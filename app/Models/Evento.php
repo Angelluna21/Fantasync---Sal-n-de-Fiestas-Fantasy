@@ -18,6 +18,10 @@ class Evento extends Model
 
     public function salones(): BelongsToMany
     {
-        return $this->belongsToMany(Salon::class, 'evento_salon')->withTimestamps();
+        
+        return $this->belongsToMany(Salon::class, 'evento_salon')
+                    ->using(EventoSalon::class)
+                    ->withPivot('id', 'adultos', 'ninos', 'factor_nino')
+                    ->withTimestamps();
     }
 }

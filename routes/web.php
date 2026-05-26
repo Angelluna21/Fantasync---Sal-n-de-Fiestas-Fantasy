@@ -10,6 +10,7 @@ use App\Http\Controllers\SalonController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ServicioGastronomicoController;
+use App\Http\Controllers\ReporteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -29,7 +30,7 @@ Route::middleware('guest')->group(function () {
 Route::get('contratos/crear', [ContratoBuilderController::class, 'create'])->name('contratos.crear');
 Route::post('contratos/crear', [ContratoBuilderController::class, 'store'])->name('contratos.crear.store');
 Route::get('contrato-demo', [ContratoPreviewController::class, 'show'])->name('contrato.demo');
-
+Route::get('reportes/insumos/{id}', [ReporteController::class, 'insumosEvento'])->name('reportes.insumos');
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', function () {
         return view('dashboard');
