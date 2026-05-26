@@ -1,0 +1,205 @@
+/* SAP Fiori/HANA inspired shared styles for welcome and login */
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "72", "Segoe UI", Arial, sans-serif;
+    background: #f3f6f9;
+    color: #222b45;
+}
+
+.page-root, .auth-page {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+    padding: 2.5rem 1.5rem;
+    background: #f3f6f9;
+}
+
+.welcome-panel, .auth-card {
+    width: min(100%, 500px);
+    background: #fff;
+    border-radius: 1.1rem;
+    box-shadow: 0 2px 16px 0 rgba(44, 62, 80, 0.07), 0 1.5px 4px 0 rgba(44, 62, 80, 0.03);
+    border: 1px solid #e5e9ef;
+    overflow: hidden;
+    padding: 2.5rem 2rem 2rem 2rem;
+}
+
+/* Welcome page specifics */
+.welcome-hero, .hero-header {
+    display: grid;
+    gap: 1.5rem;
+    padding-bottom: 0.5rem;
+}
+.hero-title {
+    margin: 0;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    line-height: 1.1;
+    font-weight: 700;
+    color: #222b45;
+}
+.hero-copy {
+    max-width: 42rem;
+    margin: 0;
+    color: #52677a;
+    line-height: 1.75;
+}
+.action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+.button-primary, .button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0 1.25rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.05rem;
+    border: none;
+    box-shadow: none;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+.button-primary {
+    background: #0070f2;
+    color: #fff;
+}
+.button-primary:hover {
+    background: #005fa3;
+}
+.button-secondary {
+    background: #eaecee;
+    color: #0070f2;
+}
+.button-secondary:hover {
+    background: #0070f2;
+    color: #fff;
+}
+.status-bar {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    background: #eaf1fb;
+    color: #0070f2;
+}
+.status-label {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #0070f2;
+}
+.status-text {
+    margin: 0;
+    line-height: 1.6;
+}
+.footer-note {
+    padding: 1.5rem 2rem;
+    background: #222b45;
+    color: #f9fafb;
+    text-align: center;
+    font-size: 0.95rem;
+}
+.footer-note a {
+    color: #0070f2;
+    text-decoration: underline;
+}
+
+/* Login specifics */
+.auth-card__brand {
+    display: grid;
+    gap: 0.35rem;
+}
+.auth-card__title {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1.05;
+    color: #222b45;
+    font-weight: 700;
+}
+.auth-card__description {
+    margin: 0;
+    color: #52677a;
+    line-height: 1.75;
+}
+.form-group {
+    display: grid;
+    gap: 0.65rem;
+}
+.form-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+.form-control {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.95rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 1rem;
+    background: #f8fafc;
+    color: #0f172a;
+    font-size: 0.98rem;
+}
+.form-control:focus {
+    outline: none;
+    border-color: #0070f2;
+    box-shadow: 0 0 0 4px rgba(0,112,242,0.10);
+}
+.form-actions {
+    display: grid;
+    gap: 1rem;
+}
+.button-submit, .button-google {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding: 0 1.5rem;
+    border-radius: 1rem;
+    border: none;
+    background: #0070f2;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 1.05rem;
+}
+.button-submit:hover, .button-google:hover {
+    background: #005fa3;
+    transform: translateY(-1px);
+}
+.button-google {
+    background: #eaecee;
+    color: #0070f2;
+    margin-top: 0.5rem;
+}
+.button-google:hover {
+    background: #0070f2;
+    color: #fff;
+}
+.form-footnote {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    color: #475569;
+    font-size: 0.95rem;
+}
+.form-footnote a {
+    color: #0070f2;
+    text-decoration: none;
+}
+.form-footnote a:hover {
+    text-decoration: underline;
+}
+.form-error {
+    color: #b91c1c;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}

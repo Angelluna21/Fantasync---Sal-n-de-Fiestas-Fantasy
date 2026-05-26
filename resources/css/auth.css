@@ -1,0 +1,140 @@
+/* Login page styles */
+.auth-page {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+    padding: 2rem;
+    background: radial-gradient(circle at top, #eef2ff 0%, #f8fafc 35%, #ffffff 100%);
+}
+
+.auth-card {
+    width: min(100%, 500px);
+    background: #ffffff;
+    border-radius: 1.5rem;
+    box-shadow: 0 30px 90px rgba(15, 23, 42, 0.12);
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.auth-card__content {
+    display: grid;
+    gap: 1.5rem;
+    padding: 2.25rem;
+}
+
+.auth-card__brand {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.auth-card__title {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1.05;
+}
+
+.auth-card__description {
+    margin: 0;
+    color: #475569;
+    line-height: 1.75;
+}
+
+.form-group {
+    display: grid;
+    gap: 0.65rem;
+}
+
+.form-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.form-control {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.95rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 1rem;
+    background: #f8fafc;
+    color: #0f172a;
+    font-size: 0.98rem;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #f97316;
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
+}
+
+.form-actions {
+    display: grid;
+    gap: 1rem;
+}
+
+.button-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding: 0 1.5rem;
+    border-radius: 1rem;
+    border: none;
+    background: #f97316;
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.button-submit:hover {
+    background: #ea580c;
+    transform: translateY(-1px);
+}
+
+.button-google {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding: 0 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    color: #111827;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.button-google:hover {
+    background: #f8fafc;
+    border-color: #9ca3af;
+    transform: translateY(-1px);
+}
+
+.form-footnote {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    color: #475569;
+    font-size: 0.95rem;
+}
+
+.form-footnote a {
+    color: #f97316;
+    text-decoration: none;
+}
+
+.form-footnote a:hover {
+    text-decoration: underline;
+}
+
+.form-error {
+    color: #b91c1c;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
