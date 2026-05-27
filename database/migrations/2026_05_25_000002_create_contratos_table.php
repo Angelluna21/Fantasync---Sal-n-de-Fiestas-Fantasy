@@ -10,19 +10,21 @@ return new class extends Migration
     {
         Schema::create('contratos', function (Blueprint $table) {
             $table->id();
-            $table->string('cliente');
-            $table->string('correo');
-            $table->string('telefono');
-            $table->date('evento_fecha');
-            $table->string('recepcion_hora');
-            $table->string('inicio_hora');
-            $table->string('tipo_evento');
-            $table->string('festejado');
-            $table->string('estado');
-            $table->foreignId('salon_id')->constrained('salones');
-            $table->json('platillos')->nullable();
-            $table->json('extras')->nullable();
-            $table->decimal('total', 12, 2)->nullable();
+            $table->foreignId('evento_id')->constrained('eventos')->onDelete('cascade');
+            
+            // Flexibilidad en JSON para el formulario (fácil captura)
+            $table->json('bebidas')->nullable(); // Guardará: sabor_agua, otras_bebidas, descorche
+            $table->json('servicios_extras')->nullable(); // Guardará: piñata, show, mickey movil, etc.
+            
+            // Módulo Financiero (Cláusula DÉCIMA SEXTA)
+            $table->decimal('monto_total', 10, 2)->default(0);
+            $table->decimal('anticipo', 10, 2)->default(0); // El sistema validará que sean mínimo $2,500
+            $table->decimal('saldo_pendiente', 10, 2)->default(0);
+            
+            // Módulo Legal
+            $table->boolean('consentimiento_imagen')->default(true); // Cláusula 17
+            $table->date('fecha_firma')->nullable();
+            
             $table->timestamps();
         });
     }
