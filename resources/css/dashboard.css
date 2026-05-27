@@ -1,114 +1,315 @@
-/* Dashboard page styles */
+/* Dashboard page styles - Tema FantaSync (Mágico/Festivo) */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap');
+
+:root {
+    /* Paleta extraída del logo FantaSync */
+    --bg-base: #fdfaf6;
+    --primary-purple: #7a288a;
+    --secondary-purple: #9b30b0;
+    --accent-magenta: #d81b60;
+    --accent-yellow: #ffd54f;
+    --accent-gold: #ffb300;
+
+    --text-main: #3d1b4a;
+    --text-muted: #6a4a75;
+
+    --card-bg: #ffffff;
+    --border-color: rgba(122, 40, 138, 0.15);
+
+    --shadow-sm: 0 4px 15px rgba(122, 40, 138, 0.08);
+    --shadow-hover: 0 12px 25px rgba(155, 48, 176, 0.2);
+    --shadow-yellow: 0 8px 25px rgba(255, 213, 79, 0.4);
+}
+
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: "72", "Segoe UI", Arial, sans-serif;
-    background: #f3f6f9;
-    color: #222b45;
+    display: flex;
+    flex-direction: column;
+    /* Permite que el pie de página baje automáticamente */
+    font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-base);
+    color: var(--text-main);
+    position: relative;
+    background-image: radial-gradient(circle at 15% 50%, rgba(255, 213, 79, 0.08), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(216, 27, 96, 0.05), transparent 25%);
+}
+
+.dashboard-background {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 35vh;
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--accent-magenta) 100%);
+    border-bottom-left-radius: 50% 20%;
+    border-bottom-right-radius: 50% 20%;
+    z-index: -1;
+    box-shadow: 0 10px 30px rgba(122, 40, 138, 0.3);
+}
+
+.dashboard-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 40px),
+        radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 30px);
+    background-size: 550px 550px, 350px 350px;
+    background-position: 0 0, 40px 60px;
+    opacity: 0.4;
+    border-bottom-left-radius: 50% 20%;
+    border-bottom-right-radius: 50% 20%;
 }
 
 .dashboard-layout {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    gap: 2.5rem;
-    padding: 2.5rem 2rem 2rem 2rem;
-    background: #f3f6f9;
+    flex-grow: 1;
+    /* Hace que el contenido principal ocupe todo el espacio disponible */
+    gap: 2rem;
+    padding: 2rem;
 }
+
+/* --- ESTILOS DE LA NAVEGACIÓN SUPERIOR --- */
+.top-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* Esto empuja el logo a la izquierda y el cerrar sesión a la derecha */
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.logo-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-logo {
+    height: 120px;
+
+    width: auto;
+
+    filter: drop-shadow(0 4px 8px rgba(122, 40, 138, 0.35));
+    transition: transform 0.3s ease;
+}
+
+.nav-logo:hover {
+    transform: scale(1.08) rotate(-2deg);
+    /* Un pequeño movimiento mágico al pasar el mouse */
+    filter: drop-shadow(0 6px 12px rgba(255, 213, 79, 0.5));
+    /* Brillo dorado */
+}
+
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    padding: 0.6rem 1.2rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+.logout-btn:hover {
+    background: var(--accent-magenta);
+    border-color: var(--accent-magenta);
+    box-shadow: 0 4px 15px rgba(216, 27, 96, 0.4);
+    transform: translateY(-2px);
+}
+
+.logout-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ------------------------------------------------------------- */
 
 .dashboard-header {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
-    max-width: 70rem;
-    margin: 0 auto;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 1rem auto;
+    color: white;
 }
 
 .eyebrow {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #0070f2;
-    letter-spacing: 0.08em;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--accent-yellow);
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .dashboard-title {
     margin: 0;
-    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
     line-height: 1.1;
-    font-weight: 700;
-    color: #222b45;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    margin-bottom: -0rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .dashboard-description {
-    margin: 0;
-    font-size: 1.13rem;
-    line-height: 1.7;
-    color: #52677a;
+    margin: 0 auto;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 650px;
 }
 
 .dashboard-actions {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2rem;
-    max-width: 70rem;
+    max-width: 1100px;
     margin: 0 auto;
-    margin-top: 2.5rem;
+    width: 100%;
 }
 
 .dashboard-card {
-    background: #fff;
-    border-radius: 1.1rem;
-    box-shadow: 0 2px 16px 0 rgba(44, 62, 80, 0.07), 0 1.5px 4px 0 rgba(44, 62, 80, 0.03);
-    padding: 2.2rem 2rem 2rem 2rem;
-    border: 1px solid #e5e9ef;
+    background: var(--card-bg);
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+    border: 2px solid transparent;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    transition: box-shadow 0.2s;
+    align-items: center;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
+
 .dashboard-card:hover {
-    box-shadow: 0 6px 24px 0 rgba(44, 62, 80, 0.13), 0 2px 8px 0 rgba(44, 62, 80, 0.07);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent-yellow);
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(255, 213, 79, 0.2) 0%, rgba(216, 27, 96, 0.1) 100%);
+    color: var(--primary-purple);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s;
+    border: 2px solid var(--accent-yellow);
+}
+
+.card-icon svg {
+    width: 30px;
+    height: 30px;
+}
+
+.dashboard-card:hover .card-icon {
+    background: linear-gradient(135deg, var(--accent-yellow) 0%, var(--accent-gold) 100%);
+    color: var(--primary-purple);
+    transform: rotate(5deg) scale(1.1);
 }
 
 .dashboard-card h2 {
-    margin: 0 0 0.7rem 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #0070f2;
+    margin: 0 0 0.75rem 0;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--primary-purple);
 }
 
 .dashboard-card p {
-    margin: 0;
-    line-height: 1.7;
-    color: #52677a;
-    font-size: 1.05rem;
+    margin: 0 0 2rem 0;
+    line-height: 1.5;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    flex-grow: 1;
 }
 
-.dashboard-card a,
-.dashboard-card-button {
+.dashboard-card a {
     display: inline-flex;
-    margin-top: 1.3rem;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     padding: 0.85rem 1.5rem;
-    border-radius: 0.7rem;
-    background: #eaecee;
-    color: #0070f2;
-    font-weight: 700;
+    border-radius: 2rem;
+    background: white;
+    color: var(--secondary-purple);
+    font-weight: 800;
     text-decoration: none;
-    border: none;
+    border: 2px solid var(--secondary-purple);
     cursor: pointer;
-    font-size: 1.05rem;
-    box-shadow: none;
-    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
-}
-.dashboard-card a:hover,
-.dashboard-card-button:hover {
-    background: #0070f2;
-    color: #fff;
-    box-shadow: 0 2px 8px 0 rgba(0,112,242,0.10);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
 }
 
-.dashboard-card-button {
+.dashboard-card a:hover {
+    background: linear-gradient(to right, var(--primary-purple), var(--secondary-purple));
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 10px rgba(155, 48, 176, 0.3);
+}
+
+/* Tarjeta destacada (Contratos) */
+.highlight-card {
+    border: 2px solid var(--accent-yellow);
+    background: linear-gradient(to bottom, #fffdf5, #ffffff);
+}
+
+.highlight-card .card-icon {
+    background: var(--accent-yellow);
+    color: var(--primary-purple);
+}
+
+.highlight-card a {
+    background: var(--accent-yellow);
+    color: var(--primary-purple);
+    border-color: var(--accent-gold);
+}
+
+.highlight-card a:hover {
+    background: linear-gradient(to right, var(--accent-yellow), var(--accent-gold));
+    color: var(--text-main);
+    box-shadow: var(--shadow-yellow);
+}
+
+/* --- ESTILOS DEL PIE DE PÁGINA (FOOTER) --- */
+.dashboard-footer {
     text-align: center;
+    padding: 2.5rem 1rem 1.5rem 1rem;
+    color: var(--text-muted);
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    position: relative;
+    z-index: 10;
+}
+
+.dashboard-footer p {
+    margin: 0;
+    opacity: 0.8;
 }
