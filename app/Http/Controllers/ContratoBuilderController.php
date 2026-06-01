@@ -115,9 +115,65 @@ class ContratoBuilderController extends Controller
             'total' => $total,
         ];
 
+        // 1. Crear o actualizar Cliente
+        $cliente = \App\Models\Cliente::updateOrCreate(
+            ['correo_electronico' => trim($data['correo'])],
+            [
+                'nombre_completo' => trim($data['cliente']),
+                'celular' => trim($data['telefono']),
+                'domicilio' => trim($data['cliente_domicilio'] ?? ''),
+                'ine_numero' => trim($data['cliente_ine'] ?? '')
+            ]
+        );
+
+        // 2. Obtener ID del evento existente si estamos editando
+        $eventoId = null;
+        if (session('contract_draft.contract_id')) {
+            $existingContract = Contrato::find(session('contract_draft.contract_id'));
+            if ($existingContract) {
+                $eventoId = $existingContract->evento_id;
+            }
+        }
+
+        // 3. Crear o actualizar Evento
+        $evento = \App\Models\Evento::updateOrCreate(
+            ['id' => $eventoId],
+            [
+                'cliente_id' => $cliente->id,
+                'fecha' => $data['evento_fecha'],
+                'hora_recepcion' => trim($data['recepcion_hora']),
+                'hora_inicio' => trim($data['inicio_hora']),
+                'horas_duracion' => (int) $data['horas_evento'],
+                'tipo_evento' => trim($data['tipo_evento']),
+                'nombre_festejado' => trim($data['festejado']),
+                'estado' => $data['estado'],
+                'color_manteleria' => trim($data['manteleria_color'] ?? ''),
+                'titulo' => trim($data['tipo_evento']) . ' de ' . trim($data['festejado']),
+                'notas' => 'Platillos: ' . implode(', ', $platilloIds) . '. Extras: ' . json_encode($extras)
+            ]
+        );
+
+        // 4. Asociar/Sincronizar Evento con el Salón en la tabla pivot
+        $evento->salones()->sync([
+            (int) $data['salon_id'] => [
+                'adultos' => (int) $data['num_adultos'],
+                'ninos' => (int) $data['num_ninos']
+            ]
+        ]);
+
+        // 5. Crear o actualizar Contrato
         $contract = Contrato::updateOrCreate(
             ['id' => session('contract_draft.contract_id')],
-            $contractData
+            [
+                'evento_id' => $evento->id,
+                'monto_total' => $total,
+                'anticipo' => 2500, // Anticipo mínimo base estipulado
+                'saldo_pendiente' => max(0, $total - 2500),
+                'bebidas' => [],
+                'servicios_extras' => $extras,
+                'consentimiento_imagen' => true,
+                'fecha_firma' => date('Y-m-d')
+            ]
         );
 
         $draft = array_merge($contractData, ['contract_id' => $contract->id]);

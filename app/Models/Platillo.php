@@ -8,7 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-#[Fillable(['categoria_platillo_id', 'nombre', 'precio', 'porciones_base'])] // Agregamos porciones_base
+#[Fillable([
+    'categoria_platillo_id',
+    'servicio_gastronomico_id',
+    'nombre',
+    'descripcion',
+    'precio',
+    'porciones_base'
+])]
 class Platillo extends Model
 {
     use HasFactory;
@@ -22,9 +29,13 @@ class Platillo extends Model
         return $this->belongsTo(CategoriaPlatillo::class);
     }
 
+    public function servicioGastronomico(): BelongsTo
+    {
+        return $this->belongsTo(ServicioGastronomico::class);
+    }
+
     public function ingredientes(): BelongsToMany
     {
-        // Regla de 3
         return $this->belongsToMany(Ingrediente::class, 'platillo_ingrediente')
                     ->withPivot('cantidad_por_base', 'nota')
                     ->withTimestamps();

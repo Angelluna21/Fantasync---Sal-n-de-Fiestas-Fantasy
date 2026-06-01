@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('evento_salon_platillo', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('evento_id')->constrained('eventos')->onDelete('cascade');
-            $table->foreignId('salon_id')->constrained('salones')->onDelete('cascade');
+            $table->foreignId('evento_salon_id')->constrained('evento_salon')->onDelete('cascade');
             $table->foreignId('platillo_id')->constrained('platillos')->onDelete('cascade');
             $table->timestamps();
 
-            $table->unique(['evento_id', 'salon_id', 'platillo_id'], 'evento_salon_platillo_unique');
+            $table->unique(['evento_salon_id', 'platillo_id'], 'evento_salon_platillo_unique');
         });
     }
 

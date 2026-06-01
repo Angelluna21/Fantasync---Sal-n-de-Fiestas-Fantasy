@@ -1,0 +1,310 @@
+/* Estilos para el módulo de Sucursales */
+
+.sucursales-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.action-bar {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.btn-create {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.85rem 1.5rem;
+    background: linear-gradient(to right, var(--primary-purple), var(--secondary-purple));
+    color: #fff;
+    border: none;
+    border-radius: 2rem;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(122, 40, 138, 0.2);
+}
+
+.btn-create:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(122, 40, 138, 0.35);
+}
+
+.btn-create svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Grid de sucursales */
+.sucursales-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+/* Tarjeta de sucursal */
+.sucursal-card {
+    background: #fff;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(122, 40, 138, 0.08);
+    border: 1px solid rgba(122, 40, 138, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sucursal-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(155, 48, 176, 0.2);
+    border-color: var(--accent-yellow);
+}
+
+.card-header {
+    position: relative;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(255, 213, 79, 0.2) 0%, rgba(216, 27, 96, 0.1) 100%);
+    border-bottom: 2px solid rgba(122, 40, 138, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--primary-purple);
+    flex: 1;
+}
+
+.location-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--accent-yellow);
+    color: var(--primary-purple);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.location-badge svg {
+    width: 20px;
+    height: 20px;
+}
+
+.card-body {
+    flex: 1;
+    padding: 1.5rem;
+}
+
+.address {
+    margin: 0 0 1.5rem 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.services-list {
+    margin: 0;
+}
+
+.services-title {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--primary-purple);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.services-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.service-item {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    background: linear-gradient(135deg, rgba(255, 213, 79, 0.15), rgba(216, 27, 96, 0.08));
+    color: var(--primary-purple);
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 213, 79, 0.4);
+}
+
+.no-services {
+    margin: 0;
+    padding: 1rem;
+    background: rgba(106, 74, 117, 0.05);
+    border-radius: 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+.salons-section {
+    margin: 0;
+}
+
+.salons-label {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--primary-purple);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.salons-label svg {
+    width: 16px;
+    height: 16px;
+}
+
+.salons-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.salon-badge {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    background: linear-gradient(135deg, rgba(255, 213, 79, 0.15), rgba(216, 27, 96, 0.08));
+    color: var(--primary-purple);
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 213, 79, 0.4);
+}
+
+.no-salons {
+    margin: 0;
+    padding: 0.75rem;
+    background: rgba(106, 74, 117, 0.05);
+    border-radius: 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+.card-footer {
+    padding: 1.25rem 1.5rem;
+    background: rgba(122, 40, 138, 0.04);
+    border-top: 1px solid rgba(122, 40, 138, 0.1);
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(122, 40, 138, 0.1);
+    color: var(--primary-purple);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Nunito', sans-serif;
+    padding: 0;
+    text-decoration: none;
+}
+
+.btn-action svg {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-action:hover {
+    background: var(--primary-purple);
+    color: #fff;
+    transform: scale(1.15);
+}
+
+.btn-view:hover {
+    background: var(--secondary-purple);
+}
+
+.btn-edit:hover {
+    background: var(--accent-gold);
+}
+
+.btn-delete:hover {
+    background: var(--accent-magenta);
+}
+
+.form-delete {
+    display: contents;
+}
+
+/* Empty state */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #fff;
+    border-radius: 1.5rem;
+    border: 2px dashed rgba(122, 40, 138, 0.2);
+    box-shadow: 0 2px 16px rgba(122, 40, 138, 0.04);
+}
+
+.empty-state svg {
+    width: 80px;
+    height: 80px;
+    color: rgba(122, 40, 138, 0.2);
+    margin: 0 auto 1.5rem;
+}
+
+.empty-state h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    color: var(--primary-purple);
+    font-weight: 800;
+}
+
+.empty-state p {
+    margin: 0 0 1.5rem 0;
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.btn-create-empty {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.85rem 1.5rem;
+    background: linear-gradient(to right, var(--primary-purple), var(--secondary-purple));
+    color: #fff;
+    border: none;
+    border-radius: 2rem;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(122, 40, 138, 0.2);
+}
+
+.btn-create-empty:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(122, 40, 138, 0.35);
+}

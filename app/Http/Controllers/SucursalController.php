@@ -9,7 +9,13 @@ class SucursalController extends Controller
 {
     public function index()
     {
-        return response()->json(Sucursal::with('salones')->get());
+        $sucursales = Sucursal::with('salones')->get();
+        return view('sucursales.index', compact('sucursales'));
+    }
+
+    public function create()
+    {
+        return view('sucursales.create');
     }
 
     public function store(Request $request)
@@ -21,12 +27,18 @@ class SucursalController extends Controller
 
         $sucursal = Sucursal::create($data);
 
-        return response()->json($sucursal, 201);
+        return redirect()->route('sucursales.show', $sucursal)->with('success', 'Sucursal creada correctamente');
     }
 
     public function show(Sucursal $sucursal)
     {
-        return response()->json($sucursal->load('salones'));
+        $sucursal->load('salones');
+        return view('sucursales.show', compact('sucursal'));
+    }
+
+    public function edit(Sucursal $sucursal)
+    {
+        return view('sucursales.edit', compact('sucursal'));
     }
 
     public function update(Request $request, Sucursal $sucursal)
@@ -38,13 +50,13 @@ class SucursalController extends Controller
 
         $sucursal->update($data);
 
-        return response()->json($sucursal);
+        return redirect()->route('sucursales.show', $sucursal)->with('success', 'Sucursal actualizada correctamente');
     }
 
     public function destroy(Sucursal $sucursal)
     {
         $sucursal->delete();
 
-        return response()->noContent();
+        return redirect()->route('sucursales.index')->with('success', 'Sucursal eliminada correctamente');
     }
 }
