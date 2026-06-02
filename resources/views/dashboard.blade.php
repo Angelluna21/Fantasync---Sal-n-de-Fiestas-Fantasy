@@ -31,7 +31,7 @@
         <header class="dashboard-header">
             <hgroup>
                 <p class="eyebrow">Bienvenido a FantaSync</p>
-                <h1 class="dashboard-title">Cocina Fantasy</h1>
+                <h1 class="dashboard-title">Gestor Fantasy</h1>
                 <p class="dashboard-description">Sistema de gestión de eventos, menús y contratos. Administra salones, platillos y sucursales para crear experiencias culinarias y eventos inolvidables de forma ágil.</p>
             </hgroup>
         </header>

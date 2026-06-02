@@ -31,6 +31,7 @@ Route::get('contratos/crear', [ContratoBuilderController::class, 'create'])->nam
 Route::post('contratos/crear', [ContratoBuilderController::class, 'store'])->name('contratos.crear.store');
 Route::get('contrato-demo', [ContratoPreviewController::class, 'show'])->name('contrato.demo');
 Route::get('reportes/insumos/{id}', [ReporteController::class, 'insumosEvento'])->name('reportes.insumos');
+Route::post('/contratos/guardar', [ContratoBuilderController::class, 'store'])->name('contratos.store');
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', function () {
         return view('dashboard');
