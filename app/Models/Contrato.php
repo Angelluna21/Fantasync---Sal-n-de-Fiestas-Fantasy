@@ -7,30 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 class Contrato extends Model
 {
     protected $fillable = [
-        'cliente',
-        'correo',
-        'telefono',
-        'evento_fecha',
-        'recepcion_hora',
-        'inicio_hora',
-        'tipo_evento',
-        'festejado',
-        'estado',
-        'salon_id',
-        'platillos',
-        'extras',
-        'total',
+        'evento_id',
+        'bebidas',
+        'servicios_extras',
+        'monto_total',
+        'anticipo',
+        'saldo_pendiente',
+        'consentimiento_imagen',
+        'fecha_firma',
     ];
 
     protected $casts = [
-        'evento_fecha' => 'date',
-        'platillos' => 'array',
-        'extras' => 'array',
-        'total' => 'decimal:2',
+        'bebidas' => 'array',
+        'servicios_extras' => 'array',
+        'monto_total' => 'decimal:2',
+        'anticipo' => 'decimal:2',
+        'saldo_pendiente' => 'decimal:2',
+        'consentimiento_imagen' => 'boolean',
+        'fecha_firma' => 'date',
     ];
 
-    public function salon(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function evento(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Salon::class);
+        return $this->belongsTo(Evento::class);
     }
 }

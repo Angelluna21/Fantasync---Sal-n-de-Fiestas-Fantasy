@@ -10,17 +10,10 @@ class SucursalSalonSeeder extends Seeder
 {
     public function run(): void
     {
-        $sucursal = Sucursal::query()->firstOrCreate(
+        // Se mantiene la sucursal Vicente Villada como sucursal base real
+        $sucursal = Sucursal::query()->updateOrCreate(
             ['nombre' => 'Vicente Villada'],
-            ['direccion' => 'San Rafael 254, Vicente Villada, Tlalpan']
-        );
-
-        Salon::query()->updateOrCreate(
-            ['nombre' => 'San Rafael 254'],
-            [
-                'sucursal_id' => $sucursal->id,
-                'alias' => 'SR254',
-            ]
+            ['direccion' => 'San Rafael 254, Col. Vicente Villada, Nezahualcóyotl, Estado de México, C.P. 57710']
         );
     }
 }

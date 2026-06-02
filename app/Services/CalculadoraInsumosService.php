@@ -10,11 +10,11 @@ class CalculadoraInsumosService
      * Calcula y consolida la lista de ingredientes para un evento,
      * procesando los menús de todos los salones asignados.
      */
-    public function calcularParaEvento(int $eventoId): array
+    public function calcularParaEvento(Evento $evento): array
     {
-        // Eager Loading para traer toda la logística en una sola consulta
-        $evento = Evento::with(['salones.platillos.ingredientes'])->findOrFail($eventoId);
+        // El evento ya viene con las relaciones cargadas desde el controlador.
         $listaInsumos = [];
+        // $evento = Evento::with(['salones.platillos.ingredientes'])->findOrFail($eventoId); // Ya no es necesario
 
         foreach ($evento->salones as $salon) {
             foreach ($salon->platillos as $platillo) {

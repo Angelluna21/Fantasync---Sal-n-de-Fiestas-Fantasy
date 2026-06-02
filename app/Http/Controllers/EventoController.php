@@ -9,7 +9,37 @@ class EventoController extends Controller
 {
     public function index()
     {
-        return response()->json(Evento::with('salones')->get());
+        $eventos = Evento::with(['cliente', 'salones.sucursal', 'contrato'])
+            ->orderBy('fecha', 'desc')
+            ->get();
+
+        $totalEventos = $eventos->count();
+        $confirmados = 0;
+        $cotizaciones = 0;
+        $montoTotal = 0;
+        $saldoPendiente = 0;
+
+        foreach ($eventos as $ev) {
+            if ($ev->estado === 'confirmado') {
+                $confirmados++;
+            } elseif ($ev->estado === 'cotizacion') {
+                $cotizaciones++;
+            }
+
+            if ($ev->contrato) {
+                $montoTotal += (float) $ev->contrato->monto_total;
+                $saldoPendiente += (float) $ev->contrato->saldo_pendiente;
+            }
+        }
+
+        return view('eventos.index', compact(
+            'eventos',
+            'totalEventos',
+            'confirmados',
+            'cotizaciones',
+            'montoTotal',
+            'saldoPendiente'
+        ));
     }
 
     public function store(Request $request)

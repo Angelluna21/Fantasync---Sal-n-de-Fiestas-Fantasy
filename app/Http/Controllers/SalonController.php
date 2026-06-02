@@ -9,7 +9,14 @@ class SalonController extends Controller
 {
     public function index()
     {
-        return response()->json(Salon::with(['sucursal', 'eventos'])->get());
+        $salones = Salon::with(['sucursal', 'eventos'])->get();
+        return view('salones.index', compact('salones'));
+    }
+
+    public function create()
+    {
+        $sucursales = \App\Models\Sucursal::orderBy('nombre')->get();
+        return view('salones.create', compact('sucursales'));
     }
 
     public function store(Request $request)
@@ -28,12 +35,19 @@ class SalonController extends Controller
             $salon->eventos()->sync($data['evento_ids']);
         }
 
-        return response()->json($salon->load(['sucursal', 'eventos']), 201);
+        return redirect()->route('salones.show', $salon)->with('success', 'Salón creado correctamente');
     }
 
     public function show(Salon $salon)
     {
-        return response()->json($salon->load(['sucursal', 'eventos']));
+        $salon->load(['sucursal', 'eventos']);
+        return view('salones.show', compact('salon'));
+    }
+
+    public function edit(Salon $salon)
+    {
+        $sucursales = \App\Models\Sucursal::orderBy('nombre')->get();
+        return view('salones.edit', compact('salon', 'sucursales'));
     }
 
     public function update(Request $request, Salon $salon)
@@ -52,13 +66,13 @@ class SalonController extends Controller
             $salon->eventos()->sync($data['evento_ids'] ?? []);
         }
 
-        return response()->json($salon->load(['sucursal', 'eventos']));
+        return redirect()->route('salones.show', $salon)->with('success', 'Salón actualizado correctamente');
     }
 
     public function destroy(Salon $salon)
     {
         $salon->delete();
 
-        return response()->noContent();
+        return redirect()->route('salones.index')->with('success', 'Salón eliminado correctamente');
     }
 }

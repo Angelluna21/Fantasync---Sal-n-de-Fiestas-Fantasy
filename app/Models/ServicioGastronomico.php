@@ -9,8 +9,7 @@ class ServicioGastronomico extends Model
 {
     use HasFactory;
 
-    protected $table = 'servicios_gastronomicos';
-
+    protected $table = 'servicio_gastronomicos';
 
     protected $fillable = [
         'nombre'

@@ -39,11 +39,18 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::resource('sucursales', SucursalController::class);
-    Route::resource('salones', SalonController::class);
+    Route::resource('sucursales', SucursalController::class)->parameters([
+        'sucursales' => 'sucursal'
+    ]);
+    Route::resource('salones', SalonController::class)->parameters([
+        'salones' => 'salon'
+    ]);
     Route::resource('categoria-platillos', CategoriaPlatilloController::class);
     Route::resource('platillos', PlatilloController::class);
     Route::resource('ingredientes', IngredienteController::class);
     Route::resource('eventos', EventoController::class);
     Route::resource('servicios-gastronomicos', ServicioGastronomicoController::class);
+    Route::get('/test-platillos', function () {
+    return \Livewire\Livewire::mount('platillo-manager');
+});
 });

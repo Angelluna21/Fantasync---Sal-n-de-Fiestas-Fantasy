@@ -313,3 +313,38 @@ body {
     margin: 0;
     opacity: 0.8;
 }
+
+/* Botón de Regreso General */
+.btn-back-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.15rem;
+    background: rgba(122, 40, 138, 0.08);
+    color: var(--primary-purple);
+    border: 1px solid rgba(122, 40, 138, 0.15);
+    border-radius: 2rem;
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-back-nav:hover {
+    background: var(--primary-purple);
+    color: #fff;
+    border-color: var(--primary-purple);
+    transform: translateX(-4px);
+    box-shadow: 0 4px 12px rgba(122, 40, 138, 0.2);
+}
+
+.btn-back-nav svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+
+.btn-back-nav:hover svg {
+    transform: translateX(-2px);
+}

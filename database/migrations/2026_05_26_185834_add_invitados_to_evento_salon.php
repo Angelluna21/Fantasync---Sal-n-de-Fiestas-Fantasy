@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('evento_salon', function (Blueprint $table) {
-            //
+            $table->integer('adultos')->default(0)->after('salon_id');
+            $table->integer('ninos')->default(0)->after('adultos');
+            $table->decimal('factor_nino', 3, 2)->default(0.5)->after('ninos');
         });
     }
 
@@ -22,7 +24,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('evento_salon', function (Blueprint $table) {
-            //
+            $table->dropColumn([
+                'adultos',
+                'ninos',
+                'factor_nino',
+            ]);
         });
     }
 };

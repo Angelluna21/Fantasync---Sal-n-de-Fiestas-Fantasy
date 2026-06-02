@@ -11,19 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-    Schema::create('servicios_gastronomicos', function (Blueprint $table) {
-        $table->id();
-        $table->string('nombre', 80);
-        $table->timestamps();
-        $table->softDeletes();
-    });
-}
+        // Tipos de servicio de comida que se ofrecen (ej. Taquiza, Menú por Tiempos).
+        Schema::create('servicios_gastronomicos', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            $table->timestamps();
+        });
+    }
 
-/**
- * Reverse the migrations.
- */
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
+        // El nombre de la tabla es plural, siguiendo la convención de Laravel.
         Schema::dropIfExists('servicios_gastronomicos');
     }
 };

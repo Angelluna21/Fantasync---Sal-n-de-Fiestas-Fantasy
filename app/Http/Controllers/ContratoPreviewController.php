@@ -11,36 +11,22 @@ use Illuminate\Support\Str;
 
 class ContratoPreviewController extends Controller
 {
-    // The `show` method is kept for the "live preview" from the session draft.
-    // It's complex due to its fallback logic for showing a demo.
+    // The `show` method handles both "live preview" from the session draft and persistent previews from the database.
     public function show()
     {
-        $draft = session('contract_draft', []);
-        $contractId = $draft['contract_id'] ?? null;
-        
+        $contractId = request()->query('id');
+        if (! $contractId) {
+            $draft = session('contract_draft', []);
+            $contractId = $draft['contract_id'] ?? null;
+        }
+
         $contract = $contractId ? Contrato::find($contractId) : null;
 
         if (! $contract) {
             // If no persisted contract is found, build a temporary one from the session draft.
+            $draft = session('contract_draft', []);
             $contract = new Contrato(is_array($draft) ? $draft : []);
         }
-
-        // Fallback values for properties that might not be in the draft yet.
-        $contract->cliente ??= 'Cliente demo';
-        $contract->correo ??= 'cliente@fantasync.local';
-        $contract->telefono ??= '55 0000 0000';
-        $contract->evento_fecha ??= '2026-06-12';
-        $contract->recepcion_hora ??= '15:00 hrs';
-        $contract->inicio_hora ??= '16:30 hrs';
-        $contract->tipo_evento ??= 'Comunión';
-        $contract->festejado ??= 'Nombre del festejado';
-        $contract->estado ??= 'cotizacion';
-        $contract->horas_evento ??= 5;
-        $contract->num_adultos ??= 50;
-        $contract->num_ninos ??= 20;
-        $contract->cliente_domicilio ??= 'Domicilio conocido';
-        $contract->cliente_ine ??= 'ABC123456DEF';
-        $contract->manteleria_color ??= 'Blanco';
 
         return view('contrato-demo', $this->gatherContractData($contract));
     }
@@ -59,7 +45,7 @@ class ContratoPreviewController extends Controller
         $filename = sprintf(
             'contrato-%s-%s.pdf',
             $contrato->id,
-            Str::slug($contrato->cliente)
+            Str::slug($data['cliente'] ?? 'cliente')
         );
 
         return $pdf->stream($filename);
@@ -70,13 +56,43 @@ class ContratoPreviewController extends Controller
      */
     private function gatherContractData(Contrato $contrato): array
     {
-        // Eager load relationships for efficiency if they haven't been loaded yet.
-        $contrato->loadMissing('salon.sucursal');
+        // Eager load relationships for efficiency.
+        $contrato->loadMissing(['evento.cliente', 'evento.salones.sucursal']);
 
-        // The 'platillos' attribute on Contrato is a JSON array of IDs.
-        // We ensure it's loaded as a relationship for consistent access.
+        $evento = $contrato->evento;
+        $clienteObj = $evento?->cliente;
+        $salonObj = $evento?->salones?->first();
+
+        // 1. Map client fields (fallback to flat contract draft values if no database relation exists)
+        $clienteName = $clienteObj?->nombre_completo ?? ($contrato->cliente ?? 'Cliente demo');
+        $clienteCorreo = $clienteObj?->correo_electronico ?? ($contrato->correo ?? 'cliente@fantasync.local');
+        $clienteTelefono = $clienteObj?->celular ?? ($contrato->telefono ?? '55 0000 0000');
+        $clienteDom = $clienteObj?->domicilio ?? ($contrato->cliente_domicilio ?? 'Domicilio conocido');
+        $clienteIneNum = $clienteObj?->ine_numero ?? ($contrato->cliente_ine ?? 'ABC123456DEF');
+
+        // 2. Map event logistical fields
+        $evtFechaRaw = $evento?->fecha ?? ($contrato->evento_fecha ?? '2026-06-12');
+        $recHora = $evento?->hora_recepcion ?? ($contrato->recepcion_hora ?? '15:00 hrs');
+        $iniHora = $evento?->hora_inicio ?? ($contrato->inicio_hora ?? '16:30 hrs');
+        $tipo = $evento?->tipo_evento ?? ($contrato->tipo_evento ?? 'Comunión');
+        $fest = $evento?->nombre_festejado ?? ($contrato->festejado ?? 'Nombre del festejado');
+        $horas = $evento?->horas_duracion ?? ($contrato->horas_evento ?? 5);
+        $mant = $evento?->color_manteleria ?? ($contrato->manteleria_color ?? 'Blanco');
+
+        $adults = $salonObj?->pivot?->adultos ?? ($contrato->num_adultos ?? 50);
+        $kids = $salonObj?->pivot?->ninos ?? ($contrato->num_ninos ?? 20);
+
+        $salonName = $salonObj?->nombre ?? ($contrato->salon?->nombre ?? 'Seleccione un salón');
+        $sucursalName = $salonObj?->sucursal?->nombre ?? ($contrato->salon?->sucursal?->nombre ?? 'Sucursal no asignada');
+
+        // 3. Map platillos (for persisted contracts, parsed from JSON notes in the database)
         if (! $contrato->relationLoaded('platillos')) {
             $platilloIds = $contrato->platillos ?? [];
+            if (empty($platilloIds) && $evento && $evento->notas) {
+                if (preg_match('/Platillos:\s*([0-9,\s]+)/', $evento->notas, $matches)) {
+                    $platilloIds = array_filter(array_map('trim', explode(',', $matches[1])));
+                }
+            }
             if (! is_array($platilloIds)) {
                 $platilloIds = json_decode($platilloIds, true) ?: [];
             }
@@ -94,15 +110,19 @@ class ContratoPreviewController extends Controller
             return [
                 'nombre' => $platillo->nombre,
                 'detalle' => $platillo->categoriaPlatillo?->nombre ?? 'Menú principal',
-                'cantidad' => 1, // This might need more complex logic based on your needs
+                'cantidad' => 1,
                 'precio' => (float) $platillo->precio,
                 'subtotal' => (float) $platillo->precio,
             ];
         })->values()->all();
 
+        // 4. Map extras (support both database JSON column and session draft array)
         $allExtras = config('fantasync.extras', []);
         $selectedExtras = [];
-        $contractExtras = is_array($contrato->extras) ? $contrato->extras : [];
+        $contractExtras = $contrato->servicios_extras ?? ($contrato->extras ?? []);
+        if (! is_array($contractExtras)) {
+            $contractExtras = json_decode($contractExtras, true) ?: [];
+        }
         foreach ($allExtras as $key => $extra) {
             if (! empty($contractExtras[$key] ?? false)) {
                 $selectedExtras[] = $extra;
@@ -112,46 +132,47 @@ class ContratoPreviewController extends Controller
         $subtotalMenu = $platillosCollection->sum('precio');
         $subtotalExtras = array_sum(array_column($selectedExtras, 'precio'));
 
-        // Use the saved total if available (from a persisted contract), otherwise calculate it.
-        $total = $contrato->total ?? ($subtotalMenu + $subtotalExtras);
+        // Use the saved total if available, otherwise calculate it.
+        $total = $contrato->monto_total ?? ($contrato->total ?? ($subtotalMenu + $subtotalExtras));
 
-        // This payment logic is hardcoded and should ideally be more dynamic.
+        // Suggested Payment Plan
         $payments = [
-            ['label' => 'Anticipo de reserva', 'value' => 2500],
+            ['label' => 'Anticipo de reserva', 'value' => $contrato->anticipo ?? 2500],
             ['label' => 'Abono mensual', 'value' => max(4000, round($total * 0.2))],
             ['label' => '50% mínimo antes de 30 días', 'value' => 'Requerido'],
             ['label' => 'Liquidación final antes de 15 días', 'value' => 'Requerido'],
         ];
 
-        $eventoFecha = Carbon::parse($contrato->evento_fecha)
+        $eventoFecha = Carbon::parse($evtFechaRaw)
             ->locale('es')
             ->translatedFormat('d \d\e F \d\e Y');
 
         return [
-            'contrato' => $contrato, // Pass the full object for flexibility
-            'cliente' => $contrato->cliente,
-            'correo' => $contrato->correo,
-            'telefono' => $contrato->telefono,
-            'clienteDomicilio' => $contrato->cliente_domicilio,
-            'clienteIne' => $contrato->cliente_ine,
+            'contrato' => $contrato,
+            'cliente' => $clienteName,
+            'correo' => $clienteCorreo,
+            'telefono' => $clienteTelefono,
+            'clienteDomicilio' => $clienteDom,
+            'clienteIne' => $clienteIneNum,
             'eventoFecha' => $eventoFecha,
-            'recepcionHora' => $contrato->recepcion_hora,
-            'inicioHora' => $contrato->inicio_hora,
-            'tipoEvento' => $contrato->tipo_evento,
-            'festejado' => $contrato->festejado,
-            'horasEvento' => $contrato->horas_evento,
-            'numAdultos' => $contrato->num_adultos,
-            'numNinos' => $contrato->num_ninos,
-            'manteleriaColor' => $contrato->manteleria_color,
-            'salonNombre' => $contrato->salon?->nombre ?? 'Seleccione un salón',
-            'salonSucursal' => $contrato->salon?->sucursal?->nombre ?? 'Sucursal no asignada',
+            'recepcionHora' => $recHora,
+            'inicioHora' => $iniHora,
+            'tipoEvento' => $tipo,
+            'festejado' => $fest,
+            'horasEvento' => $horas,
+            'numAdultos' => $adults,
+            'numNinos' => $kids,
+            'manteleriaColor' => $mant,
+            'salonNombre' => $salonName,
+            'salonSucursal' => $sucursalName,
             'menuItems' => $menuItems,
             'extras' => $selectedExtras,
             'payments' => $payments,
             'subtotalMenu' => $subtotalMenu,
             'subtotalExtras' => $subtotalExtras,
             'total' => $total,
-            'estadoContrato' => $contrato->estado,
+            'estadoContrato' => $contrato->estado ?? ($evento?->estado ?? 'cotizacion'),
         ];
+    }
     }
 }

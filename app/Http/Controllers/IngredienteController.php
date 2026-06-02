@@ -3,13 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ingrediente;
+use App\Models\Platillo;
 use Illuminate\Http\Request;
 
 class IngredienteController extends Controller
 {
     public function index()
     {
-        return response()->json(Ingrediente::with('platillos')->get());
+        $ingredientes = Ingrediente::with('platillos')->orderBy('nombre')->get();
+        return view('ingredientes.index', compact('ingredientes'));
+    }
+
+    public function create()
+    {
+        $platillos = Platillo::orderBy('nombre')->get();
+        return view('ingredientes.create', compact('platillos'));
     }
 
     public function store(Request $request)
@@ -27,19 +35,27 @@ class IngredienteController extends Controller
             $ingrediente->platillos()->sync($data['platillo_ids']);
         }
 
-        return response()->json($ingrediente->load('platillos'), 201);
+        return redirect()->route('ingredientes.index')->with('success', 'Ingrediente creado con éxito.');
     }
 
     public function show(Ingrediente $ingrediente)
     {
-        return response()->json($ingrediente->load('platillos'));
+        $ingrediente->load('platillos.categoriaPlatillo');
+        return view('ingredientes.show', compact('ingrediente'));
+    }
+
+    public function edit(Ingrediente $ingrediente)
+    {
+        $ingrediente->load('platillos');
+        $platillos = Platillo::orderBy('nombre')->get();
+        return view('ingredientes.edit', compact('ingrediente', 'platillos'));
     }
 
     public function update(Request $request, Ingrediente $ingrediente)
     {
         $data = $request->validate([
-            'nombre' => 'sometimes|string|max:120',
-            'unidad' => 'sometimes|in:kg,gr,l,ml,pz',
+            'nombre' => 'required|string|max:120',
+            'unidad' => 'required|in:kg,gr,l,ml,pz',
             'platillo_ids' => 'sometimes|array',
             'platillo_ids.*' => 'integer|exists:platillos,id',
         ]);
@@ -50,13 +66,12 @@ class IngredienteController extends Controller
             $ingrediente->platillos()->sync($data['platillo_ids'] ?? []);
         }
 
-        return response()->json($ingrediente->load('platillos'));
+        return redirect()->route('ingredientes.index')->with('success', 'Ingrediente actualizado con éxito.');
     }
 
     public function destroy(Ingrediente $ingrediente)
     {
         $ingrediente->delete();
-
-        return response()->noContent();
+        return redirect()->route('ingredientes.index')->with('success', 'Ingrediente eliminado con éxito.');
     }
 }
