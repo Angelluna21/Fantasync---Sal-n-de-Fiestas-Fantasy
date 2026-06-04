@@ -1,91 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Contratos | FantaSync</title>
-    @vite(['resources/css/app.css', 'resources/css/contract.css'])
-    
-    <!-- ESTILO INCRUSTADO: FLECHAS Y FORMATO DE IMPRESIÓN -->
-    <style>
-        /* Borra las flechas en Chrome, Safari, Edge, Opera */
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        /* Borra las flechas en Firefox */
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
+    @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/css/contract.css'])
 
-        /* Estilos de la caja de cláusulas en pantalla */
-        .clauses-box {
-            background: #f9f9f9;
-            border: 1px solid var(--border-color);
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            height: 300px;
-            overflow-y: scroll;
-            font-size: 0.85rem;
-            color: #444;
-            line-height: 1.6;
-        }
-        .clauses-box p { margin-bottom: 0.8rem; text-align: justify; }
-
-        /* Botón de impresión */
-        .btn-print {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: #e0e0e0;
-            color: #333;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 800;
-            font-size: 1.15rem;
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 3rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .btn-print:hover { background: #d0d0d0; transform: translateY(-3px); }
-
-        /* =========================================
-           MAGIA DE IMPRESIÓN (Transforma la web a papel) 
-           ========================================= */
-        @media print {
-            body { background: white !important; color: black !important; font-size: 12px; }
-            .contract-background, .top-nav, .form-actions, .contract-header p, .section-desc { display: none !important; }
-            .contract-layout { padding: 0; max-width: 100%; margin: 0; }
-            .contract-card { box-shadow: none; padding: 0; border: none; }
-            .contract-title { font-size: 18px; text-align: center; margin-bottom: 20px; color: black; }
-            
-            /* Quita bordes de los inputs para que parezca texto normal */
-            .form-control { border: none; border-bottom: 1px solid black; border-radius: 0; padding: 2px 5px; height: auto; background: transparent; }
-            select { -webkit-appearance: none; appearance: none; }
-            
-            .form-section { border: none; padding: 0; margin-bottom: 15px; page-break-inside: avoid; }
-            .form-section legend { background: transparent; color: black; padding: 0; font-size: 14px; box-shadow: none; border-bottom: 2px solid black; border-radius: 0; width: 100%; font-weight: bold; margin-bottom: 10px; }
-            
-            /* Las cláusulas deben salir completas sin scroll */
-            .clauses-box { height: auto !important; overflow: visible !important; border: none; padding: 0; font-size: 10px; line-height: 1.2; }
-            
-            /* Firmas al final de la página impresa */
-            .signatures-print {
-                display: flex !important;
-                justify-content: space-around;
-                margin-top: 50px;
-                page-break-inside: avoid;
-            }
-            .signatures-print section { text-align: center; width: 40%; }
-            .signatures-print hr { border: 1px solid black; margin-bottom: 5px; }
-        }
-
-        /* Ocultar sección de firmas en pantalla (solo se ve al imprimir) */
-        @media screen { .signatures-print { display: none; } }
-    </style>
 </head>
+
 <body class="contract-page">
     <figure class="contract-background" aria-hidden="true"></figure>
 
@@ -94,10 +17,15 @@
             <a href="{{ url('/dashboard') }}" aria-label="Volver al inicio" class="logo-link">
                 <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
             </a>
-            <a href="{{ url('/dashboard') }}" class="btn-back">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Volver al Panel
-            </a>
+            <section style="display: flex; align-items: center; gap: 1.5rem;" aria-label="Acciones de navegación">
+                <x-user-menu />
+                <a href="{{ url('/dashboard') }}" class="btn-back">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Volver al Panel
+                </a>
+            </section>
         </nav>
 
         <header class="contract-header">
@@ -109,14 +37,14 @@
 
         <section class="contract-card">
             @if ($errors->any())
-                <aside class="form-error--global" style="margin-bottom: 2rem; color: #d32f2f; background: #ffebee; padding: 1rem; border-radius: 1rem;">
-                    <strong>Por favor corrige los siguientes errores:</strong>
-                    <ul style="margin-top: 0.5rem;">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </aside>
+            <aside class="form-error--global" style="margin-bottom: 2rem; color: #d32f2f; background: #ffebee; padding: 1rem; border-radius: 1rem;">
+                <strong>Por favor corrige los siguientes errores:</strong>
+                <ul style="margin-top: 0.5rem;">
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </aside>
             @endif
 
             <form action="{{ route('contratos.store') }}" method="POST" class="contract-form">
@@ -132,8 +60,8 @@
                         </article>
                         <article class="input-wrapper">
                             <label for="cliente_ine">Clave INE *</label>
-                            <input type="text" id="cliente_ine" name="cliente_ine" class="form-control" required 
-                                minlength="18" maxlength="18" pattern="[A-Za-z0-9]{18}" 
+                            <input type="text" id="cliente_ine" name="cliente_ine" class="form-control" required
+                                minlength="18" maxlength="18" pattern="[A-Za-z0-9]{18}"
                                 placeholder="18 caracteres" onkeyup="this.value = this.value.toUpperCase()">
                         </article>
                         <article class="input-wrapper">
@@ -171,8 +99,11 @@
                             <label for="salon_id">Salón Asignado *</label>
                             <select id="salon_id" name="salon_id" class="form-control" required>
                                 <option value="" disabled selected>Seleccione un salón...</option>
-                                <option value="1">Salón Jardín</option>
-                                <option value="2">Salón Infantil</option>
+                                @foreach($salones as $salon)
+                                    <option value="{{ $salon->id }}" {{ old('salon_id', $draft['salon_id']) == $salon->id ? 'selected' : '' }}>
+                                        {{ $salon->nombre }} ({{ $salon->sucursal->nombre ?? 'Sin sucursal' }})
+                                    </option>
+                                @endforeach
                             </select>
                         </article>
                         <article class="input-wrapper">
@@ -229,14 +160,11 @@
                 <fieldset class="form-section">
                     <legend>Alimentos y Configuración</legend>
                     <section class="input-grid grid-3">
-                        <article class="input-wrapper">
-                            <label for="tipo_comida">Comida</label>
-                            <select id="tipo_comida" name="tipo_comida" class="form-control">
-                                <option value="">Seleccione...</option>
-                                <option value="Taquiza">Taquiza</option>
-                                <option value="Parrillada">Parrillada</option>
-                                <option value="Buffet">Buffet</option>
-                            </select>
+                        <article class="input-wrapper" style="grid-column: span 3;">
+                            <p style="color: var(--primary-purple); font-weight: 700; background: rgba(102, 126, 234, 0.1); padding: 1rem; border-radius: 8px;">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 0.5rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                La selección exacta del Menú (Platillos y Guisados) se realizará en el siguiente paso para poder calcular la comanda automáticamente.
+                            </p>
                         </article>
                         <article class="input-wrapper">
                             <label for="num_adultos">Para (Adultos) *</label>
@@ -247,25 +175,7 @@
                             <input type="number" id="num_ninos" name="num_ninos" class="form-control" required min="0">
                         </article>
                     </section>
-                    <article class="input-wrapper" style="margin-top: 1.5rem;">
-                        <label for="seleccion_guisados">Selección de Guisados y</label>
-                        <textarea id="seleccion_guisados" name="seleccion_guisados" class="form-control" rows="2"></textarea>
-                    </article>
-                    <section class="input-grid grid-2" style="margin-top: 1.5rem;">
-                        <fieldset class="input-wrapper" style="border: none; padding: 0; margin: 0;">
-                            <legend style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text-main);">Sabores de Agua (Elige máx. 2)</legend>
-                            <section style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-                                <label class="checkbox-label"><input type="checkbox" name="sabor_agua[]" value="Jamaica" class="sabor-checkbox"> Jamaica</label>
-                                <label class="checkbox-label"><input type="checkbox" name="sabor_agua[]" value="Horchata" class="sabor-checkbox"> Horchata</label>
-                                <label class="checkbox-label"><input type="checkbox" name="sabor_agua[]" value="Tamarindo" class="sabor-checkbox"> Tamarindo</label>
-                                <label class="checkbox-label"><input type="checkbox" name="sabor_agua[]" value="Limón" class="sabor-checkbox"> Limón</label>
-                            </section>
-                        </fieldset>
-                        <article class="input-wrapper">
-                            <label for="otras_bebidas_cual">Otras bebidas ¿Cuál?</label>
-                            <input type="text" id="otras_bebidas_cual" name="otras_bebidas_cual" class="form-control">
-                        </article>
-                    </section>
+                    <!-- Eliminada selección estática de guisados y bebidas, ahora se maneja en el Paso 2 -->
                     <section class="input-grid grid-4" style="margin-top: 1.5rem;">
                         <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_pinata" value="1"> Piñata</label></article>
                         <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_show" value="1"> Show</label></article>
@@ -283,17 +193,17 @@
                         <article class="input-wrapper"><label>Otras Bebidas</label><input type="number" step="0.01" min="0" name="c_otras_bebidas" class="form-control cost-input"></article>
                         <article class="input-wrapper"><label>Piñata</label><input type="number" step="0.01" min="0" name="c_pinata" class="form-control cost-input"></article>
                         <article class="input-wrapper"><label>Mesa de Dulces</label><input type="number" step="0.01" min="0" name="c_mesa_dulces" class="form-control cost-input"></article>
-                        
+
                         <article class="input-wrapper"><label>Show</label><input type="number" step="0.01" min="0" name="c_show" class="form-control cost-input"></article>
                         <article class="input-wrapper"><label>USB Video c/reseña</label><input type="number" step="0.01" min="0" name="c_usb_video" class="form-control cost-input"></article>
                         <article class="input-wrapper"><label>Álbum Digital</label><input type="number" step="0.01" min="0" name="c_album_digital" class="form-control cost-input"></article>
                         <article class="input-wrapper"><label>Paquete Álbum</label><input type="number" step="0.01" min="0" name="c_album_paquete" class="form-control cost-input"></article>
-                        
+
                         <article class="input-wrapper"><label>Derecho de Pista</label><input type="number" step="0.01" min="0" name="c_derecho_pista" class="form-control cost-input"></article>
                         <article class="input-wrapper"><label>Hora Extra</label><input type="number" step="0.01" min="0" name="c_hora_extra" class="form-control cost-input"></article>
                         <article class="input-wrapper"><label>Cámara 360°</label><input type="number" step="0.01" min="0" name="c_camara_360" class="form-control cost-input"></article>
                         <article class="input-wrapper"><label>Amenización</label><input type="number" step="0.01" min="0" name="c_amenizacion" class="form-control cost-input"></article>
-                        
+
                         <article class="input-wrapper"><label>Personas Adic.</label><input type="number" step="0.01" min="0" name="c_personas_adicionales" class="form-control cost-input"></article>
                         <article class="input-wrapper"><label>Café</label><input type="number" step="0.01" min="0" name="c_cafe" class="form-control cost-input"></article>
                         <article class="input-wrapper"><label>Mickey Móvil</label><input type="number" step="0.01" min="0" name="c_mickey_movil" class="form-control cost-input"></article>
@@ -302,11 +212,11 @@
                     <section class="input-grid grid-2" style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
                         <article class="input-wrapper">
                             <label for="monto_total" class="highlight-label">MONTO TOTAL ($) *</label>
-                            <input type="number" step="0.01" id="monto_total" name="monto_total" class="form-control total-input" required readonly>
+                            <input type="text" id="monto_total" name="monto_total" class="form-control total-input" style="font-weight: bold; color: #d32f2f;" required readonly>
                         </article>
                         <article class="input-wrapper">
                             <label for="total_letra">Total en Letra *</label>
-                            <input type="text" id="total_letra" name="total_letra" class="form-control" placeholder="Ej. Diez mil pesos 00/100 M.N." required>
+                            <input type="text" id="total_letra" name="total_letra" class="form-control" placeholder="Ej. Diez mil pesos 00/100 M.N." required readonly tabindex="-1" style="background-color: #f5f5f5; cursor: not-allowed; font-weight: 600;">
                         </article>
                     </section>
                 </fieldset>
@@ -377,14 +287,13 @@
                 <footer class="form-actions" style="gap: 1rem;">
                     <!-- Botón de Imprimir -->
                     <button type="button" class="btn-print" onclick="window.print()">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                        </svg>
                         Imprimir Contrato
                     </button>
                     <!-- Botón de Guardar -->
-                    <button type="submit" class="btn-submit">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-                        Guardar Contrato
-                    </button>
+                    <button type="submit" class="btn primary">Continuar al Paso 2: Configurar Menú</button>
                 </footer>
             </form>
         </section>
@@ -395,6 +304,156 @@
         document.addEventListener('DOMContentLoaded', function() {
             const costInputs = document.querySelectorAll('.cost-input');
             const totalInput = document.getElementById('monto_total');
+            const letraInput = document.getElementById('total_letra');
+
+            // Convertir número a letras (Pesos Mexicanos)
+            function numeroALetras(num) {
+                if (num === 0) return 'CERO PESOS 00/100 M.N.';
+
+                var enteros = Math.floor(num);
+                var centavos = (((Math.round(num * 100)) - (Math.floor(num) * 100)));
+
+                function Unidades(num) {
+                    switch (num) {
+                        case 1:
+                            return 'UN';
+                        case 2:
+                            return 'DOS';
+                        case 3:
+                            return 'TRES';
+                        case 4:
+                            return 'CUATRO';
+                        case 5:
+                            return 'CINCO';
+                        case 6:
+                            return 'SEIS';
+                        case 7:
+                            return 'SIETE';
+                        case 8:
+                            return 'OCHO';
+                        case 9:
+                            return 'NUEVE';
+                    }
+                    return '';
+                }
+
+                function Decenas(num) {
+                    var decena = Math.floor(num / 10);
+                    var unidad = num - (decena * 10);
+                    switch (decena) {
+                        case 1:
+                            switch (unidad) {
+                                case 0:
+                                    return 'DIEZ';
+                                case 1:
+                                    return 'ONCE';
+                                case 2:
+                                    return 'DOCE';
+                                case 3:
+                                    return 'TRECE';
+                                case 4:
+                                    return 'CATORCE';
+                                case 5:
+                                    return 'QUINCE';
+                                default:
+                                    return 'DIECI' + Unidades(unidad);
+                            }
+                        case 2:
+                            switch (unidad) {
+                                case 0:
+                                    return 'VEINTE';
+                                default:
+                                    return 'VEINTI' + Unidades(unidad);
+                            }
+                        case 3:
+                            return DecenasY('TREINTA', unidad);
+                        case 4:
+                            return DecenasY('CUARENTA', unidad);
+                        case 5:
+                            return DecenasY('CINCUENTA', unidad);
+                        case 6:
+                            return DecenasY('SESENTA', unidad);
+                        case 7:
+                            return DecenasY('SETENTA', unidad);
+                        case 8:
+                            return DecenasY('OCHENTA', unidad);
+                        case 9:
+                            return DecenasY('NOVENTA', unidad);
+                        case 0:
+                            return Unidades(unidad);
+                    }
+                }
+
+                function DecenasY(strSin, numUnidades) {
+                    if (numUnidades > 0) return strSin + ' Y ' + Unidades(numUnidades);
+                    return strSin;
+                }
+
+                function Centenas(num) {
+                    var centenas = Math.floor(num / 100);
+                    var decenas = num - (centenas * 100);
+                    switch (centenas) {
+                        case 1:
+                            if (decenas > 0) return 'CIENTO ' + Decenas(decenas);
+                            return 'CIEN';
+                        case 2:
+                            return 'DOSCIENTOS ' + Decenas(decenas);
+                        case 3:
+                            return 'TRESCIENTOS ' + Decenas(decenas);
+                        case 4:
+                            return 'CUATROCIENTOS ' + Decenas(decenas);
+                        case 5:
+                            return 'QUINIENTOS ' + Decenas(decenas);
+                        case 6:
+                            return 'SEISCIENTOS ' + Decenas(decenas);
+                        case 7:
+                            return 'SETECIENTOS ' + Decenas(decenas);
+                        case 8:
+                            return 'OCHOCIENTOS ' + Decenas(decenas);
+                        case 9:
+                            return 'NOVECIENTOS ' + Decenas(decenas);
+                    }
+                    return Decenas(decenas);
+                }
+
+                function Seccion(num, divisor, strSingular, strPlural) {
+                    var cientos = Math.floor(num / divisor);
+                    var resto = num - (cientos * divisor);
+                    var letras = '';
+                    if (cientos > 0) {
+                        if (cientos > 1) letras = Centenas(cientos) + ' ' + strPlural;
+                        else letras = strSingular;
+                    }
+                    return letras;
+                }
+
+                function Miles(num) {
+                    var divisor = 1000;
+                    var cientos = Math.floor(num / divisor);
+                    var resto = num - (cientos * divisor);
+                    var strMiles = Seccion(num, divisor, 'UN MIL', 'MIL');
+                    var strCentenas = Centenas(resto);
+                    if (strMiles == '') return strCentenas;
+                    return (strMiles + ' ' + strCentenas).trim();
+                }
+
+                function Millones(num) {
+                    var divisor = 1000000;
+                    var cientos = Math.floor(num / divisor);
+                    var resto = num - (cientos * divisor);
+                    var strMillones = Seccion(num, divisor, 'UN MILLON', 'MILLONES');
+                    var strMiles = Miles(resto);
+                    if (strMillones == '') return strMiles;
+                    return (strMillones + ' ' + strMiles).trim();
+                }
+
+                var strFinal = '';
+                if (enteros == 0) strFinal = 'CERO ';
+                else strFinal = Millones(enteros) + ' ';
+
+                var centavosStr = centavos.toString().padStart(2, '0');
+                return strFinal + 'PESOS ' + centavosStr + '/100 M.N.';
+            }
 
             function calcularTotal() {
                 let suma = 0;
@@ -406,7 +465,11 @@
                         }
                     }
                 });
-                totalInput.value = suma.toFixed(2);
+                totalInput.value = '$ ' + suma.toLocaleString('es-MX', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+                letraInput.value = numeroALetras(suma);
             }
 
             costInputs.forEach(function(input) {
@@ -416,7 +479,7 @@
                         e.preventDefault();
                         calcularTotal();
                         totalInput.style.transform = 'scale(1.05)';
-                        totalInput.style.backgroundColor = '#ffe0e9'; 
+                        totalInput.style.backgroundColor = '#ffe0e9';
                         setTimeout(function() {
                             totalInput.style.transform = 'scale(1)';
                             totalInput.style.backgroundColor = '#fff5f8';
@@ -437,5 +500,7 @@
             });
         });
     </script>
+    
 </body>
+
 </html>

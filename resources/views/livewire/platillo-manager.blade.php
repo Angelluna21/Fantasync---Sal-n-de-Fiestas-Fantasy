@@ -1,6 +1,6 @@
 <article class="manager-section">
     @if(session()->has('message')) 
-        <div class="status-bar" style="background:#e83e8c; color:white; padding:10px; margin-bottom:10px;">{{ session('message') }}</div> 
+        <aside class="status-bar" role="alert" style="background:#e83e8c; color:white; padding:10px; margin-bottom:10px;">{{ session('message') }}</aside> 
     @endif
     
     <section class="form-grid-2">
@@ -20,10 +20,10 @@
             <option value="">Buscar ingrediente...</option>
             @foreach($todosLosIngredientes as $ing) <option value="{{ $ing->id }}">{{ $ing->nombre }}</option> @endforeach
         </select>
-        <div class="ingredient-adder-qty">
+        <fieldset class="ingredient-adder-qty" style="border: none; padding: 0; margin: 0;">
             <input type="number" wire:model="cantidadTemporal" placeholder="0.00" class="form-control">
             <output class="unit-output">{{ $unidadSeleccionada }}</output>
-        </div>
+        </fieldset>
         <button wire:click="agregarIngrediente" class="btn-fantasy">Añadir</button>
     </section>
 

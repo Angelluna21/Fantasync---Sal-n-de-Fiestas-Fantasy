@@ -8,6 +8,6 @@ new class extends Component
 };
 ?>
 
-<div>
+<section>
     {{-- The biggest battle is the war against ignorance. - Mustafa Kemal Atatürk --}}
-</div>
+</section>

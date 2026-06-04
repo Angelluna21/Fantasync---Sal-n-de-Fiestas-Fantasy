@@ -8,6 +8,6 @@ new class extends Component
 };
 ?>
 
-<div>
+<section>
     {{-- Walk as if you are kissing the Earth with your feet. - Thich Nhat Hanh --}}
-</div>
+</section>

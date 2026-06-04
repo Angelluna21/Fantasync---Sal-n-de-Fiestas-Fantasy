@@ -32,10 +32,13 @@ Route::post('contratos/crear', [ContratoBuilderController::class, 'store'])->nam
 Route::get('contrato-demo', [ContratoPreviewController::class, 'show'])->name('contrato.demo');
 Route::get('reportes/insumos/{id}', [ReporteController::class, 'insumosEvento'])->name('reportes.insumos');
 Route::post('/contratos/guardar', [ContratoBuilderController::class, 'store'])->name('contratos.store');
+Route::get('eventos/{evento}/menu', [EventoController::class, 'menuConfig'])->name('eventos.menu');
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('logs/logins', [\App\Http\Controllers\LoginLogController::class, 'index'])->name('logs.logins');
 
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 

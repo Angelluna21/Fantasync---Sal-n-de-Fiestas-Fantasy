@@ -93,4 +93,9 @@ class EventoController extends Controller
 
         return response()->noContent();
     }
+
+    public function menuConfig(Evento $evento)
+    {
+        return view('contratos.menu-config', compact('evento'));
+    }
 }

@@ -161,6 +161,23 @@ class ContratoBuilderController extends Controller
             ]
         ]);
 
+        // 4.5 Asociar Platillos al EventoSalon (Comanda)
+        $eventoSalon = \App\Models\EventoSalon::where('evento_id', $evento->id)
+            ->where('salon_id', (int) $data['salon_id'])
+            ->first();
+
+        if ($eventoSalon && !empty($platilloIds)) {
+            $porciones = ((int) $data['num_adultos']) + ((int) $data['num_ninos']);
+            $syncPlatillos = [];
+            foreach ($platilloIds as $pId) {
+                $syncPlatillos[$pId] = [
+                    'porciones_plan' => $porciones,
+                    'orden' => 0
+                ];
+            }
+            $eventoSalon->platillos()->sync($syncPlatillos);
+        }
+
         // 5. Crear o actualizar Contrato
         $contract = Contrato::updateOrCreate(
             ['id' => session('contract_draft.contract_id')],
@@ -180,6 +197,7 @@ class ContratoBuilderController extends Controller
 
         session(['contract_draft' => $draft]);
 
-        return redirect()->route('contrato.demo')->with('status', 'Contrato guardado y listo para previsualizar.');
+        return redirect()->route('eventos.menu', ['evento' => $evento->id])
+                         ->with('status', 'Contrato guardado. Por favor, configura el menú.');
     }
 }

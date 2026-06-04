@@ -325,3 +325,191 @@ textarea.form-control {
         gap: 1rem;
     }
 }
+
+/* --- ESTILOS INCORPORADOS DESDE LA VISTA --- */
+/* Borra las flechas en Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Borra las flechas en Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* Estilos de la caja de cláusulas en pantalla */
+.clauses-box {
+    background: #f9f9f9;
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    height: 300px;
+    overflow-y: scroll;
+    font-size: 0.85rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+.clauses-box p {
+    margin-bottom: 0.8rem;
+    text-align: justify;
+}
+
+/* Botón de impresión */
+.btn-print {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #e0e0e0;
+    color: #333;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 3rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-print:hover {
+    background: #d0d0d0;
+    transform: translateY(-3px);
+}
+
+/* Modulo de impresion */
+@media print {
+    @page {
+        margin: 10mm;
+        size: letter portrait;
+    }
+
+    body {
+        background: white !important;
+        color: black !important;
+        font-size: 11px;
+    }
+
+    .contract-background,
+    .top-nav,
+    .form-actions,
+    .contract-header p,
+    .section-desc {
+        display: none !important;
+    }
+
+    .contract-layout {
+        padding: 0;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .contract-card {
+        box-shadow: none;
+        padding: 0;
+        border: none;
+        margin: 0;
+    }
+
+    .contract-title {
+        font-size: 14px;
+        text-align: center;
+        margin-bottom: 10px;
+        color: black;
+        font-weight: bold;
+    }
+
+    /* Quita bordes de los inputs para que parezca texto normal */
+    .form-control {
+        border: none;
+        border-bottom: 1px solid black;
+        border-radius: 0;
+        padding: 1px 2px;
+        height: auto;
+        background: transparent;
+        font-size: 10px;
+    }
+
+    select {
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .form-section {
+        border: none;
+        padding: 0;
+        margin-bottom: 5px;
+        page-break-inside: avoid;
+    }
+
+    .form-section legend {
+        background: transparent;
+        color: black;
+        padding: 0;
+        font-size: 12px;
+        box-shadow: none;
+        border-bottom: 1px solid black;
+        border-radius: 0;
+        width: 100%;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .input-wrapper {
+        margin-bottom: 2px;
+    }
+
+    label {
+        font-size: 10px;
+        margin-bottom: 1px;
+    }
+
+    .input-grid {
+        gap: 5px !important;
+        margin-top: 2px !important;
+    }
+
+    /* Las cláusulas en dos columnas para ahorrar espacio */
+    .clauses-box {
+        height: auto !important;
+        overflow: visible !important;
+        border: none;
+        padding: 0;
+        font-size: 8.5px;
+        line-height: 1.1;
+        column-count: 2;
+        column-gap: 15px;
+    }
+
+    .clauses-box p {
+        margin-bottom: 3px;
+    }
+
+    /* Firmas al final de la página impresa */
+    .signatures-print {
+        display: flex !important;
+        justify-content: space-around;
+        margin-top: 15px;
+        page-break-inside: avoid;
+    }
+
+    .signatures-print section {
+        text-align: center;
+        width: 40%;
+        font-size: 10px;
+    }
+
+    .signatures-print hr {
+        border: 1px solid black;
+        margin-bottom: 3px;
+    }
+}
+
+/* Ocultar sección de firmas en pantalla (solo se ve al imprimir) */
+@media screen {
+    .signatures-print {
+        display: none;
+    }
+}

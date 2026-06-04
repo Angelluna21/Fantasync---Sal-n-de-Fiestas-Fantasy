@@ -23,7 +23,7 @@ class ContratoMenuBuilder extends Component
     public function guardarMenu()
     {
         $reglas = [
-            'servicio_id' => 'required|exists:servicios_gastronomicos,id',
+            'servicio_id' => 'required|exists:servicio_gastronomicos,id',
         ];
 
         if ($this->servicio_id == 1) { // 1 = Taquiza
@@ -55,9 +55,21 @@ class ContratoMenuBuilder extends Component
             $totalPorciones = max(($adultos + ($ninos * $factorNino)), 1);
 
             $syncData = [];
+            
             foreach ($platillosSeleccionados as $index => $platilloId) {
+                // Lógica de Banquetería Estándar
+                if ($this->servicio_id == 1) {
+                    // TAQUIZA / BUFFET: La gente come aprox 1.5 veces una porción normal dividida en variedad.
+                    // Fórmula: (Total Invitados * 1.5) / Cantidad de Guisados
+                    $cantidadGuisados = count($platillosSeleccionados);
+                    $porcionesPorPlatillo = ($totalPorciones * 1.5) / max($cantidadGuisados, 1);
+                } else {
+                    // TIEMPOS: Cada invitado recibe 1 porción entera de la entrada y 1 del plato fuerte
+                    $porcionesPorPlatillo = $totalPorciones;
+                }
+
                 $syncData[$platilloId] = [
-                    'porciones_plan' => (int) ceil($totalPorciones),
+                    'porciones_plan' => (int) ceil($porcionesPorPlatillo),
                     'orden'          => $index + 1,
                     'notas'          => 'Registrado desde el configurador dinámico'
                 ];

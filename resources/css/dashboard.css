@@ -348,3 +348,191 @@ body {
 .btn-back-nav:hover svg {
     transform: translateX(-2px);
 }
+
+/* --- ESTILOS DE LOGS --- */
+.logs-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(122, 40, 138, 0.15);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+.logs-header {
+    padding: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.logs-header h2 {
+    color: var(--primary-purple);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    margin: 0;
+}
+.logs-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.logs-table th {
+    background: var(--light-bg);
+    color: var(--text-color);
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+}
+.logs-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+.logs-table tr:last-child td {
+    border-bottom: none;
+}
+.logs-table tr:hover {
+    background: rgba(255, 213, 79, 0.05);
+}
+.badge-user {
+    background: var(--accent-yellow);
+    color: var(--primary-purple);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-weight: 800;
+    font-size: 0.85rem;
+}
+.pagination-container {
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+}
+.btn-back-dashboard {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 800;
+    margin-left: 2rem;
+    transition: color 0.3s;
+}
+.btn-back-dashboard:hover {
+    color: var(--accent-yellow);
+}
+
+/* --- ESTILOS DE MENÚ DE USUARIO --- */
+.user-menu-container {
+    position: relative;
+    display: inline-block;
+}
+
+.user-menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.4rem 1rem 0.4rem 0.4rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.user-menu-btn:hover, .user-menu-btn[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.user-avatar {
+    width: 28px;
+    height: 28px;
+    background: var(--accent-yellow);
+    color: var(--primary-purple);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+}
+
+.dropdown-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.user-menu-btn[aria-expanded="true"] .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem !important;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    list-style: none;
+    padding: 0.5rem !important;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.user-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: none;
+    text-align: left;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+}
+
+.dropdown-item:hover {
+    background: rgba(122, 40, 138, 0.05);
+    color: var(--primary-purple);
+}
+
+.dropdown-item svg {
+    width: 18px;
+    height: 18px;
+}
+
+.dropdown-item.text-danger {
+    color: var(--accent-magenta);
+}
+
+.dropdown-item.text-danger:hover {
+    background: rgba(216, 27, 96, 0.05);
+}

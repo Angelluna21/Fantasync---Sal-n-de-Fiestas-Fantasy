@@ -16,13 +16,7 @@
                 <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
             </a>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="logout-btn">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    Cerrar sesión
-                </button>
-            </form>
+            <x-user-menu />
         </nav>
 
         <!-- Volver al Panel -->
@@ -78,16 +72,19 @@
                             <section class="events-section">
                                 <p class="events-label">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                    Eventos Asociados
+                                    Disponibilidad (Eventos Ocupados)
                                 </p>
                                 @if($salon->eventos->count() > 0)
-                                    <ul class="events-list">
+                                    <ul class="events-list" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
                                         @foreach($salon->eventos as $evento)
-                                            <li class="event-badge">{{ $evento->nombre }}</li>
+                                            <li class="event-badge" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.5rem; border-radius: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+                                                <strong>{{ $evento->titulo }}</strong>
+                                                <span>{{ $evento->fecha ? $evento->fecha->format('d/m/Y') : 'Sin fecha' }}</span>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 @else
-                                    <p class="no-events">Sin eventos asignados</p>
+                                    <p class="no-events" style="color: #10b981; font-weight: 500; margin-top: 0.5rem;">🟢 Salón Libre - Sin eventos</p>
                                 @endif
                             </section>
                         </section>

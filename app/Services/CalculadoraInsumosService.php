@@ -12,12 +12,13 @@ class CalculadoraInsumosService
      */
     public function calcularParaEvento(Evento $evento): array
     {
-        // El evento ya viene con las relaciones cargadas desde el controlador.
         $listaInsumos = [];
-        // $evento = Evento::with(['salones.platillos.ingredientes'])->findOrFail($eventoId); // Ya no es necesario
+        $eventoSalones = \App\Models\EventoSalon::where('evento_id', $evento->id)
+            ->with('platillos.ingredientes')
+            ->get();
 
-        foreach ($evento->salones as $salon) {
-            foreach ($salon->platillos as $platillo) {
+        foreach ($eventoSalones as $eventoSalon) {
+            foreach ($eventoSalon->platillos as $platillo) {
                 
                 $porcionesPlan = $platillo->pivot->porciones_plan;
                 $porcionesBase = $platillo->porciones_base ?: 1; 

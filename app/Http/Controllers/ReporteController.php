@@ -15,39 +15,73 @@ class ReporteController extends Controller
     }
 
     /**
+     * Formatea una cantidad para mostrarla amigablemente (ej. 1 kg 250 g)
+     */
+    private function formatearCantidad($cantidad, $unidad)
+    {
+        if (strtolower($unidad) === 'kg' && $cantidad > 0) {
+            $kilos = floor($cantidad);
+            $gramos = round(($cantidad - $kilos) * 1000);
+            
+            if ($kilos == 0) {
+                return "{$gramos} g";
+            } elseif ($gramos == 0) {
+                return "{$kilos} kg";
+            } else {
+                return "{$kilos} kg {$gramos} g";
+            }
+        }
+        
+        if ($cantidad == 0) {
+            return "0 {$unidad}";
+        }
+        
+        return $cantidad . ' ' . $unidad;
+    }
+
+    /**
      * Procesa y muestra el reporte de insumos para un evento específico.
      */
     public function insumosEvento($id)
     {
         // 1. Cargamos el evento con TODAS las relaciones necesarias para el cálculo y la vista.
         // Esto evita que el servicio tenga que hacer su propia consulta (N+1).
-        $evento = Evento::with(['salones.platillos.ingredientes'])->findOrFail($id);
+        $evento = Evento::with('salones')->findOrFail($id);
         
         // 2. Calculamos los insumos a través del servicio, pasándole el objeto ya cargado.
         $insumosCalculados = $this->calculadora->calcularParaEvento($evento);
 
         $reporteInsumos = [];
         foreach ($insumosCalculados as $nombre => $datos) {
-            // Nota: Aquí se mantiene la simulación, en el futuro conectarás con tu modelo Inventario
-            $stockActualSimulado = rand(0, 100); 
+            // Consultamos el stock real desde el modelo Ingrediente
+            $ingredienteModel = \App\Models\Ingrediente::where('nombre', $nombre)->first();
+            $stockActual = $ingredienteModel ? $ingredienteModel->stock : 0; 
+            
             $cantidadRequerida = $datos['cantidad'];
 
-            // 3. Lógica del semáforo de stock
-            if ($stockActualSimulado >= $cantidadRequerida) {
+            // 3. Lógica del semáforo de stock y cálculo de compras
+            if ($stockActual >= $cantidadRequerida) {
                 $estado = 'verde';
-            } elseif ($stockActualSimulado > 0 && $stockActualSimulado < $cantidadRequerida) {
+                $comprarRaw = 0;
+            } elseif ($stockActual > 0 && $stockActual < $cantidadRequerida) {
                 $estado = 'amarillo';
+                $comprarRaw = $cantidadRequerida - $stockActual;
             } else {
                 $estado = 'rojo';
+                $comprarRaw = $cantidadRequerida;
             }
 
             // 4. Construimos el array para la vista
             $reporteInsumos[] = [
-                'nombre'    => $nombre,
-                'unidad'    => $datos['unidad'],
-                'requerido' => $cantidadRequerida,
-                'stock'     => $stockActualSimulado,
-                'estado'    => $estado
+                'nombre'           => $nombre,
+                'unidad'           => $datos['unidad'],
+                'requerido'        => $cantidadRequerida,
+                'requerido_format' => $this->formatearCantidad($cantidadRequerida, $datos['unidad']),
+                'stock'            => $stockActual,
+                'stock_format'     => $this->formatearCantidad($stockActual, $datos['unidad']),
+                'comprar_raw'      => $comprarRaw,
+                'comprar_format'   => $this->formatearCantidad($comprarRaw, $datos['unidad']),
+                'estado'           => $estado
             ];
         }
 

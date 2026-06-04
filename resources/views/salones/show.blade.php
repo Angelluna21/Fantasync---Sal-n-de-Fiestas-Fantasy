@@ -19,15 +19,7 @@
                 <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
             </a>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="logout-btn">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                    </svg>
-                    Cerrar sesión
-                </button>
-            </form>
+            <x-user-menu />
         </nav>
 
         <!-- Contenedor -->
@@ -40,20 +32,20 @@
             </a>
 
             @if(session('success'))
-            <div style="background-color: rgba(76, 175, 80, 0.15); color: #2e7d32; padding: 1rem 1.5rem; border-radius: 1rem; border: 1px solid rgba(76, 175, 80, 0.3); margin-bottom: 1.5rem; font-weight: 700;">
+            <aside role="alert" style="background-color: rgba(76, 175, 80, 0.15); color: #2e7d32; padding: 1rem 1.5rem; border-radius: 1rem; border: 1px solid rgba(76, 175, 80, 0.3); margin-bottom: 1.5rem; font-weight: 700;">
                 {{ session('success') }}
-            </div>
+            </aside>
             @endif
 
             <!-- Tarjeta -->
             <article class="detail-card">
                 <header class="detail-header">
-                    <div>
+                    <hgroup>
                         <h1 class="detail-title">{{ $salon->nombre }}</h1>
                         @if($salon->alias)
                         <span class="salon-alias">{{ $salon->alias }}</span>
                         @endif
-                    </div>
+                    </hgroup>
                     <span class="salon-badge">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
@@ -88,7 +80,7 @@
                             Calendario de Eventos
                         </h2>
                         
-                        <div class="calendar-wrapper">
+                        <figure class="calendar-wrapper">
                             <header class="calendar-header">
                                 <button type="button" class="btn-calendar-nav" id="prev-month" aria-label="Mes anterior">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
@@ -115,7 +107,7 @@
                                     <!-- Se generará dinámicamente -->
                                 </tbody>
                             </table>
-                        </div>
+                        </figure>
 
                         <!-- Ficha de Detalles del Evento -->
                         <article id="event-detail-card" class="event-detail-card" style="display: none;">
@@ -312,12 +304,12 @@
 
                 eventDetailCard.innerHTML = `
                     <header class="event-detail-header">
-                        <div>
+                        <hgroup>
                             <h4 class="event-detail-title">${event.titulo || 'Sin título'}</h4>
                             <p style="margin: 0.25rem 0 0 0; font-size: 0.9rem; color: var(--text-muted); font-weight: 700;">
                                 Celebración: ${event.tipo_evento || 'Otro'}
                             </p>
-                        </div>
+                        </hgroup>
                         <span class="event-detail-badge ${event.estado}">${stateLabel}</span>
                     </header>
                     
