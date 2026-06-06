@@ -46,7 +46,7 @@ class ReporteController extends Controller
     {
         // 1. Cargamos el evento con TODAS las relaciones necesarias para el cálculo y la vista.
         // Esto evita que el servicio tenga que hacer su propia consulta (N+1).
-        $evento = Evento::with('salones')->findOrFail($id);
+        $evento = Evento::with(['salones', 'eventoSalones.platillos', 'eventoSalones.salon'])->findOrFail($id);
         
         // 2. Calculamos los insumos a través del servicio, pasándole el objeto ya cargado.
         $insumosCalculados = $this->calculadora->calcularParaEvento($evento);

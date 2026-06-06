@@ -18,11 +18,16 @@
             <x-user-menu />
         </nav>
 
-        <!-- Volver al Panel -->
-        <nav style="max-width: 1200px; margin: 0 auto; width: 100%;">
-            <a href="{{ route('dashboard') }}" class="btn-back-nav" style="background: rgba(255, 255, 255, 0.15); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.25); backdrop-filter: blur(4px); padding: 0.5rem 1.15rem; font-size: 0.9rem; margin-bottom: 0.5rem; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 2rem;" onmouseover="this.style.background='var(--accent-yellow)'; this.style.color='var(--primary-purple)'; this.style.borderColor='var(--accent-yellow)';" onmouseout="this.style.background='rgba(255, 255, 255, 0.15)'; this.style.color='#ffffff'; this.style.borderColor='rgba(255, 255, 255, 0.25)';">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px; transition: transform 0.3s;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Volver al Panel
+        <!-- Navegación de regreso -->
+        <nav style="max-width: 1200px; margin: 0 auto; width: 100%; display: flex; gap: 1rem; margin-bottom: 0.5rem;">
+            <a href="javascript:history.back()" class="btn-back-nav" style="background: rgba(255, 255, 255, 0.15); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.25); backdrop-filter: blur(4px); padding: 0.5rem 1.15rem; font-size: 0.9rem; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 2rem;" onmouseover="this.style.background='var(--accent-magenta)'; this.style.color='#ffffff'; this.style.borderColor='var(--accent-magenta)';" onmouseout="this.style.background='rgba(255, 255, 255, 0.15)'; this.style.color='#ffffff'; this.style.borderColor='rgba(255, 255, 255, 0.25)';">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                Regresar a la Vista Anterior
+            </a>
+            
+            <a href="{{ route('dashboard') }}" class="btn-back-nav" style="background: rgba(255, 255, 255, 0.15); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.25); backdrop-filter: blur(4px); padding: 0.5rem 1.15rem; font-size: 0.9rem; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 2rem;" onmouseover="this.style.background='var(--accent-yellow)'; this.style.color='var(--primary-purple)'; this.style.borderColor='var(--accent-yellow)';" onmouseout="this.style.background='rgba(255, 255, 255, 0.15)'; this.style.color='#ffffff'; this.style.borderColor='rgba(255, 255, 255, 0.25)';">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                Ir al Dashboard
             </a>
         </nav>
 
@@ -41,14 +46,34 @@
                 
                 <header class="card-header" style="margin-bottom: 1.5rem;">
                     <h2 class="card-title">Salones Reservados:</h2>
-                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <p style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0;">
                         @foreach($evento->salones as $salon)
                             <span class="location-badge" style="background: var(--accent-magenta); color: white; padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.9rem;">
                                 {{ $salon->nombre }}
                             </span>
                         @endforeach
-                    </div>
+                    </p>
                 </header>
+
+                <div style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(144, 98, 203, 0.05); border-radius: 12px; border: 1px solid rgba(144, 98, 203, 0.2);">
+                    <h3 style="font-size: 1.1rem; color: var(--primary-purple); margin-bottom: 0.8rem;">🍽️ Platillos a Preparar:</h3>
+                    <ul style="list-style-type: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0;">
+                        @php $tienePlatillos = false; @endphp
+                        @foreach($evento->eventoSalones as $eventoSalon)
+                            @foreach($eventoSalon->platillos as $platillo)
+                                @php $tienePlatillos = true; @endphp
+                                <li style="background: white; border: 1px solid var(--accent-magenta); color: var(--primary-purple); padding: 0.4rem 1rem; border-radius: 2rem; font-size: 0.9rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                                    <strong>{{ $platillo->nombre }}</strong>
+                                    <span style="color: #666; font-size: 0.8rem;">({{ $platillo->pivot->porciones_plan }} porciones en {{ $eventoSalon->salon->nombre ?? 'Salón' }})</span>
+                                </li>
+                            @endforeach
+                        @endforeach
+                        
+                        @if(!$tienePlatillos)
+                            <li style="color: #888; font-style: italic; font-size: 0.95rem;">No hay platillos asignados a este evento aún.</li>
+                        @endif
+                    </ul>
+                </div>
 
                 <table class="tabla-reporte">
                     <thead>
