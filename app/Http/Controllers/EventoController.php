@@ -22,13 +22,13 @@ class EventoController extends Controller
         foreach ($eventos as $ev) {
             if ($ev->estado === 'confirmado') {
                 $confirmados++;
+                // Sumar ingresos solo de eventos confirmados
+                if ($ev->contrato) {
+                    $montoTotal += (float) $ev->contrato->monto_total;
+                    $saldoPendiente += (float) $ev->contrato->saldo_pendiente;
+                }
             } elseif ($ev->estado === 'cotizacion') {
                 $cotizaciones++;
-            }
-
-            if ($ev->contrato) {
-                $montoTotal += (float) $ev->contrato->monto_total;
-                $saldoPendiente += (float) $ev->contrato->saldo_pendiente;
             }
         }
 

@@ -55,6 +55,15 @@
                     </article>
 
                     <article class="detail-block">
+                        <span class="detail-label">Categoría de Almacén</span>
+                        <p style="margin: 0; padding: 0;">
+                            <span style="font-size: 0.95rem; background: rgba(122, 40, 138, 0.1); color: var(--primary-purple); padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 800; border: 1px solid rgba(122, 40, 138, 0.2); display: inline-block;">
+                                {{ $ingrediente->categoria ?? 'Abarrotes' }}
+                            </span>
+                        </p>
+                    </article>
+
+                    <article class="detail-block">
                         <span class="detail-label">Fecha de Alta en Sistema</span>
                         <span class="detail-text">{{ $ingrediente->created_at->format('d/m/Y \a \l\a\s H:i') }} hrs</span>
                     </article>

@@ -35,9 +35,7 @@ Route::get('reportes/comanda/{contrato}', [\App\Http\Controllers\ComandaControll
 Route::post('/contratos/guardar', [ContratoBuilderController::class, 'store'])->name('contratos.store');
 Route::get('eventos/{evento}/menu', [EventoController::class, 'menuConfig'])->name('eventos.menu');
 Route::middleware('auth')->group(function () {
-    Route::get('dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('logs/logins', [\App\Http\Controllers\LoginLogController::class, 'index'])->name('logs.logins');
 

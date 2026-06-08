@@ -47,7 +47,7 @@ body.contract-page {
     margin: 0 auto;
 }
 
-/* --- NAVEGACIÓN Y LOGO --- */
+/* --- Navegación - */
 .top-nav {
     display: flex;
     justify-content: space-between;
@@ -127,7 +127,7 @@ body.contract-page {
     margin: 0;
 }
 
-/* --- TARJETA DEL FORMULARIO --- */
+/* --- Formulario --- */
 .contract-card {
     background: var(--card-bg);
     border-radius: 1.5rem;
@@ -141,7 +141,7 @@ body.contract-page {
     gap: 3rem;
 }
 
-/* --- SECCIONES (FIELDSETS) --- */
+/* --- Fieldsets --- */
 .form-section {
     border: 2px solid var(--border-color);
     border-radius: 1rem;
@@ -166,7 +166,7 @@ body.contract-page {
     font-size: 0.95rem;
 }
 
-/* --- CUADRÍCULA DE CAMPOS --- */
+/* --- Grid de campos --- */
 .input-grid {
     display: grid;
     gap: 1.5rem;
@@ -201,7 +201,7 @@ body.contract-page {
     font-size: 1.1rem !important;
 }
 
-/* --- ESTILOS DE INPUTS --- */
+/* --- Input --- */
 .form-control {
     width: 100%;
     box-sizing: border-box;
@@ -266,7 +266,7 @@ textarea.form-control {
     accent-color: var(--primary-purple);
 }
 
-/* --- BOTÓN DE ENVIAR --- */
+/* --- Boton de enviar --- */
 .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -301,7 +301,7 @@ textarea.form-control {
     height: 24px;
 }
 
-/* --- RESPONSIVO PARA MÓVILES --- */
+/* --- Responsive --- */
 @media (max-width: 768px) {
     .contract-card {
         padding: 1.5rem;
@@ -326,7 +326,7 @@ textarea.form-control {
     }
 }
 
-/* --- ESTILOS INCORPORADOS DESDE LA VISTA --- */
+/* --- Estilo de navegador  --- */
 /* Borra las flechas en Chrome, Safari, Edge, Opera */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {

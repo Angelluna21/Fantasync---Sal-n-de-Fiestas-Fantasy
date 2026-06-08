@@ -1,4 +1,4 @@
-/* Estilos de la página de Login - Tema FantaSync */
+/* Estilos de la página de Login - FantaSync */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap');
 
 :root {
@@ -73,7 +73,6 @@
     z-index: 10;
     transition: transform 0.3s ease, border-color 0.3s ease;
     margin-top: 60px;
-    /* Le damos espacio extra arriba para el logo que sobresale */
 }
 
 .auth-card:hover {
@@ -85,7 +84,7 @@
     display: grid;
     gap: 2rem;
     padding: 0 2.5rem 3rem 2.5rem;
-    /* Quitamos el padding de arriba para controlar el logo */
+
 }
 
 .auth-header {
@@ -94,16 +93,13 @@
     gap: 1.5rem;
 }
 
-/* --- ESTILO DEL LOGO QUE SOBRESALE --- */
+/* --- Estilos logo --- */
 .auth-logo {
     height: 170px;
-    /* Logo más grande */
     width: auto;
     margin: -70px auto 0 auto;
-    /* El -70px lo empuja hacia afuera de la tarjeta */
     display: block;
     position: relative;
-    /* Usamos drop-shadow para sombrear solo el dibujo del castillo/nubes */
     filter: drop-shadow(0 12px 16px rgba(122, 40, 138, 0.35));
     animation: flotarLogo 4s ease-in-out infinite;
 }
@@ -115,7 +111,7 @@
 
     50% {
         transform: translateY(-15px);
-        /* Sube 15 píxeles */
+
     }
 
     100% {
@@ -125,10 +121,9 @@
 
 .auth-logo:hover {
     transform: scale(1.05) rotate(-3deg);
-    /* Pequeño movimiento mágico al pasar el mouse */
+
 }
 
-/* ------------------------------------- */
 
 .auth-card__brand {
     display: grid;
@@ -202,9 +197,12 @@
 }
 
 .form-actions {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
     margin-top: 0.5rem;
+    width: 100%;
 }
 
 .divider {
@@ -213,6 +211,7 @@
     font-weight: 600;
     font-size: 0.9rem;
     position: relative;
+    width: 100%;
 }
 
 .divider::before,
@@ -234,9 +233,10 @@
 }
 
 .button-submit {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     min-height: 3.25rem;
     padding: 0 1.5rem;
     border-radius: 2rem;
@@ -258,9 +258,10 @@
 }
 
 .button-google {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     gap: 0.75rem;
     min-height: 3.25rem;
     padding: 0 1.5rem;

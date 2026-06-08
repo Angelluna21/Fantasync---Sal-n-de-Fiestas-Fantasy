@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['sucursal_id', 'nombre', 'alias'])]
+#[Fillable(['sucursal_id', 'nombre', 'alias', 'capacidad', 'direccion', 'estado', 'descripcion'])]
 class Salon extends Model
 {
     use HasFactory;

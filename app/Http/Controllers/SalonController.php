@@ -22,14 +22,28 @@ class SalonController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'sucursal_id' => 'required|integer|exists:sucursales,id',
+            'sucursal_id' => 'sometimes|integer|exists:sucursales,id',
             'nombre' => 'required|string|max:80',
             'alias' => 'nullable|string|max:20',
+            'capacidad' => 'nullable|integer|min:0',
+            'direccion' => 'nullable|string|max:255',
+            'estado' => 'sometimes|string|max:30',
+            'descripcion' => 'nullable|string',
             'evento_ids' => 'sometimes|array',
             'evento_ids.*' => 'integer|exists:eventos,id',
         ]);
 
-        $salon = Salon::create($request->only(['sucursal_id', 'nombre', 'alias']));
+        $sucursalId = $request->input('sucursal_id') ?: (\App\Models\Sucursal::first()->id ?? 1);
+
+        $salon = Salon::create([
+            'sucursal_id' => $sucursalId,
+            'nombre' => $request->input('nombre'),
+            'alias' => $request->input('alias'),
+            'capacidad' => $request->input('capacidad'),
+            'direccion' => $request->input('direccion'),
+            'estado' => $request->input('estado') ?: 'activo',
+            'descripcion' => $request->input('descripcion'),
+        ]);
 
         if (isset($data['evento_ids'])) {
             $salon->eventos()->sync($data['evento_ids']);
@@ -56,11 +70,25 @@ class SalonController extends Controller
             'sucursal_id' => 'sometimes|integer|exists:sucursales,id',
             'nombre' => 'sometimes|string|max:80',
             'alias' => 'nullable|string|max:20',
+            'capacidad' => 'nullable|integer|min:0',
+            'direccion' => 'nullable|string|max:255',
+            'estado' => 'sometimes|string|max:30',
+            'descripcion' => 'nullable|string',
             'evento_ids' => 'sometimes|array',
             'evento_ids.*' => 'integer|exists:eventos,id',
         ]);
 
-        $salon->update($request->only(['sucursal_id', 'nombre', 'alias']));
+        $sucursalId = $request->input('sucursal_id') ?: $salon->sucursal_id ?: (\App\Models\Sucursal::first()->id ?? 1);
+
+        $salon->update([
+            'sucursal_id' => $sucursalId,
+            'nombre' => $request->input('nombre') ?: $salon->nombre,
+            'alias' => $request->input('alias'),
+            'capacidad' => $request->input('capacidad'),
+            'direccion' => $request->input('direccion'),
+            'estado' => $request->input('estado') ?: $salon->estado ?: 'activo',
+            'descripcion' => $request->input('descripcion'),
+        ]);
 
         if (array_key_exists('evento_ids', $data)) {
             $salon->eventos()->sync($data['evento_ids'] ?? []);

@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use Livewire\Component; 
+use Livewire\Component;
 use App\Models\ServicioGastronomico;
 use App\Models\CategoriaPlatillo;
 use App\Models\Evento;
@@ -37,7 +37,7 @@ class ContratoMenuBuilder extends Component
 
         // Intentamos buscar el evento en la base de datos
         $evento = Evento::with('salones')->find($this->eventoId);
-        
+
         $platillosSeleccionados = [];
         if ($this->servicio_id == 1) {
             $platillosSeleccionados = $this->guisados;
@@ -51,18 +51,18 @@ class ContratoMenuBuilder extends Component
             $adultos = $eventoSalonPivot->adultos;
             $ninos = $eventoSalonPivot->ninos;
             $factorNino = $eventoSalonPivot->factor_nino ?: 0.70;
-            
+
             $totalPorciones = max(($adultos + ($ninos * $factorNino)), 1);
 
             $syncData = [];
-            
+
             foreach ($platillosSeleccionados as $index => $platilloId) {
                 // Lógica de Banquetería Estándar
                 if ($this->servicio_id == 1) {
-                    // TAQUIZA / BUFFET: La gente come aprox 1.5 veces una porción normal dividida en variedad.
-                    // Fórmula: (Total Invitados * 1.5) / Cantidad de Guisados
+                    // TAQUIZA / BUFFET: La gente come aprox 2 veces una porción normal dividida en la variedad.
+                    // Fórmula: (Total Invitados * 2) / Cantidad de Guisados
                     $cantidadGuisados = count($platillosSeleccionados);
-                    $porcionesPorPlatillo = ($totalPorciones * 1.5) / max($cantidadGuisados, 1);
+                    $porcionesPorPlatillo = ($totalPorciones * 2) / max($cantidadGuisados, 1);
                 } else {
                     // TIEMPOS: Cada invitado recibe 1 porción entera de la entrada y 1 del plato fuerte
                     $porcionesPorPlatillo = $totalPorciones;
@@ -79,17 +79,16 @@ class ContratoMenuBuilder extends Component
         }
 
         return redirect()->route('reportes.insumos', $this->eventoId)
-                         ->with('exito', 'Comanda guardada correctamente.');
+            ->with('exito', 'Comanda guardada correctamente.');
     }
 
     public function render()
     {
         return view('livewire.contrato-menu-builder', [
             'servicios' => ServicioGastronomico::all(),
-            'categorias' => CategoriaPlatillo::with(['platillos' => function($query) {
+            'categorias' => CategoriaPlatillo::with(['platillos' => function ($query) {
                 $query->orderBy('nombre');
             }])->orderBy('orden')->get()
         ]);
     }
 }
-

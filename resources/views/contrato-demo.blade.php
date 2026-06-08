@@ -179,7 +179,10 @@
                         @endforeach
                     </tbody>
                 </table>
-            @e        <!-- Resumen Financiero -->
+            @endif
+        </section>
+
+        <!-- Resumen Financiero -->
         <section class="flex justify-end mb-8">
             <aside class="w-full md:w-1/2">
                 <h3 class="text-xl font-bold border-b-2 border-slate-200 pb-2 mb-4 text-slate-800">Resumen Financiero</h3>

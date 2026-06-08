@@ -77,7 +77,12 @@
                 @forelse($ingredientes as $ingrediente)
                     <article class="ingrediente-card" data-nombre="{{ $ingrediente->nombre }}">
                         <header class="card-header">
-                            <h3 class="card-title">{{ $ingrediente->nombre }}</h3>
+                            <div>
+                                <h3 class="card-title" style="margin: 0;">{{ $ingrediente->nombre }}</h3>
+                                <span style="font-size: 0.75rem; background: rgba(122, 40, 138, 0.1); color: var(--primary-purple); padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 800; display: inline-block; margin-top: 0.35rem; border: 1px solid rgba(122, 40, 138, 0.2);">
+                                    {{ $ingrediente->categoria ?? 'Abarrotes' }}
+                                </span>
+                            </div>
                             <span class="unit-badge {{ $ingrediente->unidad }}">
                                 {{ $ingrediente->unidad }}
                             </span>
@@ -140,6 +145,7 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
+                            <th>Categoría</th>
                             <th>Unidad</th>
                             <th>Platillos Asociados</th>
                             <th style="text-align: center;">Acciones</th>
@@ -149,6 +155,11 @@
                         @forelse($ingredientes as $ingrediente)
                             <tr class="table-row-item" data-nombre="{{ $ingrediente->nombre }}">
                                 <td class="col-name">{{ $ingrediente->nombre }}</td>
+                                <td>
+                                    <span style="font-size: 0.85rem; background: rgba(122, 40, 138, 0.08); color: var(--primary-purple); padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 800; border: 1px solid rgba(122, 40, 138, 0.15);">
+                                        {{ $ingrediente->categoria ?? 'Abarrotes' }}
+                                    </span>
+                                </td>
                                 <td>
                                     <span class="unit-badge {{ $ingrediente->unidad }}">
                                         {{ $ingrediente->unidad }}

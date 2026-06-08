@@ -20,9 +20,9 @@
         </nav>
 
         <!-- Volver al Panel -->
-        <nav style="max-width: 1200px; margin: 0 auto; width: 100%;">
-            <a href="{{ route('dashboard') }}" class="btn-back-nav" style="background: rgba(255, 255, 255, 0.15); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.25); backdrop-filter: blur(4px); padding: 0.5rem 1.15rem; font-size: 0.9rem; margin-bottom: 0.5rem; transition: all 0.3s;" onmouseover="this.style.background='var(--accent-yellow)'; this.style.color='var(--primary-purple)'; this.style.borderColor='var(--accent-yellow)';" onmouseout="this.style.background='rgba(255, 255, 255, 0.15)'; this.style.color='#ffffff'; this.style.borderColor='rgba(255, 255, 255, 0.25)';">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px; transition: transform 0.3s;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        <nav style="max-width: 1200px; margin: 0 auto; width: 100%; margin-bottom: 0.5rem;">
+            <a href="{{ route('dashboard') }}" class="btn-back-nav">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                 Volver al Panel
             </a>
         </nav>
@@ -62,12 +62,27 @@
                         </header>
 
                         <section class="card-body">
-                            @if($salon->sucursal)
-                                <section class="salon-info">
-                                    <p class="info-label">Ubicación</p>
-                                    <p class="info-value">{{ $salon->sucursal->nombre }}</p>
-                                </section>
-                            @endif
+                            <section class="salon-info" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(122, 40, 138, 0.1);">
+                                <div>
+                                    <p class="info-label">Capacidad</p>
+                                    <p class="info-value" style="color: var(--primary-purple); font-weight: 800;">
+                                        {{ $salon->capacidad ? "👥 {$salon->capacidad} px" : 'No definida' }}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="info-label">Estado</p>
+                                    <span class="status-badge status-{{ $salon->estado === 'activo' ? 'verde' : ($salon->estado === 'mantenimiento' ? 'amarillo' : 'rojo') }}" style="padding: 0.25rem 0.65rem; font-size: 0.75rem; display: inline-block;">
+                                        {{ $salon->estado === 'activo' ? 'Activo' : ($salon->estado === 'mantenimiento' ? 'Mantenimiento' : 'Inactivo') }}
+                                    </span>
+                                </div>
+                            </section>
+
+                            <section class="salon-info" style="margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid rgba(122, 40, 138, 0.1);">
+                                <p class="info-label">Dirección</p>
+                                <p class="info-value" style="font-size: 0.85rem; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                                    {{ $salon->direccion ?: ($salon->sucursal->nombre ?? 'Sin dirección') }}
+                                </p>
+                            </section>
 
                             <section class="events-section">
                                 <p class="events-label">

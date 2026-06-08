@@ -293,7 +293,12 @@
                         Imprimir Contrato
                     </button>
                     <!-- Botón de Guardar -->
-                    <button type="submit" class="btn primary">Continuar al Paso 2: Configurar Menú</button>
+                    <button type="submit" class="btn-submit">
+                        Continuar al Paso 2: Configurar Menú
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </button>
                 </footer>
             </form>
         </section>

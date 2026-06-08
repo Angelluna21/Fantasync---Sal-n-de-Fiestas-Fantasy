@@ -39,28 +39,8 @@
                     @csrf
                     @method('PUT')
 
-                    <!-- Sucursal -->
-                    <fieldset class="form-group">
-                        <label for="sucursal_id" class="form-label">Sucursal</label>
-                        <select 
-                            name="sucursal_id" 
-                            id="sucursal_id"
-                            class="form-input @error('sucursal_id') form-input-error @enderror"
-                            required
-                        >
-                            <option value="">Seleccionar sucursal...</option>
-                            @forelse($sucursales as $sucursal)
-                                <option value="{{ $sucursal->id }}" @selected(old('sucursal_id', $salon->sucursal_id) == $sucursal->id)>
-                                    {{ $sucursal->nombre }}
-                                </option>
-                            @empty
-                                <option value="" disabled>No hay sucursales disponibles</option>
-                            @endforelse
-                        </select>
-                        @error('sucursal_id')
-                            <span class="form-error">{{ $message }}</span>
-                        @enderror
-                    </fieldset>
+                    <!-- Sucursal Autoseleccionada (Vicente Villada por defecto) -->
+                    <input type="hidden" name="sucursal_id" value="{{ $salon->sucursal_id ?? $sucursales->first()->id ?? 1 }}">
 
                     <!-- Nombre -->
                     <fieldset class="form-group">
@@ -70,7 +50,7 @@
                             name="nombre" 
                             id="nombre" 
                             class="form-input @error('nombre') form-input-error @enderror"
-                            placeholder="Ej: Salón Principal"
+                            placeholder="Ej: Salón Real"
                             value="{{ old('nombre', $salon->nombre) }}"
                             required
                         >
@@ -79,19 +59,86 @@
                         @enderror
                     </fieldset>
 
-                    <!-- Alias -->
+                    <!-- Alias / Sobrenombre -->
                     <fieldset class="form-group">
-                        <label for="alias" class="form-label">Alias (Código Corto)</label>
+                        <label for="alias" class="form-label">Sobrenombre / Alias</label>
                         <input 
                             type="text" 
                             name="alias" 
                             id="alias"
                             class="form-input @error('alias') form-input-error @enderror"
-                            placeholder="Ej: SP-01"
+                            placeholder="Ej: Jardín Secreto, Terraza Cristal"
                             value="{{ old('alias', $salon->alias) }}"
                         >
-                        <p class="form-hint">Opcional: Una abreviatura para referencia rápida</p>
+                        <p class="form-hint">Un nombre corto o alternativo para identificar el espacio.</p>
                         @error('alias')
+                            <span class="form-error">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+
+                    <!-- Capacidad -->
+                    <fieldset class="form-group">
+                        <label for="capacidad" class="form-label">Capacidad Máxima (personas)</label>
+                        <input 
+                            type="number" 
+                            name="capacidad" 
+                            id="capacidad"
+                            class="form-input @error('capacidad') form-input-error @enderror"
+                            placeholder="Ej: 250"
+                            min="0"
+                            value="{{ old('capacidad', $salon->capacidad) }}"
+                        >
+                        @error('capacidad')
+                            <span class="form-error">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+
+                    <!-- Dirección -->
+                    <fieldset class="form-group">
+                        <label for="direccion" class="form-label">Dirección Física del Salón</label>
+                        <input 
+                            type="text" 
+                            name="direccion" 
+                            id="direccion"
+                            class="form-input @error('direccion') form-input-error @enderror"
+                            placeholder="Ej: Av. Juárez 105, Centro Histórico"
+                            value="{{ old('direccion', $salon->direccion) }}"
+                        >
+                        <p class="form-hint">Se utilizará para mostrar la ubicación interactiva en Google Maps.</p>
+                        @error('direccion')
+                            <span class="form-error">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+
+                    <!-- Estado -->
+                    <fieldset class="form-group">
+                        <label for="estado" class="form-label">Estado del Salón</label>
+                        <select 
+                            name="estado" 
+                            id="estado"
+                            class="form-input @error('estado') form-input-error @enderror"
+                            required
+                        >
+                            <option value="activo" {{ old('estado', $salon->estado) === 'activo' ? 'selected' : '' }}>🟢 Activo / Disponible</option>
+                            <option value="mantenimiento" {{ old('estado', $salon->estado) === 'mantenimiento' ? 'selected' : '' }}>🟡 En Mantenimiento</option>
+                            <option value="inactivo" {{ old('estado', $salon->estado) === 'inactivo' ? 'selected' : '' }}>🔴 Inactivo / Cerrado</option>
+                        </select>
+                        @error('estado')
+                            <span class="form-error">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+
+                    <!-- Descripción -->
+                    <fieldset class="form-group">
+                        <label for="descripcion" class="form-label">Descripción y Amenidades</label>
+                        <textarea 
+                            name="descripcion" 
+                            id="descripcion"
+                            class="form-input form-textarea @error('descripcion') form-input-error @enderror"
+                            placeholder="Ej: Cuenta con pista de baile, área de jardín para ceremonias, camerino para festejados y de estacionamiento privado."
+                            rows="4"
+                        >{{ old('descripcion', $salon->descripcion) }}</textarea>
+                        @error('descripcion')
                             <span class="form-error">{{ $message }}</span>
                         @enderror
                     </fieldset>

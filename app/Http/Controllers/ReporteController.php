@@ -56,6 +56,7 @@ class ReporteController extends Controller
             // Consultamos el stock real desde el modelo Ingrediente
             $ingredienteModel = \App\Models\Ingrediente::where('nombre', $nombre)->first();
             $stockActual = $ingredienteModel ? $ingredienteModel->stock : 0; 
+            $categoria = $ingredienteModel && $ingredienteModel->categoria ? $ingredienteModel->categoria : 'Otros';
             
             $cantidadRequerida = $datos['cantidad'];
 
@@ -75,6 +76,7 @@ class ReporteController extends Controller
             $reporteInsumos[] = [
                 'nombre'           => $nombre,
                 'unidad'           => $datos['unidad'],
+                'categoria'        => $categoria,
                 'requerido'        => $cantidadRequerida,
                 'requerido_format' => $this->formatearCantidad($cantidadRequerida, $datos['unidad']),
                 'stock'            => $stockActual,

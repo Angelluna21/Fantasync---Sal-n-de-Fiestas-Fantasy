@@ -1,86 +1,542 @@
-/* Estilos modulares para la tabla de insumos y semaforización */
-.reporte-container {
+/* --- Estilos Modulares para el Reporte de Insumos y Categorización --- */
+
+/* Navegación y Botones Superiores */
+.navigation-buttons {
     max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-back-nav-glass {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    padding: 0.65rem 1.35rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.btn-back-nav-glass:hover {
+    background: var(--accent-magenta);
+    color: #ffffff;
+    border-color: var(--accent-magenta);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(216, 27, 96, 0.4);
+}
+
+.btn-back-nav-glass.btn-dashboard:hover {
+    background: var(--accent-yellow);
+    color: var(--primary-purple);
+    border-color: var(--accent-yellow);
+    box-shadow: var(--shadow-yellow);
+}
+
+.nav-icon {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+
+.btn-back-nav-glass:hover .nav-icon {
+    transform: translateX(-3px);
+}
+
+/* Tarjetas Principales del Reporte */
+.reportes-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.main-report-card, .shopping-list-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s ease;
+}
+
+.main-report-card:hover, .shopping-list-card:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+/* Encabezados de Tarjetas */
+.card-header-report, .card-header-shopping {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(122, 40, 138, 0.1);
+    padding-bottom: 1.25rem;
+}
+
+.card-title {
+    font-size: 1.6rem;
+    color: var(--primary-purple);
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+}
+
+.salones-badges-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.location-badge {
+    background: linear-gradient(135deg, var(--accent-magenta), #b0134e);
+    color: white;
+    padding: 0.35rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    font-weight: 800;
+    box-shadow: 0 4px 10px rgba(216, 27, 96, 0.2);
+    letter-spacing: 0.02em;
+}
+
+/* Ficha de Platillos a Preparar */
+.platillos-preparar-card {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(122, 40, 138, 0.04), rgba(216, 27, 96, 0.02));
+    border-radius: 18px;
+    border: 1px solid rgba(122, 40, 138, 0.15);
+}
+
+.platillos-title {
+    font-size: 1.15rem;
+    color: var(--primary-purple);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 800;
+}
+
+.platillos-list-badges {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0;
+}
+
+.platillo-chip {
+    background: #ffffff;
+    border: 1px solid rgba(122, 40, 138, 0.2);
+    color: var(--text-main);
+    padding: 0.5rem 1.25rem;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
+}
+
+.platillo-chip:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent-magenta);
+    box-shadow: 0 4px 12px rgba(122, 40, 138, 0.1);
+}
+
+.platillo-details {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.no-platillos-item {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.95rem;
+}
+
+/* Agrupamiento de Categorías de Insumos */
+.insumos-categories-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.category-group-card {
+    background: #ffffff;
+    border: 1px solid rgba(122, 40, 138, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+.category-group-title {
+    font-size: 1.25rem;
+    color: var(--primary-purple);
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-bottom: 2px solid rgba(122, 40, 138, 0.08);
+    padding-bottom: 0.5rem;
+}
+
+.category-icon {
+    font-size: 1.4rem;
+}
+
+/* Tablas de Reporte */
+.table-responsive {
+    overflow-x: auto;
+    width: 100%;
 }
 
 .tabla-reporte {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1.5rem;
 }
 
 .tabla-reporte th {
-    background-color: #f4f6f9;
-    color: #333;
-    padding: 12px;
+    background-color: rgba(122, 40, 138, 0.04);
+    color: var(--text-main);
+    padding: 14px 16px;
     text-align: left;
-    border-bottom: 2px solid #dee2e6;
+    font-weight: 800;
+    font-size: 0.9rem;
+    border-bottom: 2px solid rgba(122, 40, 138, 0.12);
 }
 
 .tabla-reporte td {
-    padding: 12px;
-    border-bottom: 1px solid #dee2e6;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(122, 40, 138, 0.08);
     vertical-align: middle;
+    color: var(--text-main);
+    font-size: 0.95rem;
 }
 
+.tabla-reporte tr:hover td {
+    background-color: rgba(122, 40, 138, 0.01);
+}
+
+.col-requerido {
+    font-weight: 800;
+    color: var(--accent-magenta);
+}
+
+.col-stock {
+    color: var(--text-muted);
+}
+
+/* Estados e Insignias de Stock */
 .status-badge {
     display: inline-block;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.9rem;
     border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.85rem;
+    font-weight: 800;
+    font-size: 0.8rem;
     text-transform: uppercase;
+    letter-spacing: 0.03em;
     text-align: center;
 }
 
 .status-verde {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+    background-color: #e6f7ed;
+    color: #1b8544;
+    border: 1px solid #c8ecd4;
 }
 
 .status-amarillo {
-    background-color: #fff3cd;
-    color: #856404;
-    border: 1px solid #ffeeba;
+    background-color: #fffbeb;
+    color: #b27a00;
+    border: 1px solid #fdecb2;
 }
 
 .status-rojo {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+    background-color: #fdf2f2;
+    color: #ca3c3c;
+    border: 1px solid #fbd5d5;
 }
 
+/* Botón de Impresión */
 .report-button-container {
-    margin-top: 2rem;
-    text-align: right;
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: center;
 }
 
-/* Botón de Impresión de Comandas */
 .btn-print {
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    background: linear-gradient(to right, #7a288a, #9b30b0);
+    background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
     color: white;
     font-family: 'Nunito', sans-serif;
     font-weight: 800;
-    font-size: 1.15rem;
-    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    padding: 0.9rem 2.5rem;
     border: none;
     border-radius: 3rem;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(122, 40, 138, 0.3);
-    transition: all 0.3s;
-    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(122, 40, 138, 0.25);
+    transition: all 0.3s ease;
 }
+
 .btn-print:hover {
-    transform: translateY(-3px);
-    background: linear-gradient(to right, #9b30b0, #d81b60);
-    box-shadow: 0 12px 25px rgba(216, 27, 96, 0.4);
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, var(--secondary-purple), var(--accent-magenta));
+    box-shadow: 0 10px 25px rgba(216, 27, 96, 0.35);
 }
+
+.btn-print:active {
+    transform: translateY(0);
+}
+
+/* Lista de Compras para Central de Abasto */
+.eyebrow-accent {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--accent-magenta);
+    letter-spacing: 0.12em;
+    margin: 0 0 0.5rem 0;
+}
+
+.card-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.shopping-list-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin-top: 1.5rem;
+}
+
+.shopping-category-section {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(122, 40, 138, 0.08);
+    border-radius: 18px;
+    padding: 1.5rem;
+}
+
+.shopping-category-title {
+    font-size: 1.25rem;
+    color: var(--primary-purple);
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.shopping-items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.shopping-item-card {
+    background: #ffffff;
+    border: 1px solid rgba(122, 40, 138, 0.1);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    transition: all 0.25s ease;
+}
+
+.shopping-item-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(122, 40, 138, 0.25);
+    box-shadow: 0 6px 15px rgba(122, 40, 138, 0.06);
+}
+
+/* Casillas de Verificación Checkbox Modernas */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    padding-left: 32px;
+    user-select: none;
+    width: 100%;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 20px;
+    width: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(122, 40, 138, 0.25);
+    border-radius: 6px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.checkbox-container:hover input ~ .checkmark {
+    background-color: rgba(122, 40, 138, 0.05);
+    border-color: var(--primary-purple);
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: var(--primary-purple);
+    border-color: var(--primary-purple);
+    box-shadow: 0 2px 8px rgba(122, 40, 138, 0.3);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+}
+
+/* Efectos visuales de Tachar */
+.shopping-item-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.5rem;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.shopping-item-name {
+    font-weight: 700;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    transition: text-decoration 0.3s ease, color 0.3s ease;
+}
+
+.shopping-item-qty {
+    font-weight: 800;
+    color: var(--accent-magenta);
+    font-size: 1.05rem;
+    margin-top: 0.15rem;
+    transition: color 0.3s ease;
+}
+
+.checkbox-container input:checked ~ .shopping-item-info {
+    opacity: 0.5;
+    transform: translateX(4px);
+}
+
+.checkbox-container input:checked ~ .shopping-item-info .shopping-item-name {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.checkbox-container input:checked ~ .shopping-item-info .shopping-item-qty {
+    color: var(--text-muted);
+}
+
+/* Mensajes Especiales */
+.all-stocked-message {
+    text-align: center;
+    padding: 2.5rem;
+    color: #1b8544;
+    background-color: #e6f7ed;
+    border: 1px solid #c8ecd4;
+    border-radius: 16px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(27, 133, 68, 0.1);
+}
+
+.empty-insumos-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    font-style: italic;
+    background: rgba(255,255,255,0.5);
+    border: 1px dashed var(--border-color);
+    border-radius: 16px;
+}
+
+/* Adaptación para Impresión */
 @media print {
-    .btn-print { display: none !important; }
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    .dashboard-background,
+    .top-nav,
+    .navigation-buttons,
+    .btn-print,
+    .dashboard-footer {
+        display: none !important;
+    }
+    .dashboard-layout {
+        padding: 0 !important;
+    }
+    .main-report-card, .shopping-list-card {
+        background: #ffffff !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        backdrop-filter: none !important;
+        page-break-after: always;
+    }
+    .category-group-card, .shopping-category-section {
+        border: 1px solid #cccccc !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+    }
+    .tabla-reporte th {
+        background-color: #f2f2f2 !important;
+        border-bottom: 2px solid #000000 !important;
+    }
+    .tabla-reporte td {
+        border-bottom: 1px solid #dddddd !important;
+    }
+    .status-badge {
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        color: #000000 !important;
+        font-weight: 700 !important;
+    }
+    .shopping-item-card {
+        border: 1px solid #dddddd !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+    }
 }
