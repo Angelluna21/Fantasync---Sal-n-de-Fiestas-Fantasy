@@ -23,8 +23,8 @@ class SalonController extends Controller
     {
         $data = $request->validate([
             'sucursal_id' => 'sometimes|integer|exists:sucursales,id',
-            'nombre' => 'required|string|max:80',
-            'alias' => 'nullable|string|max:20',
+            'nombre' => 'required|string|max:80|unique:salones,nombre',
+            'alias' => 'nullable|string|max:20|unique:salones,alias',
             'capacidad' => 'nullable|integer|min:0',
             'direccion' => 'nullable|string|max:255',
             'estado' => 'sometimes|string|max:30',
@@ -68,8 +68,8 @@ class SalonController extends Controller
     {
         $data = $request->validate([
             'sucursal_id' => 'sometimes|integer|exists:sucursales,id',
-            'nombre' => 'sometimes|string|max:80',
-            'alias' => 'nullable|string|max:20',
+            'nombre' => 'sometimes|string|max:80|unique:salones,nombre,' . $salon->id,
+            'alias' => 'nullable|string|max:20|unique:salones,alias,' . $salon->id,
             'capacidad' => 'nullable|integer|min:0',
             'direccion' => 'nullable|string|max:255',
             'estado' => 'sometimes|string|max:30',
