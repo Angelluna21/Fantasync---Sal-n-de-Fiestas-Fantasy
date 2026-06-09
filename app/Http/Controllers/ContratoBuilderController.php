@@ -81,6 +81,31 @@ class ContratoBuilderController extends Controller
             $extras[$key] = ! empty($data['extras'][$key]);
         }
 
+        // --- VALIDACIÓN DE DISPONIBILIDAD (Evitar duplicidad / doble reserva) ---
+        $eventoId = null;
+        if (session('contract_draft.contract_id')) {
+            $existingContract = Contrato::find(session('contract_draft.contract_id'));
+            if ($existingContract) {
+                $eventoId = $existingContract->evento_id;
+            }
+        }
+
+        $salonOcupado = \App\Models\EventoSalon::where('salon_id', $data['salon_id'])
+            ->whereHas('evento', function ($q) use ($data, $eventoId) {
+                $q->where('fecha', $data['evento_fecha']);
+                if ($eventoId) {
+                    $q->where('id', '!=', $eventoId);
+                }
+            })->exists();
+
+        if ($salonOcupado) {
+            return back()->withErrors([
+                'evento_fecha' => 'El salón seleccionado ya está reservado para esta fecha.',
+                'salon_id' => 'El salón seleccionado ya está reservado para esta fecha.'
+            ])->withInput();
+        }
+        // -------------------------------------------------------------------------
+
         // Calcular el total
         $subtotalPlatillos = Platillo::query()->whereIn('id', $platilloIds)->sum('precio');
 
@@ -126,14 +151,7 @@ class ContratoBuilderController extends Controller
             ]
         );
 
-        // 2. Obtener ID del evento existente si estamos editando
-        $eventoId = null;
-        if (session('contract_draft.contract_id')) {
-            $existingContract = Contrato::find(session('contract_draft.contract_id'));
-            if ($existingContract) {
-                $eventoId = $existingContract->evento_id;
-            }
-        }
+        // 2. Obtener ID del evento existente si estamos editando (Ya se obtuvo en la validación de disponibilidad)
 
         // 3. Crear o actualizar Evento
         $evento = \App\Models\Evento::updateOrCreate(
