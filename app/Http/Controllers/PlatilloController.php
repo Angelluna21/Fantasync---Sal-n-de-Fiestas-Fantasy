@@ -30,16 +30,22 @@ class PlatilloController extends Controller
             'descripcion' => 'nullable|string',
             'precio' => 'nullable|numeric|min:0',
             'porciones_base' => 'nullable|integer|min:1',
-            'ingrediente_ids' => 'sometimes|array',
-            'ingrediente_ids.*' => 'integer|exists:ingredientes,id',
+            'ingredientes' => 'sometimes|array',
+            'ingredientes.id.*' => 'integer|exists:ingredientes,id',
+            'ingredientes.cantidad.*' => 'numeric|min:0.01',
         ]);
 
         $platillo = Platillo::create($request->only([
             'categoria_platillo_id', 'nombre', 'descripcion', 'porciones_base'
         ]));
 
-        if (isset($data['ingrediente_ids'])) {
-            $platillo->ingredientes()->sync($data['ingrediente_ids']);
+        if (isset($data['ingredientes']['id'])) {
+            $syncData = [];
+            foreach ($data['ingredientes']['id'] as $index => $ingredienteId) {
+                $cantidad = $data['ingredientes']['cantidad'][$index] ?? 1;
+                $syncData[$ingredienteId] = ['cantidad_por_base' => $cantidad];
+            }
+            $platillo->ingredientes()->sync($syncData);
         }
 
         return redirect()->route('platillos.index')->with('success', 'Platillo creado correctamente.');
@@ -67,16 +73,24 @@ class PlatilloController extends Controller
             'descripcion' => 'nullable|string',
             'precio' => 'nullable|numeric|min:0',
             'porciones_base' => 'nullable|integer|min:1',
-            'ingrediente_ids' => 'sometimes|array',
-            'ingrediente_ids.*' => 'integer|exists:ingredientes,id',
+            'ingredientes' => 'sometimes|array',
+            'ingredientes.id.*' => 'integer|exists:ingredientes,id',
+            'ingredientes.cantidad.*' => 'numeric|min:0.01',
         ]);
 
         $platillo->update($request->only([
             'categoria_platillo_id', 'nombre', 'descripcion', 'porciones_base'
         ]));
 
-        if (array_key_exists('ingrediente_ids', $data)) {
-            $platillo->ingredientes()->sync($data['ingrediente_ids'] ?? []);
+        if (array_key_exists('ingredientes', $data) && isset($data['ingredientes']['id'])) {
+            $syncData = [];
+            foreach ($data['ingredientes']['id'] as $index => $ingredienteId) {
+                $cantidad = $data['ingredientes']['cantidad'][$index] ?? 1;
+                $syncData[$ingredienteId] = ['cantidad_por_base' => $cantidad];
+            }
+            $platillo->ingredientes()->sync($syncData);
+        } else {
+            $platillo->ingredientes()->sync([]);
         }
 
         return redirect()->route('platillos.index')->with('success', 'Platillo actualizado correctamente.');

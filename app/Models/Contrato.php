@@ -31,4 +31,21 @@ class Contrato extends Model
     {
         return $this->belongsTo(Evento::class);
     }
+
+    /**
+     * Obtener las comandas (platillos por salón) directamente desde el contrato.
+     */
+    public function getComandasAttribute()
+    {
+        // Se asegura de cargar la relación de salones con sus platillos
+        return $this->evento->eventoSalones()->with(['salon', 'platillos.categoriaPlatillo'])->get();
+    }
+
+    /**
+     * Calcular los insumos requeridos para este contrato específico.
+     */
+    public function calcularInsumosRequeridos()
+    {
+        return app(\App\Services\CalculadoraInsumosService::class)->calcularParaEvento($this->evento);
+    }
 }

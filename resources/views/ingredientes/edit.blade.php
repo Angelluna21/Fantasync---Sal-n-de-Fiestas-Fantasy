@@ -16,13 +16,7 @@
                 <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
             </a>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="logout-btn">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    Cerrar sesión
-                </button>
-            </form>
+            <x-user-menu />
         </nav>
 
         <!-- Volver al Listado -->
@@ -70,6 +64,22 @@
                             <option value="pz" {{ old('unidad', $ingrediente->unidad) === 'pz' ? 'selected' : '' }}>Piezas (pz)</option>
                         </select>
                         @error('unidad')
+                            <p style="color: var(--accent-magenta); font-size: 0.8rem; font-weight: 700; margin: 0.25rem 0 0 0;">{{ $message }}</p>
+                        @enderror
+                    </fieldset>
+
+                    <!-- Campo: Categoría -->
+                    <fieldset class="form-group">
+                        <legend class="form-label">Categoría de Almacén</legend>
+                        <select id="categoria" name="categoria" class="form-input form-select" required>
+                            <option value="" disabled>Selecciona una categoría...</option>
+                            <option value="Frutas y Verduras" {{ old('categoria', $ingrediente->categoria) === 'Frutas y Verduras' ? 'selected' : '' }}>Frutas y Verduras</option>
+                            <option value="Cremería" {{ old('categoria', $ingrediente->categoria) === 'Cremería' ? 'selected' : '' }}>Cremería</option>
+                            <option value="Abarrotes" {{ old('categoria', $ingrediente->categoria) === 'Abarrotes' ? 'selected' : '' }}>Abarrotes</option>
+                            <option value="Carnes" {{ old('categoria', $ingrediente->categoria) === 'Carnes' ? 'selected' : '' }}>Carnes</option>
+                            <option value="Otros" {{ old('categoria', $ingrediente->categoria) === 'Otros' ? 'selected' : '' }}>Otros</option>
+                        </select>
+                        @error('categoria')
                             <p style="color: var(--accent-magenta); font-size: 0.8rem; font-weight: 700; margin: 0.25rem 0 0 0;">{{ $message }}</p>
                         @enderror
                     </fieldset>

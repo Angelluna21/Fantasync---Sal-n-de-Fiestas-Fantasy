@@ -16,13 +16,7 @@
                 <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
             </a>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="logout-btn">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    Cerrar sesión
-                </button>
-            </form>
+            <x-user-menu />
         </nav>
 
         <!-- Volver al Panel -->
@@ -46,49 +40,49 @@
         <section class="metrics-grid" aria-label="Tarjetas de Indicadores Financieros y Operativos">
             <!-- Total de Eventos -->
             <article class="metric-card total">
-                <div class="metric-icon">
+                <figure class="metric-icon">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                </div>
-                <div class="metric-content">
+                </figure>
+                <hgroup class="metric-content">
                     <span class="metric-value">{{ $totalEventos }}</span>
                     <span class="metric-label">Eventos Agendados</span>
-                </div>
+                </hgroup>
             </article>
 
             <!-- Eventos Confirmados -->
             <article class="metric-card confirmados">
-                <div class="metric-icon">
+                <figure class="metric-icon">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <div class="metric-content">
+                </figure>
+                <hgroup class="metric-content">
                     <span class="metric-value">
                         {{ $confirmados }}
                         <span style="font-size: 0.9rem; font-weight: 700; color: var(--text-muted);">({{ $totalEventos > 0 ? round(($confirmados / $totalEventos) * 100) : 0 }}%)</span>
                     </span>
                     <span class="metric-label">Confirmados</span>
-                </div>
+                </hgroup>
             </article>
 
             <!-- Monto Total Contratado -->
             <article class="metric-card monto">
-                <div class="metric-icon">
+                <figure class="metric-icon">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <div class="metric-content">
+                </figure>
+                <hgroup class="metric-content">
                     <span class="metric-value">${{ number_format($montoTotal, 2) }}</span>
                     <span class="metric-label">Ingresos Contratados</span>
-                </div>
+                </hgroup>
             </article>
 
             <!-- Saldos Pendientes -->
             <article class="metric-card pendientes">
-                <div class="metric-icon">
+                <figure class="metric-icon">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                </div>
-                <div class="metric-content">
+                </figure>
+                <hgroup class="metric-content">
                     <span class="metric-value">${{ number_format($saldoPendiente, 2) }}</span>
                     <span class="metric-label font-danger">Saldos por Cobrar</span>
-                </div>
+                </hgroup>
             </article>
         </section>
 
@@ -189,7 +183,7 @@
 
                                 <!-- Acciones -->
                                 <td style="text-align: center;">
-                                    <div class="actions-group">
+                                    <menu class="actions-group">
                                         @if($evento->salones->count() > 0)
                                             <a href="{{ route('salones.show', $evento->salones->first()->id) }}" class="btn-event-link" title="Ver en Calendario">
                                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
@@ -208,7 +202,7 @@
                                                 Generar Contrato
                                             </a>
                                         @endif
-                                    </div>
+                                    </menu>
                                 </td>
                             </tr>
                         @empty

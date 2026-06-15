@@ -16,13 +16,7 @@
                 <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
             </a>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="logout-btn">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    Cerrar sesión
-                </button>
-            </form>
+            <x-user-menu />
         </nav>
 
         <!-- Encabezado -->
@@ -36,12 +30,12 @@
 
         <!-- Formulario -->
         <section class="form-section" aria-label="Formulario de creación de sucursal">
-            <div class="form-container">
+            <article class="form-container">
                 <form method="POST" action="{{ route('sucursales.store') }}" class="form-card">
                     @csrf
 
                     <!-- Nombre -->
-                    <div class="form-group">
+                    <fieldset class="form-group">
                         <label for="nombre" class="form-label">Nombre de la Sucursal</label>
                         <input 
                             type="text" 
@@ -55,10 +49,10 @@
                         @error('nombre')
                             <span class="form-error">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </fieldset>
 
                     <!-- Ubicación / Dirección -->
-                    <div class="form-group">
+                    <fieldset class="form-group">
                         <label for="direccion" class="form-label">Ubicación / Dirección</label>
                         <textarea 
                             name="direccion" 
@@ -70,19 +64,19 @@
                         @error('direccion')
                             <span class="form-error">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </fieldset>
 
                     <!-- Botones de acción -->
-                    <div class="form-actions">
+                    <menu class="form-actions">
                         <a href="{{ route('sucursales.index') }}" class="btn-secondary">
                             Cancelar
                         </a>
                         <button type="submit" class="btn-primary">
                             Crear Sucursal
                         </button>
-                    </div>
+                    </menu>
                 </form>
-            </div>
+            </article>
         </section>
     </main>
 

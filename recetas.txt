@@ -1,0 +1,1416 @@
+=====================================================================
+               FANTASYNC - RECETARIO GENERAL DE PLATILLOS
+=====================================================================
+Generado el: 08/06/2026 21:45:58
+Total de Platillos: 112
+=====================================================================
+
+🍽️  PLATILLO: AGUA DE HORCHATA
+📁 Categoría: BEBIDAS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Horchata                 : 3 l [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: AGUA DE JAMAICA
+📁 Categoría: BEBIDAS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Azúcar                  : 2 kg [Abarrotes]
+   • Jamaica                  : 1 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: AGUA DE LIMON
+📁 Categoría: BEBIDAS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Limón                   : 2.5 kg [Abarrotes]
+   • Azúcar                  : 2.5 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: AGUA DE SANDIA
+📁 Categoría: BEBIDAS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Sandía                  : 1 pz [Abarrotes]
+   • Azúcar                  : 2 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: AGUA DE TAMARINDO
+📁 Categoría: BEBIDAS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Azúcar                  : 2.5 kg [Abarrotes]
+   • Tamarindo                : 2 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ALAMBRE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Pimiento morrón, jamón, tocino y queso Oaxaca
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Pimiento morrón         : 4 kg [Abarrotes]
+   • Queso Oaxaca             : 0.75 kg [Cremería]
+   • Jamón                   : 0.75 kg [Abarrotes]
+   • Tocino                   : 0.75 kg [Carnes]
+   • Bisteck de Res           : 4 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ALAMBRE VEGETARIANO
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Pimiento morrón         : 4 kg [Abarrotes]
+   • Queso Oaxaca             : 0.75 kg [Cremería]
+   • Jamón                   : 0.75 kg [Abarrotes]
+   • Champiñón              : 4 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ARROZ BLANCO
+📁 Categoría: GUARNICIONES
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Elote desgranado         : 0.38 kg [Abarrotes]
+   • Arroz                    : 1.5 kg [Abarrotes]
+   • Zanahoria                : 1 kg [Frutas y Verduras]
+   • Elote                    : 0.5 kg [Abarrotes]
+   • Chicharo                 : 1 kg [Abarrotes]
+   • cebolla pieza            : 1 pz [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ARROZ BLANCO CON POBLANO Y ELOTE
+📁 Categoría: GUARNICIONES
+👥 Porciones Base: 100
+📝 Descripción: Arroz con chile poblano y granos de elote
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Chile poblano            : 1 kg [Frutas y Verduras]
+   • Elote desgranado         : 0.5 kg [Abarrotes]
+   • Arroz                    : 1.5 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ARROZ BLANCO CON VERDURA
+📁 Categoría: GUARNICIONES
+👥 Porciones Base: 100
+📝 Descripción: Arroz con elote y zanahoria
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ARROZ ROJO CON ZANAHORIA Y EJOTE
+📁 Categoría: GUARNICIONES
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Jitomate                 : 1 kg [Frutas y Verduras]
+   • Arroz                    : 1.5 kg [Abarrotes]
+   • Zanahoria                : 1 kg [Frutas y Verduras]
+   • Ejote                    : 0.5 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ARROZ ROJO CON ZANAHORIA Y ELOTE
+📁 Categoría: GUARNICIONES
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ARROZ VERDE CON ELOTE
+📁 Categoría: GUARNICIONES
+👥 Porciones Base: 100
+📝 Descripción: Arroz verde con elote
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Chile poblano            : 1 kg [Frutas y Verduras]
+   • Elote desgranado         : 0.5 kg [Abarrotes]
+   • Arroz                    : 1.5 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: BISTEC A LA MEXICANA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Res con jitomate, cebolla y chile
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Cilantro                 : 1 pz [Frutas y Verduras]
+   • Jitomate                 : 3 kg [Frutas y Verduras]
+   • Chile cuaresmeño        : 0.75 kg [Carnes]
+   • Bisteck de Res           : 4 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: BISTEC EN CHILE PASILLA CON PAPAS
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Res con papas en pasilla
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Jitomate                 : 1.5 kg [Frutas y Verduras]
+   • Papa                     : 3 kg [Frutas y Verduras]
+   • Chile pasilla            : 0.75 kg [Frutas y Verduras]
+   • Bisteck de Res           : 4 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: BISTEC EN SALSA DE JITOMATE CON PAPAS
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Res con papas en caldillo de jitomate
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Jitomate                 : 4 kg [Frutas y Verduras]
+   • Papa                     : 3 kg [Frutas y Verduras]
+   • Bisteck de Res           : 4 kg [Carnes]
+   • Chile serrano            : 0.25 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: BISTEC EN SALSA VERDE CON CALABAZAS
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Res en salsa verde con calabacitas
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Cilantro                 : 5 pz [Frutas y Verduras]
+   • Chile cuaresmeño        : 0.25 kg [Carnes]
+   • Calabaza italiana        : 3 kg [Abarrotes]
+   • Bisteck de Res           : 4 kg [Carnes]
+   • Tomate                   : 4 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: BOFE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Bofe guisado
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: CAFE
+📁 Categoría: BEBIDAS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Azúcar                  : 1.5 kg [Abarrotes]
+   • Cafe de Grano            : 400 gr [Abarrotes]
+   • Canela                   : 3 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: CALDO TLALPEÑO
+📁 Categoría: DESAYUNOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Jitomate                 : 1 kg [Frutas y Verduras]
+   • Papa                     : 1.5 kg [Frutas y Verduras]
+   • Zanahoria                : 2 kg [Frutas y Verduras]
+   • Huacal con Ala           : 3 kg [Abarrotes]
+   • Epazote                  : 1 pz [Abarrotes]
+   • chipotle Lata            : 2 pz [Abarrotes]
+   • Pechuga p. Deshebrar     : 3 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: CARNE DE CERDO EN MORITA CON NOPALES
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Cerdo en morita con nopales
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: CERDO AL PASTOR
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Cerdo adobado al pastor
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: CHICHARRON EN SALSA NORTEÑA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Nopales                  : 25 pz [Abarrotes]
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Cilantro                 : 1 pz [Frutas y Verduras]
+   • Jitomate                 : 4 kg [Frutas y Verduras]
+   • Chile cuaresmeño        : 0.5 kg [Carnes]
+   • Chicharron Delgado       : 0.75 kg [Abarrotes]
+   • Chicharron Grueso        : 0.25 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: CHICHARRÓN EN SALSA ROJA O RANCHERA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Chicharrón en salsa roja
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: CHICHARRÓN EN SALSA VERDE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Chicharrón en salsa verde
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Nopales                  : 25 pz [Abarrotes]
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Cilantro                 : 1 pz [Frutas y Verduras]
+   • Chile cuaresmeño        : 0.5 kg [Carnes]
+   • Tomatillo                : 4 kg [Abarrotes]
+   • Chicharron Delgado       : 0.75 kg [Abarrotes]
+   • Chicharron Grueso        : 0.25 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: CHILAQUILLES
+📁 Categoría: DESAYUNOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Queso rallado            : 0.75 kg [Cremería]
+   • Pechuga de pollo         : 4 kg [Carnes]
+   • Crema                    : 3 l [Cremería]
+   • Chile cuaresmeño        : 0.5 kg [Carnes]
+   • Chile serrano            : 0.25 kg [Frutas y Verduras]
+   • Tortilla                 : 12 kg [Abarrotes]
+   • Epazote                  : 1 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: CHORIQUEZO
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Chorizo con queso fundido
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Nopales                  : 25 pz [Abarrotes]
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Chile cuaresmeño        : 0.25 kg [Carnes]
+   • Longaniza                : 4 kg [Abarrotes]
+   • queso manchego           : 0.75 kg [Cremería]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: COCHINITA PIBIL
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Carne de cerdo marinada en achiote
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Maciza de cerdo          : 3 kg [Carnes]
+   • Espinazo de cerdo        : 1 kg [Carnes]
+   • Limón                   : 2 kg [Abarrotes]
+   • Achiote                  : 0.5 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: COCHINITA VEGETARIANA (SETAS)
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Setas estilo pibil
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: CODIITO A LA HAWAIANA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Jamón                   : 1 kg [Abarrotes]
+   • Mantequilla              : 0.5 kg [Cremería]
+   • Crema                    : 6 l [Cremería]
+   • Lata de Piña en almibar : 2 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: COMPLEMENTOS DE PARRILLADA
+📁 Categoría: Parillada
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Limón                   : 0.5 kg [Abarrotes]
+   • Chile manzano            : 0.5 kg [Frutas y Verduras]
+   • Chile serrano            : 0.75 kg [Frutas y Verduras]
+   • Piña                    : 1 pz [Abarrotes]
+   • Cebolla cambray          : 2 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: COSTILLA EN CHILE PASILLA CON PAPAS
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Costilla con papas en pasilla
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Jitomate                 : 2 kg [Frutas y Verduras]
+   • Papa                     : 2 kg [Frutas y Verduras]
+   • Chile pasilla            : 0.5 kg [Frutas y Verduras]
+   • Costilla                 : 4 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: COSTILLA EN MORITA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Costilla de cerdo guisada con chile morita
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Nopales                  : 25 pz [Abarrotes]
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Costilla de cerdo        : 4 kg [Carnes]
+   • Chile morita             : 0.25 kg [Frutas y Verduras]
+   • Tomatillo                : 4 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: COSTILLA EN SALSA VERDE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Con nopales
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Nopales                  : 25 pz [Abarrotes]
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Cilantro                 : 1 pz [Frutas y Verduras]
+   • Costilla de cerdo        : 4 kg [Carnes]
+   • Chile cuaresmeño        : 0.5 kg [Carnes]
+   • Tomatillo                : 4 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: CREMA DE ELOTE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Elote desgranado         : 10.2 kg [Abarrotes]
+   • Leche                    : 14.3 l [Cremería]
+   • Crema                    : 6 l [Cremería]
+   • Huacal con Ala           : 4 kg [Abarrotes]
+   • Apio                     : 3 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ENFRIJOLADAS CON CHORIZO
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Tortillas en frijol con chorizo
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Frijol                   : 1.5 kg [Abarrotes]
+   • Queso rallado            : 0.5 kg [Cremería]
+   • Crema                    : 3 l [Cremería]
+   • Longaniza                : 4 kg [Abarrotes]
+   • Tortilla                 : 6 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ENSALADA DE LECHUGA, PEPINO, RABANO
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Limón                   : 1 kg [Abarrotes]
+   • Lechuga                  : 2 kg [Frutas y Verduras]
+   • Rabano                   : 0.5 kg [Abarrotes]
+   • Pepino                   : 5 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ENSALADA DE MANZANA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Crema                    : 6 l [Cremería]
+   • Manzana Amarilla         : 10 kg [Abarrotes]
+   • Leche clavel             : 4 pz [Cremería]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ENSALADA DE TRES LECHUGAS
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Mermelada de chabacano   : 1 kg [Abarrotes]
+   • Ajonjoli                 : 0.75 kg [Frutas y Verduras]
+   • Arandano                 : 1 kg [Abarrotes]
+   • Espinaca                 : 1 pz [Abarrotes]
+   • Lechuga Sangria          : 3 pz [Frutas y Verduras]
+   • Lechuga italiana         : 3 pz [Frutas y Verduras]
+   • Lechuga Orejona          : 3 pz [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ENSALADA DE LECHUGA
+📁 Categoría: GUARNICIONES
+👥 Porciones Base: 100
+📝 Descripción: Ensalada simple de lechuga
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ENSALADA DE NOPALES
+📁 Categoría: GUARNICIONES
+👥 Porciones Base: 100
+📝 Descripción: Nopales con jitomate, cebolla, cilantro y queso panela
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Nopales                  : 50 pz [Abarrotes]
+   • Cebolla                  : 0.5 kg [Frutas y Verduras]
+   • Cilantro                 : 10 pz [Frutas y Verduras]
+   • Jitomate                 : 0.5 kg [Frutas y Verduras]
+   • Queso panela             : 0.75 kg [Abarrotes]
+   • Papa                     : 10 kg [Frutas y Verduras]
+   • Jamaica                  : 900 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ENSALADA FLORENTINA
+📁 Categoría: GUARNICIONES
+👥 Porciones Base: 100
+📝 Descripción: Verduras con jamón y queso panela
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Queso panela             : 0.75 kg [Abarrotes]
+   • Queso parmesano          : 0.75 kg [Cremería]
+   • Mantequilla              : 0.5 kg [Cremería]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ESPAGUETTI
+📁 Categoría: 1 INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Jamón                   : 0.25 kg [Abarrotes]
+   • Crema                    : 1 l [Cremería]
+   • Sopa de codito           : 1.5 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ESPAGUETTI ALFREDO
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Queso parmesano          : 0.5 kg [Cremería]
+   • Mantequilla              : 1 kg [Cremería]
+   • Leche                    : 14 l [Cremería]
+   • Crema                    : 6 l [Cremería]
+   • Perejil                  : 1 pz [Abarrotes]
+   • Espaguetti               : 200 gr [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ESPPAGUETTI
+📁 Categoría: 2 INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Jamón                   : 0.25 kg [Abarrotes]
+   • Crema                    : 1 l [Cremería]
+   • Codito                   : 1.5 gr [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ESQUITES CON CALABAZA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 0.5 kg [Frutas y Verduras]
+   • Elote desgranado         : 4 kg [Abarrotes]
+   • Crema                    : 1.5 l [Cremería]
+   • Chile cuaresmeño        : 0.5 kg [Carnes]
+   • Calabaza italiana        : 3 kg [Abarrotes]
+   • Epazote                  : 1 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: FAJAS DE POLLO (KENTOKI)
+📁 Categoría: 1 INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Harina                   : 1 kg [Abarrotes]
+   • Huevo                    : 0.5 kg [Abarrotes]
+   • Fajitas de Pollo         : 15 kg [Carnes]
+   • Pan Molido               : 2 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: FETTUCCINE ALFREDO
+📁 Categoría: 3 TIEMPOS
+👥 Porciones Base: 100
+📝 Descripción: Pasta con crema, leche y parmesano
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Queso parmesano          : 0.5 kg [Cremería]
+   • Mantequilla              : 1 kg [Cremería]
+   • Leche                    : 5 l [Cremería]
+   • Crema                    : 5 l [Cremería]
+   • Perejil                  : 1 pz [Abarrotes]
+   • Pasta Fettuccine         : 500 gr [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: FLAUTAS DE POLLO CON LECHUGA Y QUESO
+📁 Categoría: 2 INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: FRIJOLES CHARROS
+📁 Categoría: GUARNICIONES
+👥 Porciones Base: 100
+📝 Descripción: Frijoles con salchicha, jamón y tocino
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Frijol                   : 5 kg [Abarrotes]
+   • Jamón                   : 0.5 kg [Abarrotes]
+   • Tocino                   : 0.6 kg [Carnes]
+   • Salchicha                : 1 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: FRIJOLES REFRITOS
+📁 Categoría: GUARNICIONES
+👥 Porciones Base: 100
+📝 Descripción: Frijoles molidos con cebolla y totopos
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 0.5 kg [Frutas y Verduras]
+   • Frijol                   : 5 kg [Abarrotes]
+   • Tortilla para totopos    : 2.5 kg [Abarrotes]
+   • Salchicha(pieza)         : 4 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: FRUTA
+📁 Categoría: BUFFET INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Sandía                  : 0.25 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: GELATINA
+📁 Categoría: BUFFET INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Gelatina                 : 1 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: GUACAMOLE
+📁 Categoría: SALSAS
+👥 Porciones Base: 100
+📝 Descripción: Aguacate machacado con condimentos
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Cilantro                 : 1 pz [Frutas y Verduras]
+   • Aguacate                 : 1 kg [Frutas y Verduras]
+   • Chile serrano            : 0.5 kg [Frutas y Verduras]
+   • Tomate                   : 1 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: HABANERO
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Salsa/pico de habanero
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: LOMO ADOBADO
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Lomo de cerdo adobado con guajillo y ancho
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Chile guajillo           : 0.75 kg [Frutas y Verduras]
+   • Chile ancho              : 0.5 kg [Frutas y Verduras]
+   • Lomo de cerdo            : 1.7 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: LONGANIZA CON NOPALES Y RAJAS
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Longaniza con nopal y rajas
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: LONGANIZA CON PAPAS
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Longaniza guisada con papa
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Papa                     : 2.5 kg [Frutas y Verduras]
+   • Longaniza                : 4 kg [Abarrotes]
+   • queso manchego           : 0.5 kg [Cremería]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: NOPALES CON GUAJILLO Y ELOTE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Nopales con guajillo y elote
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Nopales                  : 50 pz [Abarrotes]
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Elote desgranado         : 0.5 kg [Abarrotes]
+   • Chile guajillo           : 0.75 kg [Frutas y Verduras]
+   • Hierbas de Olor          : 1 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: NOPALES CON QUESO
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Nopales salteados con queso
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: NOPALES EN ESCABECHE
+📁 Categoría: GUARNICIONES
+👥 Porciones Base: 100
+📝 Descripción: Nopales con vinagre y especias
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Nopales                  : 50 pz [Abarrotes]
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Zanahoria                : 1.5 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: NUGGETS DE POLLO
+📁 Categoría: BUFFET INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Harina                   : 1 kg [Abarrotes]
+   • Huevo                    : 0.5 kg [Abarrotes]
+   • Fajitas de Pollo         : 15 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PAPAS A LA FRANCESA
+📁 Categoría: BUFFET INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Papas fritas en tiras
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Papa                     : 10 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PAPAS A LA FRANCESAS
+📁 Categoría: 2 INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Papa                     : 10 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PAPAS GRATINADAS
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Papas al horno con queso
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Queso Oaxaca             : 1 kg [Cremería]
+   • Jamón                   : 1 kg [Abarrotes]
+   • Papa                     : 16 kg [Frutas y Verduras]
+   • Mantequilla              : 1 kg [Cremería]
+   • Crema                    : 4 l [Cremería]
+   • Perejil                  : 1 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PAPAZ A LA FRANCESA
+📁 Categoría: 1 INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Papa                     : 10 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PASTOR
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Carne al pastor para tacos
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Chile guajillo           : 0.75 kg [Frutas y Verduras]
+   • Bisteck de Res           : 4 kg [Carnes]
+   • Piña                    : 1 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PECHUGA DESEBRADA EN CHIPOTLE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Tiras de pollo al chipotle
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Jitomate                 : 4 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PECHUGA EMPANIZADA
+📁 Categoría: GUARNICIONES
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PECHUGA RELLENAS DE JAMON Y QUESO EMPANIZADA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Queso Oaxaca             : 2.75 kg [Cremería]
+   • Jamón                   : 2.75 kg [Abarrotes]
+   • Pechuga                  : 105 kg [Carnes]
+   • Harina                   : 1 kg [Abarrotes]
+   • Huevo                    : 2 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PECHUGA DESHEBRADA CON RAJAS, CREMA Y CHAMPIÑONES
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Pollo con rajas de poblano, crema y champiñón
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Crema                    : 4 l [Cremería]
+   • Champiñón              : 1 kg [Abarrotes]
+   • Pechuga                  : 4 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PECHUGAS CON QUESO Y TOCINO BBQ
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Pechugas rellenas de Oaxaca y tocino
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Queso Oaxaca             : 1 kg [Cremería]
+   • Tocino                   : 1 kg [Carnes]
+   • Pechuga de pollo         : 10 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PICADILLO DE RES
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Res molida con verduras
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Jitomate                 : 4 kg [Frutas y Verduras]
+   • Papa                     : 1 kg [Frutas y Verduras]
+   • Zanahoria                : 1 kg [Frutas y Verduras]
+   • Bisteck de Res           : 4 kg [Carnes]
+   • Chicharo                 : 1 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PIZZA
+📁 Categoría: BUFFET INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Peperoni                 : 1 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: POLLO CON MOLE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Pollo en mole rojo
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Pechuga                  : 4 kg [Carnes]
+   • Mole don pancho          : 2 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: POLLO DESHEBRADO EN MOLE ROJO
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Muslo/pechuga en mole rojo
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: POLLO EN CHIPOTLE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Pollo en salsa de chipotle
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: POLLO EN MOLE VERDE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Pollo en mole verde
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Chile poblano            : 0.5 kg [Frutas y Verduras]
+   • Chile cuaresmeño        : 0.25 kg [Carnes]
+   • Pechuga                  : 4 kg [Carnes]
+   • Ajonjoli                 : 0.5 kg [Frutas y Verduras]
+   • Espinaca                 : 1 pz [Abarrotes]
+   • Tomate                   : 0.5 kg [Frutas y Verduras]
+   • Verdur para Mole Verde   : 1 pz [Abarrotes]
+   • Pepita Verde             : 0.75 gr [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: POLLO EN PIBIL
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Pollo en adobo de achiote
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Achiote                  : 0.5 kg [Abarrotes]
+   • Pechuga de pollo         : 8 kg [Carnes]
+   • Chile guajillo           : 1 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: POLLO EN PIPIÁN CON CHILACAYOTES
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Pollo en salsa de pipián con chilacayote
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Pechuga de pollo         : 4 kg [Carnes]
+   • Chilacayote              : 2 kg [Abarrotes]
+   • Pipian                   : 2 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: POZOLE
+📁 Categoría: DESAYUNOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PUNTAS DE CERDO EN MOLE VERDE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Puntas de cerdo en pipián/verde
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Chile poblano            : 0.5 kg [Frutas y Verduras]
+   • Chile cuaresmeño        : 0.5 kg [Carnes]
+   • Lechuga                  : 1 kg [Frutas y Verduras]
+   • Ajonjoli                 : 0.5 kg [Frutas y Verduras]
+   • Hoja Santa               : 1 pz [Abarrotes]
+   • Chile serrano            : 0.25 kg [Frutas y Verduras]
+   • Pepita                   : 0.75 kg [Abarrotes]
+   • Tomate                   : 0.5 kg [Frutas y Verduras]
+   • Verdur para Mole Verde   : 1 pz [Abarrotes]
+   • Puntas de cerdo          : 4 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PUNTAS DE CERDO EN SALSA ROJA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Puntas de cerdo en salsa roja
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Jitomate                 : 4 kg [Frutas y Verduras]
+   • Papa                     : 2.5 kg [Frutas y Verduras]
+   • Chile de Arbol Seco      : 0.25 kg [Frutas y Verduras]
+   • Puntas de cerdo          : 4 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PUNTAS DE CERDO EN SALSA VERDE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Puntas de cerdo en salsa verde
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Nopales                  : 25 pz [Abarrotes]
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Cilantro                 : 1 pz [Frutas y Verduras]
+   • Chile serrano            : 0.5 kg [Frutas y Verduras]
+   • Tomate                   : 4 kg [Frutas y Verduras]
+   • Puntas de cerdo          : 4 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PURE DE PAPA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Papa                     : 14.5 kg [Frutas y Verduras]
+   • Mantequilla              : 1 kg [Cremería]
+   • Leche                    : 3 l [Cremería]
+   • Crema                    : 3 l [Cremería]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: RAJAS CON CREMA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Rajas de poblano con crema
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Chile poblano            : 6 kg [Frutas y Verduras]
+   • Crema                    : 4 l [Cremería]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: RAJAS CON PAPAS
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Rajas de poblano con papa
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: RAJAS CON PAPAS(SIN CREMA)
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Chile poblano            : 6 kg [Frutas y Verduras]
+   • Papa                     : 4 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: RAJAS DE MANZANO
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Rajas de chile manzano
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ROPA VIEJA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 105 kg [Frutas y Verduras]
+   • Jitomate                 : 4 kg [Frutas y Verduras]
+   • Chile poblano            : 2.5 kg [Frutas y Verduras]
+   • Papa                     : 2 kg [Frutas y Verduras]
+   • Chicharo                 : 1.5 kg [Abarrotes]
+   • Carne de Res para deshebrar: 4 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: SALCHICHAS A LA MEXICANA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Salchicha con jitomate, cebolla y chile
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Cilantro                 : 1 pz [Frutas y Verduras]
+   • Jitomate                 : 4 kg [Frutas y Verduras]
+   • Salchicha                : 4 kg [Abarrotes]
+   • Chile cuaresmeño        : 0.5 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: SALCHICHAS CON PAPAS
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Salchicha con papa
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Papa                     : 2.5 kg [Frutas y Verduras]
+   • Salchicha                : 4 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: SALCHICHAS EN CHIPOTLE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Salchicha en salsa de chipotle
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Chipotle                 : 1 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: SALSA ROJA
+📁 Categoría: SALSAS
+👥 Porciones Base: 100
+📝 Descripción: Salsa de chiles rojos
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Jitomate                 : 1 kg [Frutas y Verduras]
+   • Chile de Arbol Seco      : 0.25 kg [Frutas y Verduras]
+   • Tomate                   : 1 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: SALSA VERDE
+📁 Categoría: SALSAS
+👥 Porciones Base: 100
+📝 Descripción: Salsa de tomatillo
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1 kg [Frutas y Verduras]
+   • Cilantro                 : 1 pz [Frutas y Verduras]
+   • Chile serrano            : 0.25 kg [Frutas y Verduras]
+   • Tomate                   : 1 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: SOPA AZTECA*
+📁 Categoría: 3 TIEMPOS
+👥 Porciones Base: 100
+📝 Descripción: Sopa con tortillas fritas, jitomate y pasilla
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Jitomate                 : 2 kg [Frutas y Verduras]
+   • Chile guajillo           : 0.75 kg [Frutas y Verduras]
+   • Chile ancho              : 0.5 kg [Frutas y Verduras]
+   • Chile pasilla            : 0.5 kg [Frutas y Verduras]
+   • Tortillas para sopa      : 3 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: SOPECITOS DE FRIJOL
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Sopes mini con frijol y nopal
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Frijol                   : 1.5 kg [Abarrotes]
+   • Lechuga                  : 2 kg [Frutas y Verduras]
+   • Masa                     : 8 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: SUADERO
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Carne para tacos de suadero
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Papa                     : 3 kg [Frutas y Verduras]
+   • Chile cuaresmeño        : 0.25 kg [Carnes]
+   • Suadero                  : 4 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: TEMPORAL INFANTIL
+📁 Categoría: MENU INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: NULL
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: TIMBAL DE ESQUITES CON CALABAZAS Y QUESO CREMA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Esquites con calabaza y queso crema
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: TINGA DE POLLO
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Pollo deshebrado en jitomate, cebolla y chipotle
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Jitomate                 : 4 kg [Frutas y Verduras]
+   • Chipotle                 : 1 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: TORTITAS DE CARNE DE RES EN SALSA ROJA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Tortitas de res en salsa roja
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Nopales                  : 25 pz [Abarrotes]
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Jitomate                 : 4 kg [Frutas y Verduras]
+   • Huevo                    : 2.5 kg [Abarrotes]
+   • Chile de Arbol Seco      : 0.5 kg [Frutas y Verduras]
+   • Carne de Res para deshebrar: 4 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: TORTITAS DE CARNE DE RES EN SALSA VERDE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Tortitas de res en salsa verde
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Nopales                  : 25 pz [Abarrotes]
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Cilantro                 : 1 pz [Frutas y Verduras]
+   • Chile cuaresmeño        : 0.5 kg [Carnes]
+   • Huevo                    : 2.5 kg [Abarrotes]
+   • Tomate                   : 4 kg [Frutas y Verduras]
+   • Carne de Res para deshebrar: 4 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: TORTITAS DE PECHUGA DE POLLO EN SALSA ROJA
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Tortitas de pollo en salsa roja
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Nopales                  : 25 pz [Abarrotes]
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Jitomate                 : 4 kg [Frutas y Verduras]
+   • Chile cuaresmeño        : 0.5 kg [Carnes]
+   • Huevo                    : 2.5 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: TORTITAS DE PECHUGA DE POLLO EN SALSA VERDE
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Tortitas de pollo en salsa verde
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Nopales                  : 25 pz [Abarrotes]
+   • Cebolla                  : 1.5 kg [Frutas y Verduras]
+   • Cilantro                 : 1 pz [Frutas y Verduras]
+   • Chile cuaresmeño        : 0.5 kg [Carnes]
+   • Pechuga                  : 4 kg [Carnes]
+   • Huevo                    : 0.5 kg [Abarrotes]
+   • Tomate                   : 4 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: XNIPEC (RAJAS HABANERO)
+📁 Categoría: SALSAS
+👥 Porciones Base: 100
+📝 Descripción: Cebolla morada, limón y habanero
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Limón                   : 1 kg [Abarrotes]
+   • Chile habanero           : 0.25 kg [Frutas y Verduras]
+   • Cebolla Morada           : 0.5 kg [Frutas y Verduras]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: ZETAS AL PIBIL
+📁 Categoría: GUISADOS
+👥 Porciones Base: 100
+📝 Descripción: Setas guisadas en adobo pibil
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Limón                   : 2 kg [Abarrotes]
+   • Achiote                  : 0.25 kg [Abarrotes]
+   • Chile guajillo           : 0.25 kg [Frutas y Verduras]
+   • Zetas                    : 4 kg [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: FAJITTAS DE POLLO
+📁 Categoría: 2 INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Harina                   : 1 kg [Abarrotes]
+   • Huevo                    : 0.5 kg [Abarrotes]
+   • Fajitas de Pollo         : 15 kg [Carnes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PAPAZ A LA FRANCEZA
+📁 Categoría: 3 INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: PIZZAA
+📁 Categoría: 3 INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Peperoni                 : 1 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: SPAGGUETTI
+📁 Categoría: BUFFET INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   • Jamón                   : 0.25 kg [Abarrotes]
+   • Crema                    : 1 l [Cremería]
+   • Sopa de codito           : 1.5 pz [Abarrotes]
+
+---------------------------------------------------------------------
+
+🍽️  PLATILLO: SPAGUETTI
+📁 Categoría: 3 INFANTIL
+👥 Porciones Base: 100
+📝 Descripción: Sin descripción
+💵 Precio Sugerido: $0.00 MXN
+🌿 Ingredientes Requeridos:
+   (No hay ingredientes asociados a esta receta)
+
+---------------------------------------------------------------------
+

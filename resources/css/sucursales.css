@@ -305,6 +305,184 @@
 }
 
 .btn-create-empty:hover {
-    transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(122, 40, 138, 0.35);
+}
+
+/* --- ESTILOS DE SHOW.BLADE.PHP --- */
+.show-container {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+}
+.detail-card {
+    background: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 20px rgba(122, 40, 138, 0.1);
+    border: 1px solid rgba(122, 40, 138, 0.15);
+    overflow: hidden;
+    margin-top: 1rem;
+}
+.detail-header {
+    padding: 2.5rem;
+    background: linear-gradient(135deg, rgba(255, 213, 79, 0.2) 0%, rgba(216, 27, 96, 0.1) 100%);
+    border-bottom: 2px solid rgba(122, 40, 138, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.detail-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-purple);
+    margin: 0 0 0.5rem 0;
+}
+.detail-body {
+    padding: 2.5rem;
+}
+.detail-section {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(122, 40, 138, 0.1);
+}
+.detail-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+.section-title {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--primary-purple);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.75rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.section-title svg {
+    width: 18px;
+    height: 18px;
+}
+.section-text {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin: 0;
+}
+.salons-show-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+}
+.salon-show-item {
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba(255, 213, 79, 0.06), rgba(216, 27, 96, 0.04));
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 213, 79, 0.35);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    transition: all 0.2s ease;
+}
+.salon-show-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(122, 40, 138, 0.12);
+    border-color: var(--primary-purple);
+}
+.salon-show-name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--primary-purple);
+    margin: 0 0 0.35rem 0;
+}
+.salon-show-alias {
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: rgba(255, 213, 79, 0.4);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.4rem;
+    color: var(--text-main);
+    text-transform: uppercase;
+}
+.btn-add-salon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: linear-gradient(to right, var(--primary-purple), var(--secondary-purple));
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-radius: 1.5rem;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(122, 40, 138, 0.15);
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+.btn-add-salon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(122, 40, 138, 0.3);
+}
+.detail-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    justify-content: flex-end;
+}
+.btn-show-edit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--accent-gold);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 1.5rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(245, 127, 23, 0.2);
+    border: none;
+    cursor: pointer;
+}
+.btn-show-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 127, 23, 0.35);
+}
+.btn-show-delete {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--accent-magenta);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 1.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(216, 27, 96, 0.2);
+}
+.btn-show-delete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(216, 27, 96, 0.35);
+}
+/* Reusing btn-back-nav styling */
+.btn-back-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: var(--primary-purple);
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    transition: all 0.2s ease;
+}
+.btn-back-nav:hover {
+    color: var(--secondary-purple);
+    transform: translateX(-3px);
 }

@@ -17,13 +17,7 @@
                 <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
             </a>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="logout-btn">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    Cerrar sesión
-                </button>
-            </form>
+            <x-user-menu />
         </nav>
 
         <!-- Volver al Listado -->
@@ -96,25 +90,58 @@
                         @enderror
                     </fieldset>
 
-                    <!-- Campo: Ingredientes (Asociación Múltiple) -->
+                    <!-- Campo: Ingredientes (Asociación Múltiple con Cantidad) -->
                     <fieldset class="form-group">
                         <legend class="form-label">Fórmula / Insumos del Almacén</legend>
-                        <section class="ingredientes-multiselect">
-                            @forelse($ingredientes as $ingrediente)
-                                <label class="checkbox-option">
-                                    <input type="checkbox" name="ingrediente_ids[]"
-                                           value="{{ $ingrediente->id }}"
-                                           {{ is_array(old('ingrediente_ids')) && in_array($ingrediente->id, old('ingrediente_ids')) ? 'checked' : '' }}>
-                                    <span>{{ $ingrediente->nombre }} ({{ $ingrediente->unidad }})</span>
-                                </label>
-                            @empty
-                                <p class="multiselect-empty">No hay ingredientes registrados. Registra insumos primero.</p>
-                            @endforelse
+                        <section id="ingredientes-container" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1rem;">
+                            <!-- Las filas se agregarán aquí por JS -->
                         </section>
-                        @error('ingrediente_ids')
+                        <button type="button" id="btn-add-ingrediente" style="background: var(--surface-color); color: var(--text-main); border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-weight: 600;">+ Añadir Insumo</button>
+                        @error('ingredientes')
                             <output class="form-error">{{ $message }}</output>
                         @enderror
                     </fieldset>
+                    
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const container = document.getElementById('ingredientes-container');
+                            const btnAdd = document.getElementById('btn-add-ingrediente');
+                            const ingredientesCat = @json($ingredientes);
+
+                            function addRow() {
+                                const row = document.createElement('article');
+                                row.style.display = 'flex';
+                                row.style.gap = '1rem';
+                                row.style.alignItems = 'center';
+
+                                let selectHtml = `<select name="ingredientes[id][]" class="form-input" style="flex: 2;" required>
+                                                    <option value="" disabled selected>Selecciona insumo...</option>`;
+                                ingredientesCat.forEach(ing => {
+                                    selectHtml += `<option value="${ing.id}">${ing.nombre} (${ing.unidad})</option>`;
+                                });
+                                selectHtml += `</select>`;
+
+                                row.innerHTML = `
+                                    ${selectHtml}
+                                    <input type="number" step="0.01" min="0.01" name="ingredientes[cantidad][]" class="form-input" placeholder="Cantidad por porción base" style="flex: 1;" required>
+                                    <button type="button" class="btn-remove" style="background: #ffebee; color: #d32f2f; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-weight: bold;">X</button>
+                                `;
+
+                                row.querySelector('.btn-remove').addEventListener('click', () => row.remove());
+                                container.appendChild(row);
+                            }
+
+                            btnAdd.addEventListener('click', addRow);
+                            
+                            // Agrega una fila inicial si el catálogo no está vacío
+                            if(ingredientesCat.length > 0) {
+                                addRow();
+                            } else {
+                                container.innerHTML = '<p class="multiselect-empty">No hay ingredientes registrados. Registra insumos primero.</p>';
+                                btnAdd.style.display = 'none';
+                            }
+                        });
+                    </script>
 
                     <!-- Acciones del Formulario -->
                     <footer class="form-actions">

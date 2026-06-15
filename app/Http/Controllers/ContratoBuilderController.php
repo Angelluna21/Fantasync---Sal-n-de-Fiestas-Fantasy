@@ -81,6 +81,31 @@ class ContratoBuilderController extends Controller
             $extras[$key] = ! empty($data['extras'][$key]);
         }
 
+        // --- VALIDACIÓN DE DISPONIBILIDAD (Evitar duplicidad / doble reserva) ---
+        $eventoId = null;
+        if (session('contract_draft.contract_id')) {
+            $existingContract = Contrato::find(session('contract_draft.contract_id'));
+            if ($existingContract) {
+                $eventoId = $existingContract->evento_id;
+            }
+        }
+
+        $salonOcupado = \App\Models\EventoSalon::where('salon_id', $data['salon_id'])
+            ->whereHas('evento', function ($q) use ($data, $eventoId) {
+                $q->where('fecha', $data['evento_fecha']);
+                if ($eventoId) {
+                    $q->where('id', '!=', $eventoId);
+                }
+            })->exists();
+
+        if ($salonOcupado) {
+            return back()->withErrors([
+                'evento_fecha' => 'El salón seleccionado ya está reservado para esta fecha.',
+                'salon_id' => 'El salón seleccionado ya está reservado para esta fecha.'
+            ])->withInput();
+        }
+        // -------------------------------------------------------------------------
+
         // Calcular el total
         $subtotalPlatillos = Platillo::query()->whereIn('id', $platilloIds)->sum('precio');
 
@@ -126,14 +151,7 @@ class ContratoBuilderController extends Controller
             ]
         );
 
-        // 2. Obtener ID del evento existente si estamos editando
-        $eventoId = null;
-        if (session('contract_draft.contract_id')) {
-            $existingContract = Contrato::find(session('contract_draft.contract_id'));
-            if ($existingContract) {
-                $eventoId = $existingContract->evento_id;
-            }
-        }
+        // 2. Obtener ID del evento existente si estamos editando (Ya se obtuvo en la validación de disponibilidad)
 
         // 3. Crear o actualizar Evento
         $evento = \App\Models\Evento::updateOrCreate(
@@ -161,6 +179,23 @@ class ContratoBuilderController extends Controller
             ]
         ]);
 
+        // 4.5 Asociar Platillos al EventoSalon (Comanda)
+        $eventoSalon = \App\Models\EventoSalon::where('evento_id', $evento->id)
+            ->where('salon_id', (int) $data['salon_id'])
+            ->first();
+
+        if ($eventoSalon && !empty($platilloIds)) {
+            $porciones = ((int) $data['num_adultos']) + ((int) $data['num_ninos']);
+            $syncPlatillos = [];
+            foreach ($platilloIds as $pId) {
+                $syncPlatillos[$pId] = [
+                    'porciones_plan' => $porciones,
+                    'orden' => 0
+                ];
+            }
+            $eventoSalon->platillos()->sync($syncPlatillos);
+        }
+
         // 5. Crear o actualizar Contrato
         $contract = Contrato::updateOrCreate(
             ['id' => session('contract_draft.contract_id')],
@@ -180,6 +215,7 @@ class ContratoBuilderController extends Controller
 
         session(['contract_draft' => $draft]);
 
-        return redirect()->route('contrato.demo')->with('status', 'Contrato guardado y listo para previsualizar.');
+        return redirect()->route('eventos.menu', ['evento' => $evento->id])
+                         ->with('status', 'Contrato guardado. Por favor, configura el menú.');
     }
 }

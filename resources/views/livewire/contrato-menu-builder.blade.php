@@ -1,83 +1,85 @@
-<section class="card">
-    <header class="card-header">
-        <span class="card-icon">🍽️</span>
-        <h1>Configuración de Comanda (Reactiva)</h1>
-    </header>
-
-    <form wire:submit.prevent="guardarMenu" class="info-content">
+<section class="contract-card" style="box-shadow: none; padding: 0;">
+    <form wire:submit.prevent="guardarMenu" class="contract-form">
         
-        <fieldset style="border: 1px solid #dee2e6; padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
-            <legend style="font-weight: bold; padding: 0 10px; color: #495057;">Modalidad del Banquete</legend>
-            
-            <ul style="list-style: none; padding: 0; display: flex; gap: 2rem;">
+        <fieldset class="form-section">
+            <legend>Modalidad del Banquete</legend>
+            <section class="input-grid grid-2" style="margin-top: 1rem;">
                 @foreach($servicios as $servicio)
-                <li>
-                    <label style="cursor: pointer;">
-                        <input type="radio" value="{{ $servicio->id }}" wire:model.live="servicio_id">
-                        <strong>{{ $servicio->nombre }}</strong>
+                <article class="input-wrapper checkbox-wrapper" style="padding: 1.5rem; background: var(--surface-card); border: 2px solid var(--border-light); border-radius: 12px; transition: all 0.3s ease;">
+                    <label class="checkbox-label" style="font-weight: 600; font-size: 1.1rem; width: 100%; display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                        <input type="radio" value="{{ $servicio->id }}" wire:model.live="servicio_id" style="transform: scale(1.5);">
+                        {{ $servicio->nombre }}
                     </label>
-                </li>
+                </article>
                 @endforeach
-            </ul>
+            </section>
             @error('servicio_id') 
-                <span style="color: #dc3545; font-size: 0.85rem; display: block; margin-top: 0.5rem;">{{ $message }}</span> 
+                <span style="color: #dc3545; font-weight: 600; display: block; margin-top: 0.75rem;">{{ $message }}</span> 
             @enderror
         </fieldset>
 
         @if($servicio_id == 1)
-        <fieldset style="border: none; padding: 0; margin-bottom: 2rem;">
-            <h3 style="color: #667eea; margin-bottom: 1rem;">🌮 Selección de Guisados (Elige entre 5 y 7 platillos)</h3>
+        <fieldset class="form-section">
+            <legend>Selección de Guisados</legend>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">Elige entre 5 y 7 platillos para tu taquiza.</p>
             
-            <article style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+            <section class="input-grid grid-3">
                 @foreach($categorias->where('nombre', 'GUISADOS')->first()->platillos ?? [] as $guisado)
-                <label style="background: #f8f9fa; padding: 10px; border-radius: 6px; border: 1px solid #e9ecef; display: block; cursor: pointer;">
-                    <input type="checkbox" value="{{ $guisado->id }}" wire:model="guisados">
-                    {{ $guisado->nombre }}
-                </label>
+                <article class="input-wrapper checkbox-wrapper" style="background: var(--bg-body); border-radius: 8px; padding: 0.75rem;">
+                    <label class="checkbox-label" style="cursor: pointer; width: 100%;">
+                        <input type="checkbox" value="{{ $guisado->id }}" wire:model="guisados">
+                        {{ $guisado->nombre }}
+                    </label>
+                </article>
                 @endforeach
-            </article>
+            </section>
             @error('guisados') 
-                <span style="color: #dc3545; display: block; margin-top: 1rem; font-size: 0.85rem;">{{ $message }}</span> 
+                <span style="color: #dc3545; font-weight: 600; display: block; margin-top: 1rem;">{{ $message }}</span> 
             @enderror
         </fieldset>
         @endif
 
         @if($servicio_id == 2)
-        <fieldset style="border: none; padding: 0; margin-bottom: 2rem;">
-            <h3 style="color: #667eea; margin-bottom: 1rem;">🥂 Menú Estructurado por Tiempos</h3>
+        <fieldset class="form-section">
+            <legend>Menú Estructurado por Tiempos</legend>
             
-            <article style="display: flex; flex-direction: column; gap: 1.5rem;">
-                <label style="display: block;">
-                    <strong>1er Tiempo (Entrada o Crema de Apertura):</strong>
-                    <select wire:model="entrada_id" style="width: 100%; padding: 8px; border-radius: 4px; margin-top: 0.5rem; border: 1px solid #dee2e6;">
+            <section class="input-grid grid-2" style="margin-top: 1.5rem;">
+                <article class="input-wrapper">
+                    <label style="font-weight: 600; color: var(--primary-dark);">1er Tiempo (Entrada o Crema)</label>
+                    <select wire:model="entrada_id" class="form-control" style="margin-top: 0.5rem;">
                         <option value="">-- Selecciona una entrada --</option>
                         @foreach($categorias->where('nombre', 'ENTRADAS')->first()->platillos ?? [] as $entrada)
                             <option value="{{ $entrada->id }}">{{ $entrada->nombre }}</option>
                         @endforeach
                     </select>
                     @error('entrada_id') 
-                        <span style="color: #dc3545; font-size: 0.85rem; display: block; margin-top: 0.25rem;">{{ $message }}</span> 
+                        <span style="color: #dc3545; font-weight: 600; display: block; margin-top: 0.5rem;">{{ $message }}</span> 
                     @enderror
-                </label>
+                </article>
 
-                <label style="display: block;">
-                    <strong>2do Tiempo (Plato Fuerte de Producción):</strong>
-                    <select wire:model="plato_fuerte_id" style="width: 100%; padding: 8px; border-radius: 4px; margin-top: 0.5rem; border: 1px solid #dee2e6;">
+                <article class="input-wrapper">
+                    <label style="font-weight: 600; color: var(--primary-dark);">2do Tiempo (Plato Fuerte)</label>
+                    <select wire:model="plato_fuerte_id" class="form-control" style="margin-top: 0.5rem;">
                         <option value="">-- Selecciona el plato fuerte --</option>
                         @foreach($categorias->where('nombre', 'PLATOS FUERTES')->first()->platillos ?? [] as $fuerte)
                             <option value="{{ $fuerte->id }}">{{ $fuerte->nombre }}</option>
                         @endforeach
                     </select>
                     @error('plato_fuerte_id') 
-                        <span style="color: #dc3545; font-size: 0.85rem; display: block; margin-top: 0.25rem;">{{ $message }}</span> 
+                        <span style="color: #dc3545; font-weight: 600; display: block; margin-top: 0.5rem;">{{ $message }}</span> 
                     @enderror
-                </label>
-            </article>
+                </article>
+            </section>
         </fieldset>
         @endif
 
-        <footer style="margin-top: 2rem; text-align: right;">
-            <button type="submit" class="btn primary">💾 Registrar Menú y Calcular Insumos</button>
+        <footer style="margin-top: 2rem; display: flex; justify-content: flex-end;">
+            <button type="submit" class="btn-submit">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20" style="margin-right: 0.5rem; vertical-align: text-bottom;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Confirmar Menú y Generar Comanda
+            </button>
         </footer>
     </form>
 </section>

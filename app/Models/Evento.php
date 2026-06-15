@@ -27,6 +27,11 @@ class Evento extends Model
                     ->withTimestamps();
     }
 
+    public function eventoSalones(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(EventoSalon::class, 'evento_id');
+    }
+
     public function cliente(): BelongsTo
     {
         return $this->belongsTo(Cliente::class);

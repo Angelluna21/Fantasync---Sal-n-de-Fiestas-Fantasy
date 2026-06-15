@@ -25,11 +25,12 @@ class IngredienteController extends Controller
         $data = $request->validate([
             'nombre' => 'required|string|max:120',
             'unidad' => 'required|in:kg,gr,l,ml,pz',
+            'categoria' => 'required|string|max:50',
             'platillo_ids' => 'sometimes|array',
             'platillo_ids.*' => 'integer|exists:platillos,id',
         ]);
 
-        $ingrediente = Ingrediente::create($request->only(['nombre', 'unidad']));
+        $ingrediente = Ingrediente::create($request->only(['nombre', 'unidad', 'categoria']));
 
         if (isset($data['platillo_ids'])) {
             $ingrediente->platillos()->sync($data['platillo_ids']);
@@ -56,11 +57,12 @@ class IngredienteController extends Controller
         $data = $request->validate([
             'nombre' => 'required|string|max:120',
             'unidad' => 'required|in:kg,gr,l,ml,pz',
+            'categoria' => 'required|string|max:50',
             'platillo_ids' => 'sometimes|array',
             'platillo_ids.*' => 'integer|exists:platillos,id',
         ]);
 
-        $ingrediente->update($request->only(['nombre', 'unidad']));
+        $ingrediente->update($request->only(['nombre', 'unidad', 'categoria']));
 
         if (array_key_exists('platillo_ids', $data)) {
             $ingrediente->platillos()->sync($data['platillo_ids'] ?? []);

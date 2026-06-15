@@ -19,15 +19,7 @@
                 <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
             </a>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="logout-btn">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                    </svg>
-                    Cerrar sesión
-                </button>
-            </form>
+            <x-user-menu />
         </nav>
 
         <!-- Contenedor -->
@@ -40,20 +32,20 @@
             </a>
 
             @if(session('success'))
-            <div style="background-color: rgba(76, 175, 80, 0.15); color: #2e7d32; padding: 1rem 1.5rem; border-radius: 1rem; border: 1px solid rgba(76, 175, 80, 0.3); margin-bottom: 1.5rem; font-weight: 700;">
+            <aside role="alert" style="background-color: rgba(76, 175, 80, 0.15); color: #2e7d32; padding: 1rem 1.5rem; border-radius: 1rem; border: 1px solid rgba(76, 175, 80, 0.3); margin-bottom: 1.5rem; font-weight: 700;">
                 {{ session('success') }}
-            </div>
+            </aside>
             @endif
 
             <!-- Tarjeta -->
             <article class="detail-card">
                 <header class="detail-header">
-                    <div>
+                    <hgroup>
                         <h1 class="detail-title">{{ $salon->nombre }}</h1>
                         @if($salon->alias)
                         <span class="salon-alias">{{ $salon->alias }}</span>
                         @endif
-                    </div>
+                    </hgroup>
                     <span class="salon-badge">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
@@ -62,20 +54,95 @@
                 </header>
 
                 <section class="detail-body">
-                    <!-- Sucursal -->
+                    <!-- Datos Técnicos -->
+                    <section class="detail-section" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; border-bottom: 1px solid rgba(122, 40, 138, 0.1); padding-bottom: 1.5rem;">
+                        <article class="detail-block">
+                            <span class="detail-label" style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Capacidad Máxima</span>
+                            <span class="detail-value" style="font-size: 1.15rem; font-weight: 800; color: var(--primary-purple);">
+                                {{ $salon->capacidad ? "{$salon->capacidad} personas" : 'No especificada' }}
+                            </span>
+                        </article>
+
+                        <article class="detail-block">
+                            <span class="detail-label" style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Estado del Salón</span>
+                            <span class="status-badge status-{{ $salon->estado === 'activo' ? 'verde' : ($salon->estado === 'mantenimiento' ? 'amarillo' : 'rojo') }}" style="display: inline-block;">
+                                @if($salon->estado === 'activo')
+                                    🟢 Activo
+                                @elseif($salon->estado === 'mantenimiento')
+                                    🟡 Mantenimiento
+                                @else
+                                    🔴 Inactivo
+                                @endif
+                            </span>
+                        </article>
+
+                        @if($salon->alias)
+                        <article class="detail-block">
+                            <span class="detail-label" style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Sobrenombre / Alias</span>
+                            <span class="detail-value" style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">
+                                {{ $salon->alias }}
+                            </span>
+                        </article>
+                        @endif
+                    </section>
+
+                    @if($salon->descripcion)
+                    <!-- Descripción y Amenidades -->
+                    <section class="detail-section">
+                        <h2 class="section-title">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Descripción y Amenidades
+                        </h2>
+                        <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin: 0; background: rgba(122, 40, 138, 0.02); padding: 1rem; border-radius: 12px; border: 1px solid rgba(122, 40, 138, 0.08);">
+                            {{ $salon->descripcion }}
+                        </p>
+                    </section>
+                    @endif
+
+                    <!-- Dirección y Google Maps -->
                     <section class="detail-section">
                         <h2 class="section-title">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
-                            Sucursal
+                            Ubicación
                         </h2>
-                        @if($salon->sucursal)
-                        <p class="section-text">{{ $salon->sucursal->nombre }}</p>
-                        <p style="margin: 0.25rem 0 0 0; font-size: 0.9rem; color: #8c8c8c; font-weight: 500;">{{ $salon->sucursal->direccion }}</p>
+                        @if($salon->direccion)
+                            <p class="section-text" style="margin-bottom: 1rem; color: var(--text-main); font-weight: 700;">
+                                {{ $salon->direccion }}
+                            </p>
+                            <div class="map-container" style="border-radius: 16px; overflow: hidden; border: 1px solid rgba(122, 40, 138, 0.15); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                                <iframe 
+                                    width="100%" 
+                                    height="350" 
+                                    frameborder="0" 
+                                    style="border:0; display: block;" 
+                                    src="https://maps.google.com/maps?q={{ urlencode($salon->direccion) }}&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
                         @else
-                        <p class="section-text" style="color: #bcbcbc; font-style: italic;">Sin sucursal asignada</p>
+                            @if($salon->sucursal)
+                                <p class="section-text">{{ $salon->sucursal->nombre }}</p>
+                                <p style="margin: 0.25rem 0 1rem 0; font-size: 0.9rem; color: #8c8c8c; font-weight: 500;">
+                                    {{ $salon->sucursal->direccion }}
+                                </p>
+                                <div class="map-container" style="border-radius: 16px; overflow: hidden; border: 1px solid rgba(122, 40, 138, 0.15); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                                    <iframe 
+                                        width="100%" 
+                                        height="350" 
+                                        frameborder="0" 
+                                        style="border:0; display: block;" 
+                                        src="https://maps.google.com/maps?q={{ urlencode($salon->sucursal->direccion) }}&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                                        allowfullscreen>
+                                    </iframe>
+                                </div>
+                            @else
+                                <p class="section-text" style="color: #bcbcbc; font-style: italic;">Sin ubicación configurada</p>
+                            @endif
                         @endif
                     </section>
 
@@ -88,7 +155,7 @@
                             Calendario de Eventos
                         </h2>
                         
-                        <div class="calendar-wrapper">
+                        <figure class="calendar-wrapper">
                             <header class="calendar-header">
                                 <button type="button" class="btn-calendar-nav" id="prev-month" aria-label="Mes anterior">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
@@ -115,7 +182,7 @@
                                     <!-- Se generará dinámicamente -->
                                 </tbody>
                             </table>
-                        </div>
+                        </figure>
 
                         <!-- Ficha de Detalles del Evento -->
                         <article id="event-detail-card" class="event-detail-card" style="display: none;">
@@ -312,12 +379,12 @@
 
                 eventDetailCard.innerHTML = `
                     <header class="event-detail-header">
-                        <div>
+                        <hgroup>
                             <h4 class="event-detail-title">${event.titulo || 'Sin título'}</h4>
                             <p style="margin: 0.25rem 0 0 0; font-size: 0.9rem; color: var(--text-muted); font-weight: 700;">
                                 Celebración: ${event.tipo_evento || 'Otro'}
                             </p>
-                        </div>
+                        </hgroup>
                         <span class="event-detail-badge ${event.estado}">${stateLabel}</span>
                     </header>
                     

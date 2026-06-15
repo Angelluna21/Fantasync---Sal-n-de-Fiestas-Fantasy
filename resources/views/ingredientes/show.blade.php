@@ -16,13 +16,7 @@
                 <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
             </a>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="logout-btn">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    Cerrar sesión
-                </button>
-            </form>
+            <x-user-menu />
         </nav>
 
         <!-- Volver al Listado -->
@@ -56,6 +50,15 @@
                         <p style="margin: 0; padding: 0;">
                             <span class="unit-badge {{ $ingrediente->unidad }} show-badge">
                                 {{ $ingrediente->unidad }}
+                            </span>
+                        </p>
+                    </article>
+
+                    <article class="detail-block">
+                        <span class="detail-label">Categoría de Almacén</span>
+                        <p style="margin: 0; padding: 0;">
+                            <span style="font-size: 0.95rem; background: rgba(122, 40, 138, 0.1); color: var(--primary-purple); padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 800; border: 1px solid rgba(122, 40, 138, 0.2); display: inline-block;">
+                                {{ $ingrediente->categoria ?? 'Abarrotes' }}
                             </span>
                         </p>
                     </article>
