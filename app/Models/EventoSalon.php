@@ -14,6 +14,11 @@ class EventoSalon extends Pivot
         return $this->belongsTo(Salon::class, 'salon_id');
     }
 
+    public function evento(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Evento::class, 'evento_id');
+    }
+
     // 🔹 La magia: Conecta el salón del evento con los platillos que se van a servir (La Comanda)
     public function platillos(): BelongsToMany
     {

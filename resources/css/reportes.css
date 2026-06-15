@@ -63,7 +63,8 @@
     gap: 2.5rem;
 }
 
-.main-report-card, .shopping-list-card {
+.main-report-card,
+.shopping-list-card {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(16px);
     border: 1px solid var(--border-color);
@@ -73,12 +74,14 @@
     transition: box-shadow 0.3s ease;
 }
 
-.main-report-card:hover, .shopping-list-card:hover {
+.main-report-card:hover,
+.shopping-list-card:hover {
     box-shadow: var(--shadow-hover);
 }
 
 /* Encabezados de Tarjetas */
-.card-header-report, .card-header-shopping {
+.card-header-report,
+.card-header-shopping {
     margin-bottom: 2rem;
     border-bottom: 1px solid rgba(122, 40, 138, 0.1);
     padding-bottom: 1.25rem;
@@ -180,7 +183,7 @@
     border: 1px solid rgba(122, 40, 138, 0.1);
     border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
 }
 
 .category-group-title {
@@ -357,7 +360,7 @@
     border: 1px solid rgba(122, 40, 138, 0.1);
     border-radius: 12px;
     padding: 1rem 1.25rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
     transition: all 0.25s ease;
 }
 
@@ -399,12 +402,12 @@
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.checkbox-container:hover input ~ .checkmark {
+.checkbox-container:hover input~.checkmark {
     background-color: rgba(122, 40, 138, 0.05);
     border-color: var(--primary-purple);
 }
 
-.checkbox-container input:checked ~ .checkmark {
+.checkbox-container input:checked~.checkmark {
     background-color: var(--primary-purple);
     border-color: var(--primary-purple);
     box-shadow: 0 2px 8px rgba(122, 40, 138, 0.3);
@@ -416,7 +419,7 @@
     display: none;
 }
 
-.checkbox-container input:checked ~ .checkmark:after {
+.checkbox-container input:checked~.checkmark:after {
     display: block;
 }
 
@@ -453,17 +456,17 @@
     transition: color 0.3s ease;
 }
 
-.checkbox-container input:checked ~ .shopping-item-info {
+.checkbox-container input:checked~.shopping-item-info {
     opacity: 0.5;
     transform: translateX(4px);
 }
 
-.checkbox-container input:checked ~ .shopping-item-info .shopping-item-name {
+.checkbox-container input:checked~.shopping-item-info .shopping-item-name {
     text-decoration: line-through;
     color: var(--text-muted);
 }
 
-.checkbox-container input:checked ~ .shopping-item-info .shopping-item-qty {
+.checkbox-container input:checked~.shopping-item-info .shopping-item-qty {
     color: var(--text-muted);
 }
 
@@ -486,57 +489,134 @@
     color: var(--text-muted);
     font-size: 1.05rem;
     font-style: italic;
-    background: rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.5);
     border: 1px dashed var(--border-color);
     border-radius: 16px;
 }
 
-/* Adaptación para Impresión */
+/* Adaptación para Impresión Optimizada */
 @media print {
+    @page {
+        margin: 1cm;
+        size: auto;
+    }
+
     body {
         background: #ffffff !important;
         color: #000000 !important;
+        font-size: 10pt;
+        /* Reducir tamaño base de fuente */
     }
+
     .dashboard-background,
     .top-nav,
     .navigation-buttons,
     .btn-print,
-    .dashboard-footer {
+    .dashboard-footer,
+    .eyebrow-accent,
+    .card-subtitle {
         display: none !important;
     }
+
     .dashboard-layout {
         padding: 0 !important;
     }
-    .main-report-card, .shopping-list-card {
+
+    .main-report-card,
+    .shopping-list-card {
         background: #ffffff !important;
         border: none !important;
         box-shadow: none !important;
         padding: 0 !important;
+        margin: 0 !important;
         backdrop-filter: none !important;
-        page-break-after: always;
+        page-break-after: auto;
+        /* Evitar saltos innecesarios */
     }
-    .category-group-card, .shopping-category-section {
-        border: 1px solid #cccccc !important;
-        box-shadow: none !important;
-        page-break-inside: avoid;
+
+    .shopping-list-categories {
+        gap: 0.5rem !important;
+        margin-top: 0.5rem !important;
     }
-    .tabla-reporte th {
-        background-color: #f2f2f2 !important;
-        border-bottom: 2px solid #000000 !important;
-    }
-    .tabla-reporte td {
-        border-bottom: 1px solid #dddddd !important;
-    }
-    .status-badge {
+
+    .shopping-category-section {
         border: none !important;
-        background: transparent !important;
-        padding: 0 !important;
-        color: #000000 !important;
-        font-weight: 700 !important;
-    }
-    .shopping-item-card {
-        border: 1px solid #dddddd !important;
-        box-shadow: none !important;
+        padding: 0 0 0.5rem 0 !important;
+        margin-bottom: 0.5rem !important;
         page-break-inside: avoid;
+        background: transparent !important;
+    }
+
+    .shopping-category-title {
+        font-size: 11pt !important;
+        margin-bottom: 0.5rem !important;
+        border-bottom: 1px solid #000;
+        padding-bottom: 2px;
+        color: #000 !important;
+    }
+
+    /* Layout compacto en columnas */
+    .shopping-items-grid {
+        display: block !important;
+        column-count: 3;
+        /* Imprimir a 3 columnas tipo periódico */
+        column-gap: 1.5rem;
+    }
+
+    .shopping-item-card {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0.15rem 0 !important;
+        margin-bottom: 0.15rem !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        background: transparent !important;
+    }
+
+    .checkbox-container {
+        padding-left: 18px !important;
+        align-items: center !important;
+    }
+
+    .checkmark {
+        height: 12px !important;
+        width: 12px !important;
+        border: 1px solid #000 !important;
+        border-radius: 2px !important;
+        background: transparent !important;
+    }
+
+    .shopping-item-info {
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        align-items: baseline !important;
+        margin-left: 0.5rem !important;
+    }
+
+    .shopping-item-name {
+        font-size: 9.5pt !important;
+        font-weight: normal !important;
+        color: #000 !important;
+    }
+
+    .shopping-item-qty {
+        font-size: 9.5pt !important;
+        font-weight: bold !important;
+        color: #000 !important;
+        margin-top: 0 !important;
+        margin-left: 0.5rem !important;
+    }
+
+    .card-header-shopping {
+        margin-bottom: 1rem !important;
+        padding-bottom: 0 !important;
+        border-bottom: none !important;
+    }
+
+    .card-title {
+        font-size: 16pt !important;
+        color: #000 !important;
+        margin-bottom: 0 !important;
     }
 }

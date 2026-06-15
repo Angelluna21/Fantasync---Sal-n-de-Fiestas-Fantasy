@@ -105,26 +105,16 @@
                                         <thead>
                                             <tr>
                                                 <th>Materia Prima / Insumo</th>
-                                                <th>Cantidad Necesaria</th>
-                                                <th>Disponibilidad</th>
-                                                <th>Estado</th>
+                                                <th>Matemático (Exacto)</th>
+                                                <th>Seguro (+10% Merma)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($insumos as $insumo)
                                                 <tr>
                                                     <td><strong>{{ $insumo['nombre'] }}</strong></td>
-                                                    <td class="col-requerido">{{ $insumo['requerido_format'] }}</td>
-                                                    <td class="col-stock">{{ $insumo['stock_format'] }}</td>
-                                                    <td>
-                                                        @if($insumo['estado'] === 'verde')
-                                                            <span class="status-badge status-verde">🟢 Disponible</span>
-                                                        @elseif($insumo['estado'] === 'amarillo')
-                                                            <span class="status-badge status-amarillo">🟡 Stock Bajo</span>
-                                                        @else
-                                                            <span class="status-badge status-rojo">🔴 Sin Stock</span>
-                                                        @endif
-                                                    </td>
+                                                    <td class="col-requerido" style="color: var(--text-muted);">{{ $insumo['exacto_format'] }}</td>
+                                                    <td class="col-margen" style="font-weight: 600;">{{ $insumo['seguro_format'] }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -154,7 +144,7 @@
                 <header class="card-header-shopping">
                     <p class="eyebrow-accent">🛒 LOGÍSTICA</p>
                     <h2 class="card-title">Lista de Compras (Central de Abasto)</h2>
-                    <p class="card-subtitle">Esta lista se separa por áreas de la Central de Abasto y descuenta automáticamente lo que ya tienes en stock.</p>
+                    <p class="card-subtitle">Esta lista se separa por áreas de la Central de Abasto y te muestra el total comercial a comprar.</p>
                 </header>
 
                 @php

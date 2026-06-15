@@ -80,15 +80,6 @@
                         @enderror
                     </fieldset>
 
-                    <!-- Campo: Porciones Base -->
-                    <fieldset class="form-group">
-                        <legend class="form-label">Porciones Base</legend>
-                        <input type="number" id="porciones_base" name="porciones_base" class="form-input"
-                               placeholder="1" min="1" value="{{ old('porciones_base', 1) }}">
-                        @error('porciones_base')
-                            <output class="form-error">{{ $message }}</output>
-                        @enderror
-                    </fieldset>
 
                     <!-- Campo: Ingredientes (Asociación Múltiple con Cantidad) -->
                     <fieldset class="form-group">
@@ -123,7 +114,7 @@
 
                                 row.innerHTML = `
                                     ${selectHtml}
-                                    <input type="number" step="0.01" min="0.01" name="ingredientes[cantidad][]" class="form-input" placeholder="Cantidad por porción base" style="flex: 1;" required>
+                                    <input type="number" step="0.01" min="0.01" name="ingredientes[cantidad][]" class="form-input" placeholder="Cantidad para 100 porciones" style="flex: 1;" required>
                                     <button type="button" class="btn-remove" style="background: #ffebee; color: #d32f2f; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-weight: bold;">X</button>
                                 `;
 

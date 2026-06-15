@@ -102,17 +102,19 @@ class ImportOldRecipes extends Command
         // Parsea Platillos
         $this->info("Importando Platillos...");
         $platillos = $this->parseInsertValues($sqlContent, 'platillo');
+        $porcionesViejas = [];
         foreach ($platillos as $plat) {
             // El campo id_categoria viene en la posición 3, porciones_base en la 4
             // A veces el id_categoria puede ser NULL.
             $categoria_id = strtoupper(trim($plat[3])) === 'NULL' ? null : $plat[3];
+            
+            $porcionesViejas[$plat[0]] = $plat[4] ?? 100;
             
             Platillo::insert([
                 'id' => $plat[0],
                 'nombre' => trim($plat[1], "'"),
                 'descripcion' => trim($plat[2], "'"),
                 'categoria_platillo_id' => $categoria_id,
-                'porciones_base' => $plat[4] ?? 100, // Por defecto 100 si no viene
                 // asumiendo que no tienen un servicio gastronomico asginado
                 'servicio_gastronomico_id' => null, 
                 'precio' => 0.00,
@@ -131,13 +133,15 @@ class ImportOldRecipes extends Command
             $id_platillo = $rec[0];
             $id_ingrediente = $rec[1];
             $cantidad_por_base = $rec[2];
+            $base_vieja = $porcionesViejas[$id_platillo] ?? 100;
+            $cantidad_estandarizada = ($cantidad_por_base / $base_vieja) * 100;
             
             // Validamos que el platillo y el ingrediente existan para no romper llaves foráneas
             if (Platillo::where('id', $id_platillo)->exists() && Ingrediente::where('id', $id_ingrediente)->exists()) {
                 DB::table('platillo_ingrediente')->insert([
                     'platillo_id' => $id_platillo,
                     'ingrediente_id' => $id_ingrediente,
-                    'cantidad_por_base' => $cantidad_por_base,
+                    'cantidad_por_base' => $cantidad_estandarizada,
                     'nota' => isset($rec[3]) && strtoupper(trim($rec[3])) !== 'NULL' ? trim($rec[3], "'") : null,
                     'created_at' => now(),
                     'updated_at' => now(),

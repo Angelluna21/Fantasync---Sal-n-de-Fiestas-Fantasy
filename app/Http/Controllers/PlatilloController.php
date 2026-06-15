@@ -29,14 +29,13 @@ class PlatilloController extends Controller
             'nombre' => 'required|string|max:100',
             'descripcion' => 'nullable|string',
             'precio' => 'nullable|numeric|min:0',
-            'porciones_base' => 'nullable|integer|min:1',
             'ingredientes' => 'sometimes|array',
             'ingredientes.id.*' => 'integer|exists:ingredientes,id',
             'ingredientes.cantidad.*' => 'numeric|min:0.01',
         ]);
 
         $platillo = Platillo::create($request->only([
-            'categoria_platillo_id', 'nombre', 'descripcion', 'porciones_base'
+            'categoria_platillo_id', 'nombre', 'descripcion'
         ]));
 
         if (isset($data['ingredientes']['id'])) {
@@ -72,14 +71,13 @@ class PlatilloController extends Controller
             'nombre' => 'required|string|max:100',
             'descripcion' => 'nullable|string',
             'precio' => 'nullable|numeric|min:0',
-            'porciones_base' => 'nullable|integer|min:1',
             'ingredientes' => 'sometimes|array',
             'ingredientes.id.*' => 'integer|exists:ingredientes,id',
             'ingredientes.cantidad.*' => 'numeric|min:0.01',
         ]);
 
         $platillo->update($request->only([
-            'categoria_platillo_id', 'nombre', 'descripcion', 'porciones_base'
+            'categoria_platillo_id', 'nombre', 'descripcion'
         ]));
 
         if (array_key_exists('ingredientes', $data) && isset($data['ingredientes']['id'])) {

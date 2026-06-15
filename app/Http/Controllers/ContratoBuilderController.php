@@ -6,6 +6,7 @@ use App\Models\Contrato;
 use App\Models\Platillo;
 use App\Models\Salon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ContratoBuilderController extends Controller
 {
@@ -75,36 +76,19 @@ class ContratoBuilderController extends Controller
             'extras.*' => 'nullable|boolean',
         ]);
 
+        // Sanitizar entradas de texto para prevenir XSS (Inyección de Software Malicioso)
+        $stringFields = ['cliente', 'correo', 'telefono', 'recepcion_hora', 'inicio_hora', 'tipo_evento', 'festejado', 'cliente_domicilio', 'cliente_ine', 'manteleria_color'];
+        foreach ($stringFields as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = strip_tags($data[$field]);
+            }
+        }
+
         $platilloIds = array_values(array_map('intval', $data['platillo_ids'] ?? []));
         $extras = [];
         foreach ($extraKeys as $key) {
             $extras[$key] = ! empty($data['extras'][$key]);
         }
-
-        // --- VALIDACIÓN DE DISPONIBILIDAD (Evitar duplicidad / doble reserva) ---
-        $eventoId = null;
-        if (session('contract_draft.contract_id')) {
-            $existingContract = Contrato::find(session('contract_draft.contract_id'));
-            if ($existingContract) {
-                $eventoId = $existingContract->evento_id;
-            }
-        }
-
-        $salonOcupado = \App\Models\EventoSalon::where('salon_id', $data['salon_id'])
-            ->whereHas('evento', function ($q) use ($data, $eventoId) {
-                $q->where('fecha', $data['evento_fecha']);
-                if ($eventoId) {
-                    $q->where('id', '!=', $eventoId);
-                }
-            })->exists();
-
-        if ($salonOcupado) {
-            return back()->withErrors([
-                'evento_fecha' => 'El salón seleccionado ya está reservado para esta fecha.',
-                'salon_id' => 'El salón seleccionado ya está reservado para esta fecha.'
-            ])->withInput();
-        }
-        // -------------------------------------------------------------------------
 
         // Calcular el total
         $subtotalPlatillos = Platillo::query()->whereIn('id', $platilloIds)->sum('precio');
@@ -139,6 +123,35 @@ class ContratoBuilderController extends Controller
             'extras' => $extras,
             'total' => $total,
         ];
+
+        return DB::transaction(function () use ($data, $platilloIds, $extras, $total, $contractData) {
+            // Bloqueo pesimista para evitar Condiciones de Carrera (duplicidad de reservas en el mismo instante)
+            DB::table('salones')->where('id', $data['salon_id'])->lockForUpdate()->first();
+
+            // --- VALIDACIÓN DE DISPONIBILIDAD (Evitar duplicidad / doble reserva) ---
+            $eventoId = null;
+            if (session('contract_draft.contract_id')) {
+                $existingContract = Contrato::find(session('contract_draft.contract_id'));
+                if ($existingContract) {
+                    $eventoId = $existingContract->evento_id;
+                }
+            }
+
+            $salonOcupado = \App\Models\EventoSalon::where('salon_id', $data['salon_id'])
+                ->whereHas('evento', function ($q) use ($data, $eventoId) {
+                    $q->where('fecha', $data['evento_fecha']);
+                    if ($eventoId) {
+                        $q->where('id', '!=', $eventoId);
+                    }
+                })->exists();
+
+            if ($salonOcupado) {
+                return back()->withErrors([
+                    'evento_fecha' => 'El salón seleccionado ya está reservado para esta fecha.',
+                    'salon_id' => 'El salón seleccionado ya está reservado para esta fecha.'
+                ])->withInput();
+            }
+            // -------------------------------------------------------------------------
 
         // 1. Crear o actualizar Cliente
         $cliente = \App\Models\Cliente::updateOrCreate(
@@ -213,9 +226,10 @@ class ContratoBuilderController extends Controller
 
         $draft = array_merge($contractData, ['contract_id' => $contract->id]);
 
-        session(['contract_draft' => $draft]);
+            session(['contract_draft' => $draft]);
 
-        return redirect()->route('eventos.menu', ['evento' => $evento->id])
-                         ->with('status', 'Contrato guardado. Por favor, configura el menú.');
+            return redirect()->route('eventos.menu', ['evento' => $evento->id])
+                             ->with('status', 'Contrato guardado. Por favor, configura el menú.');
+        });
     }
 }

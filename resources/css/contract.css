@@ -513,3 +513,16 @@ input[type="number"] {
         display: none;
     }
 }
+
+/* --- LIVEWIRE MENU BUILDER --- */
+.menu-builder-card { box-shadow: none; padding: 0; }
+.servicio-card { padding: 1.5rem; background: var(--surface-card); border: 2px solid var(--border-light); border-radius: 12px; transition: all 0.3s ease; }
+.servicio-card.selected { background: #f0fdf4; border-color: #22c55e; }
+.servicio-label { font-weight: 600; font-size: 1.1rem; width: 100%; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+.servicio-radio { transform: scale(1.5); accent-color: #22c55e; }
+.animated-section { animation: fadeSlideDown 0.4s ease-out; }
+.guisado-card { background: var(--bg-body); border-radius: 8px; padding: 0.75rem; transition: background 0.2s; }
+.guisado-card.selected { background: #e0f2fe; }
+.guisado-label { cursor: pointer; width: 100%; display: flex; align-items: center; gap: 0.5rem; }
+.tiempo-label { font-weight: 600; color: var(--text-main); /* Cambiado de --primary-dark si no existe */ }
+@keyframes fadeSlideDown { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }

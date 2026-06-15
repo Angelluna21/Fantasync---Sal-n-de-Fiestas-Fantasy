@@ -13,8 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
     'servicio_gastronomico_id',
     'nombre',
     'descripcion',
-    'precio',
-    'porciones_base'
+    'precio'
 ])]
 class Platillo extends Model
 {

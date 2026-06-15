@@ -10,14 +10,13 @@ use App\Models\Ingrediente;
 
 class PlatilloManager extends Component
 {
-    public $nombre, $descripcion, $precio = 0, $porciones_base = 100, $categoria_platillo_id, $servicio_gastronomico_id;
+    public $nombre, $descripcion, $precio = 0, $categoria_platillo_id, $servicio_gastronomico_id;
     public $ingredientesAgregados = [], $ingredienteSeleccionadoId, $cantidadTemporal, $unidadSeleccionada = '';
 
     protected $rules = [
         'nombre' => 'required|max:150',
         'categoria_platillo_id' => 'required',
         'servicio_gastronomico_id' => 'required',
-        'porciones_base' => 'required|integer|min:1',
     ];
 
     public function updatedIngredienteSeleccionadoId($id) {
@@ -49,7 +48,6 @@ class PlatilloManager extends Component
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
             'precio' => $this->precio,
-            'porciones_base' => $this->porciones_base,
             'categoria_platillo_id' => $this->categoria_platillo_id,
             'servicio_gastronomico_id' => $this->servicio_gastronomico_id
         ]);

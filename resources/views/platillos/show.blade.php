@@ -55,10 +55,6 @@
                         @endif
                     </article>
 
-                    <article class="detail-block">
-                        <span class="detail-label">Porciones Base</span>
-                        <span class="detail-value">{{ $platillo->porciones_base ?? 1 }} pz</span>
-                    </article>
 
                     <article class="detail-block">
                         <span class="detail-label">Total de Insumos</span>

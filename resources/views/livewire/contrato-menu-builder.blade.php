@@ -1,13 +1,13 @@
-<section class="contract-card" style="box-shadow: none; padding: 0;">
+<section class="contract-card menu-builder-card">
     <form wire:submit.prevent="guardarMenu" class="contract-form">
         
         <fieldset class="form-section">
             <legend>Modalidad del Banquete</legend>
             <section class="input-grid grid-2" style="margin-top: 1rem;">
                 @foreach($servicios as $servicio)
-                <article class="input-wrapper checkbox-wrapper" style="padding: 1.5rem; background: var(--surface-card); border: 2px solid var(--border-light); border-radius: 12px; transition: all 0.3s ease;">
-                    <label class="checkbox-label" style="font-weight: 600; font-size: 1.1rem; width: 100%; display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
-                        <input type="radio" value="{{ $servicio->id }}" wire:model.live="servicio_id" style="transform: scale(1.5);">
+                <article class="input-wrapper checkbox-wrapper servicio-card {{ $servicio_id == $servicio->id ? 'selected' : '' }}">
+                    <label for="servicio_{{ $servicio->id }}" class="checkbox-label servicio-label">
+                        <input type="radio" id="servicio_{{ $servicio->id }}" value="{{ $servicio->id }}" wire:model.live="servicio_id" class="servicio-radio">
                         {{ $servicio->nombre }}
                     </label>
                 </article>
@@ -19,15 +19,15 @@
         </fieldset>
 
         @if($servicio_id == 1)
-        <fieldset class="form-section">
+        <fieldset class="form-section animated-section" wire:key="servicio-1-section">
             <legend>Selección de Guisados</legend>
             <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">Elige entre 5 y 7 platillos para tu taquiza.</p>
             
             <section class="input-grid grid-3">
                 @foreach($categorias->where('nombre', 'GUISADOS')->first()->platillos ?? [] as $guisado)
-                <article class="input-wrapper checkbox-wrapper" style="background: var(--bg-body); border-radius: 8px; padding: 0.75rem;">
-                    <label class="checkbox-label" style="cursor: pointer; width: 100%;">
-                        <input type="checkbox" value="{{ $guisado->id }}" wire:model="guisados">
+                <article class="input-wrapper checkbox-wrapper guisado-card {{ in_array($guisado->id, $guisados) ? 'selected' : '' }}">
+                    <label for="guisado_{{ $guisado->id }}" class="checkbox-label guisado-label">
+                        <input type="checkbox" id="guisado_{{ $guisado->id }}" value="{{ $guisado->id }}" wire:model.live="guisados">
                         {{ $guisado->nombre }}
                     </label>
                 </article>
@@ -40,12 +40,12 @@
         @endif
 
         @if($servicio_id == 2)
-        <fieldset class="form-section">
+        <fieldset class="form-section animated-section" wire:key="servicio-2-section">
             <legend>Menú Estructurado por Tiempos</legend>
             
             <section class="input-grid grid-2" style="margin-top: 1.5rem;">
                 <article class="input-wrapper">
-                    <label style="font-weight: 600; color: var(--primary-dark);">1er Tiempo (Entrada o Crema)</label>
+                    <label class="tiempo-label">1er Tiempo (Entrada o Crema)</label>
                     <select wire:model="entrada_id" class="form-control" style="margin-top: 0.5rem;">
                         <option value="">-- Selecciona una entrada --</option>
                         @foreach($categorias->where('nombre', 'ENTRADAS')->first()->platillos ?? [] as $entrada)
@@ -58,7 +58,7 @@
                 </article>
 
                 <article class="input-wrapper">
-                    <label style="font-weight: 600; color: var(--primary-dark);">2do Tiempo (Plato Fuerte)</label>
+                    <label class="tiempo-label">2do Tiempo (Plato Fuerte)</label>
                     <select wire:model="plato_fuerte_id" class="form-control" style="margin-top: 0.5rem;">
                         <option value="">-- Selecciona el plato fuerte --</option>
                         @foreach($categorias->where('nombre', 'PLATOS FUERTES')->first()->platillos ?? [] as $fuerte)

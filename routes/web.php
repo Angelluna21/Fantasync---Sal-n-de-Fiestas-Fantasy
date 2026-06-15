@@ -32,6 +32,7 @@ Route::post('contratos/crear', [ContratoBuilderController::class, 'store'])->nam
 Route::get('contrato-demo', [ContratoPreviewController::class, 'show'])->name('contrato.demo');
 Route::get('reportes/insumos/{id}', [ReporteController::class, 'insumosEvento'])->name('reportes.insumos');
 Route::get('reportes/comanda/{contrato}', [\App\Http\Controllers\ComandaController::class, 'showByContrato'])->name('reportes.comanda');
+Route::get('reportes/comanda-rapida', [ReporteController::class, 'comandaRapida'])->name('reportes.comanda-rapida');
 Route::post('/contratos/guardar', [ContratoBuilderController::class, 'store'])->name('contratos.store');
 Route::get('eventos/{evento}/menu', [EventoController::class, 'menuConfig'])->name('eventos.menu');
 Route::middleware('auth')->group(function () {

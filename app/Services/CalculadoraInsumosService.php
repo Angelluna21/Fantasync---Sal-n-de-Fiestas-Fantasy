@@ -21,15 +21,15 @@ class CalculadoraInsumosService
             foreach ($eventoSalon->platillos as $platillo) {
                 
                 $porcionesPlan = $platillo->pivot->porciones_plan;
-                $porcionesBase = $platillo->porciones_base ?: 1; 
+                // La base fija es siempre 100 porciones
                 
                 foreach ($platillo->ingredientes as $ingrediente) {
                     $cantidadBase = $ingrediente->pivot->cantidad_por_base;
                     $unidad = $ingrediente->unidad;
                     $nombreIngrediente = $ingrediente->nombre;
 
-                    // Regla de 3 para escalar ingredientes
-                    $cantidadFinal = ($cantidadBase / $porcionesBase) * $porcionesPlan;
+                    // Regla de 3 para escalar ingredientes con base fija de 100
+                    $cantidadFinal = ($cantidadBase / 100) * $porcionesPlan;
 
                     // Consolidación: Sumar ingredientes repetidos
                     if (!isset($listaInsumos[$nombreIngrediente])) {
@@ -41,6 +41,50 @@ class CalculadoraInsumosService
                     
                     $listaInsumos[$nombreIngrediente]['cantidad'] += $cantidadFinal;
                 }
+            }
+        }
+
+        // Redondear las cantidades a 3 decimales
+        foreach ($listaInsumos as &$insumo) {
+            $insumo['cantidad'] = round($insumo['cantidad'], 3);
+        }
+
+        return $listaInsumos;
+    }
+
+    /**
+     * Calcula la lista de ingredientes para una comanda rápida (banquete independiente)
+     * donde no existe un EventoSalon, sino una lista de platillos y porciones totales.
+     * 
+     * @param array $platillosIds Array con los IDs de los platillos seleccionados
+     * @param int $totalPorciones La cantidad total de porciones a calcular por platillo
+     */
+    public function calcularParaComandaRapida(array $platillosIds, int $totalPorciones): array
+    {
+        $listaInsumos = [];
+        $platillos = \App\Models\Platillo::with('ingredientes')->whereIn('id', $platillosIds)->get();
+
+        foreach ($platillos as $platillo) {
+            foreach ($platillo->ingredientes as $ingrediente) {
+                $cantidadBase = $ingrediente->pivot->cantidad_por_base;
+                $unidad = $ingrediente->unidad;
+                $nombreIngrediente = $ingrediente->nombre;
+
+                // Regla de 3 para escalar ingredientes con base fija de 100
+                // Asumimos que $totalPorciones se asigna completo a cada platillo seleccionado
+                // (Si fuera Taquiza se tendría que dividir entre guisados, pero para banquete rápido 
+                // asumimos la porción completa por invitado, o que el usuario ingresa la porción ajustada).
+                $cantidadFinal = ($cantidadBase / 100) * $totalPorciones;
+
+                // Consolidación: Sumar ingredientes repetidos
+                if (!isset($listaInsumos[$nombreIngrediente])) {
+                    $listaInsumos[$nombreIngrediente] = [
+                        'cantidad' => 0,
+                        'unidad'   => $unidad
+                    ];
+                }
+                
+                $listaInsumos[$nombreIngrediente]['cantidad'] += $cantidadFinal;
             }
         }
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Platillos · FantaSync</title>
     <meta name="description" content="Catálogo de platillos y menús — FantaSync Sistema de Gestión de Eventos Gastronómicos">
-    @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/css/platillos.css'])
+    @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/css/platillos.css', 'resources/css/comanda-rapida.css'])
 </head>
 <body>
     <!-- Fondo decorativo -->
@@ -40,6 +40,10 @@
 
         <!-- Contenedor Principal de Platillos -->
         <section class="platillos-section" aria-label="Listado de platillos">
+            
+            <!-- COMANDA RÁPIDA (Banquete Independiente) -->
+            @livewire('comanda-rapida-builder')
+
             <menu class="action-bar" aria-label="Acciones del catálogo">
                 <li>
                     <h2 class="section-title">Catálogo de Platillos</h2>
@@ -111,7 +115,7 @@
                         </section>
 
                         <footer class="card-footer">
-                            <span class="porciones-badge">{{ $platillo->porciones_base ?? 1 }} pz base</span>
+
                             <menu style="list-style: none; display: flex; gap: 0.5rem; padding: 0; margin: 0;">
                                 <li>
                                     <a href="{{ route('platillos.show', $platillo->id) }}" class="btn-action btn-view" title="Ver Platillo">
@@ -153,7 +157,7 @@
                         <tr>
                             <th>Nombre</th>
                             <th>Categoría</th>
-                            <th>Porciones</th>
+
                             <th>Ingredientes</th>
                             <th style="text-align: center;">Acciones</th>
                         </tr>
@@ -169,7 +173,7 @@
                                         <span class="badge badge-gray">Sin categoría</span>
                                     @endif
                                 </td>
-                                <td style="font-weight: 700;">{{ $platillo->porciones_base ?? 1 }} pz</td>
+
                                 <td>
                                     @if($platillo->ingredientes->count() > 0)
                                         <span class="badge badge-gray">{{ $platillo->ingredientes->count() }} insumos</span>
@@ -199,7 +203,7 @@
                             </tr>
                         @empty
                             <tr class="table-empty">
-                                <td colspan="5" style="text-align: center; padding: 2rem;">No hay platillos registrados.</td>
+                                <td colspan="4" style="text-align: center; padding: 2rem;">No hay platillos registrados.</td>
                             </tr>
                         @endforelse
                     </tbody>
