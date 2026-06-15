@@ -15,6 +15,7 @@ class ContratoPreviewController extends Controller
     public function show()
     {
         $contractId = request()->query('id');
+        
         if (! $contractId) {
             $draft = session('contract_draft', []);
             $contractId = $draft['contract_id'] ?? null;
@@ -34,17 +35,16 @@ class ContratoPreviewController extends Controller
     /**
      * Generates and streams a PDF for a given contract.
      */
-    public function download(Contrato $contrato)
+    public function download(Contrato $contract)
     {
-        $data = $this->gatherContractData($contrato);
+        $data = $this->gatherContractData($contract);
 
         // This requires a 'contrato-pdf.blade.php' view, styled to match your PDF document.
-        // You can use HTML and CSS (with some limitations) to structure the document.
         $pdf = Pdf::loadView('contrato-pdf', $data);
 
         $filename = sprintf(
             'contrato-%s-%s.pdf',
-            $contrato->id,
+            $contract->id,
             Str::slug($data['cliente'] ?? 'cliente')
         );
 
@@ -54,72 +54,72 @@ class ContratoPreviewController extends Controller
     /**
      * Gathers and prepares all data related to a contract for view presentation.
      */
-    private function gatherContractData(Contrato $contrato): array
+    private function gatherContractData(Contrato $contract): array
     {
         // Eager load relationships for efficiency.
-        $contrato->loadMissing(['evento.cliente', 'evento.salones.sucursal']);
+        $contract->loadMissing(['evento.cliente', 'evento.salones.sucursal']);
 
-        $evento = $contrato->evento;
-        $clienteObj = $evento?->cliente;
-        $salonObj = $evento?->salones?->first();
+        $event = $contract->evento;
+        $client = $event?->cliente;
+        $venue = $event?->salones?->first();
 
-        // 1. Map client fields (fallback to flat contract draft values if no database relation exists)
-        $clienteName = $clienteObj?->nombre_completo ?? ($contrato->cliente ?? 'Cliente demo');
-        $clienteCorreo = $clienteObj?->correo_electronico ?? ($contrato->correo ?? 'cliente@fantasync.local');
-        $clienteTelefono = $clienteObj?->celular ?? ($contrato->telefono ?? '55 0000 0000');
-        $clienteDom = $clienteObj?->domicilio ?? ($contrato->cliente_domicilio ?? 'Domicilio conocido');
-        $clienteIneNum = $clienteObj?->ine_numero ?? ($contrato->cliente_ine ?? 'ABC123456DEF');
+        // 1. Map client fields
+        $clientName = $client?->nombre_completo ?? ($contract->cliente ?? 'Cliente demo');
+        $clientEmail = $client?->correo_electronico ?? ($contract->correo ?? 'cliente@fantasync.local');
+        $clientPhone = $client?->celular ?? ($contract->telefono ?? '55 0000 0000');
+        $clientAddress = $client?->domicilio ?? ($contract->cliente_domicilio ?? 'Domicilio conocido');
+        $clientIne = $client?->ine_numero ?? ($contract->cliente_ine ?? 'ABC123456DEF');
 
         // 2. Map event logistical fields
-        $evtFechaRaw = $evento?->fecha ?? ($contrato->evento_fecha ?? '2026-06-12');
-        $recHora = $evento?->hora_recepcion ?? ($contrato->recepcion_hora ?? '15:00 hrs');
-        $iniHora = $evento?->hora_inicio ?? ($contrato->inicio_hora ?? '16:30 hrs');
-        $tipo = $evento?->tipo_evento ?? ($contrato->tipo_evento ?? 'Comunión');
-        $fest = $evento?->nombre_festejado ?? ($contrato->festejado ?? 'Nombre del festejado');
-        $horas = $evento?->horas_duracion ?? ($contrato->horas_evento ?? 5);
-        $mant = $evento?->color_manteleria ?? ($contrato->manteleria_color ?? 'Blanco');
+        $eventDateRaw = $event?->fecha ?? ($contract->evento_fecha ?? '2026-06-12');
+        $receptionTime = $event?->hora_recepcion ?? ($contract->recepcion_hora ?? '15:00 hrs');
+        $startTime = $event?->hora_inicio ?? ($contract->inicio_hora ?? '16:30 hrs');
+        $eventType = $event?->tipo_evento ?? ($contract->tipo_evento ?? 'Comunión');
+        $honoree = $event?->nombre_festejado ?? ($contract->festejado ?? 'Nombre del festejado');
+        $durationHours = $event?->horas_duracion ?? ($contract->horas_evento ?? 5);
+        $linenColor = $event?->color_manteleria ?? ($contract->manteleria_color ?? 'Blanco');
 
-        $adults = $salonObj?->pivot?->adultos ?? ($contrato->num_adultos ?? 50);
-        $kids = $salonObj?->pivot?->ninos ?? ($contrato->num_ninos ?? 20);
+        $adultCount = $venue?->pivot?->adultos ?? ($contract->num_adultos ?? 50);
+        $kidCount = $venue?->pivot?->ninos ?? ($contract->num_ninos ?? 20);
 
-        $salonName = $salonObj?->nombre ?? ($contrato->salon?->nombre ?? 'Seleccione un salón');
-        $sucursalName = $salonObj?->sucursal?->nombre ?? ($contrato->salon?->sucursal?->nombre ?? 'Sucursal no asignada');
+        $venueName = $venue?->nombre ?? ($contract->salon?->nombre ?? 'Seleccione un salón');
+        $branchName = $venue?->sucursal?->nombre ?? ($contract->salon?->sucursal?->nombre ?? 'Sucursal no asignada');
 
-        // 3. Map platillos (for persisted contracts, parsed from JSON notes in the database)
-        if (! $contrato->relationLoaded('platillos')) {
-            $platilloIds = $contrato->platillos ?? [];
-            if (empty($platilloIds) && $evento && $evento->notas) {
-                if (preg_match('/Platillos:\s*([0-9,\s]+)/', $evento->notas, $matches)) {
-                    $platilloIds = array_filter(array_map('trim', explode(',', $matches[1])));
+        // 3. Map dishes (for persisted contracts, parsed from JSON notes in the database)
+        if (! $contract->relationLoaded('platillos')) {
+            $dishIds = $contract->platillos ?? [];
+            if (empty($dishIds) && $event && $event->notas) {
+                if (preg_match('/Platillos:\s*([0-9,\s]+)/', $event->notas, $matches)) {
+                    $dishIds = array_filter(array_map('trim', explode(',', $matches[1])));
                 }
             }
-            if (! is_array($platilloIds)) {
-                $platilloIds = json_decode($platilloIds, true) ?: [];
+            if (! is_array($dishIds)) {
+                $dishIds = json_decode($dishIds, true) ?: [];
             }
 
-            $platillosCollection = collect();
-            if (! empty($platilloIds)) {
-                $platilloIds = array_map('intval', $platilloIds);
-                $platillosCollection = Platillo::with('categoriaPlatillo')->whereIn('id', $platilloIds)->get();
+            $dishesCollection = collect();
+            if (! empty($dishIds)) {
+                $dishIds = array_map('intval', $dishIds);
+                $dishesCollection = Platillo::with('categoriaPlatillo')->whereIn('id', $dishIds)->get();
             }
-            $contrato->setRelation('platillos', $platillosCollection);
+            $contract->setRelation('platillos', $dishesCollection);
         }
-        $platillosCollection = $contrato->getRelation('platillos');
+        $dishesCollection = $contract->getRelation('platillos');
 
-        $menuItems = $platillosCollection->map(function (Platillo $platillo) {
+        $menuItems = $dishesCollection->map(function (Platillo $dish) {
             return [
-                'nombre' => $platillo->nombre,
-                'detalle' => $platillo->categoriaPlatillo?->nombre ?? 'Menú principal',
+                'nombre' => $dish->nombre,
+                'detalle' => $dish->categoriaPlatillo?->nombre ?? 'Menú principal',
                 'cantidad' => 1,
-                'precio' => (float) $platillo->precio,
-                'subtotal' => (float) $platillo->precio,
+                'precio' => (float) $dish->precio,
+                'subtotal' => (float) $dish->precio,
             ];
         })->values()->all();
 
-        // 4. Map extras (support both database JSON column and session draft array)
+        // 4. Map extras
         $allExtras = config('fantasync.extras', []);
         $selectedExtras = [];
-        $contractExtras = $contrato->servicios_extras ?? ($contrato->extras ?? []);
+        $contractExtras = $contract->servicios_extras ?? ($contract->extras ?? []);
         if (! is_array($contractExtras)) {
             $contractExtras = json_decode($contractExtras, true) ?: [];
         }
@@ -129,50 +129,49 @@ class ContratoPreviewController extends Controller
             }
         }
 
-        $subtotalMenu = $platillosCollection->sum('precio');
-        $subtotalExtras = array_sum(array_column($selectedExtras, 'precio'));
+        $menuSubtotal = $dishesCollection->sum('precio');
+        $extrasSubtotal = array_sum(array_column($selectedExtras, 'precio'));
 
         // Use the saved total if available, otherwise calculate it.
-        $total = $contrato->monto_total ?? ($contrato->total ?? ($subtotalMenu + $subtotalExtras));
+        $totalAmount = $contract->monto_total ?? ($contract->total ?? ($menuSubtotal + $extrasSubtotal));
 
         // Suggested Payment Plan
-        $payments = [
-            ['label' => 'Anticipo de reserva', 'value' => $contrato->anticipo ?? 2500],
-            ['label' => 'Abono mensual', 'value' => max(4000, round($total * 0.2))],
+        $paymentPlan = [
+            ['label' => 'Anticipo de reserva', 'value' => $contract->anticipo ?? 2500],
+            ['label' => 'Abono mensual', 'value' => max(4000, round($totalAmount * 0.2))],
             ['label' => '50% mínimo antes de 30 días', 'value' => 'Requerido'],
             ['label' => 'Liquidación final antes de 15 días', 'value' => 'Requerido'],
         ];
 
-        $eventoFecha = Carbon::parse($evtFechaRaw)
+        $formattedEventDate = Carbon::parse($eventDateRaw)
             ->locale('es')
             ->translatedFormat('d \d\e F \d\e Y');
 
         return [
-            'contrato' => $contrato,
-            'cliente' => $clienteName,
-            'correo' => $clienteCorreo,
-            'telefono' => $clienteTelefono,
-            'clienteDomicilio' => $clienteDom,
-            'clienteIne' => $clienteIneNum,
-            'eventoFecha' => $eventoFecha,
-            'recepcionHora' => $recHora,
-            'inicioHora' => $iniHora,
-            'tipoEvento' => $tipo,
-            'festejado' => $fest,
-            'horasEvento' => $horas,
-            'numAdultos' => $adults,
-            'numNinos' => $kids,
-            'manteleriaColor' => $mant,
-            'salonNombre' => $salonName,
-            'salonSucursal' => $sucursalName,
+            'contrato' => $contract,
+            'cliente' => $clientName,
+            'correo' => $clientEmail,
+            'telefono' => $clientPhone,
+            'clienteDomicilio' => $clientAddress,
+            'clienteIne' => $clientIne,
+            'eventoFecha' => $formattedEventDate,
+            'recepcionHora' => $receptionTime,
+            'inicioHora' => $startTime,
+            'tipoEvento' => $eventType,
+            'festejado' => $honoree,
+            'horasEvento' => $durationHours,
+            'numAdultos' => $adultCount,
+            'numNinos' => $kidCount,
+            'manteleriaColor' => $linenColor,
+            'salonNombre' => $venueName,
+            'salonSucursal' => $branchName,
             'menuItems' => $menuItems,
             'extras' => $selectedExtras,
-            'payments' => $payments,
-            'subtotalMenu' => $subtotalMenu,
-            'subtotalExtras' => $subtotalExtras,
-            'total' => $total,
-            'estadoContrato' => $contrato->estado ?? ($evento?->estado ?? 'cotizacion'),
+            'payments' => $paymentPlan,
+            'subtotalMenu' => $menuSubtotal,
+            'subtotalExtras' => $extrasSubtotal,
+            'total' => $totalAmount,
+            'estadoContrato' => $contract->estado ?? ($event?->estado ?? 'cotizacion'),
         ];
-    }
     }
 }
