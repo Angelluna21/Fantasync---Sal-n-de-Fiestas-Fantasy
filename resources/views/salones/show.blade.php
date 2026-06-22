@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles del Salón · FantaSync</title>
     @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/css/salones.css'])
+    <style>
+        .calendar-day.has-external-event {
+            border: 2px dashed var(--primary-purple, #7a288a) !important;
+            background-color: rgba(122, 40, 138, 0.05) !important;
+            color: var(--primary-purple, #7a288a) !important;
+        }
+    </style>
 
 </head>
 
@@ -271,6 +278,7 @@
         }
         // Lógica del Calendario de Eventos
         const salonEvents = @json($salon->eventos);
+        const platillosDiccionario = @json($platillos_diccionario ?? []);
         const calendarMonthYear = document.getElementById('calendar-month-year');
         const calendarBody = document.getElementById('calendar-body');
         const eventDetailCard = document.getElementById('event-detail-card');
@@ -324,7 +332,16 @@
                         const isToday = new Date().toDateString() === new Date(year, month, dateCounter).toDateString();
                         let classes = 'calendar-day';
                         if (isToday) classes += ' today';
-                        if (dayEvents.length > 0) classes += ' has-event';
+                        if (dayEvents.length > 0) {
+                            const hasExternal = dayEvents.some(e => e.tipo_evento === 'banquete_externo');
+                            const hasInternal = dayEvents.some(e => e.tipo_evento !== 'banquete_externo');
+                            
+                            if (hasInternal) {
+                                classes += ' has-event';
+                            } else if (hasExternal) {
+                                classes += ' has-external-event';
+                            }
+                        }
 
                         cells.push(`
                             <td>
@@ -377,46 +394,80 @@
                     return `${parts[0]}:${parts[1]} hrs`;
                 };
 
+                let notasHtml = '';
+                if (event.notas) {
+                    try {
+                        const parsedNotas = JSON.parse(event.notas);
+                        if (parsedNotas.tipo === 'comanda_rapida') {
+                            let platillosList = '<ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem; list-style-type: none;">';
+                            if (parsedNotas.platillos && Array.isArray(parsedNotas.platillos)) {
+                                parsedNotas.platillos.forEach(id => {
+                                    platillosList += `<li style="margin-bottom: 0.25rem;">🍲 \${platillosDiccionario[id] || 'Platillo desconocido'}</li>`;
+                                });
+                            }
+                            platillosList += '</ul>';
+
+                            notasHtml = `
+                            <section class="event-detail-notes-section" style="background: rgba(122, 40, 138, 0.05); padding: 1rem; border-radius: 8px; border: 1px solid rgba(122,40,138,0.1);">
+                                <h5 class="event-detail-notes-title" style="color: var(--primary-purple); display:flex; align-items:center; gap:0.5rem; margin-top: 0; margin-bottom: 0.5rem;">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                                    Detalle de Orden Rápida
+                                </h5>
+                                <p style="margin: 0; font-weight: 700; font-size: 0.95rem; color: var(--text-main);">Para \${parsedNotas.adultos} adultos y \${parsedNotas.ninos} niños.</p>
+                                <div style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--text-main);">
+                                    <strong style="color: var(--text-muted); text-transform: uppercase; font-size: 0.75rem;">Platillos a Preparar:</strong>
+                                    \${platillosList}
+                                </div>
+                            </section>
+                            `;
+                        } else {
+                            throw new Error("No es comanda rapida");
+                        }
+                    } catch (e) {
+                        notasHtml = `
+                        <section class="event-detail-notes-section">
+                            <h5 class="event-detail-notes-title">Notas del Evento</h5>
+                            <p class="event-detail-notes-text">\${event.notas}</p>
+                        </section>
+                        `;
+                    }
+                }
+
                 eventDetailCard.innerHTML = `
                     <header class="event-detail-header">
                         <hgroup>
-                            <h4 class="event-detail-title">${event.titulo || 'Sin título'}</h4>
+                            <h4 class="event-detail-title">\${event.titulo || 'Sin título'}</h4>
                             <p style="margin: 0.25rem 0 0 0; font-size: 0.9rem; color: var(--text-muted); font-weight: 700;">
-                                Celebración: ${event.tipo_evento || 'Otro'}
+                                Celebración: \${event.tipo_evento || 'Otro'}
                             </p>
                         </hgroup>
-                        <span class="event-detail-badge ${event.estado}">${stateLabel}</span>
+                        <span class="event-detail-badge \${event.estado}">\${stateLabel}</span>
                     </header>
                     
                     <section class="event-detail-grid">
                         <article class="event-meta-item">
                             <span class="event-meta-label">Fecha</span>
-                            <span class="event-meta-value" style="text-transform: capitalize;">${formattedDate}</span>
+                            <span class="event-meta-value" style="text-transform: capitalize;">\${formattedDate}</span>
                         </article>
                         <article class="event-meta-item">
                             <span class="event-meta-label">Festejado(a)</span>
-                            <span class="event-meta-value">${event.nombre_festejado || 'No especificado'}</span>
+                            <span class="event-meta-value">\${event.nombre_festejado || 'No especificado'}</span>
                         </article>
                         <article class="event-meta-item">
                             <span class="event-meta-label">Recepción</span>
-                            <span class="event-meta-value">${formatTime(event.hora_recepcion)}</span>
+                            <span class="event-meta-value">\${formatTime(event.hora_recepcion)}</span>
                         </article>
                         <article class="event-meta-item">
                             <span class="event-meta-label">Inicio / Duración</span>
-                            <span class="event-meta-value">${formatTime(event.hora_inicio)} (${event.horas_duracion} hrs)</span>
+                            <span class="event-meta-value">\${formatTime(event.hora_inicio)} (\${event.horas_duracion} hrs)</span>
                         </article>
                         <article class="event-meta-item">
                             <span class="event-meta-label">Mantelería</span>
-                            <span class="event-meta-value">${event.color_manteleria || 'Estándar'}</span>
+                            <span class="event-meta-value">\${event.color_manteleria || 'Estándar'}</span>
                         </article>
                     </section>
 
-                    \${event.notas ? `
-                    <section class="event-detail-notes-section">
-                        <h5 class="event-detail-notes-title">Notas del Evento</h5>
-                        <p class="event-detail-notes-text">\${event.notas}</p>
-                    </section>
-                    ` : ''}
+                    \${notasHtml}
 
                     <footer class="event-detail-actions">
                         <a href="/eventos/\${event.id}" class="btn-event-link">

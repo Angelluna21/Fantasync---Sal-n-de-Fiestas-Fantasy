@@ -34,7 +34,23 @@
         <header class="dashboard-header" style="margin-bottom: 2rem;">
             <hgroup>
                 <h1 class="dashboard-title" style="color: var(--primary-purple); text-shadow: none;">Comanda Rápida / Banquete Independiente</h1>
+                
+                @if(!empty($comandaSession['nombre_cliente']))
+                    <p style="font-size: 1.2rem; color: #333; font-weight: bold; margin-bottom: 0.5rem; text-shadow: none;">Cliente: {{ $comandaSession['nombre_cliente'] }}</p>
+                @endif
+
                 <p class="dashboard-description" style="color: var(--text-main); text-shadow: none;">Para: <strong>{{ $comandaSession['total'] }} personas</strong> ({{ $comandaSession['adultos'] }} adultos, {{ $comandaSession['ninos'] }} niños)</p>
+                
+                @if(!empty($comandaSession['fecha_evento']) || !empty($comandaSession['telefono']))
+                    <p style="color: var(--text-main); text-shadow: none; margin-top: 0.5rem;">
+                        @if(!empty($comandaSession['fecha_evento']))
+                            <strong>Fecha:</strong> {{ \Carbon\Carbon::parse($comandaSession['fecha_evento'])->format('d/m/Y') }} &nbsp;
+                        @endif
+                        @if(!empty($comandaSession['telefono']))
+                            <strong>Teléfono:</strong> {{ $comandaSession['telefono'] }}
+                        @endif
+                    </p>
+                @endif
             </hgroup>
         </header>
 

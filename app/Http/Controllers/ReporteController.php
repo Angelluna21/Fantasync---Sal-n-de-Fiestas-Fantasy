@@ -134,6 +134,10 @@ class ReporteController extends Controller
         $margenSeguridad = 1.10; // 10% extra por mermas y seguridad
 
         foreach ($insumosCalculados as $nombre => $datos) {
+            // Consultamos la categoría desde el modelo Ingrediente
+            $ingredienteModel = \App\Models\Ingrediente::where('nombre', $nombre)->first();
+            $categoria = $ingredienteModel && $ingredienteModel->categoria ? $ingredienteModel->categoria : 'Otros';
+
             $cantidadExacta = $datos['cantidad'];
             
             // Aplicar margen del 10%
@@ -149,7 +153,7 @@ class ReporteController extends Controller
             $reporteInsumos[] = [
                 'nombre'           => $nombre,
                 'unidad'           => $datos['unidad'],
-                'categoria'        => 'General', // Asignamos General por simplicidad o podríamos buscar en DB
+                'categoria'        => $categoria,
                 'requerido_exacto' => $cantidadExacta,
                 'exacto_format'    => $this->formatearCantidad($cantidadExacta, $datos['unidad']),
                 'requerido_seguro' => $cantidadSegura,

@@ -174,8 +174,4 @@ class ContratoPreviewController extends Controller
             'estadoContrato' => $contract->estado ?? ($event?->estado ?? 'cotizacion'),
         ];
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 7131ac6ea8a73aa739ea979c99678cfe26961ca7

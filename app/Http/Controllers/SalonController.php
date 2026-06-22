@@ -55,7 +55,8 @@ class SalonController extends Controller
     public function show(Salon $salon)
     {
         $salon->load(['sucursal', 'eventos']);
-        return view('salones.show', compact('salon'));
+        $platillos_diccionario = \App\Models\Platillo::pluck('nombre', 'id');
+        return view('salones.show', compact('salon', 'platillos_diccionario'));
     }
 
     public function edit(Salon $salon)

@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SucursalSalonSeeder::class,
             PlatillosFromRecetasSeeder::class,
+            PlatillosSeeder::class,
         ]);
 
         // 3. Catálogos para FantaSync (Taquiza, 2 tiempos, etc.)
