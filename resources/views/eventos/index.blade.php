@@ -20,7 +20,7 @@
         </nav>
 
         <!-- Volver al Panel -->
-        <nav style="max-width: 1200px; margin: 0 auto; width: 100%;">
+        <nav class="eventos-back-nav">
             <a href="{{ route('dashboard') }}" class="btn-back-nav">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                 Volver al Panel
@@ -57,7 +57,7 @@
                 <hgroup class="metric-content">
                     <span class="metric-value">
                         {{ $confirmados }}
-                        <span style="font-size: 0.9rem; font-weight: 700; color: var(--text-muted);">({{ $totalEventos > 0 ? round(($confirmados / $totalEventos) * 100) : 0 }}%)</span>
+                        <span class="metric-percent">({{ $totalEventos > 0 ? round(($confirmados / $totalEventos) * 100) : 0 }}%)</span>
                     </span>
                     <span class="metric-label">Confirmados</span>
                 </hgroup>
@@ -88,7 +88,7 @@
 
         <!-- Tabla de Eventos -->
         <section class="eventos-section" aria-label="Tabla de Gestión Administrativa">
-            <h2 class="section-title" style="margin-bottom: 1rem; color: var(--primary-purple); font-weight: 800; font-size: 1.2rem;">
+            <h2 class="section-title eventos-table-title">
                 Control de Agenda y Finanzas
             </h2>
 
@@ -102,7 +102,7 @@
                             <th>Estado</th>
                             <th>Monto Total</th>
                             <th>Saldo Pendiente</th>
-                            <th style="text-align: center;">Acción</th>
+                            <th class="table-center">Acción</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,7 +119,7 @@
                                 <!-- Cliente -->
                                 <td>
                                     @if($evento->cliente)
-                                        <h3 class="event-info-name" style="font-size: 0.95rem; font-weight: 700;">{{ $evento->cliente->nombre_completo }}</h3>
+                                        <h3 class="event-info-name event-info-name-client">{{ $evento->cliente->nombre_completo }}</h3>
                                         <p class="event-info-sub">{{ $evento->cliente->celular }}</p>
                                     @else
                                         <span class="finance-muted">No especificado</span>
@@ -133,7 +133,7 @@
                                             <span class="badge-sucursal">
                                                 {{ $salon->nombre }} 
                                                 @if($salon->sucursal)
-                                                    <span style="font-weight: 500; font-size: 0.75rem; opacity: 0.85;">({{ $salon->sucursal->nombre }})</span>
+                                                    <span class="badge-sucursal-sub">({{ $salon->sucursal->nombre }})</span>
                                                 @endif
                                             </span>
                                         @endforeach
@@ -182,7 +182,7 @@
                                 </td>
 
                                 <!-- Acciones -->
-                                <td style="text-align: center;">
+                                <td class="table-center">
                                     <menu class="actions-group">
                                         @if($evento->salones->count() > 0)
                                             <a href="{{ route('salones.show', $evento->salones->first()->id) }}" class="btn-event-link" title="Ver en Calendario">
@@ -207,7 +207,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" style="text-align: center; padding: 3rem 1.5rem; color: var(--text-muted); font-weight: 700;">
+                                <td colspan="7" class="table-empty">
                                     No hay eventos registrados en la agenda de dirección.
                                 </td>
                             </tr>
@@ -219,7 +219,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="dashboard-footer" style="margin-top: 4rem;">
+    <footer class="dashboard-footer eventos-footer">
         <p>© 2026 FantaSync · Dashboard Administrativo de Operaciones Gastronómicas</p>
     </footer>
 </body>

@@ -47,7 +47,7 @@
 
                     <article class="detail-block">
                         <span class="detail-label">Unidad de Control en Receta</span>
-                        <p style="margin: 0; padding: 0;">
+                        <p class="detail-p-marginless">
                             <span class="unit-badge {{ $ingrediente->unidad }} show-badge">
                                 {{ $ingrediente->unidad }}
                             </span>
@@ -56,8 +56,8 @@
 
                     <article class="detail-block">
                         <span class="detail-label">Categoría de Almacén</span>
-                        <p style="margin: 0; padding: 0;">
-                            <span style="font-size: 0.95rem; background: rgba(122, 40, 138, 0.1); color: var(--primary-purple); padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 800; border: 1px solid rgba(122, 40, 138, 0.2); display: inline-block;">
+                        <p class="detail-p-marginless">
+                            <span class="categoria-badge-show">
                                 {{ $ingrediente->categoria ?? 'Abarrotes' }}
                             </span>
                         </p>
@@ -92,7 +92,7 @@
                                     <footer class="dish-card-footer">
                                         <a href="{{ route('platillos.show', $platillo->id) }}" class="btn-dish-link">
                                             Ver Ficha
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="btn-dish-icon"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                                         </a>
                                     </footer>
                                 </article>
@@ -108,8 +108,8 @@
                 <!-- Botones de Acción de Ficha -->
                 <footer class="form-actions">
                     <a href="{{ route('ingredientes.index') }}" class="btn-cancel">Volver</a>
-                    <a href="{{ route('ingredientes.edit', $ingrediente->id) }}" class="btn-save" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    <a href="{{ route('ingredientes.edit', $ingrediente->id) }}" class="btn-save btn-save-link">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="btn-save-icon"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                         Editar Ficha
                     </a>
                 </footer>

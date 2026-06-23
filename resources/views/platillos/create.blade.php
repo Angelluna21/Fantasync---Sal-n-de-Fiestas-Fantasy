@@ -84,10 +84,10 @@
                     <!-- Campo: Ingredientes (Asociación Múltiple con Cantidad) -->
                     <fieldset class="form-group">
                         <legend class="form-label">Fórmula / Insumos del Almacén</legend>
-                        <section id="ingredientes-container" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1rem;">
+                        <section id="ingredientes-container" class="ingredientes-container">
                             <!-- Las filas se agregarán aquí por JS -->
                         </section>
-                        <button type="button" id="btn-add-ingrediente" style="background: var(--surface-color); color: var(--text-main); border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-weight: 600;">+ Añadir Insumo</button>
+                        <button type="button" id="btn-add-ingrediente" class="btn-add-ingrediente">+ Añadir Insumo</button>
                         @error('ingredientes')
                             <output class="form-error">{{ $message }}</output>
                         @enderror
@@ -101,11 +101,9 @@
 
                             function addRow() {
                                 const row = document.createElement('article');
-                                row.style.display = 'flex';
-                                row.style.gap = '1rem';
-                                row.style.alignItems = 'center';
+                                row.className = 'ingrediente-row';
 
-                                let selectHtml = `<select name="ingredientes[id][]" class="form-input" style="flex: 2;" required>
+                                let selectHtml = `<select name="ingredientes[id][]" class="form-input ingrediente-select" required>
                                                     <option value="" disabled selected>Selecciona insumo...</option>`;
                                 ingredientesCat.forEach(ing => {
                                     selectHtml += `<option value="${ing.id}">${ing.nombre} (${ing.unidad})</option>`;
@@ -114,8 +112,8 @@
 
                                 row.innerHTML = `
                                     ${selectHtml}
-                                    <input type="number" step="0.01" min="0.01" name="ingredientes[cantidad][]" class="form-input" placeholder="Cantidad para 100 porciones" style="flex: 1;" required>
-                                    <button type="button" class="btn-remove" style="background: #ffebee; color: #d32f2f; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-weight: bold;">X</button>
+                                    <input type="number" step="0.01" min="0.01" name="ingredientes[cantidad][]" class="form-input ingrediente-input" placeholder="Cantidad para 100 porciones" required>
+                                    <button type="button" class="btn-remove btn-remove-ingrediente">X</button>
                                 `;
 
                                 row.querySelector('.btn-remove').addEventListener('click', () => row.remove());

@@ -47,7 +47,7 @@
                         <legend class="form-label">Nombre del Ingrediente</legend>
                         <input type="text" id="nombre" name="nombre" class="form-input" placeholder="Ej. Jitomate Saladet, Harina de Trigo, Crema Líquida" value="{{ old('nombre') }}" required>
                         @error('nombre')
-                            <p style="color: var(--accent-magenta); font-size: 0.8rem; font-weight: 700; margin: 0.25rem 0 0 0;">{{ $message }}</p>
+                            <p class="form-error-msg">{{ $message }}</p>
                         @enderror
                     </fieldset>
 
@@ -63,7 +63,7 @@
                             <option value="pz" {{ old('unidad') === 'pz' ? 'selected' : '' }}>Piezas (pz)</option>
                         </select>
                         @error('unidad')
-                            <p style="color: var(--accent-magenta); font-size: 0.8rem; font-weight: 700; margin: 0.25rem 0 0 0;">{{ $message }}</p>
+                            <p class="form-error-msg">{{ $message }}</p>
                         @enderror
                     </fieldset>
 
@@ -79,7 +79,7 @@
                             <option value="Otros" {{ old('categoria') === 'Otros' ? 'selected' : '' }}>Otros</option>
                         </select>
                         @error('categoria')
-                            <p style="color: var(--accent-magenta); font-size: 0.8rem; font-weight: 700; margin: 0.25rem 0 0 0;">{{ $message }}</p>
+                            <p class="form-error-msg">{{ $message }}</p>
                         @enderror
                     </fieldset>
 
@@ -93,11 +93,11 @@
                                     <span>{{ $platillo->nombre }}</span>
                                 </label>
                             @empty
-                                <p style="color: #bcbcbc; font-size: 0.85rem; font-style: italic; margin: 0; padding: 0.5rem 0;">No hay platillos creados actualmente.</p>
+                                <p class="empty-platillos-msg">No hay platillos creados actualmente.</p>
                             @endforelse
                         </section>
                         @error('platillo_ids')
-                            <p style="color: var(--accent-magenta); font-size: 0.8rem; font-weight: 700; margin: 0.25rem 0 0 0;">{{ $message }}</p>
+                            <p class="form-error-msg">{{ $message }}</p>
                         @enderror
                     </fieldset>
 

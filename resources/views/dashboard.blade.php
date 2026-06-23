@@ -129,6 +129,20 @@
                 <p>Gestiona los servicios adicionales y gastronomía contratados para los eventos.</p>
                 <a href="{{ route('servicios-gastronomicos.index') }}">Ver servicios</a>
             </article>
+
+            @if(auth()->user()->isSuperadmin())
+            <!-- 8. Gestión de Usuarios (Admin Only) -->
+            <article class="dashboard-card" style="border-color: var(--primary-purple); background: #faf5fc;">
+                <span class="card-icon" aria-hidden="true" style="background: var(--primary-purple); color: white; border: none;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                </span>
+                <h2 style="color: var(--primary-purple);">Gestión de Usuarios</h2>
+                <p>Crea y administra a los usuarios normales que tendrán acceso al sistema.</p>
+                <a href="{{ route('users.index') }}" style="background: var(--primary-purple); color: white;">Ver usuarios</a>
+            </article>
+            @endif
         </section>
     </main>
 

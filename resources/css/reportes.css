@@ -238,7 +238,11 @@
 
 .col-requerido {
     font-weight: 800;
-    color: var(--accent-magenta);
+    color: var(--text-muted);
+}
+
+.col-margen {
+    font-weight: 600;
 }
 
 .col-stock {
@@ -619,4 +623,184 @@
         color: #000 !important;
         margin-bottom: 0 !important;
     }
+}
+
+/* ======================================================
+   COMANDA.BLADE.PHP REFACTORED STYLES
+   ====================================================== */
+.comanda-card-empty {
+    padding: 2rem;
+    text-align: center;
+}
+
+.comanda-empty-text {
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+.comanda-category-card {
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.comanda-card-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--accent-yellow);
+    padding-bottom: 0.5rem;
+}
+
+.comanda-category-title {
+    color: var(--accent-magenta);
+}
+
+.comanda-table-th-platillo {
+    width: 40%;
+}
+.comanda-table-th-total {
+    width: 20%;
+}
+.comanda-table-th-dist {
+    width: 40%;
+}
+
+.comanda-platillo-name {
+    font-size: 1.1rem;
+}
+
+.comanda-total-porciones {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--primary-purple);
+}
+
+.comanda-salon-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.comanda-salon-item {
+    margin-bottom: 0.5rem;
+    background: rgba(0,0,0,0.03);
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.comanda-salon-nota {
+    color: #d9534f;
+}
+
+.comanda-actions-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+}
+
+.btn-insumos-link {
+    background: var(--accent-magenta);
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(216, 27, 96, 0.2);
+}
+
+.btn-insumos-link:hover {
+    background: #b0134e;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(216, 27, 96, 0.4);
+}
+
+/* ======================================================
+   COMANDA-RAPIDA.BLADE.PHP REFACTORED STYLES
+   ====================================================== */
+.btn-back-purple {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary-purple);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 6px rgba(122, 40, 138, 0.2);
+    transition: all 0.3s ease;
+}
+
+.btn-back-purple:hover {
+    background-color: var(--secondary-purple);
+    transform: translateY(-2px);
+}
+
+.nav-buttons-rapida {
+    margin-bottom: 2rem;
+}
+
+.header-rapida {
+    margin-bottom: 2rem;
+}
+
+.title-rapida {
+    color: var(--primary-purple);
+    text-shadow: none;
+}
+
+.dashboard-cliente {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-shadow: none;
+}
+
+.dashboard-description-rapida {
+    color: var(--text-main);
+    text-shadow: none;
+}
+
+.dashboard-fecha {
+    color: var(--text-main);
+    text-shadow: none;
+    margin-top: 0.5rem;
+}
+
+.card-header-rapida {
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.shopping-list-card-rapida {
+    margin-top: -1.5rem;
+}
+
+.card-header-shopping-rapida {
+    border-bottom: 2px solid var(--accent-magenta);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.eyebrow-accent-rapida {
+    font-size: 1.1rem;
+}
+
+.card-title-rapida {
+    font-size: 2rem;
+}
+
+.shopping-items-grid-reset {
+    padding: 0;
+    margin: 0;
+}
+
+.all-stocked-message-alt {
+    background-color: #f8fafc;
+    color: #475569;
+    border-color: #e2e8f0;
 }

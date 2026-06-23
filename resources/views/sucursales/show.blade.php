@@ -27,7 +27,7 @@
             </a>
 
             @if(session('success'))
-                <aside role="alert" style="background-color: rgba(76, 175, 80, 0.15); color: #2e7d32; padding: 1rem 1.5rem; border-radius: 1rem; border: 1px solid rgba(76, 175, 80, 0.3); margin-bottom: 1.5rem; font-weight: 700;">
+                <aside role="alert" class="alert-success">
                     {{ session('success') }}
                 </aside>
             @endif
@@ -37,8 +37,8 @@
                 <header class="detail-header">
                     <hgroup>
                         <h1 class="detail-title">{{ $sucursal->nombre }}</h1>
-                        <span class="location-badge" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--accent-yellow); color: var(--primary-purple); border-radius: 50%;">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <span class="location-badge-large">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         </span>
                     </hgroup>
                 </header>
@@ -69,7 +69,7 @@
                                                 <span class="salon-show-alias">{{ $salon->alias }}</span>
                                             @endif
                                         </hgroup>
-                                        <a href="{{ route('salones.show', $salon->id) }}" style="margin-top: 1rem; font-size: 0.85rem; font-weight: 700; color: var(--primary-purple); text-decoration: none; display: flex; align-items: center; gap: 0.25rem;">
+                                        <a href="{{ route('salones.show', $salon->id) }}" class="btn-view-salon-link">
                                             Ver salón
                                             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                                         </a>
@@ -77,10 +77,10 @@
                                 @endforeach
                             </section>
                         @else
-                            <p style="margin: 0; color: #bcbcbc; font-style: italic;">Esta sucursal no tiene salones asignados actualmente.</p>
+                            <p class="no-salons-text">Esta sucursal no tiene salones asignados actualmente.</p>
                         @endif
                         
-                        <menu style="margin-top: 1rem; padding: 0;">
+                        <menu class="add-salon-menu">
                             <a href="{{ route('salones.create', ['sucursal_id' => $sucursal->id]) }}" class="btn-add-salon">
                                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                                 Crear Salón para esta Sucursal
@@ -109,7 +109,7 @@
         </section>
     </main>
 
-    <footer class="page-footer" style="text-align: center; margin-top: 3rem; padding-bottom: 2rem; color: #8c8c8c; font-size: 0.9rem;">
+    <footer class="dashboard-footer">
         <p>© 2026 FantaSync · Sistema de Gestión de Eventos Gastronómicos</p>
     </footer>
 </body>

@@ -77,12 +77,12 @@
                 @forelse($ingredientes as $ingrediente)
                     <article class="ingrediente-card" data-nombre="{{ $ingrediente->nombre }}">
                         <header class="card-header">
-                            <div>
-                                <h3 class="card-title" style="margin: 0;">{{ $ingrediente->nombre }}</h3>
-                                <span style="font-size: 0.75rem; background: rgba(122, 40, 138, 0.1); color: var(--primary-purple); padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 800; display: inline-block; margin-top: 0.35rem; border: 1px solid rgba(122, 40, 138, 0.2);">
+                            <hgroup>
+                                <h3 class="card-title card-title-marginless">{{ $ingrediente->nombre }}</h3>
+                                <span class="categoria-badge">
                                     {{ $ingrediente->categoria ?? 'Abarrotes' }}
                                 </span>
-                            </div>
+                            </hgroup>
                             <span class="unit-badge {{ $ingrediente->unidad }}">
                                 {{ $ingrediente->unidad }}
                             </span>
@@ -105,7 +105,7 @@
                         </section>
 
                         <footer class="card-footer">
-                            <menu style="list-style: none; display: flex; gap: 0.5rem; padding: 0; margin: 0;">
+                            <menu class="card-actions-menu">
                                 <li>
                                     <a href="{{ route('ingredientes.show', $ingrediente->id) }}" class="btn-action btn-view" title="Ver Detalles">
                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
@@ -148,7 +148,7 @@
                             <th>Categoría</th>
                             <th>Unidad</th>
                             <th>Platillos Asociados</th>
-                            <th style="text-align: center;">Acciones</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="ingredients-table-body">
@@ -156,7 +156,7 @@
                             <tr class="table-row-item" data-nombre="{{ $ingrediente->nombre }}">
                                 <td class="col-name">{{ $ingrediente->nombre }}</td>
                                 <td>
-                                    <span style="font-size: 0.85rem; background: rgba(122, 40, 138, 0.08); color: var(--primary-purple); padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 800; border: 1px solid rgba(122, 40, 138, 0.15);">
+                                    <span class="categoria-badge-table">
                                         {{ $ingrediente->categoria ?? 'Abarrotes' }}
                                     </span>
                                 </td>
@@ -167,7 +167,7 @@
                                 </td>
                                 <td>
                                     @if($ingrediente->platillos->count() > 0)
-                                        <menu class="platillos-list" aria-label="Platillos asociados" style="list-style: none; display: flex; gap: 0.35rem; padding: 0; margin: 0; flex-wrap: wrap;">
+                                        <menu class="platillos-list-table" aria-label="Platillos asociados">
                                             @foreach($ingrediente->platillos as $platillo)
                                                 <li><span class="platillo-badge">{{ $platillo->nombre }}</span></li>
                                             @endforeach
@@ -177,7 +177,7 @@
                                     @endif
                                 </td>
                                 <td class="col-actions">
-                                    <menu style="list-style: none; display: flex; gap: 0.5rem; padding: 0; margin: 0; justify-content: center;">
+                                    <menu class="table-actions-menu">
                                         <li>
                                             <a href="{{ route('ingredientes.show', $ingrediente->id) }}" class="btn-action btn-view" title="Ver Detalles">
                                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
@@ -198,7 +198,7 @@
                             </tr>
                         @empty
                             <tr class="table-empty">
-                                <td colspan="4" style="text-align: center; padding: 2rem;">No hay ingredientes registrados.</td>
+                                <td colspan="4" class="table-empty-cell">No hay ingredientes registrados.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -217,12 +217,12 @@
         <h3 id="confirm-title" class="confirm-title">¿Eliminar ingrediente?</h3>
         <p id="confirm-text" class="confirm-text">Esta acción no se puede deshacer y desvinculará este ingrediente de todas sus recetas.</p>
         <footer class="confirm-actions">
-            <menu style="list-style: none; display: flex; gap: 0.75rem; padding: 0; margin: 0;">
+            <menu class="confirm-actions-menu">
                 <li>
                     <button type="button" class="btn-cancel" onclick="closeConfirmModal()">Cancelar</button>
                 </li>
                 <li>
-                    <button type="button" class="btn-save" style="background: var(--accent-magenta); box-shadow: 0 4px 12px rgba(216,27,96,0.2);" id="confirm-delete-btn">Eliminar</button>
+                    <button type="button" class="btn-save btn-confirm-delete" id="confirm-delete-btn">Eliminar</button>
                 </li>
             </menu>
         </footer>

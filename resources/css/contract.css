@@ -526,3 +526,18 @@ input[type="number"] {
 .guisado-label { cursor: pointer; width: 100%; display: flex; align-items: center; gap: 0.5rem; }
 .tiempo-label { font-weight: 600; color: var(--text-main); /* Cambiado de --primary-dark si no existe */ }
 @keyframes fadeSlideDown { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- REFACTORED MENU CONFIG --- */
+.nav-actions { display: flex; align-items: center; gap: 1.5rem; }
+.contract-subtitle { color: #6c757d; font-size: 1.1rem; margin-top: 0.5rem; }
+.contract-card-margin { margin-top: 2rem; }
+
+.grid-margin-1 { margin-top: 1rem; }
+.grid-margin-2 { margin-top: 1.5rem; }
+.error-msg-1 { color: #dc3545; font-weight: 600; display: block; margin-top: 0.75rem; }
+.error-msg-2 { color: #dc3545; font-weight: 600; display: block; margin-top: 1rem; }
+.error-msg-3 { color: #dc3545; font-weight: 600; display: block; margin-top: 0.5rem; }
+.guisado-subtitle { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem; }
+.select-margin { margin-top: 0.5rem; }
+.footer-submit { margin-top: 2rem; display: flex; justify-content: flex-end; }
+.icon-submit { margin-right: 0.5rem; vertical-align: text-bottom; }

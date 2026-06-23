@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CategoriaPlatilloController;
 use App\Http\Controllers\ContratoBuilderController;
-use App\Http\Controllers\ContratoPreviewController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\IngredienteController;
 use App\Http\Controllers\PlatilloController;
@@ -29,7 +28,6 @@ Route::middleware('guest')->group(function () {
 
 Route::get('contratos/crear', [ContratoBuilderController::class, 'create'])->name('contratos.crear');
 Route::post('contratos/crear', [ContratoBuilderController::class, 'store'])->name('contratos.crear.store');
-Route::get('contrato-demo', [ContratoPreviewController::class, 'show'])->name('contrato.demo');
 Route::get('reportes/insumos/{id}', [ReporteController::class, 'insumosEvento'])->name('reportes.insumos');
 Route::get('reportes/comanda/{contrato}', [\App\Http\Controllers\ComandaController::class, 'showByContrato'])->name('reportes.comanda');
 Route::get('reportes/comanda-rapida', [ReporteController::class, 'comandaRapida'])->name('reportes.comanda-rapida');
@@ -53,7 +51,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('ingredientes', IngredienteController::class);
     Route::resource('eventos', EventoController::class);
     Route::resource('servicios-gastronomicos', ServicioGastronomicoController::class);
-    Route::get('/test-platillos', function () {
-    return \Livewire\Livewire::mount('platillo-manager');
-});
+
+    // Rutas protegidas por superadmin
+    Route::middleware('superadmin')->group(function () {
+        Route::resource('users', \App\Http\Controllers\UserController::class);
+    });
 });

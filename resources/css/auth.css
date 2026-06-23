@@ -326,3 +326,8 @@
     border-radius: 1rem;
     border: 1px solid #ffcdd2;
 }
+
+/* --- REFACTORED CLASSES --- */
+.auth-success-msg { background: rgba(76, 175, 80, 0.15); color: #2e7d32; border-color: rgba(76, 175, 80, 0.3); }
+.auth-footnote-margin { margin-top: 1.5rem; }
+.auth-link-back { display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; }

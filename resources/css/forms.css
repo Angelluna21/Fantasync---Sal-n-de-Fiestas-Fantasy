@@ -224,3 +224,9 @@ fieldset.form-group {
     padding: 0;
     margin: 0;
 }
+
+/* Custom Form Icons */
+.nav-icon-large {
+    width: 20px;
+    height: 20px;
+}

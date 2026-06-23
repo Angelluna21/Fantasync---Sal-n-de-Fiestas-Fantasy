@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <meta name="description" content="Catálogo de platillos y menús — FantaSync Sistema de Gestión de Eventos Gastronómicos">
     @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/css/platillos.css', 'resources/css/comanda-rapida.css'])
 </head>
+
 <body>
     <!-- Fondo decorativo -->
     <figure class="dashboard-background" aria-hidden="true"></figure>
@@ -24,7 +26,9 @@
         <!-- Volver al Panel -->
         <nav aria-label="Navegación de retorno" class="platillos-section">
             <a href="{{ route('dashboard') }}" class="btn-back-nav">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
                 Volver al Panel
             </a>
         </nav>
@@ -40,7 +44,7 @@
 
         <!-- Contenedor Principal de Platillos -->
         <section class="platillos-section" aria-label="Listado de platillos">
-            
+
             <!-- COMANDA RÁPIDA (Banquete Independiente) -->
             @livewire('comanda-rapida-builder')
 
@@ -62,15 +66,21 @@
                         <!-- Conmutador de Vistas -->
                         <nav class="view-switcher" aria-label="Cambio de vista">
                             <button type="button" id="grid-view-btn" class="btn-switch active" title="Vista Cuadrícula">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                </svg>
                             </button>
                             <button type="button" id="list-view-btn" class="btn-switch" title="Vista Lista">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                                </svg>
                             </button>
                         </nav>
 
                         <a href="{{ route('platillos.create') }}" class="btn-create">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
                             Crear Platillo
                         </a>
                     </nav>
@@ -80,73 +90,84 @@
             <!-- 1. Vista de Cuadrícula (Grid) -->
             <section class="platillos-grid" id="platillos-grid-view" aria-label="Catálogo de Platillos en Cuadrícula">
                 @forelse($platillos as $platillo)
-                    <article class="platillo-card" data-nombre="{{ $platillo->nombre }}">
-                        <header class="card-header">
-                            <h3 class="card-title">{{ $platillo->nombre }}</h3>
-                            @if($platillo->categoriaPlatillo)
-                                <span class="badge">{{ $platillo->categoriaPlatillo->nombre }}</span>
-                            @else
-                                <span class="badge badge-gray">Sin categoría</span>
+                <article class="platillo-card" data-nombre="{{ $platillo->nombre }}">
+                    <header class="card-header">
+                        <h3 class="card-title">{{ $platillo->nombre }}</h3>
+                        @if($platillo->categoriaPlatillo)
+                        <span class="badge">{{ $platillo->categoriaPlatillo->nombre }}</span>
+                        @else
+                        <span class="badge badge-gray">Sin categoría</span>
+                        @endif
+                    </header>
+
+                    <section class="card-body">
+                        @if($platillo->descripcion)
+                        <p class="card-description">{{ Str::limit($platillo->descripcion, 90) }}</p>
+                        @endif
+
+                        <h4 class="associated-label">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                            Insumos de la Receta
+                        </h4>
+
+                        @if($platillo->ingredientes->count() > 0)
+                        <menu class="platillos-list" aria-label="Ingredientes de este platillo">
+                            @foreach($platillo->ingredientes->take(4) as $ingrediente)
+                            <li><span class="platillo-badge">{{ $ingrediente->nombre }}</span></li>
+                            @endforeach
+                            @if($platillo->ingredientes->count() > 4)
+                            <li><span class="platillo-badge badge-gray">+{{ $platillo->ingredientes->count() - 4 }} más</span></li>
                             @endif
-                        </header>
+                        </menu>
+                        @else
+                        <p class="no-platillos">Sin fórmula de ingredientes</p>
+                        @endif
+                    </section>
 
-                        <section class="card-body">
-                            @if($platillo->descripcion)
-                                <p class="card-description">{{ Str::limit($platillo->descripcion, 90) }}</p>
-                            @endif
+                    <footer class="card-footer">
 
-                            <h4 class="associated-label">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                                Insumos de la Receta
-                            </h4>
+                        <menu class="card-actions-menu">
+                            <li>
+                                <a href="{{ route('platillos.show', $platillo->id) }}" class="btn-action btn-view" title="Ver Platillo">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('platillos.edit', $platillo->id) }}" class="btn-action btn-edit" title="Editar Platillo">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-action btn-delete" title="Eliminar" onclick="confirmDelete('{{ $platillo->nombre }}', 'delete-form-{{ $platillo->id }}')">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </li>
+                        </menu>
 
-                            @if($platillo->ingredientes->count() > 0)
-                                <menu class="platillos-list" aria-label="Ingredientes de este platillo">
-                                    @foreach($platillo->ingredientes->take(4) as $ingrediente)
-                                        <li><span class="platillo-badge">{{ $ingrediente->nombre }}</span></li>
-                                    @endforeach
-                                    @if($platillo->ingredientes->count() > 4)
-                                        <li><span class="platillo-badge badge-gray">+{{ $platillo->ingredientes->count() - 4 }} más</span></li>
-                                    @endif
-                                </menu>
-                            @else
-                                <p class="no-platillos">Sin fórmula de ingredientes</p>
-                            @endif
-                        </section>
-
-                        <footer class="card-footer">
-
-                            <menu style="list-style: none; display: flex; gap: 0.5rem; padding: 0; margin: 0;">
-                                <li>
-                                    <a href="{{ route('platillos.show', $platillo->id) }}" class="btn-action btn-view" title="Ver Platillo">
-                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('platillos.edit', $platillo->id) }}" class="btn-action btn-edit" title="Editar Platillo">
-                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                    </a>
-                                </li>
-                                <li>
-                                    <button type="button" class="btn-action btn-delete" title="Eliminar" onclick="confirmDelete('{{ $platillo->nombre }}', 'delete-form-{{ $platillo->id }}')">
-                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                    </button>
-                                </li>
-                            </menu>
-
-                            <form id="delete-form-{{ $platillo->id }}" action="{{ route('platillos.destroy', $platillo->id) }}" method="POST" class="form-delete" style="display:none;">
-                                @csrf
-                                @method('DELETE')
-                            </form>
-                        </footer>
-                    </article>
+                        <form id="delete-form-{{ $platillo->id }}" action="{{ route('platillos.destroy', $platillo->id) }}" method="POST" class="form-delete" style="display:none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    </footer>
+                </article>
                 @empty
-                    <article class="empty-state" id="empty-state-card">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                        <h3>No hay platillos registrados</h3>
-                        <p>Agrega tu primer platillo para comenzar a construir el menú de tus eventos.</p>
-                        <a href="{{ route('platillos.create') }}" class="btn-create">Crear Primer Platillo</a>
-                    </article>
+                <article class="empty-state" id="empty-state-card">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                    <h3>No hay platillos registrados</h3>
+                    <p>Agrega tu primer platillo para comenzar a construir el menú de tus eventos.</p>
+                    <a href="{{ route('platillos.create') }}" class="btn-create">Crear Primer Platillo</a>
+                </article>
                 @endforelse
             </section>
 
@@ -159,52 +180,59 @@
                             <th>Categoría</th>
 
                             <th>Ingredientes</th>
-                            <th style="text-align: center;">Acciones</th>
+                            <th class="table-th-actions">Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="platillos-table-body">
                         @forelse($platillos as $platillo)
-                            <tr class="table-row-item" data-nombre="{{ $platillo->nombre }}">
-                                <td class="col-name">{{ $platillo->nombre }}</td>
-                                <td class="col-category">
-                                    @if($platillo->categoriaPlatillo)
-                                        <span class="badge">{{ $platillo->categoriaPlatillo->nombre }}</span>
-                                    @else
-                                        <span class="badge badge-gray">Sin categoría</span>
-                                    @endif
-                                </td>
+                        <tr class="table-row-item" data-nombre="{{ $platillo->nombre }}">
+                            <td class="col-name">{{ $platillo->nombre }}</td>
+                            <td class="col-category">
+                                @if($platillo->categoriaPlatillo)
+                                <span class="badge">{{ $platillo->categoriaPlatillo->nombre }}</span>
+                                @else
+                                <span class="badge badge-gray">Sin categoría</span>
+                                @endif
+                            </td>
 
-                                <td>
-                                    @if($platillo->ingredientes->count() > 0)
-                                        <span class="badge badge-gray">{{ $platillo->ingredientes->count() }} insumos</span>
-                                    @else
-                                        <span class="badge badge-gray" style="font-style: italic; opacity: 0.6;">Sin receta</span>
-                                    @endif
-                                </td>
-                                <td class="col-actions">
-                                    <menu style="list-style: none; display: flex; gap: 0.5rem; padding: 0; margin: 0; justify-content: center;">
-                                        <li>
-                                            <a href="{{ route('platillos.show', $platillo->id) }}" class="btn-action btn-view" title="Ver Platillo">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('platillos.edit', $platillo->id) }}" class="btn-action btn-edit" title="Editar Platillo">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" class="btn-action btn-delete" title="Eliminar" onclick="confirmDelete('{{ $platillo->nombre }}', 'delete-form-{{ $platillo->id }}')">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                            </button>
-                                        </li>
-                                    </menu>
-                                </td>
-                            </tr>
+                            <td>
+                                @if($platillo->ingredientes->count() > 0)
+                                <span class="badge badge-gray">{{ $platillo->ingredientes->count() }} insumos</span>
+                                @else
+                                <span class="badge badge-gray badge-no-receta">Sin receta</span>
+                                @endif
+                            </td>
+                            <td class="col-actions">
+                                <menu class="table-actions-menu">
+                                    <li>
+                                        <a href="{{ route('platillos.show', $platillo->id) }}" class="btn-action btn-view" title="Ver Platillo">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('platillos.edit', $platillo->id) }}" class="btn-action btn-edit" title="Editar Platillo">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="btn-action btn-delete" title="Eliminar" onclick="confirmDelete('{{ $platillo->nombre }}', 'delete-form-{{ $platillo->id }}')">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            </svg>
+                                        </button>
+                                    </li>
+                                </menu>
+                            </td>
+                        </tr>
                         @empty
-                            <tr class="table-empty">
-                                <td colspan="4" style="text-align: center; padding: 2rem;">No hay platillos registrados.</td>
-                            </tr>
+                        <tr class="table-empty">
+                            <td colspan="4" class="table-empty-td">No hay platillos registrados.</td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -222,7 +250,7 @@
         <h3 id="confirm-title" class="confirm-title">¿Eliminar platillo?</h3>
         <p id="confirm-text" class="confirm-text">Esta acción no se puede deshacer.</p>
         <footer class="confirm-actions">
-            <menu style="list-style: none; display: flex; gap: 0.75rem; padding: 0; margin: 0;">
+            <menu class="modal-actions-menu">
                 <li>
                     <button type="button" class="btn-cancel" onclick="closeConfirmModal()">Cancelar</button>
                 </li>
@@ -258,8 +286,8 @@
         // ==========================================
         const gridViewBtn = document.getElementById('grid-view-btn');
         const listViewBtn = document.getElementById('list-view-btn');
-        const gridView    = document.getElementById('platillos-grid-view');
-        const listView    = document.getElementById('platillos-list-view');
+        const gridView = document.getElementById('platillos-grid-view');
+        const listView = document.getElementById('platillos-list-view');
 
         gridViewBtn.addEventListener('click', () => {
             gridViewBtn.classList.add('active');
@@ -331,4 +359,5 @@
         });
     </script>
 </body>
+
 </html>

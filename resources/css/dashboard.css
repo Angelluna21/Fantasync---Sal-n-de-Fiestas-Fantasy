@@ -1,4 +1,4 @@
-﻿/* Dashboard page styles - Tema FantaSync (Mágico/Festivo) */
+/* Dashboard page styles - Tema FantaSync (Mágico/Festivo) */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap');
 
 :root {
@@ -627,4 +627,14 @@ body {
     margin: 0;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
+
+/* --- REFACTORED CLASSES --- */
+.header-content-no-padding { padding: 0; margin: 0; }
+.main-logs { padding-top: 6rem; position: relative; z-index: 10; }
+.figure-logs { overflow-x: auto; margin: 0; padding: 0; }
+.logs-small-text { color: #666; }
+.logs-monospace-text { font-family: monospace; }
+.logs-ellipsis-text { max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.logs-empty-cell { text-align: center; padding: 3rem; }
+.form-no-margin { margin: 0; }
 

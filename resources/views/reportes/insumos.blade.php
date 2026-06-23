@@ -46,16 +46,16 @@
                 
                 <header class="card-header-report">
                     <h2 class="card-title">Salones Reservados:</h2>
-                    <div class="salones-badges-container">
+                    <section class="salones-badges-container">
                         @foreach($evento->salones as $salon)
                             <span class="location-badge">
                                 {{ $salon->nombre }}
                             </span>
                         @endforeach
-                    </div>
+                    </section>
                 </header>
 
-                <div class="platillos-preparar-card">
+                <section class="platillos-preparar-card">
                     <h3 class="platillos-title">🍽️ Platillos a Preparar:</h3>
                     <ul class="platillos-list-badges">
                         @php $tienePlatillos = false; @endphp
@@ -73,7 +73,7 @@
                             <li class="no-platillos-item">No hay platillos asignados a este evento aún.</li>
                         @endif
                     </ul>
-                </div>
+                </section>
 
                 @php
                     $groupedInsumos = collect($reporteInsumos)->groupBy('categoria');
@@ -92,15 +92,15 @@
                     ];
                 @endphp
 
-                <div class="insumos-categories-container">
+                <section class="insumos-categories-container">
                     @if(count($reporteInsumos) > 0)
                         @foreach($sortedGroups as $categoria => $insumos)
-                            <div class="category-group-card">
+                            <article class="category-group-card">
                                 <h3 class="category-group-title">
                                     <span class="category-icon">{{ $emojiMap[$categoria] ?? '📦' }}</span>
                                     {{ $categoria }}
                                 </h3>
-                                <div class="table-responsive">
+                                <figure class="table-responsive">
                                     <table class="tabla-reporte">
                                         <thead>
                                             <tr>
@@ -113,21 +113,21 @@
                                             @foreach($insumos as $insumo)
                                                 <tr>
                                                     <td><strong>{{ $insumo['nombre'] }}</strong></td>
-                                                    <td class="col-requerido" style="color: var(--text-muted);">{{ $insumo['exacto_format'] }}</td>
-                                                    <td class="col-margen" style="font-weight: 600;">{{ $insumo['seguro_format'] }}</td>
+                                                    <td class="col-requerido">{{ $insumo['exacto_format'] }}</td>
+                                                    <td class="col-margen">{{ $insumo['seguro_format'] }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
+                                </figure>
+                            </article>
                         @endforeach
                     @else
-                        <div class="empty-insumos-state">
+                        <section class="empty-insumos-state">
                             No hay platillos asignados para calcular insumos.
-                        </div>
+                        </section>
                     @endif
-                </div>
+                </section>
                 
                 <footer class="report-button-container">
                     <button class="btn-print" onclick="window.print();">
@@ -156,36 +156,36 @@
                     });
                 @endphp
 
-                <div class="shopping-list-categories">
+                <section class="shopping-list-categories">
                     @if($comprasInsumos->count() > 0)
                         @foreach($sortedCompras as $categoria => $compras)
-                            <div class="shopping-category-section">
+                            <section class="shopping-category-section">
                                 <h3 class="shopping-category-title">
                                     <span class="category-icon">{{ $emojiMap[$categoria] ?? '📦' }}</span>
                                     {{ $categoria }}
                                 </h3>
-                                <div class="shopping-items-grid">
+                                <menu class="shopping-items-grid">
                                     @foreach($compras as $insumo)
-                                        <div class="shopping-item-card">
+                                        <li class="shopping-item-card">
                                             <label class="checkbox-container">
                                                 <input type="checkbox">
                                                 <span class="checkmark"></span>
-                                                <div class="shopping-item-info">
+                                                <hgroup class="shopping-item-info">
                                                     <span class="shopping-item-name">{{ $insumo['nombre'] }}</span>
                                                     <span class="shopping-item-qty">{{ $insumo['comprar_format'] }}</span>
-                                                </div>
+                                                </hgroup>
                                             </label>
-                                        </div>
+                                        </li>
                                     @endforeach
-                                </div>
-                            </div>
+                                </menu>
+                            </section>
                         @endforeach
                     @else
-                        <div class="all-stocked-message">
+                        <section class="all-stocked-message">
                             🎉 ¡Excelente! Hay stock suficiente de todos los ingredientes para este evento. No es necesario comprar nada.
-                        </div>
+                        </section>
                     @endif
-                </div>
+                </section>
             </article>
         </section>
     </main>

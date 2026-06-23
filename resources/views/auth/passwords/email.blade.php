@@ -22,7 +22,7 @@
                 </header>
 
                 @if (session('status'))
-                    <output class="form-error form-error--global" style="background: rgba(76, 175, 80, 0.15); color: #2e7d32; border-color: rgba(76, 175, 80, 0.3);">
+                    <output class="form-error form-error--global auth-success-msg">
                         {{ session('status') }}
                     </output>
                 @endif
@@ -42,8 +42,8 @@
                         <button type="submit" class="button-submit">Enviar enlace de recuperación</button>
                     </footer>
 
-                    <footer class="form-footnote" style="margin-top: 1.5rem;">
-                        <a href="{{ route('login') }}" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none;">
+                    <footer class="form-footnote auth-footnote-margin">
+                        <a href="{{ route('login') }}" class="auth-link-back">
                             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                             Volver al inicio de sesión
                         </a>

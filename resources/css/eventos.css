@@ -329,3 +329,50 @@
     flex-wrap: wrap;
 }
 
+/* ======================================================
+   EVENTOS INDEX REFACTORED STYLES
+   ====================================================== */
+.eventos-back-nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.metric-percent {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.eventos-table-title {
+    margin-bottom: 1rem;
+    color: var(--primary-purple);
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+
+.table-center {
+    text-align: center;
+}
+
+.event-info-name-client {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.badge-sucursal-sub {
+    font-weight: 500;
+    font-size: 0.75rem;
+    opacity: 0.85;
+}
+
+.table-empty {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.eventos-footer {
+    margin-top: 4rem;
+}

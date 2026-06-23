@@ -32,7 +32,7 @@
         <section class="form-section" aria-label="Formulario de creación de salón">
             <section class="form-container">
                 <a href="{{ route('salones.index') }}" class="btn-back-nav">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="nav-icon-large"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Volver a la lista de salones
                 </a>
                 <form method="POST" action="{{ route('salones.store') }}" class="form-card">

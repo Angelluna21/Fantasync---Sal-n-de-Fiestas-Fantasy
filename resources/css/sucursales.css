@@ -471,7 +471,6 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(216, 27, 96, 0.35);
 }
-/* Reusing btn-back-nav styling */
 .btn-back-nav {
     display: inline-flex;
     align-items: center;
@@ -485,4 +484,93 @@
 .btn-back-nav:hover {
     color: var(--secondary-purple);
     transform: translateX(-3px);
+}
+
+.back-nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.btn-back-nav-glass {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(4px);
+    padding: 0.5rem 1.15rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s;
+    border-radius: 2rem;
+    text-decoration: none;
+}
+
+.btn-back-nav-glass:hover {
+    background: var(--accent-yellow);
+    color: var(--primary-purple) !important;
+    border-color: var(--accent-yellow);
+}
+
+.btn-back-nav-glass svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s;
+}
+
+.btn-back-nav-glass:hover svg {
+    transform: translateX(-3px);
+}
+
+/* ======================================================
+   SHOW.BLADE.PHP REFACTORED STYLES
+   ====================================================== */
+.alert-success {
+    background-color: rgba(76, 175, 80, 0.15);
+    color: #2e7d32;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.location-badge-large {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--accent-yellow);
+    color: var(--primary-purple);
+    border-radius: 50%;
+}
+
+.location-badge-large svg {
+    width: 20px;
+    height: 20px;
+}
+
+.btn-view-salon-link {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary-purple);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.no-salons-text {
+    margin: 0;
+    color: #bcbcbc;
+    font-style: italic;
+}
+
+.add-salon-menu {
+    margin-top: 1rem;
+    padding: 0;
 }

@@ -20,7 +20,7 @@
         </nav>
 
         <!-- Volver al Panel -->
-        <nav style="max-width: 1200px; margin: 0 auto; width: 100%; margin-bottom: 0.5rem;">
+        <nav class="salones-section back-nav-container" aria-label="Navegación de retorno">
             <a href="{{ route('dashboard') }}" class="btn-back-nav">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                 Volver al Panel
@@ -62,24 +62,24 @@
                         </header>
 
                         <section class="card-body">
-                            <section class="salon-info" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(122, 40, 138, 0.1);">
-                                <div>
+                            <section class="salon-info salon-info-grid">
+                                <article>
                                     <p class="info-label">Capacidad</p>
-                                    <p class="info-value" style="color: var(--primary-purple); font-weight: 800;">
+                                    <p class="info-value info-value-highlight">
                                         {{ $salon->capacidad ? "👥 {$salon->capacidad} px" : 'No definida' }}
                                     </p>
-                                </div>
-                                <div>
+                                </article>
+                                <article>
                                     <p class="info-label">Estado</p>
-                                    <span class="status-badge status-{{ $salon->estado === 'activo' ? 'verde' : ($salon->estado === 'mantenimiento' ? 'amarillo' : 'rojo') }}" style="padding: 0.25rem 0.65rem; font-size: 0.75rem; display: inline-block;">
+                                    <span class="status-badge status-{{ $salon->estado === 'activo' ? 'verde' : ($salon->estado === 'mantenimiento' ? 'amarillo' : 'rojo') }} status-badge-inline">
                                         {{ $salon->estado === 'activo' ? 'Activo' : ($salon->estado === 'mantenimiento' ? 'Mantenimiento' : 'Inactivo') }}
                                     </span>
-                                </div>
+                                </article>
                             </section>
 
-                            <section class="salon-info" style="margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid rgba(122, 40, 138, 0.1);">
+                            <section class="salon-info">
                                 <p class="info-label">Dirección</p>
-                                <p class="info-value" style="font-size: 0.85rem; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                                <p class="info-value info-address">
                                     {{ $salon->direccion ?: ($salon->sucursal->nombre ?? 'Sin dirección') }}
                                 </p>
                             </section>
@@ -90,16 +90,16 @@
                                     Disponibilidad (Eventos Ocupados)
                                 </p>
                                 @if($salon->eventos->count() > 0)
-                                    <ul class="events-list" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+                                    <ul class="events-list">
                                         @foreach($salon->eventos as $evento)
-                                            <li class="event-badge" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.5rem; border-radius: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+                                            <li class="event-badge event-badge-busy">
                                                 <strong>{{ $evento->titulo }}</strong>
                                                 <span>{{ $evento->fecha ? $evento->fecha->format('d/m/Y') : 'Sin fecha' }}</span>
                                             </li>
                                         @endforeach
                                     </ul>
                                 @else
-                                    <p class="no-events" style="color: #10b981; font-weight: 500; margin-top: 0.5rem;">🟢 Salón Libre - Sin eventos</p>
+                                    <p class="no-events no-events-text">🟢 Salón Libre - Sin eventos</p>
                                 @endif
                             </section>
                         </section>

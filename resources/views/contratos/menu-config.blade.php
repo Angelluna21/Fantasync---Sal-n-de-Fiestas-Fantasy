@@ -15,7 +15,7 @@
             <a href="{{ route('dashboard') }}" aria-label="Volver al inicio" class="logo-link">
                 <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
             </a>
-            <section style="display: flex; align-items: center; gap: 1.5rem;" aria-label="Acciones de navegación">
+            <section class="nav-actions" aria-label="Acciones de navegación">
                 <x-user-menu />
                 <a href="{{ route('dashboard') }}" class="btn-back">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -30,11 +30,11 @@
             <hgroup>
                 <p class="eyebrow">Paso 2 / 2</p>
                 <h1 class="contract-title">Selección de Menú y Comanda</h1>
-                <p style="color: #6c757d; font-size: 1.1rem; margin-top: 0.5rem;">Asigna el menú para el evento de {{ $evento->nombre_festejado }} ({{ \Carbon\Carbon::parse($evento->fecha)->format('d/m/Y') }})</p>
+                <p class="contract-subtitle">Asigna el menú para el evento de {{ $evento->nombre_festejado }} ({{ \Carbon\Carbon::parse($evento->fecha)->format('d/m/Y') }})</p>
             </hgroup>
         </header>
 
-        <section class="contract-card" style="margin-top: 2rem;">
+        <section class="contract-card contract-card-margin">
             @livewire('contrato-menu-builder', ['eventoId' => $evento->id])
         </section>
     </main>

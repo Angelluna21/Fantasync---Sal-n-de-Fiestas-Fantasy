@@ -15,32 +15,32 @@
     @if($isExpanded)
     <article class="comanda-builder-body">
         <form wire:submit.prevent="generarComanda">
-            <fieldset class="comanda-builder-form-grid" style="border: none; padding: 0; margin-bottom: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+            <fieldset class="comanda-builder-form-grid comanda-builder-fieldset-grid">
                 <!-- Cliente -->
-                <p style="margin: 0;">
+                <p class="comanda-builder-input-group">
                     <label class="comanda-builder-label">Nombre del Cliente (Opcional)</label>
                     <input type="text" wire:model="nombreCliente" class="comanda-builder-input" placeholder="Ej. Juan Pérez">
                     @error('nombreCliente') <span class="comanda-builder-error">{{ $message }}</span> @enderror
                 </p>
                 
                 <!-- Fecha -->
-                <p style="margin: 0;">
+                <p class="comanda-builder-input-group">
                     <label class="comanda-builder-label">Fecha del Evento *</label>
                     <input type="date" wire:model="fechaEvento" class="comanda-builder-input" required>
                     @error('fechaEvento') <span class="comanda-builder-error">{{ $message }}</span> @enderror
                 </p>
 
                 <!-- Teléfono -->
-                <p style="margin: 0;">
+                <p class="comanda-builder-input-group">
                     <label class="comanda-builder-label">Teléfono (Opcional)</label>
                     <input type="text" wire:model="telefono" class="comanda-builder-input" placeholder="Ej. 555-1234">
                     @error('telefono') <span class="comanda-builder-error">{{ $message }}</span> @enderror
                 </p>
 
                 <!-- Salón -->
-                <p style="margin: 0;">
+                <p class="comanda-builder-input-group">
                     <label class="comanda-builder-label">Salón Asignado (Opcional)</label>
-                    <select wire:model="salon_id" class="comanda-builder-input" style="padding: 0.6rem;">
+                    <select wire:model="salon_id" class="comanda-builder-input comanda-builder-select-padding">
                         <option value="">-- Ninguno / No aplica --</option>
                         @foreach($salones as $salon)
                             <option value="{{ $salon->id }}">{{ $salon->nombre }}</option>
@@ -50,22 +50,22 @@
                 </p>
 
                 <!-- Es Externo -->
-                <p style="margin: 0; display: flex; align-items: center; gap: 0.5rem; padding-top: 1.5rem;">
-                    <input type="checkbox" wire:model="es_externo" id="es_externo_chk" style="width: 1.2rem; height: 1.2rem;">
-                    <label for="es_externo_chk" class="comanda-builder-label" style="margin: 0; cursor: pointer;">
+                <p class="comanda-builder-checkbox-group">
+                    <input type="checkbox" wire:model="es_externo" id="es_externo_chk" class="comanda-builder-checkbox-large">
+                    <label for="es_externo_chk" class="comanda-builder-label comanda-builder-label-pointer">
                         Banquete Externo (Solo señalización)
                     </label>
                 </p>
 
                 <!-- Adultos -->
-                <p style="margin: 0;">
+                <p class="comanda-builder-input-group">
                     <label class="comanda-builder-label">Cantidad de Adultos</label>
                     <input type="number" wire:model="adultos" min="0" class="comanda-builder-input">
                     @error('adultos') <span class="comanda-builder-error">{{ $message }}</span> @enderror
                 </p>
                 
                 <!-- Niños -->
-                <p style="margin: 0;">
+                <p class="comanda-builder-input-group">
                     <label class="comanda-builder-label">Cantidad de Niños</label>
                     <input type="number" wire:model="ninos" min="0" class="comanda-builder-input">
                     @error('ninos') <span class="comanda-builder-error">{{ $message }}</span> @enderror
@@ -73,7 +73,7 @@
             </fieldset>
 
             <!-- Platillos Categorizados (Checkboxes) -->
-            <section style="margin-bottom: 2rem;">
+            <section class="comanda-builder-section-margin">
                 <label class="comanda-builder-section-title">
                     Selecciona los Platillos para la Comanda
                 </label>
@@ -91,11 +91,11 @@
                                 {{ $categoria }}
                             </h4>
                             
-                            <fieldset class="comanda-builder-items-container" style="border: none; padding: 0;">
+                            <fieldset class="comanda-builder-items-container comanda-builder-items-fieldset">
                                 @foreach($platillos as $platillo)
                                     <label class="comanda-builder-item-label">
                                         <input type="checkbox" wire:model="platillosSeleccionados" value="{{ $platillo->id }}" class="comanda-builder-checkbox">
-                                        <span style="line-height: 1.4;">{{ $platillo->nombre }}</span>
+                                        <span class="comanda-builder-item-text">{{ $platillo->nombre }}</span>
                                     </label>
                                 @endforeach
                             </fieldset>

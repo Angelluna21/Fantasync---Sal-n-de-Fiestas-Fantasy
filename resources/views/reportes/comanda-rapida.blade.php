@@ -21,8 +21,8 @@
         </nav>
 
         <!-- Navegación de regreso -->
-        <nav class="navigation-buttons" style="margin-bottom: 2rem;">
-            <a href="javascript:history.back()" style="display: inline-flex; align-items: center; gap: 0.5rem; background-color: var(--primary-purple); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 0.95rem; box-shadow: 0 4px 6px rgba(122, 40, 138, 0.2); transition: all 0.3s ease;">
+        <nav class="navigation-buttons nav-buttons-rapida">
+            <a href="javascript:history.back()" class="btn-back-purple">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
@@ -31,18 +31,18 @@
         </nav>
 
         <!-- Encabezado -->
-        <header class="dashboard-header" style="margin-bottom: 2rem;">
+        <header class="dashboard-header header-rapida">
             <hgroup>
-                <h1 class="dashboard-title" style="color: var(--primary-purple); text-shadow: none;">Comanda Rápida / Banquete Independiente</h1>
+                <h1 class="dashboard-title title-rapida">Comanda Rápida / Banquete Independiente</h1>
                 
                 @if(!empty($comandaSession['nombre_cliente']))
-                    <p style="font-size: 1.2rem; color: #333; font-weight: bold; margin-bottom: 0.5rem; text-shadow: none;">Cliente: {{ $comandaSession['nombre_cliente'] }}</p>
+                    <p class="dashboard-cliente">Cliente: {{ $comandaSession['nombre_cliente'] }}</p>
                 @endif
 
-                <p class="dashboard-description" style="color: var(--text-main); text-shadow: none;">Para: <strong>{{ $comandaSession['total'] }} personas</strong> ({{ $comandaSession['adultos'] }} adultos, {{ $comandaSession['ninos'] }} niños)</p>
+                <p class="dashboard-description dashboard-description-rapida">Para: <strong>{{ $comandaSession['total'] }} personas</strong> ({{ $comandaSession['adultos'] }} adultos, {{ $comandaSession['ninos'] }} niños)</p>
                 
                 @if(!empty($comandaSession['fecha_evento']) || !empty($comandaSession['telefono']))
-                    <p style="color: var(--text-main); text-shadow: none; margin-top: 0.5rem;">
+                    <p class="dashboard-fecha">
                         @if(!empty($comandaSession['fecha_evento']))
                             <strong>Fecha:</strong> {{ \Carbon\Carbon::parse($comandaSession['fecha_evento'])->format('d/m/Y') }} &nbsp;
                         @endif
@@ -58,7 +58,7 @@
         <section class="reportes-section">
             <article class="sucursal-card main-report-card">
 
-                <header class="card-header-report" style="border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 1rem; margin-bottom: 1rem;">
+                <header class="card-header-report card-header-rapida">
                     <h2 class="card-title">Resumen de Comanda</h2>
                 </header>
 
@@ -90,10 +90,10 @@
             </article>
 
             <!-- Lista de Compras para Central de Abasto -->
-            <article class="sucursal-card shopping-list-card" style="margin-top: -1.5rem;">
-                <header class="card-header-shopping" style="border-bottom: 2px solid var(--accent-magenta); padding-bottom: 1.5rem; margin-bottom: 2rem;">
-                    <p class="eyebrow-accent" style="font-size: 1.1rem;">LISTA DE SUPERMERCADO</p>
-                    <h2 class="card-title" style="font-size: 2rem;">Ingredientes a Comprar</h2>
+            <article class="sucursal-card shopping-list-card shopping-list-card-rapida">
+                <header class="card-header-shopping card-header-shopping-rapida">
+                    <p class="eyebrow-accent eyebrow-accent-rapida">LISTA DE SUPERMERCADO</p>
+                    <h2 class="card-title card-title-rapida">Ingredientes a Comprar</h2>
                 </header>
 
                 @php
@@ -112,7 +112,7 @@
                         <h3 class="shopping-category-title">
                             {{ $categoria }}
                         </h3>
-                        <menu class="shopping-items-grid" style="padding: 0; margin: 0;">
+                        <menu class="shopping-items-grid shopping-items-grid-reset">
                             @foreach($compras as $insumo)
                             <article class="shopping-item-card">
                                 <label class="checkbox-container">
@@ -129,7 +129,7 @@
                     </section>
                     @endforeach
                     @else
-                    <aside class="all-stocked-message" style="background-color: #f8fafc; color: #475569; border-color: #e2e8f0;">
+                    <aside class="all-stocked-message all-stocked-message-alt">
                         No hay insumos en esta lista. Selecciona los platillos deseados en el panel anterior para generar tu comanda.
                     </aside>
                     @endif
