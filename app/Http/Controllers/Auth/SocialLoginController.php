@@ -31,13 +31,7 @@ class SocialLoginController extends Controller
             ->first();
 
         if (! $user) {
-            $user = User::create([
-                'name' => $googleUser->getName() ?? $googleUser->getNickname() ?? 'Usuario Google',
-                'email' => $googleUser->getEmail(),
-                'google_id' => $googleUser->getId(),
-                'password' => Str::random(24),
-                'email_verified_at' => now(),
-            ]);
+            return redirect()->route('login')->with('error', 'Tu cuenta no está registrada en el sistema. Contacta al administrador.');
         } elseif (! $user->google_id) {
             $user->update(['google_id' => $googleUser->getId()]);
         }

@@ -10,6 +10,7 @@ use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ServicioGastronomicoController;
 use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\NominaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -51,6 +52,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('ingredientes', IngredienteController::class);
     Route::resource('eventos', EventoController::class);
     Route::resource('servicios-gastronomicos', ServicioGastronomicoController::class);
+    Route::get('nominas/reporte-pdf', [NominaController::class, 'reportePdf'])->name('nominas.reporte-pdf');
+    Route::resource('nominas', NominaController::class);
 
     // Rutas protegidas por superadmin
     Route::middleware('superadmin')->group(function () {

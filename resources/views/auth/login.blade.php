@@ -62,7 +62,6 @@
 
                     <footer class="form-footnote">
                         <p>Sólo personal autorizado</p>
-                        <a href="#">¿Olvidaste tu contraseña?</a>
                     </footer>
                 </form>
             </article>
