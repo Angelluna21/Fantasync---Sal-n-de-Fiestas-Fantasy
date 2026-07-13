@@ -130,6 +130,18 @@
                 <a href="{{ route('servicios-gastronomicos.index') }}">Ver servicios</a>
             </article>
 
+            <!-- 8. Nóminas -->
+            <article class="dashboard-card">
+                <span class="card-icon" aria-hidden="true">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                    </svg>
+                </span>
+                <h2>Nóminas</h2>
+                <p>Calcula y registra los pagos y asistencia del personal por cada evento.</p>
+                <a href="{{ route('nominas.index') }}">Ver nóminas</a>
+            </article>
+
             @if(auth()->user()->isSuperadmin())
             <!-- 8. Gestión de Usuarios (Admin Only) -->
             <article class="dashboard-card" style="border-color: var(--primary-purple); background: #faf5fc;">
