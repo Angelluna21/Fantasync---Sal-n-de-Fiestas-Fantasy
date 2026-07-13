@@ -9,32 +9,32 @@
 </head>
 <body>
 
-    <div class="header">
+    <header class="header">
         <h1>FantaSync</h1>
         <h2>Reporte de Nóminas y Pagos</h2>
         <p>Fecha de generación: {{ date('d/m/Y H:i') }}</p>
         @if($search)
             <p><strong>Filtro aplicado:</strong> "{{ $search }}"</p>
         @endif
-    </div>
+    </header>
 
     <table class="kpi-container">
         <tr>
-            <td>
-                <span class="kpi-value">{{ $totalEmpleados }}</span>
-                <span class="kpi-label">Empleados</span>
-            </td>
             <td>
                 <span class="kpi-value">${{ number_format($totalAPagar, 2) }}</span>
                 <span class="kpi-label">Total a Pagar</span>
             </td>
             <td>
-                <span class="kpi-value">${{ number_format($pagadas, 2) }}</span>
-                <span class="kpi-label">Nóminas Pagadas</span>
+                <span class="kpi-value">${{ number_format($operacionTotal, 2) }}</span>
+                <span class="kpi-label">Operación</span>
             </td>
             <td>
-                <span class="kpi-value">${{ number_format($pendientes, 2) }}</span>
-                <span class="kpi-label">Saldo Pendiente</span>
+                <span class="kpi-value">${{ number_format($cocinaTotal, 2) }}</span>
+                <span class="kpi-label">Cocina</span>
+            </td>
+            <td>
+                <span class="kpi-value">${{ number_format($oficinaTotal, 2) }}</span>
+                <span class="kpi-label">Oficina</span>
             </td>
         </tr>
     </table>
@@ -64,9 +64,9 @@
         </tbody>
     </table>
 
-    <div class="footer">
-        Reporte generado desde FantaSync - {{ date('Y') }}
-    </div>
+    <footer class="footer">
+        FantaSync ERP - Reporte generado automáticamente.
+    </footer>
 
 </body>
 </html>

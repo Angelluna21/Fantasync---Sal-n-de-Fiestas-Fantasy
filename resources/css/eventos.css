@@ -1,4 +1,4 @@
-/* Hojas de Estilos para el Dashboard de Dirección - Eventos FantaSync */
+/* Hojas de Estilos para el Dashboard de DirecciÃ³n - Eventos FantaSync */
 
 .eventos-section {
     max-width: 1200px;
@@ -42,7 +42,7 @@
     flex-shrink: 0;
 }
 
-/* Colores temáticos de indicadores */
+/* Colores temÃ¡ticos de indicadores */
 .metric-card.total .metric-icon {
     background: rgba(122, 40, 138, 0.1);
     color: var(--primary-purple);
@@ -240,14 +240,14 @@
     }
 }
 
-/* Botón de retroceso premium con micro-animación y glassmorphism */
+/* BotÃ³n de retroceso premium con micro-animaciÃ³n y glassmorphism */
 .btn-back-nav {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.15);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(122, 40, 138, 0.1);
+    color: var(--primary-purple);
+    border: 1px solid rgba(122, 40, 138, 0.2);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     padding: 0.6rem 1.25rem;
@@ -308,7 +308,7 @@
     height: 14px;
 }
 
-/* Botón alternativo para generar contrato */
+/* BotÃ³n alternativo para generar contrato */
 .btn-event-link.generate {
     background: transparent;
     color: var(--accent-magenta) !important;
@@ -377,7 +377,7 @@
     margin-top: 4rem;
 }
 
-/* Estilos para Formularios (N�minas / Generales) */
+/* Estilos para Formularios (Nóminas / Generales) */
 .nomina-form-container { max-width: 600px; margin: 0 auto; background: var(--bg-card); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color); }
 .form-fieldset { margin-bottom: 1rem; }
 .form-fieldset-lg { margin-bottom: 1.5rem; }

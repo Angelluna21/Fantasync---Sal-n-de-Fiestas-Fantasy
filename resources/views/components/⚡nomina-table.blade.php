@@ -41,10 +41,25 @@ new class extends Component {
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
     }
+
+    public function getOperacionTotalProperty()
+    {
+        return (clone $this->baseQuery)->whereIn('puesto', ['Pista (meseros)', 'Dj', 'Puerta', 'Capitan de meseros', 'Barra', 'Nana'])->sum('monto_total');
+    }
+
+    public function getCocinaTotalProperty()
+    {
+        return (clone $this->baseQuery)->whereIn('puesto', ['Cocinera', 'Auxiliar de cocina'])->sum('monto_total');
+    }
+
+    public function getOficinaTotalProperty()
+    {
+        return (clone $this->baseQuery)->whereIn('puesto', ['Encargada', 'Oficina'])->sum('monto_total');
+    }
 };
 ?>
 
-<div>
+<section>
     <!-- KPIs -->
     <section class="metrics-grid" style="margin-bottom: 2rem;">
         <article class="metric-card total">
@@ -72,25 +87,35 @@ new class extends Component {
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </figure>
             <hgroup class="metric-content">
-                <span class="metric-value">${{ number_format((clone $this->baseQuery)->where('estado_pago', 'Pagado')->sum('monto_total'), 2) }}</span>
-                <span class="metric-label">Nóminas Pagadas</span>
+                <span class="metric-value">${{ number_format($this->operacionTotal, 2) }}</span>
+                <span class="metric-label">Operación</span>
             </hgroup>
         </article>
 
         <article class="metric-card pendientes">
             <figure class="metric-icon">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
             </figure>
             <hgroup class="metric-content">
-                <span class="metric-value">${{ number_format((clone $this->baseQuery)->where('estado_pago', 'Pendiente')->sum('monto_total'), 2) }}</span>
-                <span class="metric-label font-danger">Saldo Pendiente</span>
+                <span class="metric-value">${{ number_format($this->cocinaTotal, 2) }}</span>
+                <span class="metric-label">Cocina</span>
+            </hgroup>
+        </article>
+        
+        <article class="metric-card total">
+            <figure class="metric-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+            </figure>
+            <hgroup class="metric-content">
+                <span class="metric-value">${{ number_format($this->oficinaTotal, 2) }}</span>
+                <span class="metric-label">Oficina</span>
             </hgroup>
         </article>
     </section>
 
-    <div class="mb-4 flex justify-between items-center" style="margin-bottom: 20px;">
+    <header class="mb-4 flex justify-between items-center" style="margin-bottom: 20px;">
         <input wire:model.live="search" type="text" placeholder="Buscar empleado o puesto..." class="form-control" style="width: 300px;">
-        <div style="display: flex; gap: 10px;">
+        <search style="display: flex; gap: 10px;">
             <a href="{{ route('nominas.reporte-pdf', ['search' => $search]) }}" target="_blank" class="btn-event-link" style="display:inline-flex; align-items:center; gap:8px; background: #e5e7eb; color: #111827 !important; font-weight: bold;">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                 Imprimir PDF
@@ -99,8 +124,8 @@ new class extends Component {
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                 Dar de Alta Empleado
             </a>
-        </div>
-    </div>
+        </search>
+    </header>
 
     <section class="table-wrapper">
         <table class="eventos-table">
@@ -159,7 +184,7 @@ new class extends Component {
         </table>
     </section>
 
-    <div class="mt-4">
+    <footer class="mt-4">
         {{ $this->nominas->links() }}
-    </div>
-</div>
+    </footer>
+</section>

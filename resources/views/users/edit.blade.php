@@ -75,53 +75,54 @@
     </header>
 
     <main class="dashboard-layout" style="padding-top: 0;">
-        <div class="form-card">
+        <fieldset class="form-card">
+            <legend class="sr-only">Formulario de Edición de Usuario</legend>
             <h1 style="margin: 0 0 0.5rem 0; color: var(--primary-purple);">Editar Usuario</h1>
-            <p style="color: var(--text-muted); margin-bottom: 2rem;">Actualiza la información de {{ $user->name }}.</p>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Modifica los datos o permisos de este usuario.</p>
 
             <form action="{{ route('users.update', $user) }}" method="POST">
                 @csrf
                 @method('PUT')
-                <div class="form-group">
+                
+                <section class="form-group">
                     <label class="form-label" for="name">Nombre Completo</label>
                     <input type="text" id="name" name="name" class="form-control" value="{{ old('name', $user->name) }}" required>
                     @error('name') <span class="error-message">{{ $message }}</span> @enderror
-                </div>
+                </section>
 
-                <div class="form-group">
+                <section class="form-group">
                     <label class="form-label" for="email">Correo Electrónico</label>
                     <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
                     @error('email') <span class="error-message">{{ $message }}</span> @enderror
-                </div>
+                </section>
 
-                <div class="form-group">
+                <section class="form-group">
                     <label class="form-label" for="role">Rol</label>
                     <select id="role" name="role" class="form-control" required>
                         <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>Normal (Usuario)</option>
                         <option value="superadmin" {{ old('role', $user->role) == 'superadmin' ? 'selected' : '' }}>Super Administrador</option>
                     </select>
                     @error('role') <span class="error-message">{{ $message }}</span> @enderror
-                </div>
+                </section>
 
-                <div style="margin-top: 2rem; margin-bottom: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
-                    <h3 style="margin: 0 0 1rem 0; color: var(--text-main); font-size: 1.1rem;">Cambiar Contraseña (Opcional)</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: -0.5rem;">Déjalo en blanco si no deseas cambiarla.</p>
-                </div>
+                <section style="margin-top: 2rem; margin-bottom: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                    <h2 style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 1rem;">Cambiar Contraseña <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: normal;">(Opcional)</span></h2>
+                </section>
 
-                <div class="form-group">
+                <section class="form-group">
                     <label class="form-label" for="password">Nueva Contraseña</label>
                     <input type="password" id="password" name="password" class="form-control">
                     @error('password') <span class="error-message">{{ $message }}</span> @enderror
-                </div>
+                </section>
 
-                <div class="form-group" style="margin-bottom: 2.5rem;">
+                <section class="form-group" style="margin-bottom: 2.5rem;">
                     <label class="form-label" for="password_confirmation">Confirmar Nueva Contraseña</label>
                     <input type="password" id="password_confirmation" name="password_confirmation" class="form-control">
-                </div>
+                </section>
 
-                <button type="submit" class="btn-submit">Actualizar Usuario</button>
+                <button type="submit" class="btn-submit">Guardar Cambios</button>
             </form>
-        </div>
+        </fieldset>
     </main>
 </body>
 </html>

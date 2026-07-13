@@ -24,7 +24,7 @@
             <p class="guisado-subtitle">Elige entre 5 y 7 platillos para tu taquiza.</p>
             
             <section class="input-grid grid-3">
-                @foreach($categorias->where('nombre', 'GUISADOS')->first()->platillos ?? [] as $guisado)
+                @foreach($categorias->firstWhere(fn($cat) => strtolower(trim($cat->nombre)) === 'guisados')->platillos ?? [] as $guisado)
                 <article class="input-wrapper checkbox-wrapper guisado-card {{ in_array($guisado->id, $guisados) ? 'selected' : '' }}">
                     <label for="guisado_{{ $guisado->id }}" class="checkbox-label guisado-label">
                         <input type="checkbox" id="guisado_{{ $guisado->id }}" value="{{ $guisado->id }}" wire:model.live="guisados">
@@ -48,7 +48,7 @@
                     <label class="tiempo-label">1er Tiempo (Entrada o Crema)</label>
                     <select wire:model="entrada_id" class="form-control select-margin">
                         <option value="">-- Selecciona una entrada --</option>
-                        @foreach($categorias->where('nombre', 'ENTRADAS')->first()->platillos ?? [] as $entrada)
+                        @foreach($categorias->firstWhere(fn($cat) => strtolower(trim($cat->nombre)) === 'entradas' || strtolower(trim($cat->nombre)) === '3 tiempos')->platillos ?? [] as $entrada)
                             <option value="{{ $entrada->id }}">{{ $entrada->nombre }}</option>
                         @endforeach
                     </select>
@@ -61,7 +61,7 @@
                     <label class="tiempo-label">2do Tiempo (Plato Fuerte)</label>
                     <select wire:model="plato_fuerte_id" class="form-control select-margin">
                         <option value="">-- Selecciona el plato fuerte --</option>
-                        @foreach($categorias->where('nombre', 'PLATOS FUERTES')->first()->platillos ?? [] as $fuerte)
+                        @foreach($categorias->firstWhere(fn($cat) => strtolower(trim($cat->nombre)) === 'platos fuertes' || strtolower(trim($cat->nombre)) === '3 tiempos')->platillos ?? [] as $fuerte)
                             <option value="{{ $fuerte->id }}">{{ $fuerte->nombre }}</option>
                         @endforeach
                     </select>

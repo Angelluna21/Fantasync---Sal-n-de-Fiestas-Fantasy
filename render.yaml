@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: fantasync
+    env: docker
+    region: ohio # Puedes cambiar a tu región preferida
+    plan: free # El plan gratuito de Render
+    branch: main
+    # Estos comandos se corren antes de que Render inicie el servidor
+    # ¡Ideal para correr las migraciones automáticamente!
+    preDeployCommand: "php artisan migrate --force"
+    envVars:
+      - key: APP_NAME
+        value: "FantaSync"
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true # Render generará una clave aleatoria en el primer despliegue
+      - key: APP_URL
+        value: "https://fantasync.onrender.com" # Se ajustará al nombre que te asigne Render
+      
+      # Forzamos que los logs salgan por la consola de Render
+      - key: LOG_CHANNEL
+        value: stderr
+      
+      # Conexión a Base de Datos (Supabase)
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: aws-0-us-east-1.pooler.supabase.com # ¡Deberás cambiarlo por tu URL real de Supabase!
+      - key: DB_PORT
+        value: 5432
+      - key: DB_DATABASE
+        value: postgres
+      - key: DB_USERNAME
+        value: postgres # ¡Cambiar por tu usuario de Supabase!
+      - key: DB_PASSWORD
+        sync: false # Esto significa que pondrás el password manualmente en el Dashboard de Render (por seguridad)

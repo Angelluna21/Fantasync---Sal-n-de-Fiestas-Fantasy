@@ -100,15 +100,15 @@
     <figure class="dashboard-background" aria-hidden="true"></figure>
 
     <header class="dashboard-header" style="max-width: 1100px; margin: 0 auto; text-align: left; padding: 2rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <header style="display: flex; justify-content: space-between; align-items: center;">
             <a href="{{ route('dashboard') }}" class="btn-back-nav" style="margin: 0;">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                 Volver al Panel
             </a>
             <x-user-menu />
-        </div>
+        </header>
         
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2rem;">
+        <search style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2rem;">
             <hgroup>
                 <p class="eyebrow">Administración</p>
                 <h1 class="dashboard-title" style="font-size: 2.5rem; text-shadow: none;">Gestión de Usuarios</h1>
@@ -117,22 +117,22 @@
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                 Nuevo Usuario
             </a>
-        </div>
+        </search>
     </header>
 
     <main class="dashboard-layout" style="padding-top: 0; max-width: 1100px; margin: 0 auto;">
         @if(session('success'))
-            <div style="background: rgba(76, 175, 80, 0.15); color: #2e7d32; padding: 1rem; border-radius: 1rem; border: 1px solid rgba(76, 175, 80, 0.3); font-weight: 800;">
+            <aside style="background: rgba(76, 175, 80, 0.15); color: #2e7d32; padding: 1rem; border-radius: 1rem; border: 1px solid rgba(76, 175, 80, 0.3); font-weight: 800;">
                 {{ session('success') }}
-            </div>
+            </aside>
         @endif
         @if(session('error'))
-            <div style="background: rgba(220, 53, 69, 0.15); color: #dc3545; padding: 1rem; border-radius: 1rem; border: 1px solid rgba(220, 53, 69, 0.3); font-weight: 800;">
+            <aside style="background: rgba(220, 53, 69, 0.15); color: #dc3545; padding: 1rem; border-radius: 1rem; border: 1px solid rgba(220, 53, 69, 0.3); font-weight: 800;">
                 {{ session('error') }}
-            </div>
+            </aside>
         @endif
 
-        <div class="users-table-container">
+        <section class="users-table-container">
             <table class="users-table">
                 <thead>
                     <tr>
@@ -169,9 +169,9 @@
                 </tbody>
             </table>
             @if($users->hasPages())
-                <div style="padding: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: center;">
+                <footer style="padding: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: center;">
                     {{ $users->links() }}
-                </div>
+                </footer>
             @endif
         </div>
     </main>

@@ -94,11 +94,17 @@ class NominaController extends Controller
         $nominas = $query->orderBy('created_at', 'desc')->get();
         $totalEmpleados = $nominas->count();
         $totalAPagar = $nominas->sum('monto_total');
-        $pagadas = $nominas->where('estado_pago', 'Pagado')->sum('monto_total');
-        $pendientes = $nominas->where('estado_pago', 'Pendiente')->sum('monto_total');
+        
+        $puestosOperacion = ['Pista (meseros)', 'Dj', 'Puerta', 'Capitan de meseros', 'Barra', 'Nana'];
+        $puestosCocina = ['Cocinera', 'Auxiliar de cocina'];
+        $puestosOficina = ['Encargada', 'Oficina'];
+
+        $operacionTotal = $nominas->whereIn('puesto', $puestosOperacion)->sum('monto_total');
+        $cocinaTotal = $nominas->whereIn('puesto', $puestosCocina)->sum('monto_total');
+        $oficinaTotal = $nominas->whereIn('puesto', $puestosOficina)->sum('monto_total');
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('nominas.reporte-pdf', compact(
-            'nominas', 'totalEmpleados', 'totalAPagar', 'pagadas', 'pendientes', 'search'
+            'nominas', 'totalEmpleados', 'totalAPagar', 'operacionTotal', 'cocinaTotal', 'oficinaTotal', 'search'
         ));
         
         return $pdf->stream('reporte_nominas_' . date('Y-m-d') . '.pdf');

@@ -38,9 +38,9 @@
 
         <section class="eventos-section" aria-label="Lista de Nóminas">
             @if(session('success'))
-                <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <aside class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
                     <span class="block sm:inline">{{ session('success') }}</span>
-                </div>
+                </aside>
             @endif
 
             <livewire:nomina-table />

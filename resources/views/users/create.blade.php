@@ -75,47 +75,49 @@
     </header>
 
     <main class="dashboard-layout" style="padding-top: 0;">
-        <div class="form-card">
+        <fieldset class="form-card">
+            <legend class="sr-only">Formulario de Nuevo Usuario</legend>
             <h1 style="margin: 0 0 0.5rem 0; color: var(--primary-purple);">Crear Usuario</h1>
             <p style="color: var(--text-muted); margin-bottom: 2rem;">Registra un nuevo usuario en la plataforma.</p>
 
             <form action="{{ route('users.store') }}" method="POST">
                 @csrf
-                <div class="form-group">
+                
+                <section class="form-group">
                     <label class="form-label" for="name">Nombre Completo</label>
                     <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}" required>
                     @error('name') <span class="error-message">{{ $message }}</span> @enderror
-                </div>
+                </section>
 
-                <div class="form-group">
+                <section class="form-group">
                     <label class="form-label" for="email">Correo Electrónico</label>
                     <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" required>
                     @error('email') <span class="error-message">{{ $message }}</span> @enderror
-                </div>
+                </section>
 
-                <div class="form-group">
+                <section class="form-group">
                     <label class="form-label" for="role">Rol</label>
                     <select id="role" name="role" class="form-control" required>
                         <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Normal (Usuario)</option>
                         <option value="superadmin" {{ old('role') == 'superadmin' ? 'selected' : '' }}>Super Administrador</option>
                     </select>
                     @error('role') <span class="error-message">{{ $message }}</span> @enderror
-                </div>
+                </section>
 
-                <div class="form-group">
+                <section class="form-group">
                     <label class="form-label" for="password">Contraseña</label>
                     <input type="password" id="password" name="password" class="form-control" required>
                     @error('password') <span class="error-message">{{ $message }}</span> @enderror
-                </div>
+                </section>
 
-                <div class="form-group" style="margin-bottom: 2.5rem;">
+                <section class="form-group" style="margin-bottom: 2.5rem;">
                     <label class="form-label" for="password_confirmation">Confirmar Contraseña</label>
                     <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" required>
-                </div>
+                </section>
 
                 <button type="submit" class="btn-submit">Guardar Usuario</button>
             </form>
-        </div>
+        </fieldset>
     </main>
 </body>
 </html>

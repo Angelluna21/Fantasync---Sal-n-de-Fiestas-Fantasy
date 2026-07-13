@@ -15,56 +15,6 @@ class ReporteController extends Controller
     }
 
     /**
-     * Formatea una cantidad para mostrarla amigablemente (ej. 1 kg 250 g)
-     */
-    private function formatearCantidad($cantidad, $unidad)
-    {
-        if (strtolower($unidad) === 'kg' && $cantidad > 0) {
-            $kilos = floor($cantidad);
-            $gramos = round(($cantidad - $kilos) * 1000);
-            
-            if ($kilos == 0) {
-                return "{$gramos} g";
-            } elseif ($gramos == 0) {
-                return "{$kilos} kg";
-            } else {
-                return "{$kilos} kg {$gramos} g";
-            }
-        }
-        
-        if ($cantidad == 0) {
-            return "0 {$unidad}";
-        }
-        
-        return $cantidad . ' ' . $unidad;
-    }
-
-    /**
-     * Calcula la cantidad comercial a comprar aplicando redondeo lógico según la unidad.
-     */
-    private function calcularCompraComercial($cantidadRequeridaSegura, $unidad)
-    {
-        $unidad = strtolower(trim($unidad));
-        
-        // Unidades que no se pueden fraccionar en el supermercado
-        $unidadesDiscretas = ['pz', 'pieza', 'piezas', 'manojo', 'manojos', 'lata', 'latas', 'paquete', 'paquetes', 'frasco', 'botella'];
-
-        if (in_array($unidad, $unidadesDiscretas)) {
-            // Siempre redondear hacia arriba al entero más próximo
-            return ceil($cantidadRequeridaSegura);
-        } elseif ($unidad === 'kg' || $unidad === 'l') {
-            // Para kilos y litros, redondear al 0.5 más cercano hacia arriba para facilitar compra (ej. 1.2 -> 1.5)
-            return ceil($cantidadRequeridaSegura * 2) / 2;
-        } elseif ($unidad === 'gr' || $unidad === 'g' || $unidad === 'ml') {
-            // Para gramos, redondear a los 50g más cercanos hacia arriba
-            return ceil($cantidadRequeridaSegura / 50) * 50;
-        }
-
-        // Por defecto, redondear a 2 decimales
-        return round($cantidadRequeridaSegura, 2);
-    }
-
-    /**
      * Procesa y muestra el reporte de insumos para un evento específico.
      */
     public function insumosEvento($id)
@@ -93,7 +43,7 @@ class ReporteController extends Controller
             $comprarPuro = $cantidadSegura;
 
             // Aplicar redondeo comercial sobre lo que se debe comprar
-            $comprarComercial = $comprarPuro > 0 ? $this->calcularCompraComercial($comprarPuro, $datos['unidad']) : 0;
+            $comprarComercial = $comprarPuro > 0 ? $this->calculadora->calcularCompraComercial($comprarPuro, $datos['unidad']) : 0;
 
             // 4. Construimos el array para la vista
             $reporteInsumos[] = [
@@ -101,11 +51,11 @@ class ReporteController extends Controller
                 'unidad'           => $datos['unidad'],
                 'categoria'        => $categoria,
                 'requerido_exacto' => $cantidadExacta,
-                'exacto_format'    => $this->formatearCantidad($cantidadExacta, $datos['unidad']),
+                'exacto_format'    => $this->calculadora->formatearCantidad($cantidadExacta, $datos['unidad']),
                 'requerido_seguro' => $cantidadSegura,
-                'seguro_format'    => $this->formatearCantidad($cantidadSegura, $datos['unidad']),
+                'seguro_format'    => $this->calculadora->formatearCantidad($cantidadSegura, $datos['unidad']),
                 'comprar_raw'      => $comprarComercial,
-                'comprar_format'   => $this->formatearCantidad($comprarComercial, $datos['unidad'])
+                'comprar_format'   => $this->calculadora->formatearCantidad($comprarComercial, $datos['unidad'])
             ];
         }
 
@@ -147,7 +97,7 @@ class ReporteController extends Controller
             $comprarPuro = $cantidadSegura;
 
             // Aplicar redondeo comercial
-            $comprarComercial = $comprarPuro > 0 ? $this->calcularCompraComercial($comprarPuro, $datos['unidad']) : 0;
+            $comprarComercial = $comprarPuro > 0 ? $this->calculadora->calcularCompraComercial($comprarPuro, $datos['unidad']) : 0;
 
             // Construimos el array para la vista
             $reporteInsumos[] = [
@@ -155,11 +105,11 @@ class ReporteController extends Controller
                 'unidad'           => $datos['unidad'],
                 'categoria'        => $categoria,
                 'requerido_exacto' => $cantidadExacta,
-                'exacto_format'    => $this->formatearCantidad($cantidadExacta, $datos['unidad']),
+                'exacto_format'    => $this->calculadora->formatearCantidad($cantidadExacta, $datos['unidad']),
                 'requerido_seguro' => $cantidadSegura,
-                'seguro_format'    => $this->formatearCantidad($cantidadSegura, $datos['unidad']),
+                'seguro_format'    => $this->calculadora->formatearCantidad($cantidadSegura, $datos['unidad']),
                 'comprar_raw'      => $comprarComercial,
-                'comprar_format'   => $this->formatearCantidad($comprarComercial, $datos['unidad'])
+                'comprar_format'   => $this->calculadora->formatearCantidad($comprarComercial, $datos['unidad'])
             ];
         }
 

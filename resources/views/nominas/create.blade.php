@@ -50,7 +50,7 @@
                     @error('puesto') <span class="form-error-msg">{{ $message }}</span> @enderror
                 </fieldset>
                 
-                <div class="form-flex-row">
+                <section class="form-flex-row">
                     <fieldset class="form-group border-0 p-0 m-0 form-fieldset-flex">
                         <label class="form-label form-label-semibold">Salario Base ($)</label>
                         <input type="number" step="0.01" name="salario_base" id="salario_base" class="form-control form-input-readonly" required readonly>
@@ -61,9 +61,9 @@
                         <label class="form-label form-label-semibold">Pago x Hora Extra ($)</label>
                         <input type="number" step="0.01" id="pago_hora_extra" class="form-control form-input-readonly" readonly>
                     </fieldset>
-                </div>
+                </section>
 
-                <div class="form-flex-row">
+                <section class="form-flex-row">
                     <fieldset class="form-group border-0 p-0 m-0 form-fieldset-flex">
                         <label class="form-label form-label-semibold">Horas Extra (Cantidad)</label>
                         <input type="number" name="horas_extra" id="horas_extra" class="form-control" value="0" min="0">
@@ -75,7 +75,7 @@
                         <input type="number" step="0.01" name="monto_total" id="monto_total" class="form-control form-input-total" readonly>
                         @error('monto_total') <span class="form-error-msg">{{ $message }}</span> @enderror
                     </fieldset>
-                </div>
+                </section>
                 <fieldset class="form-group border-0 p-0 m-0 form-fieldset">
                     <label class="form-label form-label-semibold">Fecha de Trabajo</label>
                     <input type="date" name="fecha_trabajo" class="form-control" required>
@@ -100,9 +100,9 @@
                     </select>
                     @error('estado_pago') <span class="form-error-msg">{{ $message }}</span> @enderror
                 </fieldset>
-                <div class="pt-4">
+                <section class="pt-4">
                     <button type="submit" class="button-submit btn-submit-full">Guardar Nómina</button>
-                </div>
+                </section>
             </form>
         </section>
     </main>
@@ -140,6 +140,7 @@
         const horasExtraInput = document.getElementById('horas_extra');
         const montoTotalInput = document.getElementById('monto_total');
         const empleadoInput = document.getElementById('nombre_empleado');
+        const fechaTrabajoInput = document.querySelector('input[name="fecha_trabajo"]');
 
         // Store original options to filter them
         const originalEventos = Array.from(eventoSelect.options);
@@ -212,7 +213,13 @@
 
         puestoSelect.addEventListener('change', filtrarEventos);
         empleadoInput.addEventListener('input', filtrarEventos);
-        eventoSelect.addEventListener('change', calcularTotal);
+        eventoSelect.addEventListener('change', function() {
+            calcularTotal();
+            if (this.value && eventosData[this.value]) {
+                const fecha = eventosData[this.value].fecha;
+                fechaTrabajoInput.value = fecha.split(' ')[0]; // Solo tomar yyyy-mm-dd
+            }
+        });
         horasExtraInput.addEventListener('input', calcularTotal);
     </script>
 </body>
