@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB; // <-- Agregado para poder insertar los datos
 
 return new class extends Migration
 {
@@ -17,6 +18,14 @@ return new class extends Migration
             $table->string('nombre');
             $table->timestamps();
         });
+
+        // Insertamos los servicios base para el funcionamiento del sistema -->
+        DB::table('servicios_gastronomicos')->insert([
+            ['id' => 1, 'nombre' => 'Menús a 2 Tiempos'],
+            ['id' => 2, 'nombre' => 'Menús a 3 Tiempos'],
+            ['id' => 3, 'nombre' => 'Taquizas'],
+            ['id' => 4, 'nombre' => 'Parrilladas'],
+        ]);
     }
 
     /**

@@ -2,22 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-#[Fillable([
-    'categoria_platillo_id',
-    'servicio_gastronomico_id',
-    'nombre',
-    'descripcion',
-    'precio'
-])]
 class Platillo extends Model
 {
     use HasFactory;
+
+    protected $table = 'platillos';
+
+    protected $fillable = [
+        'categoria_platillo_id',
+        'nombre',
+        'descripcion',
+        'precio'
+    ];
 
     protected $casts = [
         'precio' => 'decimal:2',
@@ -28,9 +29,10 @@ class Platillo extends Model
         return $this->belongsTo(CategoriaPlatillo::class);
     }
 
-    public function servicioGastronomico(): BelongsTo
+    public function serviciosGastronomicos(): BelongsToMany
     {
-        return $this->belongsTo(ServicioGastronomico::class);
+        return $this->belongsToMany(ServicioGastronomico::class, 'platillo_servicio_gastronomico')
+                    ->withTimestamps();
     }
 
     public function ingredientes(): BelongsToMany

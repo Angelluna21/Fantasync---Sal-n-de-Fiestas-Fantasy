@@ -106,18 +106,28 @@
                 <a href="{{ route('salones.index') }}">Ver salones</a>
             </article>
 
-
-
-            <!-- 8. Nóminas -->
+            <!-- 6. Categorías -->
             <article class="dashboard-card">
-                <span class="card-icon" aria-hidden="true" style="color: #059669; background: #d1fae5;">
+                <span class="card-icon" aria-hidden="true">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                     </svg>
                 </span>
-                <h2>Nóminas</h2>
-                <p>Dar de alta empleados, registrar salarios, horas extras y pagos de eventos.</p>
-                <a href="{{ route('nominas.index') }}">Ver nóminas</a>
+                <h2>Categorías</h2>
+                <p>Clasifica los platillos por tiempos (guisados, bebidas, infantil, guarniciones, etc.).</p>
+                <a href="{{ route('categorias.index') }}">Ver categorías</a>
+            </article>
+
+            <!-- 7. Servicios Gastronómicos -->
+            <article class="dashboard-card">
+                <span class="card-icon" aria-hidden="true">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </span>
+                <h2>Servicios Gastronómicos</h2>
+                <p>Gestiona los servicios adicionales y gastronomía contratados para los eventos.</p>
+                <a href="{{ route('servicios-gastronomicos.index') }}">Ver servicios</a>
             </article>
 
             @if(auth()->user()->isSuperadmin())

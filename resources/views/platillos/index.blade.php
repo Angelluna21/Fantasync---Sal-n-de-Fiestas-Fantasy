@@ -87,88 +87,110 @@
                 </li>
             </menu>
 
+            @php
+                // Títulos para las secciones según el ID del servicio
+                $nombresServicios = [
+                    1 => 'Menús a 2 Tiempos',
+                    2 => 'Menús a 3 Tiempos',
+                    3 => 'Taquizas',
+                    4 => 'Parrilladas'
+                ];
+            @endphp
+
             <!-- 1. Vista de Cuadrícula (Grid) -->
-            <section class="platillos-grid" id="platillos-grid-view" aria-label="Catálogo de Platillos en Cuadrícula">
-                @forelse($platillos as $platillo)
-                <article class="platillo-card" data-nombre="{{ $platillo->nombre }}">
-                    <header class="card-header">
-                        <h3 class="card-title">{{ $platillo->nombre }}</h3>
-                        @if($platillo->categoriaPlatillo)
-                        <span class="badge">{{ $platillo->categoriaPlatillo->nombre }}</span>
-                        @else
-                        <span class="badge badge-gray">Sin categoría</span>
+            <section id="platillos-grid-view" aria-label="Catálogo de Platillos en Cuadrícula">
+                
+                @if($platillos->isEmpty())
+                    <article class="empty-state" id="empty-state-card">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                        <h3>No hay platillos registrados</h3>
+                        <p>Agrega tu primer platillo para comenzar a construir el menú de tus eventos.</p>
+                        <a href="{{ route('platillos.create') }}" class="btn-create">Crear Primer Platillo</a>
+                    </article>
+                @else
+                    @foreach($nombresServicios as $idServicio => $titulo)
+                        @if(isset($platillosAgrupados[$idServicio]) && $platillosAgrupados[$idServicio]->count() > 0)
+                            
+                            <h3 style="color: var(--primary-purple, #7A288A); margin: 2rem 0 1rem 0; font-size: 1.25rem; border-bottom: 2px solid #f0eaef; padding-bottom: 5px;">{{ $titulo }}</h3>
+                            
+                            <!-- El div interno hereda tu clase CSS de grid -->
+                            <div class="platillos-grid group-container">
+                                @foreach($platillosAgrupados[$idServicio] as $platillo)
+                                    <article class="platillo-card" data-nombre="{{ $platillo->nombre }}">
+                                        <header class="card-header">
+                                            <h3 class="card-title">{{ $platillo->nombre }}</h3>
+                                            @if($platillo->categoriaPlatillo)
+                                                <span class="badge">{{ $platillo->categoriaPlatillo->nombre }}</span>
+                                            @else
+                                                <span class="badge badge-gray">Sin categoría</span>
+                                            @endif
+                                        </header>
+
+                                        <section class="card-body">
+                                            @if($platillo->descripcion)
+                                                <p class="card-description">{{ Str::limit($platillo->descripcion, 90) }}</p>
+                                            @endif
+
+                                            <h4 class="associated-label">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                                </svg>
+                                                Insumos de la Receta
+                                            </h4>
+
+                                            @if($platillo->ingredientes->count() > 0)
+                                                <menu class="platillos-list" aria-label="Ingredientes de este platillo">
+                                                    @foreach($platillo->ingredientes->take(4) as $ingrediente)
+                                                        <li><span class="platillo-badge">{{ $ingrediente->nombre }}</span></li>
+                                                    @endforeach
+                                                    @if($platillo->ingredientes->count() > 4)
+                                                        <li><span class="platillo-badge badge-gray">+{{ $platillo->ingredientes->count() - 4 }} más</span></li>
+                                                    @endif
+                                                </menu>
+                                            @else
+                                                <p class="no-platillos">Sin fórmula de ingredientes</p>
+                                            @endif
+                                        </section>
+
+                                        <footer class="card-footer">
+                                            <menu class="card-actions-menu">
+                                                <li>
+                                                    <a href="{{ route('platillos.show', $platillo->id) }}" class="btn-action btn-view" title="Ver Platillo">
+                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                                        </svg>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('platillos.edit', $platillo->id) }}" class="btn-action btn-edit" title="Editar Platillo">
+                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                        </svg>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <button type="button" class="btn-action btn-delete" title="Eliminar" onclick="confirmDelete('{{ $platillo->nombre }}', 'delete-form-{{ $platillo->id }}')">
+                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                        </svg>
+                                                    </button>
+                                                </li>
+                                            </menu>
+
+                                            <form id="delete-form-{{ $platillo->id }}" action="{{ route('platillos.destroy', $platillo->id) }}" method="POST" class="form-delete" style="display:none;">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </footer>
+                                    </article>
+                                @endforeach
+                            </div>
                         @endif
-                    </header>
-
-                    <section class="card-body">
-                        @if($platillo->descripcion)
-                        <p class="card-description">{{ Str::limit($platillo->descripcion, 90) }}</p>
-                        @endif
-
-                        <h4 class="associated-label">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                            </svg>
-                            Insumos de la Receta
-                        </h4>
-
-                        @if($platillo->ingredientes->count() > 0)
-                        <menu class="platillos-list" aria-label="Ingredientes de este platillo">
-                            @foreach($platillo->ingredientes->take(4) as $ingrediente)
-                            <li><span class="platillo-badge">{{ $ingrediente->nombre }}</span></li>
-                            @endforeach
-                            @if($platillo->ingredientes->count() > 4)
-                            <li><span class="platillo-badge badge-gray">+{{ $platillo->ingredientes->count() - 4 }} más</span></li>
-                            @endif
-                        </menu>
-                        @else
-                        <p class="no-platillos">Sin fórmula de ingredientes</p>
-                        @endif
-                    </section>
-
-                    <footer class="card-footer">
-
-                        <menu class="card-actions-menu">
-                            <li>
-                                <a href="{{ route('platillos.show', $platillo->id) }}" class="btn-action btn-view" title="Ver Platillo">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('platillos.edit', $platillo->id) }}" class="btn-action btn-edit" title="Editar Platillo">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <button type="button" class="btn-action btn-delete" title="Eliminar" onclick="confirmDelete('{{ $platillo->nombre }}', 'delete-form-{{ $platillo->id }}')">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                    </svg>
-                                </button>
-                            </li>
-                        </menu>
-
-                        <form id="delete-form-{{ $platillo->id }}" action="{{ route('platillos.destroy', $platillo->id) }}" method="POST" class="form-delete" style="display:none;">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                    </footer>
-                </article>
-                @empty
-                <article class="empty-state" id="empty-state-card">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                    </svg>
-                    <h3>No hay platillos registrados</h3>
-                    <p>Agrega tu primer platillo para comenzar a construir el menú de tus eventos.</p>
-                    <a href="{{ route('platillos.create') }}" class="btn-create">Crear Primer Platillo</a>
-                </article>
-                @endforelse
+                    @endforeach
+                @endif
             </section>
 
             <!-- 2. Vista de Lista (Tabla) -->
@@ -178,63 +200,76 @@
                         <tr>
                             <th>Nombre</th>
                             <th>Categoría</th>
-
                             <th>Ingredientes</th>
                             <th class="table-th-actions">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="platillos-table-body">
-                        @forelse($platillos as $platillo)
-                        <tr class="table-row-item" data-nombre="{{ $platillo->nombre }}">
-                            <td class="col-name">{{ $platillo->nombre }}</td>
-                            <td class="col-category">
-                                @if($platillo->categoriaPlatillo)
-                                <span class="badge">{{ $platillo->categoriaPlatillo->nombre }}</span>
-                                @else
-                                <span class="badge badge-gray">Sin categoría</span>
-                                @endif
-                            </td>
+                    
+                    @if($platillos->isEmpty())
+                        <tbody>
+                            <tr class="table-empty">
+                                <td colspan="4" class="table-empty-td">No hay platillos registrados.</td>
+                            </tr>
+                        </tbody>
+                    @else
+                        @foreach($nombresServicios as $idServicio => $titulo)
+                            @if(isset($platillosAgrupados[$idServicio]) && $platillosAgrupados[$idServicio]->count() > 0)
+                                <tbody class="group-container">
+                                    <!-- Fila separadora de grupo -->
+                                    <tr style="background: rgba(122, 40, 138, 0.05);">
+                                        <td colspan="4" style="font-weight: bold; color: var(--primary-purple, #7A288A); padding: 12px 16px;">{{ $titulo }}</td>
+                                    </tr>
+                                    
+                                    @foreach($platillosAgrupados[$idServicio] as $platillo)
+                                        <tr class="table-row-item" data-nombre="{{ $platillo->nombre }}">
+                                            <td class="col-name">{{ $platillo->nombre }}</td>
+                                            <td class="col-category">
+                                                @if($platillo->categoriaPlatillo)
+                                                    <span class="badge">{{ $platillo->categoriaPlatillo->nombre }}</span>
+                                                @else
+                                                    <span class="badge badge-gray">Sin categoría</span>
+                                                @endif
+                                            </td>
 
-                            <td>
-                                @if($platillo->ingredientes->count() > 0)
-                                <span class="badge badge-gray">{{ $platillo->ingredientes->count() }} insumos</span>
-                                @else
-                                <span class="badge badge-gray badge-no-receta">Sin receta</span>
-                                @endif
-                            </td>
-                            <td class="col-actions">
-                                <menu class="table-actions-menu">
-                                    <li>
-                                        <a href="{{ route('platillos.show', $platillo->id) }}" class="btn-action btn-view" title="Ver Platillo">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('platillos.edit', $platillo->id) }}" class="btn-action btn-edit" title="Editar Platillo">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="btn-action btn-delete" title="Eliminar" onclick="confirmDelete('{{ $platillo->nombre }}', 'delete-form-{{ $platillo->id }}')">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                            </svg>
-                                        </button>
-                                    </li>
-                                </menu>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr class="table-empty">
-                            <td colspan="4" class="table-empty-td">No hay platillos registrados.</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
+                                            <td>
+                                                @if($platillo->ingredientes->count() > 0)
+                                                    <span class="badge badge-gray">{{ $platillo->ingredientes->count() }} insumos</span>
+                                                @else
+                                                    <span class="badge badge-gray badge-no-receta">Sin receta</span>
+                                                @endif
+                                            </td>
+                                            <td class="col-actions">
+                                                <menu class="table-actions-menu">
+                                                    <li>
+                                                        <a href="{{ route('platillos.show', $platillo->id) }}" class="btn-action btn-view" title="Ver Platillo">
+                                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                                            </svg>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ route('platillos.edit', $platillo->id) }}" class="btn-action btn-edit" title="Editar Platillo">
+                                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                            </svg>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" class="btn-action btn-delete" title="Eliminar" onclick="confirmDelete('{{ $platillo->nombre }}', 'delete-form-{{ $platillo->id }}')">
+                                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                            </svg>
+                                                        </button>
+                                                    </li>
+                                                </menu>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            @endif
+                        @endforeach
+                    @endif
                 </table>
             </section>
         </section>
@@ -292,7 +327,7 @@
         gridViewBtn.addEventListener('click', () => {
             gridViewBtn.classList.add('active');
             listViewBtn.classList.remove('active');
-            gridView.style.display = 'grid';
+            gridView.style.display = 'block'; // Adaptado para el contenedor de grupos
             listView.style.display = 'none';
             localStorage.setItem('platillos_view', 'grid');
         });
@@ -328,34 +363,37 @@
         });
 
         // ==========================================
-        // ORDENAMIENTO DINÁMICO
+        // ORDENAMIENTO DINÁMICO (ADAPTADO POR GRUPOS)
         // ==========================================
         const sortSelect = document.getElementById('sort-select');
         sortSelect.addEventListener('change', () => {
             const order = sortSelect.value;
 
-            // Ordenar Grid
-            const cards = Array.from(gridView.querySelectorAll('.platillo-card'));
-            if (cards.length > 0) {
-                cards.sort((a, b) => {
-                    const nameA = a.getAttribute('data-nombre').toLowerCase();
-                    const nameB = b.getAttribute('data-nombre').toLowerCase();
-                    return order === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
-                });
-                cards.forEach(card => gridView.appendChild(card));
-            }
+            // Ordenar Grid por grupos
+            document.querySelectorAll('#platillos-grid-view .group-container').forEach(container => {
+                const cards = Array.from(container.querySelectorAll('.platillo-card'));
+                if (cards.length > 0) {
+                    cards.sort((a, b) => {
+                        const nameA = a.getAttribute('data-nombre').toLowerCase();
+                        const nameB = b.getAttribute('data-nombre').toLowerCase();
+                        return order === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+                    });
+                    cards.forEach(card => container.appendChild(card));
+                }
+            });
 
-            // Ordenar Tabla
-            const tableBody = document.getElementById('platillos-table-body');
-            const rows = Array.from(tableBody.querySelectorAll('.table-row-item'));
-            if (rows.length > 0) {
-                rows.sort((a, b) => {
-                    const nameA = a.getAttribute('data-nombre').toLowerCase();
-                    const nameB = b.getAttribute('data-nombre').toLowerCase();
-                    return order === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
-                });
-                rows.forEach(row => tableBody.appendChild(row));
-            }
+            // Ordenar Tabla por grupos
+            document.querySelectorAll('#platillos-list-view .group-container').forEach(container => {
+                const rows = Array.from(container.querySelectorAll('.table-row-item'));
+                if (rows.length > 0) {
+                    rows.sort((a, b) => {
+                        const nameA = a.getAttribute('data-nombre').toLowerCase();
+                        const nameB = b.getAttribute('data-nombre').toLowerCase();
+                        return order === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+                    });
+                    rows.forEach(row => container.appendChild(row));
+                }
+            });
         });
     </script>
 </body>

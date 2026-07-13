@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('platillos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('categoria_platillo_id')->constrained('categoria_platillos')->onDelete('cascade');
-            $table->foreignId('servicio_gastronomico_id')->nullable()->constrained('servicio_gastronomicos')->onDelete('set null');
+            $table->foreignId('servicio_gastronomico_id')->nullable()->constrained('servicios_gastronomicos')->onDelete('set null');
             
             $table->string('nombre', 150);
             $table->text('descripcion')->nullable();

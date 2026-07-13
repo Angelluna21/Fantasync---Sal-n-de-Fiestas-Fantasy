@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('ingredientes', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 120);
-            // Unidades de medida estándar para recetas. 'pz' = pieza.
-            $table->enum('unidad', ['kg', 'gr', 'l', 'ml', 'pz']);
+            // Cambiado a string para aceptar cualquier unidad de medida libremente
+            $table->string('unidad'); 
             $table->timestamps();
             $table->softDeletes();
         });
