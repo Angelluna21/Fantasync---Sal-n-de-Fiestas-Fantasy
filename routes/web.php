@@ -12,6 +12,7 @@ use App\Http\Controllers\ServicioGastronomicoController;
 use App\Http\Controllers\ReporteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\NominaController;
  
 
 Route::get('/', function () {
@@ -43,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('ingredientes',IngredienteController::class);
     Route::resource('eventos', EventoController::class);
     Route::resource('servicios-gastronomicos', ServicioGastronomicoController::class);
+    Route::resource('nominas', NominaController::class);
 
     // Tus rutas manuales de Categorías
     Route::get('/categorias', function() {
