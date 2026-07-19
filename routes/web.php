@@ -39,25 +39,15 @@ Route::middleware('auth')->group(function () {
     // Recursos generales
     Route::resource('sucursales', SucursalController::class)->parameters(['sucursales' => 'sucursal']);
     Route::resource('salones', SalonController::class)->parameters(['salones' => 'salon']);
-    Route::resource('categoria-platillos', CategoriaPlatilloController::class);
+    Route::resource('categorias', CategoriaPlatilloController::class);
     Route::resource('platillos', PlatilloController::class);
-    Route::resource('ingredientes',IngredienteController::class);
+    Route::resource('ingredientes', IngredienteController::class);
     Route::resource('eventos', EventoController::class);
     Route::resource('servicios-gastronomicos', ServicioGastronomicoController::class);
 
     Route::get('nominas/reporte-pdf', [NominaController::class, 'reportePdf'])->name('nominas.reporte-pdf');
     Route::resource('nominas', NominaController::class);
 
-    // Tus rutas manuales de Categorías
-    Route::get('/categorias', function() {
-        return view('categorias.index');
-    })->name('categorias.index');
-
-    Route::get('/categorias/create', function() {
-        return view('categorias.create');
-    })->name('categorias.create');
-
-    Route::post('/categorias', [CategoriaPlatilloController::class, 'store'])->name('categorias.store');
 
     // Test de Livewire para Platillos
     Route::get('/test-platillos', function () {

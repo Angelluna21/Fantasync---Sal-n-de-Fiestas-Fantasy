@@ -60,11 +60,15 @@
                         <legend class="form-label">Categoría de Menú</legend>
                         <select id="categoria_platillo_id" name="categoria_platillo_id" class="form-input" required>
                             <option value="" disabled>Selecciona una categoría...</option>
-                            @foreach($categorias as $categoria)
-                                <option value="{{ $categoria->id }}"
-                                    {{ old('categoria_platillo_id', $platillo->categoria_platillo_id) == $categoria->id ? 'selected' : '' }}>
-                                    {{ $categoria->nombre }}
-                                </option>
+                            @foreach($categorias->groupBy(fn($cat) => $cat->grupo ?? 'Sin Grupo') as $grupo => $items)
+                                <optgroup label="{{ $grupo }}">
+                                    @foreach($items as $categoria)
+                                        <option value="{{ $categoria->id }}"
+                                            {{ old('categoria_platillo_id', $platillo->categoria_platillo_id) == $categoria->id ? 'selected' : '' }}>
+                                            {{ $categoria->nombre }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
                         </select>
                         @error('categoria_platillo_id')

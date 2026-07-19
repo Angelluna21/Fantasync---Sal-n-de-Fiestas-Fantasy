@@ -9,42 +9,92 @@ class CategoriaPlatilloController extends Controller
 {
     public function index()
     {
-        return response()->json(CategoriaPlatillo::with('platillos')->get());
+        $categorias = CategoriaPlatillo::withCount('platillos')
+            ->orderBy('orden')
+            ->orderBy('nombre')
+            ->get()
+            ->groupBy(function ($categoria) {
+                return $categoria->grupo ?? 'Sin Grupo';
+            });
+
+        return view('categoria-platillos.index', compact('categorias'));
     }
 
-   public function store(Request $request)
+    public function create()
+    {
+        $grupos = CategoriaPlatillo::whereNotNull('grupo')
+            ->distinct()
+            ->orderBy('grupo')
+            ->pluck('grupo');
+
+        return view('categoria-platillos.create', compact('grupos'));
+    }
+
+    public function store(Request $request)
     {
         $data = $request->validate([
             'nombre' => 'required|string|max:60',
+            'grupo' => 'nullable|string|max:60',
             'orden' => 'required|integer|min:1',
+        ], [
+            'nombre.required' => 'El nombre de la categoría es obligatorio.',
+            'orden.required' => 'El orden es obligatorio.',
+            'orden.integer' => 'El orden debe ser un número.',
         ]);
 
         CategoriaPlatillo::create($data);
 
-        return redirect()->route('categorias.index')->with('success', 'Categoría creada correctamente');
+        return redirect()->route('categorias.index')
+            ->with('success', 'Categoría creada correctamente.');
     }
 
-    public function show(CategoriaPlatillo $categoriaPlatillo)
+    // OJO: el nombre del parámetro debe ser $categoria (coincide con el
+    // {categoria} que genera Route::resource('categorias', ...)).
+    public function show(CategoriaPlatillo $categoria)
     {
-        return response()->json($categoriaPlatillo->load('platillos'));
+        $categoria->load('platillos');
+
+        return view('categoria-platillos.show', compact('categoria'));
     }
 
-    public function update(Request $request, CategoriaPlatillo $categoriaPlatillo)
+    public function edit(CategoriaPlatillo $categoria)
+    {
+        $grupos = CategoriaPlatillo::whereNotNull('grupo')
+            ->distinct()
+            ->orderBy('grupo')
+            ->pluck('grupo');
+
+        return view('categoria-platillos.edit', compact('categoria', 'grupos'));
+    }
+
+    public function update(Request $request, CategoriaPlatillo $categoria)
     {
         $data = $request->validate([
-            'nombre' => 'sometimes|string|max:60',
-            'orden' => 'sometimes|integer|min:1',
+            'nombre' => 'required|string|max:60',
+            'grupo' => 'nullable|string|max:60',
+            'orden' => 'required|integer|min:1',
+        ], [
+            'nombre.required' => 'El nombre de la categoría es obligatorio.',
+            'orden.required' => 'El orden es obligatorio.',
+            'orden.integer' => 'El orden debe ser un número.',
         ]);
 
-        $categoriaPlatillo->update($data);
+        $categoria->update($data);
 
-        return response()->json($categoriaPlatillo);
+        return redirect()->route('categorias.index')
+            ->with('success', 'Categoría actualizada correctamente.');
     }
 
-    public function destroy(CategoriaPlatillo $categoriaPlatillo)
+    public function destroy(CategoriaPlatillo $categoria)
     {
-        $categoriaPlatillo->delete();
+        if ($categoria->platillos()->exists()) {
+            return redirect()->route('categorias.index')
+                ->with('error', 'No se puede eliminar "' . $categoria->nombre . '" porque tiene platillos asociados.');
+        }
 
-        return response()->noContent();
+        $categoria->delete();
+
+        return redirect()->route('categorias.index')
+            ->with('success', 'Categoría eliminada correctamente.');
     }
 }

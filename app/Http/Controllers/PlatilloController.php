@@ -35,7 +35,7 @@ class PlatilloController extends Controller
     public function create()
     {
         $servicios = ServicioGastronomico::all();
-        $categorias = CategoriaPlatillo::all();
+        $categorias = CategoriaPlatillo::orderBy('orden')->orderBy('nombre')->get();
         $insumos = Ingrediente::orderBy('nombre')->get();
 
         return view('platillos.create', compact('servicios', 'categorias', 'insumos'));

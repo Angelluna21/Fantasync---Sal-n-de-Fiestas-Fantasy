@@ -44,14 +44,14 @@
                     @csrf
 
                     @if ($errors->any())
-                        <div style="background: #ffebee; color: #d32f2f; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #d32f2f;">
-                            <p style="margin-top: 0; font-weight: bold;">Por favor corrige los siguientes errores:</p>
-                            <ul style="margin-bottom: 0;">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                    <div style="background: #ffebee; color: #d32f2f; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #d32f2f;">
+                        <p style="margin-top: 0; font-weight: bold;">Por favor corrige los siguientes errores:</p>
+                        <ul style="margin-bottom: 0;">
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                     @endif
 
                     <div class="form-group">
@@ -63,10 +63,10 @@
                         <label class="form-label">SERVICIO(S) GASTRONÓMICO(S)</label>
                         <div style="display: flex; flex-direction: column; gap: 8px; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
                             @foreach($servicios as $servicio)
-                                <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer;">
-                                    <input type="checkbox" name="servicio_gastronomico_id[]" value="{{ $servicio->id }}">
-                                    {{ $servicio->nombre }}
-                                </label>
+                            <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer;">
+                                <input type="checkbox" name="servicio_gastronomico_id[]" value="{{ $servicio->id }}">
+                                {{ $servicio->nombre }}
+                            </label>
                             @endforeach
                         </div>
                     </div>
@@ -75,27 +75,13 @@
                         <label class="form-label">CATEGORÍA DE MENÚ</label>
                         <select name="categoria_platillo_id" class="form-input" required>
                             <option value="">Selecciona una categoría...</option>
-                            <optgroup label="Menús por Tiempos">
-                                <option value="1">Sopas, Cremas y Caldos</option>
-                                <option value="2">Pastas</option>
-                                <option value="3">Ensaladas</option>
-                                <option value="4">Plato Fuerte - Pollo</option>
-                                <option value="5">Plato Fuerte - Res</option>
-                                <option value="6">Plato Fuerte - Cerdo</option>
+                            @foreach($categorias->groupBy(fn($cat) => $cat->grupo ?? 'Sin Grupo') as $grupo => $items)
+                            <optgroup label="{{ $grupo }}">
+                                @foreach($items as $categoria)
+                                <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                                @endforeach
                             </optgroup>
-                            <optgroup label="Opciones de Taquiza">
-                                <option value="7">Guisado - Pollo</option>
-                                <option value="8">Guisado - Res</option>
-                                <option value="9">Guisado - Cerdo</option>
-                                <option value="10">Guisado - Vegetariano</option>
-                                <option value="11">Guisado - Otros</option>
-                            </optgroup>
-                            <optgroup label="Opciones de Parrillada">
-                                <option value="12">Carnes de Parrillada</option>
-                            </optgroup>
-                            <optgroup label="Complementos Universales">
-                                <option value="13">Guarniciones</option>
-                            </optgroup>
+                            @endforeach
                         </select>
                     </div>
 
@@ -112,9 +98,9 @@
                                 <select class="form-input ingrediente-select" name="ingredientes[id][]" style="flex: 2;">
                                     <option value="">Selecciona insumo...</option>
                                     @if(isset($insumos) && $insumos->count() > 0)
-                                        @foreach($insumos as $insumo)
-                                            <option value="{{ $insumo->id }}">{{ $insumo->nombre }} ({{ $insumo->unidad ?? 'pza' }})</option>
-                                        @endforeach
+                                    @foreach($insumos as $insumo)
+                                    <option value="{{ $insumo->id }}">{{ $insumo->nombre }} ({{ $insumo->unidad ?? 'pza' }})</option>
+                                    @endforeach
                                     @endif
                                 </select>
                                 <input type="text" class="form-input ingrediente-input" name="ingredientes[cantidad][]" placeholder="Cantidad" style="flex: 1;">
@@ -184,47 +170,57 @@
             }
         });
 
-        function abrirModalInsumo() { document.getElementById('modal-insumo').style.display = 'flex'; }
-        function cerrarModalInsumo() { document.getElementById('modal-insumo').style.display = 'none'; document.getElementById('modal-nombre').value = ''; }
-        
+        function abrirModalInsumo() {
+            document.getElementById('modal-insumo').style.display = 'flex';
+        }
+
+        function cerrarModalInsumo() {
+            document.getElementById('modal-insumo').style.display = 'none';
+            document.getElementById('modal-nombre').value = '';
+        }
+
         function simularGuardadoInsumo() {
             const nombre = document.getElementById('modal-nombre').value;
             const unidad = document.getElementById('modal-unidad').value;
-            
-            if(nombre.trim() === '') { 
-                alert('Por favor, ingresa el nombre del insumo.'); 
-                return; 
+
+            if (nombre.trim() === '') {
+                alert('Por favor, ingresa el nombre del insumo.');
+                return;
             }
 
             // Petición AJAX para guardar en la base de datos real
             fetch("{{ route('insumos.storeAjax') }}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ nombre: nombre, unidad: unidad })
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Añadimos el insumo recién creado a todas las listas
-                const selects = document.querySelectorAll('.ingrediente-select');
-                selects.forEach(select => {
-                    const option = document.createElement('option');
-                    option.value = data.id; // Aquí se asigna el ID real generado en la base de datos
-                    option.text = `${data.nombre} (${data.unidad})`;
-                    select.appendChild(option);
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        unidad: unidad
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Añadimos el insumo recién creado a todas las listas
+                    const selects = document.querySelectorAll('.ingrediente-select');
+                    selects.forEach(select => {
+                        const option = document.createElement('option');
+                        option.value = data.id; // Aquí se asigna el ID real generado en la base de datos
+                        option.text = `${data.nombre} (${data.unidad})`;
+                        select.appendChild(option);
+                    });
+
+                    // Seleccionamos automáticamente el nuevo insumo en la última fila
+                    selects[selects.length - 1].value = data.id;
+                    cerrarModalInsumo();
+                })
+                .catch(error => {
+                    alert("Hubo un error al guardar el insumo en el servidor.");
+                    console.error("Error:", error);
                 });
-                
-                // Seleccionamos automáticamente el nuevo insumo en la última fila
-                selects[selects.length - 1].value = data.id;
-                cerrarModalInsumo();
-            })
-            .catch(error => {
-                alert("Hubo un error al guardar el insumo en el servidor.");
-                console.error("Error:", error);
-            });
         }
     </script>
 </body>
+
 </html>
