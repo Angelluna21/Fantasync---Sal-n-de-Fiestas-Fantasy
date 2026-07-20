@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Ingrediente extends Model
 {
+    use Auditable;
+
     use HasFactory;
 
     // Aquí está la línea clave que permite guardar el insumo desde tu modal

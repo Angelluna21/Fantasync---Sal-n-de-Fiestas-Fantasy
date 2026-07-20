@@ -121,7 +121,7 @@
                                 </td>
                                 <td class="table-center">
                                     <menu class="actions-group" style="justify-content: center;">
-                                        <a href="{{ route('contrato.demo', $contrato->id) }}" target="_blank" class="btn-event-link" title="Ver PDF">
+                                        <a href="{{ route('contratos.show', $contrato->id) }}" target="_blank" class="btn-event-link" title="Ver PDF">
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                                             Ver PDF
                                         </a>

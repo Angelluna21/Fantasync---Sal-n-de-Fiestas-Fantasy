@@ -14,6 +14,7 @@ class ContratoMenuBuilder extends Component
     public $guisados = [];
     public $entrada_id = '';
     public $plato_fuerte_id = '';
+    public $postre_id = '';
 
     public function mount($eventoId)
     {
@@ -23,14 +24,16 @@ class ContratoMenuBuilder extends Component
     public function guardarMenu()
     {
         $reglas = [
-            'servicio_id' => 'required|exists:servicio_gastronomicos,id',
+            'servicio_id' => 'required|exists:servicios_gastronomicos,id',
         ];
 
-        if ($this->servicio_id == 1) { // 1 = Taquiza
-            $reglas['guisados'] = 'required|array|min:5|max:7';
-        } elseif ($this->servicio_id == 2) { // 2 = Por Tiempos
+        if ($this->servicio_id == 1) { // 1 = 2 Tiempos
             $reglas['entrada_id'] = 'required|exists:platillos,id';
             $reglas['plato_fuerte_id'] = 'required|exists:platillos,id';
+        } elseif ($this->servicio_id == 2) { // 2 = 3 Tiempos
+            $reglas['entrada_id'] = 'required|exists:platillos,id';
+            $reglas['plato_fuerte_id'] = 'required|exists:platillos,id';
+            $reglas['postre_id'] = 'required|exists:platillos,id';
         }
 
         $this->validate($reglas);
@@ -40,9 +43,9 @@ class ContratoMenuBuilder extends Component
 
         $platillosSeleccionados = [];
         if ($this->servicio_id == 1) {
-            $platillosSeleccionados = $this->guisados;
-        } else {
             $platillosSeleccionados = array_filter([$this->entrada_id, $this->plato_fuerte_id]);
+        } elseif ($this->servicio_id == 2) {
+            $platillosSeleccionados = array_filter([$this->entrada_id, $this->plato_fuerte_id, $this->postre_id]);
         }
 
         foreach ($evento->salones as $salon) {
@@ -57,16 +60,8 @@ class ContratoMenuBuilder extends Component
             $syncData = [];
 
             foreach ($platillosSeleccionados as $index => $platilloId) {
-                // Lógica de Banquetería Estándar
-                if ($this->servicio_id == 1) {
-                    // TAQUIZA / BUFFET: La gente come aprox 2 veces una porción normal dividida en la variedad.
-                    // Fórmula: (Total Invitados * 2) / Cantidad de Guisados
-                    $cantidadGuisados = count($platillosSeleccionados);
-                    $porcionesPorPlatillo = ($totalPorciones * 2) / max($cantidadGuisados, 1);
-                } else {
-                    // TIEMPOS: Cada invitado recibe 1 porción entera de la entrada y 1 del plato fuerte
-                    $porcionesPorPlatillo = $totalPorciones;
-                }
+                // TIEMPOS: Cada invitado recibe 1 porción entera
+                $porcionesPorPlatillo = $totalPorciones;
 
                 $syncData[$platilloId] = [
                     'porciones_plan' => (int) ceil($porcionesPorPlatillo),
@@ -85,8 +80,8 @@ class ContratoMenuBuilder extends Component
     public function render()
     {
         return view('livewire.contrato-menu-builder', [
-            'servicios' => ServicioGastronomico::all(),
-            'categorias' => CategoriaPlatillo::with(['platillos' => function ($query) {
+            'servicios' => ServicioGastronomico::whereIn('id', [1, 2])->get(), // Solo 2 tiempos y 3 tiempos
+            'categorias' => CategoriaPlatillo::whereIn('id', [31, 32, 33])->with(['platillos' => function ($query) {
                 $query->orderBy('nombre');
             }])->orderBy('orden')->get()
         ]);

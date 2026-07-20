@@ -18,29 +18,10 @@
             @enderror
         </fieldset>
 
-        @if($servicio_id == 1)
-        <fieldset class="form-section animated-section" wire:key="servicio-1-section">
-            <legend>Selección de Guisados</legend>
-            <p class="guisado-subtitle">Elige entre 5 y 7 platillos para tu taquiza.</p>
-            
-            <section class="input-grid grid-3">
-                @foreach($categorias->firstWhere(fn($cat) => strtolower(trim($cat->nombre)) === 'guisados')->platillos ?? [] as $guisado)
-                <article class="input-wrapper checkbox-wrapper guisado-card {{ in_array($guisado->id, $guisados) ? 'selected' : '' }}">
-                    <label for="guisado_{{ $guisado->id }}" class="checkbox-label guisado-label">
-                        <input type="checkbox" id="guisado_{{ $guisado->id }}" value="{{ $guisado->id }}" wire:model.live="guisados">
-                        {{ $guisado->nombre }}
-                    </label>
-                </article>
-                @endforeach
-            </section>
-            @error('guisados') 
-                <span class="error-msg-2">{{ $message }}</span> 
-            @enderror
-        </fieldset>
-        @endif
 
-        @if($servicio_id == 2)
-        <fieldset class="form-section animated-section" wire:key="servicio-2-section">
+
+        @if($servicio_id == 1 || $servicio_id == 2)
+        <fieldset class="form-section animated-section" wire:key="servicio-tiempos-section">
             <legend>Menú Estructurado por Tiempos</legend>
             
             <section class="input-grid grid-2 grid-margin-2">
@@ -48,7 +29,7 @@
                     <label class="tiempo-label">1er Tiempo (Entrada o Crema)</label>
                     <select wire:model="entrada_id" class="form-control select-margin">
                         <option value="">-- Selecciona una entrada --</option>
-                        @foreach($categorias->firstWhere(fn($cat) => strtolower(trim($cat->nombre)) === 'entradas' || strtolower(trim($cat->nombre)) === '3 tiempos')->platillos ?? [] as $entrada)
+                        @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['entradas']))->flatMap->platillos ?? [] as $entrada)
                             <option value="{{ $entrada->id }}">{{ $entrada->nombre }}</option>
                         @endforeach
                     </select>
@@ -61,7 +42,7 @@
                     <label class="tiempo-label">2do Tiempo (Plato Fuerte)</label>
                     <select wire:model="plato_fuerte_id" class="form-control select-margin">
                         <option value="">-- Selecciona el plato fuerte --</option>
-                        @foreach($categorias->firstWhere(fn($cat) => strtolower(trim($cat->nombre)) === 'platos fuertes' || strtolower(trim($cat->nombre)) === '3 tiempos')->platillos ?? [] as $fuerte)
+                        @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['platos fuertes']))->flatMap->platillos ?? [] as $fuerte)
                             <option value="{{ $fuerte->id }}">{{ $fuerte->nombre }}</option>
                         @endforeach
                     </select>
@@ -69,6 +50,21 @@
                         <span class="error-msg-3">{{ $message }}</span> 
                     @enderror
                 </article>
+                
+                @if($servicio_id == 2)
+                <article class="input-wrapper">
+                    <label class="tiempo-label">3er Tiempo (Postre)</label>
+                    <select wire:model="postre_id" class="form-control select-margin">
+                        <option value="">-- Selecciona el postre --</option>
+                        @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['postres']))->flatMap->platillos ?? [] as $postre)
+                            <option value="{{ $postre->id }}">{{ $postre->nombre }}</option>
+                        @endforeach
+                    </select>
+                    @error('postre_id') 
+                        <span class="error-msg-3">{{ $message }}</span> 
+                    @enderror
+                </article>
+                @endif
             </section>
         </fieldset>
         @endif

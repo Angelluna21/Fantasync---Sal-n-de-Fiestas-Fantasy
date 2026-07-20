@@ -91,7 +91,11 @@ class EventoController extends Controller
     {
         $evento->delete();
 
-        return response()->noContent();
+        if (request()->expectsJson()) {
+            return response()->noContent();
+        }
+        
+        return redirect()->back()->with('success', 'Evento eliminado correctamente.');
     }
 
     public function menuConfig(Evento $evento)

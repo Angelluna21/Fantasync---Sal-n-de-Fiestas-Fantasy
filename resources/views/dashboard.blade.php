@@ -150,9 +150,21 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                     </svg>
                 </span>
-                <h2 style="color: var(--primary-purple);">Gestión de Usuarios</h2>
+                <h2>Gestión de Usuarios</h2>
                 <p>Crea y administra a los usuarios normales que tendrán acceso al sistema.</p>
-                <a href="{{ route('users.index') }}" style="background: var(--primary-purple); color: white;">Ver usuarios</a>
+                <a href="{{ route('users.index') }}">Ver usuarios</a>
+            </article>
+
+            <!-- 9. Bitácora de Actividades (Admin Only) -->
+            <article class="dashboard-card">
+                <span class="card-icon" aria-hidden="true">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </span>
+                <h2>Bitácora de Actividades</h2>
+                <p>Revisa el historial de cambios y modificaciones realizados por otros usuarios.</p>
+                <a href="{{ route('logs.activity') }}">Ver bitácora</a>
             </article>
             @endif
         </section>

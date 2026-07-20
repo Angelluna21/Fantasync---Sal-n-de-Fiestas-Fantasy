@@ -24,31 +24,45 @@ class PlatillosFromRecetasSeeder extends Seeder
         foreach ($lines as $line) {
             $line = trim($line);
             
-            if (str_starts_with($line, '🍽️  PLATILLO:')) {
-                $nombre = trim(str_replace('🍽️  PLATILLO:', '', $line));
+            if (strpos($line, 'PLATILLO:') !== false) {
+                // Extraer el nombre de todo lo que esté después de "PLATILLO:"
+                $partes = explode('PLATILLO:', $line);
+                $nombre = trim($partes[1] ?? '');
                 $currentPlatillo = Platillo::firstOrNew(['nombre' => $nombre]);
                 $currentPlatillo->precio = 0;
-            } elseif (str_starts_with($line, '📁 Categoría:')) {
-                $catNombre = trim(str_replace('📁 Categoría:', '', $line));
+            } elseif (strpos($line, 'Categoría:') !== false) {
+                $partes = explode('Categoría:', $line);
+                $catNombre = trim($partes[1] ?? '');
                 $categoria = CategoriaPlatillo::firstOrCreate(['nombre' => $catNombre]);
                 if ($currentPlatillo) {
                     $currentPlatillo->categoria_platillo_id = $categoria->id;
                 }
-            } elseif (str_starts_with($line, '📝 Descripción:')) {
-                $desc = trim(str_replace('📝 Descripción:', '', $line));
+            } elseif (strpos($line, 'Descripción:') !== false) {
+                $partes = explode('Descripción:', $line);
+                $desc = trim($partes[1] ?? '');
                 if ($currentPlatillo) {
                     $currentPlatillo->descripcion = $desc === 'Sin descripción' ? null : $desc;
                 }
-            } elseif (str_starts_with($line, '💵 Precio Sugerido:')) {
-                $precioStr = trim(str_replace('💵 Precio Sugerido:', '', $line));
+            } elseif (strpos($line, 'Precio Sugerido:') !== false) {
+                $partes = explode('Precio Sugerido:', $line);
+                $precioStr = trim($partes[1] ?? '');
                 $precio = (float) preg_replace('/[^0-9.]/', '', $precioStr);
                 if ($currentPlatillo) {
                     $currentPlatillo->precio = $precio;
                     $currentPlatillo->save();
+                    
+                    // Asegurar que el platillo esté disponible para el primer servicio gastronómico
+                    // o para todos, para que aparezca en la vista de contratos.
+                    $serviciosIds = \App\Models\ServicioGastronomico::pluck('id')->toArray();
+                    if (!empty($serviciosIds)) {
+                        $currentPlatillo->serviciosGastronomicos()->syncWithoutDetaching($serviciosIds);
+                    }
                 }
             } elseif (str_starts_with($line, '•')) {
                 if ($currentPlatillo) {
-                    preg_match('/•\s*(.+?)\s*:\s*([\d\.]+)\s*([a-zA-Z]+)?\s*(?:\[(.*?)\])?/', $line, $matches);
+                    // Limpiar caracteres extraños
+                    $cleanLine = mb_convert_encoding($line, 'UTF-8', 'UTF-8');
+                    preg_match('/•\s*(.+?)\s*:\s*([\d\.]+)\s*([a-zA-Z]+)?\s*(?:\[(.*?)\])?/', $cleanLine, $matches);
                     if (count($matches) >= 3) {
                         $ingName = trim($matches[1]);
                         $ingQty = (float) $matches[2];

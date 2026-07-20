@@ -308,7 +308,7 @@
     height: 14px;
 }
 
-/* BotÃ³n alternativo para generar contrato */
+/* Botón alternativo para generar contrato */
 .btn-event-link.generate {
     background: transparent;
     color: var(--accent-magenta) !important;
@@ -317,6 +317,20 @@
 }
 
 .btn-event-link.generate:hover {
+    background: var(--accent-magenta);
+    color: #ffffff !important;
+    box-shadow: 0 6px 14px rgba(216, 27, 96, 0.2);
+}
+
+/* Botón para eliminar evento */
+.btn-event-link.delete {
+    background: transparent;
+    color: var(--accent-magenta) !important;
+    border: 1px solid var(--accent-magenta);
+    box-shadow: none;
+}
+
+.btn-event-link.delete:hover {
     background: var(--accent-magenta);
     color: #ffffff !important;
     box-shadow: 0 6px 14px rgba(216, 27, 96, 0.2);

@@ -499,17 +499,19 @@
 }
 
 /* Adaptación para Impresión Optimizada */
+/* Adaptación para Impresión Optimizada y Elegante */
 @media print {
     @page {
-        margin: 1cm;
-        size: auto;
+        margin: 1.5cm 1cm;
+        size: letter portrait;
     }
 
     body {
         background: #ffffff !important;
-        color: #000000 !important;
-        font-size: 10pt;
-        /* Reducir tamaño base de fuente */
+        color: #333333 !important;
+        font-family: 'Arial', Helvetica, sans-serif !important;
+        font-size: 12pt !important;
+        line-height: 1.3 !important;
     }
 
     .dashboard-background,
@@ -518,12 +520,37 @@
     .btn-print,
     .dashboard-footer,
     .eyebrow-accent,
-    .card-subtitle {
+    .card-subtitle,
+    .no-print {
         display: none !important;
     }
 
-    .dashboard-layout {
+    .dashboard-layout,
+    .reportes-section {
         padding: 0 !important;
+        display: block !important; /* Avoid flexbox page break issues */
+        margin: 0 !important;
+    }
+    
+    .dashboard-header {
+        text-align: center;
+        border-bottom: 2px solid #333;
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem !important;
+        page-break-after: avoid; /* Prevent breaking after header */
+    }
+
+    .dashboard-title {
+        font-size: 14pt !important;
+        color: #000 !important;
+        font-weight: bold !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .dashboard-description {
+        font-size: 11pt !important;
+        color: #555 !important;
     }
 
     .main-report-card,
@@ -532,61 +559,121 @@
         border: none !important;
         box-shadow: none !important;
         padding: 0 !important;
-        margin: 0 !important;
+        margin: 0 0 1rem 0 !important;
         backdrop-filter: none !important;
-        page-break-after: auto;
-        /* Evitar saltos innecesarios */
+        display: block !important;
+        page-break-inside: auto;
+    }
+    
+    .card-header-report {
+        margin-bottom: 0.5rem !important;
+        padding-bottom: 0.2rem !important;
+        border-bottom: 1px solid #ddd !important;
+    }
+    
+    .platillos-preparar-card {
+        background: transparent !important;
+        border: 1px solid #ccc !important;
+        padding: 0.8rem !important;
+        margin-bottom: 1rem !important;
+        border-radius: 4px !important;
+    }
+    
+    .platillos-title {
+        font-size: 10pt !important;
+        color: #000 !important;
+        margin-bottom: 0.5rem !important;
+        text-transform: uppercase;
+    }
+    
+    .platillo-chip {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+        padding: 0.2rem 0.5rem !important;
+        border-radius: 4px !important;
+        font-size: 8pt !important;
+    }
+    
+    .category-group-card {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin-bottom: 1rem !important;
+        page-break-inside: avoid;
+    }
+    
+    .category-group-title {
+        font-size: 11pt !important;
+        color: #000 !important;
+        border-bottom: 1px solid #000 !important;
+        margin-bottom: 0.5rem !important;
+        padding-bottom: 2px !important;
+        text-transform: uppercase;
+    }
+    
+    .tabla-reporte th {
+        background-color: transparent !important;
+        border-bottom: 1px solid #000 !important;
+        padding: 4px 6px !important;
+        font-size: 8pt !important;
+        text-transform: uppercase;
+    }
+    
+    .tabla-reporte td {
+        padding: 4px 6px !important;
+        border-bottom: 1px solid #eee !important;
+        font-size: 8pt !important;
     }
 
     .shopping-list-categories {
-        gap: 0.5rem !important;
-        margin-top: 0.5rem !important;
+        gap: 0 !important;
+        margin-top: 0 !important;
     }
 
     .shopping-category-section {
         border: none !important;
-        padding: 0 0 0.5rem 0 !important;
-        margin-bottom: 0.5rem !important;
+        padding: 0 !important;
+        margin-bottom: 1rem !important;
         page-break-inside: avoid;
         background: transparent !important;
     }
 
     .shopping-category-title {
         font-size: 11pt !important;
-        margin-bottom: 0.5rem !important;
-        border-bottom: 1px solid #000;
-        padding-bottom: 2px;
+        margin-bottom: 0.3rem !important;
+        border-bottom: 1px solid #000 !important;
+        padding-bottom: 2px !important;
         color: #000 !important;
+        text-transform: uppercase;
     }
 
     /* Layout compacto en columnas */
     .shopping-items-grid {
         display: block !important;
         column-count: 3;
-        /* Imprimir a 3 columnas tipo periódico */
         column-gap: 1.5rem;
     }
 
     .shopping-item-card {
         border: none !important;
         box-shadow: none !important;
-        padding: 0.15rem 0 !important;
-        margin-bottom: 0.15rem !important;
+        padding: 0.1rem 0 !important;
+        margin-bottom: 0.1rem !important;
         page-break-inside: avoid;
         break-inside: avoid;
         background: transparent !important;
     }
 
     .checkbox-container {
-        padding-left: 18px !important;
+        padding-left: 14px !important;
         align-items: center !important;
     }
 
     .checkmark {
-        height: 12px !important;
-        width: 12px !important;
+        height: 10px !important;
+        width: 10px !important;
         border: 1px solid #000 !important;
-        border-radius: 2px !important;
+        border-radius: 0 !important; /* Estilo más sobrio, cuadrado */
         background: transparent !important;
     }
 
@@ -595,33 +682,36 @@
         justify-content: space-between !important;
         width: 100% !important;
         align-items: baseline !important;
-        margin-left: 0.5rem !important;
+        margin-left: 0.3rem !important;
     }
 
     .shopping-item-name {
-        font-size: 9.5pt !important;
+        font-size: 8.5pt !important;
         font-weight: normal !important;
         color: #000 !important;
     }
 
     .shopping-item-qty {
-        font-size: 9.5pt !important;
+        font-size: 8.5pt !important;
         font-weight: bold !important;
         color: #000 !important;
         margin-top: 0 !important;
-        margin-left: 0.5rem !important;
+        margin-left: 0.2rem !important;
+        border-bottom: 1px dotted #ccc !important;
     }
 
     .card-header-shopping {
-        margin-bottom: 1rem !important;
+        margin-bottom: 0.5rem !important;
         padding-bottom: 0 !important;
         border-bottom: none !important;
+        page-break-before: always; /* Nueva página para la lista de logística */
     }
 
     .card-title {
-        font-size: 16pt !important;
+        font-size: 14pt !important;
         color: #000 !important;
         margin-bottom: 0 !important;
+        text-transform: uppercase;
     }
 }
 

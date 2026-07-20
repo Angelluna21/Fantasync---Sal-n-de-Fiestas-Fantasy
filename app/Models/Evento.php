@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 #[Fillable(['fecha', 'estado', 'titulo', 'notas', 'cliente_id', 'hora_recepcion', 'hora_inicio', 'horas_duracion', 'tipo_evento', 'nombre_festejado', 'color_manteleria', 'cerrado_por'])]
 class Evento extends Model
 {
+    use Auditable;
+
     use HasFactory;
 
     protected $casts = [

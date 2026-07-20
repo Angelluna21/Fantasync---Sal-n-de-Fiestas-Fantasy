@@ -34,7 +34,7 @@
         <!-- Encabezado -->
         <header class="dashboard-header">
             <hgroup>
-                <p class="eyebrow">📋 Producción de Cocina</p>
+                <p class="eyebrow">Producción de Cocina</p>
                 <h1 class="dashboard-title">Lista Consolidada de Insumos</h1>
                 <p class="dashboard-description">Evento: <strong>{{ $evento->titulo }}</strong> ({{ $evento->fecha->format('d/m/Y') }})</p>
             </hgroup>
@@ -56,7 +56,7 @@
                 </header>
 
                 <section class="platillos-preparar-card">
-                    <h3 class="platillos-title">🍽️ Platillos a Preparar:</h3>
+                    <h3 class="platillos-title">Platillos a Preparar:</h3>
                     <ul class="platillos-list-badges">
                         @php $tienePlatillos = false; @endphp
                         @foreach($evento->eventoSalones as $eventoSalon)
@@ -82,14 +82,6 @@
                         $pos = array_search($key, $categoriaOrder);
                         return $pos === false ? 99 : $pos;
                     });
-                    
-                    $emojiMap = [
-                        'Frutas y Verduras' => '🥬',
-                        'Cremería' => '🥛',
-                        'Carnes' => '🥩',
-                        'Abarrotes' => '🥫',
-                        'Otros' => '📦'
-                    ];
                 @endphp
 
                 <section class="insumos-categories-container">
@@ -97,7 +89,6 @@
                         @foreach($sortedGroups as $categoria => $insumos)
                             <article class="category-group-card">
                                 <h3 class="category-group-title">
-                                    <span class="category-icon">{{ $emojiMap[$categoria] ?? '📦' }}</span>
                                     {{ $categoria }}
                                 </h3>
                                 <figure class="table-responsive">
@@ -142,9 +133,9 @@
             <!-- Lista de Compras para Central de Abasto (Agrupada) -->
             <article class="sucursal-card shopping-list-card">
                 <header class="card-header-shopping">
-                    <p class="eyebrow-accent">🛒 LOGÍSTICA</p>
+                    <p class="eyebrow-accent">LOGÍSTICA</p>
                     <h2 class="card-title">Lista de Compras (Central de Abasto)</h2>
-                    <p class="card-subtitle">Esta lista se separa por áreas de la Central de Abasto y te muestra el total comercial a comprar.</p>
+                    <p class="card-subtitle">Lista consolidada por áreas de la Central de Abasto con totales comerciales.</p>
                 </header>
 
                 @php
@@ -161,7 +152,6 @@
                         @foreach($sortedCompras as $categoria => $compras)
                             <section class="shopping-category-section">
                                 <h3 class="shopping-category-title">
-                                    <span class="category-icon">{{ $emojiMap[$categoria] ?? '📦' }}</span>
                                     {{ $categoria }}
                                 </h3>
                                 <menu class="shopping-items-grid">
@@ -182,10 +172,22 @@
                         @endforeach
                     @else
                         <section class="all-stocked-message">
-                            🎉 ¡Excelente! Hay stock suficiente de todos los ingredientes para este evento. No es necesario comprar nada.
+                            Hay stock suficiente de todos los ingredientes para este evento. No es necesario comprar nada.
                         </section>
                     @endif
                 </section>
+            </article>
+
+            <!-- Bloque de Confirmación y Salida -->
+            <article class="sucursal-card text-center no-print" style="margin-top: 1rem; padding: 3rem 2rem; text-align: center;">
+                <svg fill="none" stroke="#1b8544" viewBox="0 0 24 24" width="60" height="60" style="margin: 0 auto 1rem;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h2 style="color: var(--primary-purple); font-size: 1.5rem; margin-bottom: 0.5rem;">¡Todo está guardado exitosamente!</h2>
+                <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.05rem;">El evento y la lista logística están seguros. Puedes salir de esta pantalla sin preocuparte.</p>
+                <a href="{{ route('dashboard') }}" class="btn-print" style="text-decoration: none; margin: 0 auto;">
+                    Finalizar y Volver al Inicio
+                </a>
             </article>
         </section>
     </main>

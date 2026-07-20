@@ -192,9 +192,14 @@
                                         @endif
 
                                         @if($evento->contrato)
-                                            <a href="{{ route('contrato.demo', ['id' => $evento->contrato->id]) }}" class="btn-event-link" title="Ver Contrato / Cotización">
+                                            <a href="{{ route('contratos.show', $evento->contrato->id) }}" class="btn-event-link" title="Ver Contrato / Cotización">
                                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                                 Ver Contrato
+                                            </a>
+                                            
+                                            <a href="{{ route('reportes.insumos', $evento->id) }}" class="btn-event-link" title="Reporte de Insumos / Lista de Compras">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                                Insumos
                                             </a>
                                         @else
                                             <a href="{{ route('contratos.crear', ['new' => 1]) }}" class="btn-event-link generate" title="Generar Contrato">
@@ -202,6 +207,16 @@
                                                 Generar Contrato
                                             </a>
                                         @endif
+                                        
+                                        <!-- Botón Eliminar Evento -->
+                                        <form action="{{ route('eventos.destroy', $evento->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de querer eliminar este evento? Esta acción no se puede deshacer.');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn-event-link delete" title="Eliminar Evento">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                                Eliminar
+                                            </button>
+                                        </form>
                                     </menu>
                                 </td>
                             </tr>

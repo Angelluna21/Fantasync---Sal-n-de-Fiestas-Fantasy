@@ -72,5 +72,6 @@ Route::middleware('auth')->group(function () {
     // Rutas protegidas por superadmin
     Route::middleware('superadmin')->group(function () {
         Route::resource('users', \App\Http\Controllers\UserController::class);
+        Route::get('logs/actividad', [\App\Http\Controllers\ActivityLogController::class, 'index'])->name('logs.activity');
     });
 });
