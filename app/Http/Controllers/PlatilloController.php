@@ -16,8 +16,6 @@ class PlatilloController extends Controller
         $platillos = Platillo::with(['categoriaPlatillo', 'ingredientes', 'serviciosGastronomicos'])
             ->orderBy('nombre')->get();
 
-        // Como un platillo ahora puede estar en varios servicios,
-        // lo agrupamos manualmente para que aparezca en cada sección a la que pertenece
         $platillosAgrupados = collect();
 
         foreach ($platillos as $platillo) {
@@ -41,7 +39,6 @@ class PlatilloController extends Controller
         return view('platillos.create', compact('servicios', 'categorias', 'insumos'));
     }
 
-    // FUNCIÓN BLINDADA PARA EVITAR ERRORES DE BASE DE DATOS Y DUPLICADOS
     public function storeAjax(Request $request)
     {
         try {
@@ -52,11 +49,9 @@ class PlatilloController extends Controller
 
             $nombreLimpio = trim($request->nombre);
 
-            // Buscamos si ya existe un insumo con ese nombre (sin importar mayúsculas/minúsculas)
             $insumo = Ingrediente::whereRaw('LOWER(TRIM(nombre)) = ?', [strtolower($nombreLimpio)])->first();
 
             if (!$insumo) {
-                // No existe, lo creamos
                 $insumo = Ingrediente::create([
                     'nombre' => $nombreLimpio,
                     'unidad' => $request->unidad,
@@ -71,10 +66,8 @@ class PlatilloController extends Controller
                 'unidad' => $insumo->unidad
             ]);
         } catch (\Exception $e) {
-            // Logueamos el error real para verlo en laravel.log
             Log::error('Error al guardar insumo vía AJAX: ' . $e->getMessage());
 
-            // Devolvemos el error detallado para que sepas exactamente qué pasa
             return response()->json([
                 'success' => false,
                 'message' => 'Error al guardar el insumo: ' . $e->getMessage()
@@ -90,19 +83,18 @@ class PlatilloController extends Controller
             'categoria_platillo_id' => 'required|integer|exists:categoria_platillos,id',
             'nombre' => 'required|string|max:100',
             'descripcion' => 'nullable|string',
-            'precio' => 'nullable|numeric|min:0',
             'ingredientes.id.*' => 'nullable|integer|exists:ingredientes,id',
             'ingredientes.cantidad.*' => 'nullable|numeric|min:0.01',
         ]);
 
-        $platillo = Platillo::create($request->only([
-            'categoria_platillo_id',
-            'nombre',
-            'descripcion',
-            'precio'
-        ]));
+        // Guardamos sin requerir precio (si no viene, se guarda como 0 o null)
+        $platillo = Platillo::create([
+            'categoria_platillo_id' => $data['categoria_platillo_id'],
+            'nombre' => $data['nombre'],
+            'descripcion' => $data['descripcion'] ?? null,
+            
+        ]);
 
-        // Enlaza el platillo a uno o varios tipos de servicio (sin duplicar el platillo)
         $platillo->serviciosGastronomicos()->sync($data['servicio_gastronomico_id']);
 
         if (isset($data['ingredientes']['id'])) {
@@ -143,17 +135,15 @@ class PlatilloController extends Controller
             'categoria_platillo_id' => 'required|integer|exists:categoria_platillos,id',
             'nombre' => 'required|string|max:100',
             'descripcion' => 'nullable|string',
-            'precio' => 'nullable|numeric|min:0',
             'ingredientes.id.*' => 'nullable|integer|exists:ingredientes,id',
             'ingredientes.cantidad.*' => 'nullable|numeric|min:0.01',
         ]);
 
-        $platillo->update($request->only([
-            'categoria_platillo_id',
-            'nombre',
-            'descripcion',
-            'precio'
-        ]));
+        $platillo->update([
+            'categoria_platillo_id' => $data['categoria_platillo_id'],
+            'nombre' => $data['nombre'],
+            'descripcion' => $data['descripcion'] ?? null,
+        ]);
 
         $platillo->serviciosGastronomicos()->sync($data['servicio_gastronomico_id']);
 

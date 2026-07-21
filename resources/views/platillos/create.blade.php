@@ -56,11 +56,11 @@
 
                     <div class="form-group">
                         <label class="form-label">NOMBRE DEL PLATILLO</label>
-                        <input type="text" name="nombre" class="form-input" placeholder="Ej. Pechuga Cordon Bleu en salsa chipotle" required>
+                        <input type="text" name="nombre" class="form-input" placeholder="Ej. Pechuga Cordon Bleu en salsa chipotle" value="{{ old('nombre') }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">SERVICIO(S) GASTRONÓMICO(S)</label>
+                        <label class="form-label">SERVICIO(S) GASTRONÓMICO(S) (Define la sección donde aparecerá)</label>
                         <div style="display: flex; flex-direction: column; gap: 8px; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
                             @foreach($servicios as $servicio)
                             <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer;">
@@ -87,14 +87,13 @@
 
                     <div class="form-group">
                         <label class="form-label">DESCRIPCIÓN</label>
-                        <textarea name="descripcion" class="form-input form-textarea" placeholder="Ingresa los detalles principales del platillo, guarniciones incluidas, etc."></textarea>
+                        <textarea name="descripcion" class="form-input form-textarea" placeholder="Ingresa los detalles principales del platillo, guarniciones incluidas, etc.">{{ old('descripcion') }}</textarea>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">FÓRMULA / INSUMOS DEL ALMACÉN</label>
                         <div id="contenedor-insumos">
                             <div class="ingrediente-row" style="display: flex; gap: 10px; margin-bottom: 10px;">
-                                <!-- Quitamos 'required' aquí para que el formulario se envíe aunque el select esté en blanco -->
                                 <select class="form-input ingrediente-select" name="ingredientes[id][]" style="flex: 2;">
                                     <option value="">Selecciona insumo...</option>
                                     @if(isset($insumos) && $insumos->count() > 0)
@@ -180,15 +179,14 @@
         }
 
         function simularGuardadoInsumo() {
-            const nombre = document.getElementById('modal-nombre').value;
+            const nombre = document.getElementById('modal-nombre').value; 
             const unidad = document.getElementById('modal-unidad').value;
 
-            if (nombre.trim() === '') {
+            if (!nombre || nombre.trim() === '') {
                 alert('Por favor, ingresa el nombre del insumo.');
                 return;
             }
 
-            // Petición AJAX para guardar en la base de datos real
             fetch("{{ route('insumos.storeAjax') }}", {
                     method: 'POST',
                     headers: {
@@ -202,16 +200,14 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // Añadimos el insumo recién creado a todas las listas
                     const selects = document.querySelectorAll('.ingrediente-select');
                     selects.forEach(select => {
                         const option = document.createElement('option');
-                        option.value = data.id; // Aquí se asigna el ID real generado en la base de datos
+                        option.value = data.id;
                         option.text = `${data.nombre} (${data.unidad})`;
                         select.appendChild(option);
                     });
 
-                    // Seleccionamos automáticamente el nuevo insumo en la última fila
                     selects[selects.length - 1].value = data.id;
                     cerrarModalInsumo();
                 })

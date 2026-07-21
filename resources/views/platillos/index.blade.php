@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.5">
     <title>Platillos · FantaSync</title>
     <meta name="description" content="Catálogo de platillos y menús — FantaSync Sistema de Gestión de Eventos Gastronómicos">
     @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/css/platillos.css', 'resources/css/comanda-rapida.css'])
@@ -121,11 +121,13 @@
                                     <article class="platillo-card" data-nombre="{{ $platillo->nombre }}">
                                         <header class="card-header">
                                             <h3 class="card-title">{{ $platillo->nombre }}</h3>
-                                            @if($platillo->categoriaPlatillo)
-                                                <span class="badge">{{ $platillo->categoriaPlatillo->nombre }}</span>
-                                            @else
-                                                <span class="badge badge-gray">Sin categoría</span>
-                                            @endif
+                                            <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                                                @if($platillo->categoriaPlatillo)
+                                                    <span class="badge">{{ $platillo->categoriaPlatillo->nombre }}</span>
+                                                @else
+                                                    <span class="badge badge-gray">Sin categoría</span>
+                                                @endif
+                                            </div>
                                         </header>
 
                                         <section class="card-body">
@@ -193,7 +195,6 @@
                 @endif
             </section>
 
-            <!-- 2. Vista de Lista (Tabla) -->
             <section class="table-container" id="platillos-list-view" style="display: none;" aria-label="Catálogo de Platillos en Lista">
                 <table class="platillos-table">
                     <thead>
@@ -230,7 +231,6 @@
                                                     <span class="badge badge-gray">Sin categoría</span>
                                                 @endif
                                             </td>
-
                                             <td>
                                                 @if($platillo->ingredientes->count() > 0)
                                                     <span class="badge badge-gray">{{ $platillo->ingredientes->count() }} insumos</span>
@@ -365,7 +365,7 @@
         // ==========================================
         // ORDENAMIENTO DINÁMICO (ADAPTADO POR GRUPOS)
         // ==========================================
-        const sortSelect = document.getElementById('sort-select');
+        const sortSelect = defaultEl = document.getElementById('sort-select');
         sortSelect.addEventListener('change', () => {
             const order = sortSelect.value;
 

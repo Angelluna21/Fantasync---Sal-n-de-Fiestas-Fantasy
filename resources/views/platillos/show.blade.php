@@ -55,10 +55,20 @@
                         @endif
                     </article>
 
-
                     <article class="detail-block">
                         <span class="detail-label">Total de Insumos</span>
                         <span class="detail-value">{{ $platillo->ingredientes->count() }}</span>
+                    </article>
+
+                    <article class="detail-block detail-full-width">
+                        <span class="detail-label">Servicio(s) Gastronómico(s) Asignado(s)</span>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 0.5rem;">
+                            @forelse($platillo->serviciosGastronomicos as $servicio)
+                                <span class="badge" style="background-color: var(--primary-purple, #7A288A); color: white;">{{ $servicio->nombre }}</span>
+                            @empty
+                                <span class="badge badge-gray">Sin servicios asociados</span>
+                            @endforelse
+                        </div>
                     </article>
 
                     @if($platillo->descripcion)
@@ -77,10 +87,13 @@
                     </h3>
 
                     @if($platillo->ingredientes->count() > 0)
-                        <section class="ingredients-grid" aria-label="Grid de ingredientes de la receta">
+                        <section class="ingredients-grid" aria-label="Grid de ingredientes de la receta" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 1rem;">
                             @foreach($platillo->ingredientes as $ingrediente)
-                                <article class="ingredient-card">
-                                    <h4>{{ $ingrediente->nombre }}</h4>
+                                <article class="ingredient-card" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                                    <div>
+                                        <h4 style="margin: 0; font-weight: 600; color: white;">{{ $ingrediente->nombre }}</h4>
+                                        <span style="font-size: 0.85em; color: rgba(255,255,255,0.6);">Cantidad base: {{ $ingrediente->pivot->cantidad_por_base }} {{ $ingrediente->unidad }}</span>
+                                    </div>
                                     <span class="unit-badge {{ $ingrediente->unidad }}">{{ $ingrediente->unidad }}</span>
                                 </article>
                             @endforeach
