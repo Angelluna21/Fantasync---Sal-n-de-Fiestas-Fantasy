@@ -21,6 +21,8 @@ export default defineConfig({
                 'resources/css/salones.css',
                 'resources/css/sucursales.css',
                 'resources/css/welcome.css',
+                'resources/css/users.css',
+                'resources/css/nominas.css',
                 'resources/js/app.js',
             ],
             refresh: true,
@@ -34,6 +36,7 @@ export default defineConfig({
     ],
     server: {
         watch: {
+            usePolling: true,
             ignored: ['**/storage/framework/views/**'],
         },
     },

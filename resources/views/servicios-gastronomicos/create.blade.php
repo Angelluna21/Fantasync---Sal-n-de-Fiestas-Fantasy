@@ -36,12 +36,12 @@
             </hgroup>
         </header>
 
-        <section class="platillos-section" aria-label="Formulario de servicio" style="max-width: 520px; margin: 0 auto;">
-            <div class="platillo-card" style="padding: 2rem;">
+        <section class="platillos-section form-section-narrow" aria-label="Formulario de servicio">
+            <article class="platillo-card card-padded">
                 <form action="{{ route('servicios-gastronomicos.store') }}" method="POST">
                     @csrf
 
-                    <label for="nombre" style="display:block; font-weight:600; color: var(--primary-purple, #7A288A); margin-bottom: 8px;">
+                    <label for="nombre" class="form-label-primary">
                         Nombre del servicio
                     </label>
                     <input
@@ -50,22 +50,21 @@
                         name="nombre"
                         value="{{ old('nombre') }}"
                         placeholder="Ej. Servicio de Banquetes"
-                        class="search-bar-input"
-                        style="width: 100%; margin-bottom: 4px;"
+                        class="search-bar-input form-input-full"
                         autofocus
                         required
                     >
 
                     @error('nombre')
-                        <p style="color:#c0392b; font-size: 0.85rem; margin: 6px 0 0;">{{ $message }}</p>
+                        <p class="form-error-msg">{{ $message }}</p>
                     @enderror
 
-                    <div style="display:flex; justify-content:flex-end; gap:12px; margin-top: 24px;">
+                    <footer class="form-footer-actions">
                         <a href="{{ route('servicios-gastronomicos.index') }}" class="btn-back-nav">Cancelar</a>
                         <button type="submit" class="btn-create">Guardar Servicio</button>
-                    </div>
+                    </footer>
                 </form>
-            </div>
+            </article>
         </section>
     </main>
 

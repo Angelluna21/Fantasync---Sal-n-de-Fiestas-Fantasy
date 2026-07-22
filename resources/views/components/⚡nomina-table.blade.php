@@ -61,7 +61,7 @@ new class extends Component {
 
 <section>
     <!-- KPIs -->
-    <section class="metrics-grid" style="margin-bottom: 2rem;">
+    <section class="metrics-grid metrics-grid-mb">
         <article class="metric-card total">
             <figure class="metric-icon">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
@@ -113,14 +113,14 @@ new class extends Component {
         </article>
     </section>
 
-    <header class="mb-4 flex justify-between items-center" style="margin-bottom: 20px;">
-        <input wire:model.live="search" type="text" placeholder="Buscar empleado o puesto..." class="form-control" style="width: 300px;">
-        <search style="display: flex; gap: 10px;">
-            <a href="{{ route('nominas.reporte-pdf', ['search' => $search]) }}" target="_blank" class="btn-event-link" style="display:inline-flex; align-items:center; gap:8px; background: #e5e7eb; color: #111827 !important; font-weight: bold;">
+    <header class="header-nomina-search">
+        <input wire:model.live="search" type="text" placeholder="Buscar empleado o puesto..." class="form-control input-nomina-search">
+        <search class="search-nomina-actions">
+            <a href="{{ route('nominas.reporte-pdf', ['search' => $search]) }}" target="_blank" class="btn-event-link btn-print-pdf">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                 Imprimir PDF
             </a>
-            <a href="{{ route('nominas.create') }}" class="btn-event-link generate" style="display:inline-flex; align-items:center; gap:8px;">
+            <a href="{{ route('nominas.create') }}" class="btn-event-link generate btn-nomina-action">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                 Dar de Alta Empleado
             </a>
@@ -131,12 +131,12 @@ new class extends Component {
         <table class="eventos-table">
             <thead>
                 <tr>
-                    <th wire:click="sortBy('nombre_empleado')" style="cursor:pointer;">Empleado @if($sortField === 'nombre_empleado') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
-                    <th wire:click="sortBy('puesto')" style="cursor:pointer;">Puesto @if($sortField === 'puesto') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
-                    <th wire:click="sortBy('salario_base')" style="cursor:pointer;">Salario @if($sortField === 'salario_base') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
+                    <th wire:click="sortBy('nombre_empleado')" class="th-sortable">Empleado @if($sortField === 'nombre_empleado') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
+                    <th wire:click="sortBy('puesto')" class="th-sortable">Puesto @if($sortField === 'puesto') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
+                    <th wire:click="sortBy('salario_base')" class="th-sortable">Salario @if($sortField === 'salario_base') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
                     <th>Evento</th>
-                    <th wire:click="sortBy('fecha_trabajo')" style="cursor:pointer;">Fecha @if($sortField === 'fecha_trabajo') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
-                    <th wire:click="sortBy('estado_pago')" style="cursor:pointer;">Estado @if($sortField === 'estado_pago') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
+                    <th wire:click="sortBy('fecha_trabajo')" class="th-sortable">Fecha @if($sortField === 'fecha_trabajo') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
+                    <th wire:click="sortBy('estado_pago')" class="th-sortable">Estado @if($sortField === 'estado_pago') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
                     <th class="table-center">Acciones</th>
                 </tr>
             </thead>
@@ -148,9 +148,9 @@ new class extends Component {
                         </td>
                         <td><span class="finance-muted">{{ $nomina->puesto }}</span></td>
                         <td class="table-cell">
-                            <span style="font-weight: 500;">${{ number_format($nomina->monto_total, 2) }}</span>
+                            <span class="font-medium-price">${{ number_format($nomina->monto_total, 2) }}</span>
                             @if($nomina->horas_extra > 0)
-                                <span style="font-size: 0.75rem; color: #059669; display: block;">(+{{ $nomina->horas_extra }} extras)</span>
+                                <span class="text-extras-green">(+{{ $nomina->horas_extra }} extras)</span>
                             @endif
                         </td>
                         <td>
@@ -167,10 +167,10 @@ new class extends Component {
                                 <a href="{{ route('nominas.edit', $nomina) }}" class="btn-event-link">
                                     Editar
                                 </a>
-                                <form action="{{ route('nominas.destroy', $nomina) }}" method="POST" class="inline-block" onsubmit="return confirm('¿Seguro que deseas eliminar este registro?');" style="margin:0;">
+                                <form action="{{ route('nominas.destroy', $nomina) }}" method="POST" class="inline-block form-inline-m0" onsubmit="return confirm('¿Seguro que deseas eliminar este registro?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-event-link" style="color: #ef4444;">Eliminar</button>
+                                    <button type="submit" class="btn-event-link btn-text-danger">Eliminar</button>
                                 </form>
                             </menu>
                         </td>

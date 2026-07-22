@@ -19,13 +19,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Insertamos los servicios base para el funcionamiento del sistema -->
-        DB::table('servicios_gastronomicos')->insert([
-            ['id' => 1, 'nombre' => 'Menús a 2 Tiempos'],
-            ['id' => 2, 'nombre' => 'Menús a 3 Tiempos'],
-            ['id' => 3, 'nombre' => 'Taquizas'],
-            ['id' => 4, 'nombre' => 'Parrilladas'],
-        ]);
+
     }
 
     /**

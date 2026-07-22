@@ -13,30 +13,30 @@
 
     <main class="dashboard-layout">
         <!-- Navegación superior y Encabezado Unificado -->
-        <div class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+        <nav class="top-nav top-nav-dashboard">
             <!-- Lado Izquierdo: Logo -->
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
-                <a href="{{ url('/') }}" aria-label="Volver al inicio" class="logo-link" style="width: fit-content;">
-                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
+            <section class="nav-brand-col">
+                <a href="{{ url('/') }}" aria-label="Volver al inicio" class="logo-link logo-link-fit">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo nav-logo-lg">
                 </a>
-            </div>
+            </section>
 
             <!-- Centro: Encabezado -->
-            <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
+            <header class="dashboard-header header-center-col">
                 <hgroup>
-                    <p class="eyebrow" style="margin-bottom: 0;">Bienvenido a FantaSync</p>
-                    <h1 class="dashboard-title" style="font-size: 2.5rem; margin-top: 0.2rem;">Gestor Fantasy</h1>
-                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.05rem;">Sistema de gestión de eventos, menús y contratos. Administra salones y platillos para crear experiencias culinarias y eventos inolvidables de forma ágil.</p>
+                    <p class="eyebrow eyebrow-no-margin">Bienvenido a FantaSync</p>
+                    <h1 class="dashboard-title title-hero">Gestor Fantasy</h1>
+                    <p class="dashboard-description desc-hero">Sistema de gestión de eventos, menús y contratos. Administra salones y platillos para crear experiencias culinarias y eventos inolvidables de forma ágil.</p>
                 </hgroup>
             </header>
 
             <!-- Lado Derecho: Menú Usuario -->
-            <div style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+            <aside class="nav-user-col">
                 <x-user-menu />
-            </div>
-        </div>
+            </aside>
+        </nav>
 
-        <section class="dashboard-actions" aria-label="Secciones de administración del panel" style="margin-top: 5rem;">
+        <section class="dashboard-actions dashboard-actions-mt" aria-label="Secciones de administración del panel">
             <!-- 1. Contratos -->
             <article class="dashboard-card highlight-card">
                 <span class="card-icon" aria-hidden="true">
@@ -135,8 +135,8 @@
 
             @if(auth()->user()->isSuperadmin())
             <!-- 9. Gestión de Usuarios (Admin Only) -->
-            <article class="dashboard-card" style="border-color: var(--primary-purple); background: #faf5fc;">
-                <span class="card-icon" aria-hidden="true" style="background: var(--primary-purple); color: white; border: none;">
+            <article class="dashboard-card card-admin">
+                <span class="card-icon icon-admin" aria-hidden="true">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                     </svg>

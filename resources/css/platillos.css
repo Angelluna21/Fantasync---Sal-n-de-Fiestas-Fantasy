@@ -1055,3 +1055,64 @@ dialog.custom-confirm::backdrop {
     padding: 0;
     margin: 0;
 }
+
+/* ======================================================
+   CLASES UTILITARIAS PARA SERVICIOS GASTRONÓMICOS (HTML5)
+   ====================================================== */
+.alert-success-msg {
+    max-width: 1100px; 
+    margin: 0 auto 1rem; 
+    background: #e9f9ee; 
+    color: #1e8a4c; 
+    padding: 12px 18px; 
+    border-radius: 10px; 
+    font-weight: 500;
+}
+
+.alert-error-msg {
+    max-width: 1100px; 
+    margin: 0 auto 1rem; 
+    background: #fdeceb; 
+    color: #c0392b; 
+    padding: 12px 18px; 
+    border-radius: 10px; 
+    font-weight: 500;
+}
+
+.form-section-narrow {
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.card-padded {
+    padding: 2rem;
+}
+
+.form-label-primary {
+    display: block;
+    font-weight: 600;
+    color: var(--primary-purple, #7a288a);
+    margin-bottom: 8px;
+}
+
+.form-input-full {
+    width: 100%;
+    margin-bottom: 4px;
+}
+
+.form-error-msg {
+    color: #c0392b;
+    font-size: 0.85rem;
+    margin: 6px 0 0;
+}
+
+.form-footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.card-actions-menu-end {
+    justify-content: flex-end;
+}

@@ -43,13 +43,13 @@
         </header>
 
         @if (session('success'))
-            <p style="max-width: 1100px; margin: 0 auto 1rem; background: #e9f9ee; color: #1e8a4c; padding: 12px 18px; border-radius: 10px; font-weight: 500;">
+            <p class="alert-success-msg">
                 {{ session('success') }}
             </p>
         @endif
 
         @if (session('error'))
-            <p style="max-width: 1100px; margin: 0 auto 1rem; background: #fdeceb; color: #c0392b; padding: 12px 18px; border-radius: 10px; font-weight: 500;">
+            <p class="alert-error-msg">
                 {{ session('error') }}
             </p>
         @endif
@@ -108,7 +108,7 @@
                         <a href="{{ route('servicios-gastronomicos.create') }}" class="btn-create">Crear Primer Servicio</a>
                     </article>
                 @else
-                    <div class="platillos-grid group-container">
+                    <section class="platillos-grid group-container">
                         @foreach($servicios as $servicio)
                             <article class="platillo-card" data-nombre="{{ $servicio->nombre }}">
                                 <header class="card-header">
@@ -153,7 +153,7 @@
                                 </footer>
                             </article>
                         @endforeach
-                    </div>
+                    </section>
                 @endif
             </section>
 

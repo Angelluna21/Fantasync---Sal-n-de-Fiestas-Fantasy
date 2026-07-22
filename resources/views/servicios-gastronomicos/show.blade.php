@@ -36,9 +36,9 @@
             </hgroup>
         </header>
 
-        <section class="platillos-section" aria-label="Detalle del servicio" style="max-width: 520px; margin: 0 auto;">
-            <div class="platillo-card" style="padding: 2rem;">
-                <menu class="card-actions-menu" style="justify-content: flex-end;">
+        <section class="platillos-section form-section-narrow" aria-label="Detalle del servicio">
+            <article class="platillo-card card-padded">
+                <menu class="card-actions-menu card-actions-menu-end">
                     <li>
                         <a href="{{ route('servicios-gastronomicos.edit', $servicio->id) }}" class="btn-action btn-edit" title="Editar Servicio">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,7 +60,7 @@
                     @csrf
                     @method('DELETE')
                 </form>
-            </div>
+            </article>
         </section>
     </main>
 
