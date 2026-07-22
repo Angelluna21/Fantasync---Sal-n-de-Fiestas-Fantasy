@@ -10,34 +10,36 @@
     <figure class="dashboard-background" aria-hidden="true"></figure>
     
     <main class="dashboard-layout">
-        <!-- Navegación superior -->
-        <nav class="top-nav" aria-label="Menú superior">
-            <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
-            </a>
+        <!-- Navegación superior y Encabezado Unificado -->
+        <div class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+            <!-- Lado Izquierdo: Logo y Botón Volver -->
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+                <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
+                </a>
+                <a href="{{ route('ingredientes.index') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Volver al Catálogo
+                </a>
+            </div>
 
-            <x-user-menu />
-        </nav>
+            <!-- Centro: Encabezado -->
+            <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
+                <hgroup>
+                    <p class="eyebrow" style="margin-bottom: 0;">Catálogo de Almacén</p>
+                    <h1 class="dashboard-title" style="font-size: 2.5rem; margin-top: 0.2rem;">Editar Ingrediente</h1>
+                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.05rem;">Actualiza la información del ingrediente y gestiona su vinculación con las recetas.</p>
+                </hgroup>
+            </header>
 
-        <!-- Volver al Listado -->
-        <nav aria-label="Navegación de retorno" class="narrow-container">
-            <a href="{{ route('ingredientes.index') }}" class="btn-back-nav">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Volver al Catálogo
-            </a>
-        </nav>
-
-        <!-- Encabezado -->
-        <header class="dashboard-header narrow-container">
-            <hgroup>
-                <p class="eyebrow">Catálogo de Almacén</p>
-                <h1 class="dashboard-title">Editar Ingrediente</h1>
-                <p class="dashboard-description">Actualiza la información del ingrediente y gestiona su vinculación con las recetas.</p>
-            </hgroup>
-        </header>
+            <!-- Lado Derecho: Menú Usuario -->
+            <div style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+                <x-user-menu />
+            </div>
+        </div>
 
         <!-- Formulario -->
-        <section aria-label="Formulario de edición de ingrediente">
+        <section aria-label="Formulario de edición de ingrediente" style="margin-top: 7rem;">
             <article class="form-card">
                 <form action="{{ route('ingredientes.update', $ingrediente->id) }}" method="POST">
                     @csrf

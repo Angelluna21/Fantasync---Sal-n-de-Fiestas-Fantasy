@@ -13,29 +13,34 @@
     <figure class="contract-background" aria-hidden="true"></figure>
 
     <main class="contract-layout">
-        <nav class="top-nav" aria-label="Navegación del sistema">
-            <a href="{{ url('/dashboard') }}" aria-label="Volver al inicio" class="logo-link">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
-            </a>
-            <section style="display: flex; align-items: center; gap: 1.5rem;" aria-label="Acciones de navegación">
-                <x-user-menu />
-                <a href="{{ url('/dashboard') }}" class="btn-back">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
+        <!-- Navegación superior y Encabezado Unificado -->
+        <div class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+            <!-- Lado Izquierdo: Logo y Botón Volver -->
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+                <a href="{{ url('/dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
+                </a>
+                <a href="{{ url('/dashboard') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 2rem;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Volver al Panel
                 </a>
-            </section>
-        </nav>
+            </div>
 
-        <header class="contract-header">
-            <hgroup>
-                <p class="eyebrow">FantaSync</p>
-                <h1 class="contract-title">Contrato Nuevo</h1>
-            </hgroup>
-        </header>
+            <!-- Centro: Encabezado -->
+            <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
+                <hgroup>
+                    <p class="eyebrow" style="margin-bottom: 0;">Fantasy</p>
+                    <h1 class="dashboard-title" style="font-size: 2.5rem; margin-top: 0.2rem;">Contrato Nuevo</h1>
+                </hgroup>
+            </header>
 
-        <section class="contract-card">
+            <!-- Lado Derecho: Menú Usuario -->
+            <div style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+                <x-user-menu />
+            </div>
+        </div>
+
+        <section class="contract-card" style="margin-top: 7rem;">
             @if ($errors->any())
             <aside class="form-error--global" style="margin-bottom: 2rem; color: #d32f2f; background: #ffebee; padding: 1rem; border-radius: 1rem;">
                 <strong>Por favor corrige los siguientes errores:</strong>
@@ -160,11 +165,14 @@
                 <fieldset class="form-section">
                     <legend>Alimentos y Configuración</legend>
                     <section class="input-grid grid-3">
-                        <article class="input-wrapper" style="grid-column: span 3;">
-                            <p style="color: var(--primary-purple); font-weight: 700; background: rgba(102, 126, 234, 0.1); padding: 1rem; border-radius: 8px;">
-                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 0.5rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                La selección exacta del Menú (Platillos y Guisados) se realizará en el siguiente paso para poder calcular la comanda automáticamente.
-                            </p>
+                        <article class="input-wrapper">
+                            <label for="servicio_gastronomico">Servicio Gastronómico *</label>
+                            <select id="servicio_gastronomico" name="servicio_gastronomico" class="form-control" required>
+                                <option value="">-- Selecciona el Servicio --</option>
+                                @foreach($serviciosGastronomicos as $sg)
+                                    <option value="{{ $sg->id }}">{{ $sg->nombre }}</option>
+                                @endforeach
+                            </select>
                         </article>
                         <article class="input-wrapper">
                             <label for="num_adultos">Para (Adultos) *</label>
@@ -175,6 +183,94 @@
                             <input type="number" id="num_ninos" name="num_ninos" class="form-control" required min="0">
                         </article>
                     </section>
+
+                    <!-- CONTENEDOR DINÁMICO DE PLATILLOS -->
+                    <section id="menu-dinamico-container" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px;">
+                        <h3 style="margin-bottom: 1rem; color: var(--primary-purple); font-size: 1.1rem;">Selección de Menú</h3>
+                        
+                        <style>
+                            .dropdown-multi { position: relative; width: 100%; }
+                            .dropdown-multi summary { list-style: none; user-select: none; }
+                            .dropdown-multi summary::-webkit-details-marker { display: none; }
+                            .dropdown-multi .dropdown-content {
+                                position: absolute; top: 100%; left: 0; right: 0; background: white; 
+                                border: 1px solid #ccc; border-top: none; max-height: 200px; overflow-y: auto; 
+                                z-index: 10; border-radius: 0 0 4px 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                            }
+                            .dropdown-multi .dropdown-content label { display: block; padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee; margin: 0; }
+                            .dropdown-multi .dropdown-content label:hover { background: #f9f9f9; }
+                            .dropdown-multi .dropdown-content input { margin-right: 8px; }
+                        </style>
+
+                        <!-- Taquiza -->
+                        <div id="menu-taquiza" class="menu-opciones input-grid grid-2" style="display: none;">
+                            <article class="input-wrapper">
+                                <label style="display:block; margin-bottom: 0.5rem; font-weight: 600;">Selecciona los Guisados</label>
+                                <details class="dropdown-multi" id="dropdown_platillos_taquiza">
+                                    <summary class="form-control" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="selected-text">-- Seleccionar opciones --</span>
+                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </summary>
+                                    <div class="dropdown-content platillo-checkbox-container" data-target="platillos_taquiza">
+                                        <!-- Llenado por JS -->
+                                    </div>
+                                </details>
+                            </article>
+                            <article class="input-wrapper">
+                                <label style="display:block; margin-bottom: 0.5rem; font-weight: 600;">Selecciona las Guarniciones (Opcional)</label>
+                                <details class="dropdown-multi" id="dropdown_guarniciones_taquiza">
+                                    <summary class="form-control" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="selected-text">-- Seleccionar opciones --</span>
+                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </summary>
+                                    <div class="dropdown-content platillo-checkbox-container" data-target="guarniciones_taquiza">
+                                        <!-- Llenado por JS -->
+                                    </div>
+                                </details>
+                            </article>
+                        </div>
+
+                        <!-- 2 Tiempos -->
+                        <div id="menu-2tiempos" class="menu-opciones input-grid grid-2" style="display: none;">
+                            <article class="input-wrapper">
+                                <label for="platillo_2t_entrada">Entrada</label>
+                                <select id="platillo_2t_entrada" class="form-control platillo-select">
+                                    <option value="">-- Selecciona --</option>
+                                </select>
+                            </article>
+                            <article class="input-wrapper">
+                                <label for="platillo_2t_fuerte">Plato Fuerte</label>
+                                <select id="platillo_2t_fuerte" class="form-control platillo-select">
+                                    <option value="">-- Selecciona --</option>
+                                </select>
+                            </article>
+                        </div>
+
+                        <!-- 3 Tiempos -->
+                        <div id="menu-3tiempos" class="menu-opciones input-grid grid-3" style="display: none;">
+                            <article class="input-wrapper">
+                                <label for="platillo_3t_entrada">Entrada / Primer Tiempo</label>
+                                <select id="platillo_3t_entrada" class="form-control platillo-select">
+                                    <option value="">-- Selecciona --</option>
+                                </select>
+                            </article>
+                            <article class="input-wrapper">
+                                <label for="platillo_3t_sopa">Sopa / Crema / Segundo Tiempo</label>
+                                <select id="platillo_3t_sopa" class="form-control platillo-select">
+                                    <option value="">-- Selecciona --</option>
+                                </select>
+                            </article>
+                            <article class="input-wrapper">
+                                <label for="platillo_3t_fuerte">Plato Fuerte</label>
+                                <select id="platillo_3t_fuerte" class="form-control platillo-select">
+                                    <option value="">-- Selecciona --</option>
+                                </select>
+                            </article>
+                        </div>
+                    </section>
+                    
+                    <!-- Campo oculto para los platillos seleccionados -->
+                    <select name="platillo_ids[]" id="platillo_ids_hidden" multiple style="display: none;"></select>
                     <!-- Eliminada selección estática de guisados y bebidas, ahora se maneja en el Paso 2 -->
                     <section class="input-grid grid-4" style="margin-top: 1.5rem;">
                         <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_pinata" value="1"> Piñata</label></article>
@@ -503,6 +599,134 @@
                     }
                 });
             });
+
+            /* ==== LOGICA DINÁMICA DE SERVICIOS GASTRONÓMICOS ==== */
+            const platillos = @json($platillos);
+            
+            const servicioSelect = document.getElementById('servicio_gastronomico');
+            const menuContainer = document.getElementById('menu-dinamico-container');
+            const menuTaquiza = document.getElementById('menu-taquiza');
+            const menu2Tiempos = document.getElementById('menu-2tiempos');
+            const menu3Tiempos = document.getElementById('menu-3tiempos');
+            const platilloIdsHidden = document.getElementById('platillo_ids_hidden');
+
+            function fillSelect(selectElement, filteredPlatillos) {
+                if (!selectElement) return;
+                selectElement.innerHTML = selectElement.multiple ? '' : '<option value="">-- Selecciona --</option>';
+                filteredPlatillos.forEach(p => {
+                    const option = document.createElement('option');
+                    option.value = p.id;
+                    option.textContent = p.nombre;
+                    selectElement.appendChild(option);
+                });
+            }
+
+            function fillCheckboxes(containerElement, filteredPlatillos) {
+                if (!containerElement) return;
+                containerElement.innerHTML = '';
+                if (filteredPlatillos.length === 0) {
+                    containerElement.innerHTML = '<p style="padding: 8px 12px; color: #999; margin: 0;">No hay opciones</p>';
+                    return;
+                }
+                filteredPlatillos.forEach(p => {
+                    const label = document.createElement('label');
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = p.id;
+                    checkbox.className = 'platillo-checkbox';
+                    checkbox.addEventListener('change', updateHiddenField);
+                    
+                    label.appendChild(checkbox);
+                    label.appendChild(document.createTextNode(' ' + p.nombre));
+                    containerElement.appendChild(label);
+                });
+            }
+
+            function updateHiddenField() {
+                const visibleSelects = document.querySelectorAll('.menu-opciones:not([style*="display: none"]) .platillo-select');
+                const visibleCheckboxes = document.querySelectorAll('.menu-opciones:not([style*="display: none"]) .platillo-checkbox:checked');
+                const selectedIds = new Set();
+                
+                visibleSelects.forEach(select => {
+                    Array.from(select.selectedOptions).forEach(opt => {
+                        if (opt.value) selectedIds.add(opt.value);
+                    });
+                });
+                
+                visibleCheckboxes.forEach(cb => {
+                    selectedIds.add(cb.value);
+                });
+                
+                platilloIdsHidden.innerHTML = '';
+                selectedIds.forEach(id => {
+                    const option = document.createElement('option');
+                    option.value = id;
+                    option.selected = true;
+                    platilloIdsHidden.appendChild(option);
+                });
+                
+                // Update dropdown summaries
+                document.querySelectorAll('.dropdown-multi').forEach(dropdown => {
+                    const summary = dropdown.querySelector('.selected-text');
+                    const checkboxes = dropdown.querySelectorAll('.platillo-checkbox:checked');
+                    if (checkboxes.length === 0) summary.textContent = '-- Seleccionar opciones --';
+                    else if (checkboxes.length === 1) summary.textContent = '1 seleccionado';
+                    else summary.textContent = checkboxes.length + ' seleccionados';
+                });
+            }
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown-multi')) {
+                    document.querySelectorAll('.dropdown-multi').forEach(d => d.removeAttribute('open'));
+                }
+            });
+
+            document.querySelectorAll('.platillo-select').forEach(select => {
+                select.addEventListener('change', updateHiddenField);
+            });
+
+            servicioSelect.addEventListener('change', function() {
+                const sId = parseInt(this.value);
+                menuTaquiza.style.display = 'none';
+                menu2Tiempos.style.display = 'none';
+                menu3Tiempos.style.display = 'none';
+                menuContainer.style.display = sId ? 'block' : 'none';
+                
+                document.querySelectorAll('.platillo-select').forEach(select => {
+                    select.innerHTML = ''; 
+                });
+                
+                if (sId === 1) { // Taquiza / Parrillada
+                    menuTaquiza.style.display = 'grid'; // changed from block to grid for 2 columns
+                    const taquizaPlatillos = platillos.filter(p => p.servicios_gastronomicos.some(sg => sg.id === 1) && (!p.categoria_platillo || p.categoria_platillo.nombre !== 'Guarniciones'));
+                    const taquizaGuarniciones = platillos.filter(p => p.servicios_gastronomicos.some(sg => sg.id === 1) && p.categoria_platillo && p.categoria_platillo.nombre === 'Guarniciones');
+                    fillCheckboxes(document.querySelector('.platillo-checkbox-container[data-target="platillos_taquiza"]'), taquizaPlatillos);
+                    fillCheckboxes(document.querySelector('.platillo-checkbox-container[data-target="guarniciones_taquiza"]'), taquizaGuarniciones);
+                }
+                else if (sId === 2) { // 2 Tiempos
+                    menu2Tiempos.style.display = 'grid';
+                    const entradas = platillos.filter(p => p.servicios_gastronomicos.some(sg => sg.id === 2) && p.categoria_platillo && p.categoria_platillo.nombre === 'Entradas');
+                    const fuertes = platillos.filter(p => p.servicios_gastronomicos.some(sg => sg.id === 2) && p.categoria_platillo && p.categoria_platillo.nombre === 'Platos Fuertes');
+                    fillSelect(document.getElementById('platillo_2t_entrada'), entradas);
+                    fillSelect(document.getElementById('platillo_2t_fuerte'), fuertes);
+                }
+                else if (sId === 3) { // 3 Tiempos
+                    menu3Tiempos.style.display = 'grid';
+                    const entradas = platillos.filter(p => p.servicios_gastronomicos.some(sg => sg.id === 3) && p.categoria_platillo && p.categoria_platillo.nombre === 'Entradas');
+                    const intermedios = platillos.filter(p => p.servicios_gastronomicos.some(sg => sg.id === 3) && p.categoria_platillo && p.categoria_platillo.nombre === 'Guisados');
+                    const fuertes = platillos.filter(p => p.servicios_gastronomicos.some(sg => sg.id === 3) && p.categoria_platillo && p.categoria_platillo.nombre === 'Platos Fuertes');
+                    fillSelect(document.getElementById('platillo_3t_entrada'), entradas);
+                    fillSelect(document.getElementById('platillo_3t_sopa'), intermedios);
+                    fillSelect(document.getElementById('platillo_3t_fuerte'), fuertes);
+                }
+                
+                updateHiddenField();
+            });
+
+            if (servicioSelect.value) {
+                servicioSelect.dispatchEvent(new Event('change'));
+            }
         });
     </script>
     

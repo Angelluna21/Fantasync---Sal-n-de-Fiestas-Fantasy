@@ -61,6 +61,7 @@ class StoreContratoRequest extends FormRequest
             'manteleria_color' => 'nullable|string|max:50',
             'platillo_ids' => 'sometimes|array',
             'platillo_ids.*' => 'integer|exists:platillos,id',
+            'servicio_gastronomico' => 'required|integer|exists:servicios_gastronomicos,id',
             'extras' => 'sometimes|array',
             'extras.*' => 'nullable|boolean',
         ];

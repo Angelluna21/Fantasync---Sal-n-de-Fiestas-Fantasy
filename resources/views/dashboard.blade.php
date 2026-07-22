@@ -12,40 +12,31 @@
     <figure class="dashboard-background" aria-hidden="true"></figure>
 
     <main class="dashboard-layout">
-        <!-- Navegación superior y Header unificado -->
-        <header class="top-nav header-unified" aria-label="Menú superior">
-            <!-- Elace al logo -->
-            <a href="{{ url('/') }}" aria-label="Volver al inicio" class="logo-link">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
-            </a>
+        <!-- Navegación superior y Encabezado Unificado -->
+        <div class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+            <!-- Lado Izquierdo: Logo -->
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+                <a href="{{ url('/') }}" aria-label="Volver al inicio" class="logo-link" style="width: fit-content;">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
+                </a>
+            </div>
 
-            <!-- TÍTULOS CENTRALES -->
-            <hgroup class="header-titles">
-                <p class="eyebrow">Bienvenido a FantaSync</p>
-                <h1 class="dashboard-title">Gestor Fantasy</h1>
-            </hgroup>
+            <!-- Centro: Encabezado -->
+            <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
+                <hgroup>
+                    <p class="eyebrow" style="margin-bottom: 0;">Bienvenido a FantaSync</p>
+                    <h1 class="dashboard-title" style="font-size: 2.5rem; margin-top: 0.2rem;">Gestor Fantasy</h1>
+                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.05rem;">Sistema de gestión de eventos, menús y contratos. Administra salones y platillos para crear experiencias culinarias y eventos inolvidables de forma ágil.</p>
+                </hgroup>
+            </header>
 
-            <!-- MENÚ DE USUARIO -->
-            <nav aria-label="Opciones de usuario">
+            <!-- Lado Derecho: Menú Usuario -->
+            <div style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
                 <x-user-menu />
-            </nav>
-        </header>
+            </div>
+        </div>
 
-        <!-- Descripción del sistema -->
-        <section class="system-description-wrapper" aria-label="Acerca del sistema">
-            <article class="system-description-card">
-                <figure class="system-icon-wrapper" aria-hidden="true">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="system-icon">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                    </svg>
-                </figure>
-                <p class="dashboard-description">
-                    Sistema de gestión de eventos, menús y contratos. Administra salones y platillos para crear experiencias culinarias y eventos inolvidables de forma ágil.
-                </p>
-            </article>
-        </section>
-
-        <section class="dashboard-actions" aria-label="Secciones de administración del panel">
+        <section class="dashboard-actions" aria-label="Secciones de administración del panel" style="margin-top: 5rem;">
             <!-- 1. Contratos -->
             <article class="dashboard-card highlight-card">
                 <span class="card-icon" aria-hidden="true">

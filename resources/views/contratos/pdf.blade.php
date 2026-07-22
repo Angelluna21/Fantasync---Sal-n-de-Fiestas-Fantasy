@@ -7,43 +7,44 @@
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             color: #333;
-            line-height: 1.6;
+            line-height: 1.3;
             margin: 0;
-            padding: 20px;
+            padding: 10px 20px;
+            font-size: 12px;
         }
         .header {
             text-align: center;
             border-bottom: 2px solid #7a288a;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
         }
         .header h1 {
             color: #7a288a;
             margin: 0;
-            font-size: 24px;
+            font-size: 18px;
             text-transform: uppercase;
         }
         .header p {
-            margin: 5px 0 0;
+            margin: 4px 0 0;
             color: #666;
-            font-size: 14px;
+            font-size: 11px;
         }
         .section-title {
             background-color: #f8f9fa;
             color: #7a288a;
-            padding: 10px;
-            font-size: 16px;
+            padding: 6px 10px;
+            font-size: 14px;
             font-weight: bold;
             border-left: 4px solid #7a288a;
-            margin: 20px 0 10px;
+            margin: 15px 0 8px;
         }
         .info-grid {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .info-grid td {
-            padding: 8px;
+            padding: 5px;
             vertical-align: top;
             width: 50%;
         }
@@ -51,21 +52,22 @@
             font-weight: bold;
             color: #555;
             display: block;
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
         }
         .value {
-            font-size: 15px;
+            font-size: 13px;
             color: #111;
         }
         .table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin: 10px 0;
+            font-size: 11px;
         }
         .table th, .table td {
             border: 1px solid #ddd;
-            padding: 12px;
+            padding: 6px 8px;
             text-align: left;
         }
         .table th {
@@ -75,38 +77,42 @@
         }
         .totals-box {
             float: right;
-            width: 300px;
+            width: 250px;
             background: #f8f9fa;
             border: 1px solid #ddd;
-            padding: 15px;
+            padding: 10px;
             border-radius: 5px;
         }
         .totals-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
         .totals-row.grand-total {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #7a288a;
             border-top: 2px solid #ddd;
-            padding-top: 10px;
-            margin-top: 10px;
+            padding-top: 5px;
+            margin-top: 5px;
         }
         .clauses {
-            font-size: 12px;
+            font-size: 10px;
             color: #555;
             text-align: justify;
-            margin-top: 40px;
+            margin-top: 25px;
             clear: both;
         }
         .clauses h3 {
-            font-size: 14px;
+            font-size: 12px;
             color: #333;
+            margin-bottom: 5px;
+        }
+        .clauses p {
+            margin: 4px 0;
         }
         .signatures {
-            margin-top: 60px;
+            margin-top: 35px;
             width: 100%;
             border-collapse: collapse;
             page-break-inside: avoid;
@@ -114,17 +120,18 @@
         .signatures td {
             text-align: center;
             width: 50%;
-            padding: 20px;
+            padding: 15px;
         }
         .sign-line {
             border-top: 1px solid #333;
             width: 80%;
             margin: 0 auto;
-            padding-top: 10px;
+            padding-top: 6px;
             font-weight: bold;
+            font-size: 13px;
         }
         .sign-title {
-            font-size: 12px;
+            font-size: 11px;
             color: #666;
         }
     </style>

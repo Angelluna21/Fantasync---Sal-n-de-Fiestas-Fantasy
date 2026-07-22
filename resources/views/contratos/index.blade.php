@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Módulo de Contratos · FantaSync</title>
+    <title>Módulo de Contratos · Fantasy</title>
     @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/css/eventos.css'])
 </head>
 <body>

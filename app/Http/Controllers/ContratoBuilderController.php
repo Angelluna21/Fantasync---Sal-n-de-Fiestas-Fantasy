@@ -42,9 +42,10 @@ class ContratoBuilderController extends Controller
         ]);
 
         $salones = Salon::query()->with('sucursal')->orderBy('nombre')->get();
-        $platillos = Platillo::query()->with('categoriaPlatillo')->orderBy('nombre')->get();
+        $platillos = Platillo::query()->with(['categoriaPlatillo', 'serviciosGastronomicos'])->orderBy('nombre')->get();
+        $serviciosGastronomicos = \App\Models\ServicioGastronomico::orderBy('id')->get();
 
-        return view('contrato-builder', compact('salones', 'platillos', 'draft'));
+        return view('contrato-builder', compact('salones', 'platillos', 'serviciosGastronomicos', 'draft'));
     }
 
     public function store(StoreContratoRequest $request, ContratoBuilderService $service)

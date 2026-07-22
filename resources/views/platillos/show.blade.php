@@ -11,34 +11,36 @@
     <figure class="dashboard-background" aria-hidden="true"></figure>
 
     <main class="dashboard-layout">
-        <!-- Navegación superior -->
-        <nav class="top-nav" aria-label="Menú superior">
-            <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
-            </a>
+        <!-- Navegación superior y Encabezado Unificado -->
+        <div class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+            <!-- Lado Izquierdo: Logo y Botón Volver -->
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+                <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
+                </a>
+                <a href="{{ route('platillos.index') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Volver al Catálogo
+                </a>
+            </div>
 
-            <x-user-menu />
-        </nav>
+            <!-- Centro: Encabezado -->
+            <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
+                <hgroup>
+                    <p class="eyebrow" style="margin-bottom: 0;">Administración de Menú</p>
+                    <h1 class="dashboard-title" style="font-size: 2.5rem; margin-top: 0.2rem;">{{ $platillo->nombre }}</h1>
+                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.05rem;">Detalles de la preparación culinaria y listado de ingredientes involucrados en su fórmula.</p>
+                </hgroup>
+            </header>
 
-        <!-- Volver al Listado -->
-        <nav aria-label="Navegación de retorno" class="medium-container">
-            <a href="{{ route('platillos.index') }}" class="btn-back-nav">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Volver al Catálogo
-            </a>
-        </nav>
-
-        <!-- Encabezado -->
-        <header class="dashboard-header medium-container">
-            <hgroup>
-                <p class="eyebrow">Administración de Menú</p>
-                <h1 class="dashboard-title">{{ $platillo->nombre }}</h1>
-                <p class="dashboard-description">Detalles de la preparación culinaria y listado de ingredientes involucrados en su fórmula.</p>
-            </hgroup>
-        </header>
+            <!-- Lado Derecho: Menú Usuario -->
+            <div style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+                <x-user-menu />
+            </div>
+        </div>
 
         <!-- Detalles del Platillo -->
-        <section aria-label="Ficha de detalles del platillo">
+        <section aria-label="Ficha de detalles del platillo" style="margin-top: 7rem;">
             <article class="details-card">
                 <section class="details-grid" aria-label="Datos técnicos del platillo">
                     <article class="detail-block">
@@ -89,10 +91,10 @@
                     @if($platillo->ingredientes->count() > 0)
                         <section class="ingredients-grid" aria-label="Grid de ingredientes de la receta" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 1rem;">
                             @foreach($platillo->ingredientes as $ingrediente)
-                                <article class="ingredient-card" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                                <article class="ingredient-card" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(122, 40, 138, 0.04); border-radius: 8px; border: 1px solid rgba(122, 40, 138, 0.15);">
                                     <div>
-                                        <h4 style="margin: 0; font-weight: 600; color: white;">{{ $ingrediente->nombre }}</h4>
-                                        <span style="font-size: 0.85em; color: rgba(255,255,255,0.6);">Cantidad base: {{ $ingrediente->pivot->cantidad_por_base }} {{ $ingrediente->unidad }}</span>
+                                        <h4 style="margin: 0; font-weight: 600; color: var(--text-main, #3d1b4a);">{{ $ingrediente->nombre }}</h4>
+                                        <span style="font-size: 0.85em; color: var(--text-muted, #6a4a75);">Cantidad base: {{ $ingrediente->pivot->cantidad_por_base }} {{ $ingrediente->unidad }}</span>
                                     </div>
                                     <span class="unit-badge {{ $ingrediente->unidad }}">{{ $ingrediente->unidad }}</span>
                                 </article>

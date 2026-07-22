@@ -12,33 +12,36 @@
     
     <main class="dashboard-layout">
         <!-- Navegación superior -->
-        <nav class="top-nav" aria-label="Menú superior">
-            <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
-            </a>
+        <!-- Navegación superior y Encabezado Unificado -->
+        <div class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+            <!-- Lado Izquierdo: Logo y Botón Volver -->
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+                <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
+                </a>
+                <a href="{{ route('dashboard') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Volver al Panel
+                </a>
+            </div>
 
-            <x-user-menu />
-        </nav>
+            <!-- Centro: Encabezado -->
+            <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
+                <hgroup>
+                    <p class="eyebrow" style="margin-bottom: 0;">Recetas e Insumos</p>
+                    <h1 class="dashboard-title" style="font-size: 2.5rem; margin-top: 0.2rem;">Ingredientes</h1>
+                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.05rem;">Administra el catálogo de ingredientes, presentaciones y unidades métricas necesarias para formular tus platillos y recetas.</p>
+                </hgroup>
+            </header>
 
-        <!-- Volver al Panel -->
-        <nav aria-label="Navegación de retorno" class="ingredientes-section">
-            <a href="{{ route('dashboard') }}" class="btn-back-nav">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Volver al Panel
-            </a>
-        </nav>
-
-        <!-- Encabezado -->
-        <header class="dashboard-header">
-            <hgroup>
-                <p class="eyebrow">Recetas e Insumos</p>
-                <h1 class="dashboard-title">Ingredientes</h1>
-                <p class="dashboard-description">Administra el catálogo de ingredientes, presentaciones y unidades métricas necesarias para formular tus platillos y recetas.</p>
-            </hgroup>
-        </header>
+            <!-- Lado Derecho: Menú Usuario -->
+            <div style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+                <x-user-menu />
+            </div>
+        </div>
 
         <!-- Contenedor Principal de Ingredientes -->
-        <section class="ingredientes-section" aria-label="Listado de ingredientes">
+        <section class="ingredientes-section" aria-label="Listado de ingredientes" style="margin-top: 7rem;">
             <menu class="action-bar" aria-label="Acciones del catálogo">
                 <li>
                     <h2 class="section-title">Insumos del Almacén</h2>
@@ -88,21 +91,7 @@
                             </span>
                         </header>
 
-                        <section class="card-body">
-                            <h4 class="associated-label">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-                                Platillos Asociados
-                            </h4>
-                            @if($ingrediente->platillos->count() > 0)
-                                <menu class="platillos-list" aria-label="Platillos que usan este ingrediente">
-                                    @foreach($ingrediente->platillos as $platillo)
-                                        <li><span class="platillo-badge">{{ $platillo->nombre }}</span></li>
-                                    @endforeach
-                                </menu>
-                            @else
-                                <p class="no-platillos">No asignado a ningún platillo</p>
-                            @endif
-                        </section>
+                        <!-- Se removió la sección de platillos asociados por ser muy larga para ingredientes comunes -->
 
                         <footer class="card-footer">
                             <menu class="card-actions-menu">
@@ -147,7 +136,7 @@
                             <th>Nombre</th>
                             <th>Categoría</th>
                             <th>Unidad</th>
-                            <th>Platillos Asociados</th>
+                            <!-- Columna removida -->
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -165,17 +154,7 @@
                                         {{ $ingrediente->unidad }}
                                     </span>
                                 </td>
-                                <td>
-                                    @if($ingrediente->platillos->count() > 0)
-                                        <menu class="platillos-list-table" aria-label="Platillos asociados">
-                                            @foreach($ingrediente->platillos as $platillo)
-                                                <li><span class="platillo-badge">{{ $platillo->nombre }}</span></li>
-                                            @endforeach
-                                        </menu>
-                                    @else
-                                        <span class="no-platillos">No asignado a ningún platillo</span>
-                                    @endif
-                                </td>
+                                <!-- Columna removida -->
                                 <td class="col-actions">
                                     <menu class="table-actions-menu">
                                         <li>
