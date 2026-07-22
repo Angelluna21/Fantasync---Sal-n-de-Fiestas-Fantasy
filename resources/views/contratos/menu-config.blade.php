@@ -13,7 +13,7 @@
     <main class="contract-layout">
         <nav class="top-nav" aria-label="Navegación del sistema" style="align-items: flex-start; margin-bottom: 2rem;">
             <!-- Lado Izquierdo: Logo y Editar Contrato -->
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+            <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
                 <a href="{{ route('dashboard') }}" aria-label="Volver al inicio" class="logo-link" style="width: fit-content;">
                     <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
                 </a>
@@ -26,7 +26,7 @@
                     Editar Contrato
                 </a>
                 @endif
-            </div>
+            </section>
 
             <!-- Centro: Encabezado -->
             <header class="contract-header" style="flex: 2; margin-bottom: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">

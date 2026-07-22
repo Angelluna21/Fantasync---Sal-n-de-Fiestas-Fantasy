@@ -13,21 +13,20 @@
     <figure class="contract-background" aria-hidden="true"></figure>
 
     <main class="contract-layout">
-        <!-- Navegación superior y Encabezado Unificado -->
-        <div class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+        <!-- Navegación superior y Encabezado Unificado -->        <nav class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
             <!-- Lado Izquierdo: Logo y Botón Volver -->
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+            <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
                 <a href="{{ url('/dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
                     <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
                 </a>
-                <a href="{{ url('/dashboard') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 2rem;">
+                <a href="{{ url('/dashboard') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white; display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 8px; text-decoration: none; transition: all 0.3s;">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Volver al Panel
                 </a>
-            </div>
+            </section>
 
             <!-- Centro: Encabezado -->
-            <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
+            <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none; text-align: center;">
                 <hgroup>
                     <p class="eyebrow" style="margin-bottom: 0;">Fantasy</p>
                     <h1 class="dashboard-title" style="font-size: 2.5rem; margin-top: 0.2rem;">Contrato Nuevo</h1>
@@ -35,92 +34,70 @@
             </header>
 
             <!-- Lado Derecho: Menú Usuario -->
-            <div style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+            <aside style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
                 <x-user-menu />
-            </div>
-        </div>
-
-        <section class="contract-card" style="margin-top: 7rem;">
-            @if ($errors->any())
-            <aside class="form-error--global" style="margin-bottom: 2rem; color: #d32f2f; background: #ffebee; padding: 1rem; border-radius: 1rem;">
-                <strong>Por favor corrige los siguientes errores:</strong>
-                <ul style="margin-top: 0.5rem;">
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
             </aside>
+        </nav>
+
+        <section class="contract-card">
+            <!-- Mensajes de Error -->
+            @if($errors->any())
+                <aside class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert" style="margin-bottom: 2rem;">
+                    <strong class="font-bold">¡Atención!</strong>
+                    <ul class="mt-2 list-disc list-inside">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </aside>
             @endif
 
             <form action="{{ route('contratos.store') }}" method="POST" class="contract-form">
                 @csrf
-
+                @if(isset($draft['contract_id']))
+                    <input type="hidden" name="contract_id" value="{{ $draft['contract_id'] }}">
+                @endif
+                
                 <!-- SECCIÓN 1: DATOS DEL CLIENTE -->
                 <fieldset class="form-section">
                     <legend>Datos del Cliente</legend>
-                    <section class="input-grid grid-3">
+                    <section class="input-grid grid-2">
                         <article class="input-wrapper">
-                            <label for="cliente">Nombre del cliente *</label>
-                            <input type="text" id="cliente" name="cliente" class="form-control" required minlength="5" placeholder="Nombre completo" value="{{ old('cliente', $draft['cliente'] ?? '') }}">
+                            <label for="cliente">Nombre Completo del Contratante *</label>
+                            <input type="text" id="cliente" name="cliente" class="form-control" required value="{{ old('cliente', $draft['cliente'] ?? '') }}">
                         </article>
                         <article class="input-wrapper">
-                            <label for="cliente_ine">Clave INE *</label>
-                            <input type="text" id="cliente_ine" name="cliente_ine" class="form-control" required
-                                minlength="18" maxlength="18" pattern="[A-Za-z0-9]{18}"
-                                placeholder="18 caracteres" onkeyup="this.value = this.value.toUpperCase()" value="{{ old('cliente_ine', $draft['cliente_ine'] ?? '') }}">
-                        </article>
-                        <article class="input-wrapper">
-                            <label for="correo">Correo electrónico *</label>
-                            <input type="email" id="correo" name="correo" class="form-control" required placeholder="correo@ejemplo.com" value="{{ old('correo', $draft['correo'] ?? '') }}">
-                        </article>
-                    </section>
-                    <section class="input-grid grid-2" style="margin-top: 1.5rem;">
-                        <article class="input-wrapper">
-                            <label for="cliente_domicilio">Domicilio completo *</label>
-                            <input type="text" id="cliente_domicilio" name="cliente_domicilio" class="form-control" required placeholder="Calle, Número, Colonia" value="{{ old('cliente_domicilio', $draft['cliente_domicilio'] ?? '') }}">
-                        </article>
-                        <article class="input-wrapper">
-                            <label for="cp">C.P. *</label>
-                            <input type="text" id="cp" name="cp" class="form-control" required maxlength="5" pattern="[0-9]{5}" placeholder="Ej. 57000" value="{{ old('cp', $draft['cp'] ?? '') }}">
-                        </article>
-                    </section>
-                    <section class="input-grid grid-2" style="margin-top: 1.5rem;">
-                        <article class="input-wrapper">
-                            <label for="tel_casa">Tel. de casa *</label>
-                            <input type="tel" id="tel_casa" name="tel_casa" class="form-control" required maxlength="10" minlength="10" pattern="[0-9]{10}" placeholder="10 dígitos" value="{{ old('tel_casa', $draft['tel_casa'] ?? '') }}">
+                            <label for="correo">Correo Electrónico *</label>
+                            <input type="email" id="correo" name="correo" class="form-control" required value="{{ old('correo', $draft['correo'] ?? '') }}">
                         </article>
                         <article class="input-wrapper">
                             <label for="telefono">Celular *</label>
-                            <input type="tel" id="telefono" name="telefono" class="form-control" required maxlength="10" minlength="10" pattern="[0-9]{10}" placeholder="10 dígitos" value="{{ old('telefono', $draft['telefono'] ?? '') }}">
+                            <input type="tel" id="telefono" name="telefono" class="form-control" required value="{{ old('telefono', $draft['telefono'] ?? '') }}">
+                        </article>
+                        <article class="input-wrapper">
+                            <label for="tel_casa">Teléfono Casa</label>
+                            <input type="tel" id="tel_casa" name="tel_casa" class="form-control" value="{{ old('tel_casa', $draft['tel_casa'] ?? '') }}">
+                        </article>
+                    </section>
+                    <section class="input-grid grid-3" style="margin-top: 1.5rem;">
+                        <article class="input-wrapper">
+                            <label for="cliente_domicilio">Domicilio</label>
+                            <input type="text" id="cliente_domicilio" name="cliente_domicilio" class="form-control" value="{{ old('cliente_domicilio', $draft['cliente_domicilio'] ?? '') }}">
+                        </article>
+                        <article class="input-wrapper">
+                            <label for="cp">C.P.</label>
+                            <input type="text" id="cp" name="cp" class="form-control" value="{{ old('cp', $draft['cp'] ?? '') }}">
+                        </article>
+                        <article class="input-wrapper">
+                            <label for="cliente_ine">INE</label>
+                            <input type="text" id="cliente_ine" name="cliente_ine" class="form-control" value="{{ old('cliente_ine', $draft['cliente_ine'] ?? '') }}">
                         </article>
                     </section>
                 </fieldset>
 
-                <!-- SECCIÓN 2: DETALLES DEL EVENTO -->
+                <!-- SECCIÓN 2: LOGÍSTICA Y DETALLES DEL EVENTO -->
                 <fieldset class="form-section">
                     <legend>Detalles del Evento</legend>
-                    <section class="input-grid grid-2">
-                        <article class="input-wrapper">
-                            <label for="salon_id">Salón Asignado *</label>
-                            <select id="salon_id" name="salon_id" class="form-control" required>
-                                <option value="" disabled selected>Seleccione un salón...</option>
-                                @foreach($salones as $salon)
-                                    <option value="{{ $salon->id }}" {{ old('salon_id', $draft['salon_id']) == $salon->id ? 'selected' : '' }}>
-                                        {{ $salon->nombre }} ({{ $salon->sucursal->nombre ?? 'Sin sucursal' }})
-                                    </option>
-                                @endforeach
-                            </select>
-                        </article>
-                        <article class="input-wrapper">
-                            <label for="estado">Estado del Contrato *</label>
-                            <select id="estado" name="estado" class="form-control" required>
-                                <option value="cotizacion" {{ old('estado', $draft['estado'] ?? '') == 'cotizacion' ? 'selected' : '' }}>Cotización</option>
-                                <option value="confirmado" {{ old('estado', $draft['estado'] ?? '') == 'confirmado' ? 'selected' : '' }}>Confirmado</option>
-                                <option value="cancelado" {{ old('estado', $draft['estado'] ?? '') == 'cancelado' ? 'selected' : '' }}>Cancelado</option>
-                                <option value="finalizado" {{ old('estado', $draft['estado'] ?? '') == 'finalizado' ? 'selected' : '' }}>Liquidado</option>
-                            </select>
-                        </article>
-                    </section>
                     <section class="input-grid grid-4" style="margin-top: 1.5rem;">
                         <article class="input-wrapper">
                             <label for="tipo_evento">Tipo de Evento *</label>
@@ -245,7 +222,7 @@
                         </style>
 
                         <!-- Taquiza -->
-                        <div id="menu-taquiza" class="menu-opciones input-grid grid-2" style="display: none;">
+                        <section id="menu-taquiza" class="menu-opciones input-grid grid-2" style="display: none;">
                             <article class="input-wrapper">
                                 <label style="display:block; margin-bottom: 0.5rem; font-weight: 600;">Selecciona los Guisados</label>
                                 <details class="dropdown-multi" id="dropdown_platillos_taquiza">
@@ -253,9 +230,9 @@
                                         <span class="selected-text">-- Seleccionar opciones --</span>
                                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                                     </summary>
-                                    <div class="dropdown-content platillo-checkbox-container" data-target="platillos_taquiza">
+                                    <section class="dropdown-content platillo-checkbox-container" data-target="platillos_taquiza">
                                         <!-- Llenado por JS -->
-                                    </div>
+                                    </section>
                                 </details>
                             </article>
                             <article class="input-wrapper">
@@ -265,31 +242,43 @@
                                         <span class="selected-text">-- Seleccionar opciones --</span>
                                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                                     </summary>
-                                    <div class="dropdown-content platillo-checkbox-container" data-target="guarniciones_taquiza">
+                                    <section class="dropdown-content platillo-checkbox-container" data-target="guarniciones_taquiza">
                                         <!-- Llenado por JS -->
-                                    </div>
+                                    </section>
                                 </details>
                             </article>
-                        </div>
+                        </section>
 
                         <!-- 2 Tiempos -->
-                        <div id="menu-2tiempos" class="menu-opciones input-grid grid-2" style="display: none;">
+                        <section id="menu-2tiempos" class="menu-opciones input-grid grid-2" style="display: none;">
                             <article class="input-wrapper">
-                                <label for="platillo_2t_entrada">Entrada</label>
-                                <select id="platillo_2t_entrada" class="form-control platillo-select">
-                                    <option value="">-- Selecciona --</option>
-                                </select>
+                                <label style="display:block; margin-bottom: 0.5rem; font-weight: 600;">Guisados (Elige 2)</label>
+                                <details class="dropdown-multi" id="dropdown_platillos_2tiempos">
+                                    <summary class="form-control" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="selected-text">-- Seleccionar 2 guisados --</span>
+                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </summary>
+                                    <section class="dropdown-content platillo-checkbox-container" data-target="platillos_2tiempos">
+                                        <!-- Llenado por JS -->
+                                    </section>
+                                </details>
                             </article>
                             <article class="input-wrapper">
-                                <label for="platillo_2t_fuerte">Plato Fuerte</label>
-                                <select id="platillo_2t_fuerte" class="form-control platillo-select">
-                                    <option value="">-- Selecciona --</option>
-                                </select>
+                                <label style="display:block; margin-bottom: 0.5rem; font-weight: 600;">Selecciona las Guarniciones (Opcional)</label>
+                                <details class="dropdown-multi" id="dropdown_guarniciones_taquiza">
+                                    <summary class="form-control" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="selected-text">-- Seleccionar opciones --</span>
+                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </summary>
+                                    <section class="dropdown-content platillo-checkbox-container" data-target="guarniciones_taquiza">
+                                        <!-- Llenado por JS -->
+                                    </section>
+                                </details>
                             </article>
-                        </div>
+                        </section>
 
                         <!-- 3 Tiempos -->
-                        <div id="menu-3tiempos" class="menu-opciones input-grid grid-3" style="display: none;">
+                        <section id="menu-3tiempos" class="menu-opciones input-grid grid-3" style="display: none;">
                             <article class="input-wrapper">
                                 <label for="platillo_3t_entrada">Entrada / Primer Tiempo</label>
                                 <select id="platillo_3t_entrada" class="form-control platillo-select">
@@ -308,7 +297,7 @@
                                     <option value="">-- Selecciona --</option>
                                 </select>
                             </article>
-                        </div>
+                        </section>
                     </section>
                     
                     <!-- Campo oculto para los platillos seleccionados -->
@@ -357,7 +346,7 @@
                     <legend>Pagos, Notas y Cierre</legend>
                     <p class="section-desc">Agrega los pagos realizados para este contrato. El sistema lo marcará como liquidado automáticamente si el total pagado cubre el monto total.</p>
                     
-                    <div id="pagos-container">
+                    <section id="pagos-container">
                         @php
                             $pagos = old('pagos', $draft['pagos'] ?? []);
                             if (empty($pagos)) {
@@ -387,27 +376,27 @@
                             </article>
                         </section>
                         @endforeach
-                    </div>
+                    </section>
                     
                     <button type="button" id="btn-add-pago" style="background: var(--accent-yellow); color: var(--primary-purple); font-weight: 800; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 213, 79, 0.4); margin-top: 1rem;">
                         + Agregar Pago
                     </button>
                     
-                    <div style="margin-top: 2rem; display: flex; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
-                        <div style="text-align: center; flex: 1;">
+                    <section style="margin-top: 2rem; display: flex; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <article style="text-align: center; flex: 1;">
                             <p style="margin:0; font-size: 0.8rem; color: #a0a0a0; text-transform: uppercase;">Total Pagado</p>
                             <p id="display-total-pagado" style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #10b981;">$0.00</p>
-                        </div>
-                        <div style="text-align: center; flex: 1;">
+                        </article>
+                        <article style="text-align: center; flex: 1;">
                             <p style="margin:0; font-size: 0.8rem; color: #a0a0a0; text-transform: uppercase;">Saldo Pendiente</p>
-                            <p id="display-saldo-pendiente" style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #f87171;">$0.00</p>
-                        </div>
-                        <div style="text-align: center; flex: 1; display: flex; align-items: center; justify-content: center;">
-                            <span id="badge-liquidado" style="display: none; background: #10b981; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; font-size: 0.9rem;">
+                            <p id="display-saldo-pendiente" style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #ef4444;">$0.00</p>
+                        </article>
+                        <article style="text-align: center; flex: 1; display: flex; align-items: center; justify-content: center;">
+                            <span id="badge-liquidado" style="display: none; background: #10b981; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 0 10px rgba(16,185,129,0.5);">
                                 ¡LIQUIDADO!
                             </span>
-                        </div>
-                    </div>
+                        </article>
+                    </section>
                 </fieldset>
 
                 <!-- SECCIÓN 6: CLÁUSULAS (Imprimible) -->
