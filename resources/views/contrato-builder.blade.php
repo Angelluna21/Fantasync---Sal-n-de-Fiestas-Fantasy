@@ -148,7 +148,7 @@
                     <section class="input-grid grid-4" style="margin-top: 1.5rem;">
                         <article class="input-wrapper">
                             <label for="horas_evento">Horas de servicio *</label>
-                            <input type="number" id="horas_evento" name="horas_evento" class="form-control" required min="1" value="{{ old('horas_evento', $draft['horas_evento'] ?? 5) }}">
+                            <input type="number" id="horas_evento" name="horas_evento" class="form-control" required min="1" value="{{ old('horas_evento', $draft['horas_evento'] ?? 6) }}">
                         </article>
                         <article class="input-wrapper">
                             <label for="horas_adicionales">Horas Adicionales</label>
