@@ -145,7 +145,7 @@
                             <input type="text" id="paquete_no" name="paquete_no" class="form-control" value="{{ old('paquete_no', $draft['paquete_no'] ?? '') }}">
                         </article>
                     </section>
-                    <section class="input-grid grid-5" style="margin-top: 1.5rem;">
+                    <section class="input-grid grid-4" style="margin-top: 1.5rem;">
                         <article class="input-wrapper">
                             <label for="horas_evento">Horas de servicio *</label>
                             <input type="number" id="horas_evento" name="horas_evento" class="form-control" required min="1" value="{{ old('horas_evento', $draft['horas_evento'] ?? 5) }}">
