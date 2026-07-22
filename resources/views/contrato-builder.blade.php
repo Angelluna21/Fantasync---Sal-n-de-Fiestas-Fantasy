@@ -61,37 +61,37 @@
                     <section class="input-grid grid-3">
                         <article class="input-wrapper">
                             <label for="cliente">Nombre del cliente *</label>
-                            <input type="text" id="cliente" name="cliente" class="form-control" required minlength="5" placeholder="Nombre completo">
+                            <input type="text" id="cliente" name="cliente" class="form-control" required minlength="5" placeholder="Nombre completo" value="{{ old('cliente', $draft['cliente'] ?? '') }}">
                         </article>
                         <article class="input-wrapper">
                             <label for="cliente_ine">Clave INE *</label>
                             <input type="text" id="cliente_ine" name="cliente_ine" class="form-control" required
                                 minlength="18" maxlength="18" pattern="[A-Za-z0-9]{18}"
-                                placeholder="18 caracteres" onkeyup="this.value = this.value.toUpperCase()">
+                                placeholder="18 caracteres" onkeyup="this.value = this.value.toUpperCase()" value="{{ old('cliente_ine', $draft['cliente_ine'] ?? '') }}">
                         </article>
                         <article class="input-wrapper">
                             <label for="correo">Correo electrónico *</label>
-                            <input type="email" id="correo" name="correo" class="form-control" required placeholder="correo@ejemplo.com">
+                            <input type="email" id="correo" name="correo" class="form-control" required placeholder="correo@ejemplo.com" value="{{ old('correo', $draft['correo'] ?? '') }}">
                         </article>
                     </section>
                     <section class="input-grid grid-2" style="margin-top: 1.5rem;">
                         <article class="input-wrapper">
                             <label for="cliente_domicilio">Domicilio completo *</label>
-                            <input type="text" id="cliente_domicilio" name="cliente_domicilio" class="form-control" required placeholder="Calle, Número, Colonia">
+                            <input type="text" id="cliente_domicilio" name="cliente_domicilio" class="form-control" required placeholder="Calle, Número, Colonia" value="{{ old('cliente_domicilio', $draft['cliente_domicilio'] ?? '') }}">
                         </article>
                         <article class="input-wrapper">
                             <label for="cp">C.P. *</label>
-                            <input type="text" id="cp" name="cp" class="form-control" required maxlength="5" pattern="[0-9]{5}" placeholder="Ej. 57000">
+                            <input type="text" id="cp" name="cp" class="form-control" required maxlength="5" pattern="[0-9]{5}" placeholder="Ej. 57000" value="{{ old('cp', $draft['cp'] ?? '') }}">
                         </article>
                     </section>
                     <section class="input-grid grid-2" style="margin-top: 1.5rem;">
                         <article class="input-wrapper">
                             <label for="tel_casa">Tel. de casa *</label>
-                            <input type="tel" id="tel_casa" name="tel_casa" class="form-control" required maxlength="10" minlength="10" pattern="[0-9]{10}" placeholder="10 dígitos">
+                            <input type="tel" id="tel_casa" name="tel_casa" class="form-control" required maxlength="10" minlength="10" pattern="[0-9]{10}" placeholder="10 dígitos" value="{{ old('tel_casa', $draft['tel_casa'] ?? '') }}">
                         </article>
                         <article class="input-wrapper">
                             <label for="telefono">Celular *</label>
-                            <input type="tel" id="telefono" name="telefono" class="form-control" required maxlength="10" minlength="10" pattern="[0-9]{10}" placeholder="10 dígitos">
+                            <input type="tel" id="telefono" name="telefono" class="form-control" required maxlength="10" minlength="10" pattern="[0-9]{10}" placeholder="10 dígitos" value="{{ old('telefono', $draft['telefono'] ?? '') }}">
                         </article>
                     </section>
                 </fieldset>
@@ -114,10 +114,10 @@
                         <article class="input-wrapper">
                             <label for="estado">Estado del Contrato *</label>
                             <select id="estado" name="estado" class="form-control" required>
-                                <option value="cotizacion">Cotización</option>
-                                <option value="confirmado">Confirmado</option>
-                                <option value="cancelado">Cancelado</option>
-                                <option value="liquidado">Liquidado</option>
+                                <option value="cotizacion" {{ old('estado', $draft['estado'] ?? '') == 'cotizacion' ? 'selected' : '' }}>Cotización</option>
+                                <option value="confirmado" {{ old('estado', $draft['estado'] ?? '') == 'confirmado' ? 'selected' : '' }}>Confirmado</option>
+                                <option value="cancelado" {{ old('estado', $draft['estado'] ?? '') == 'cancelado' ? 'selected' : '' }}>Cancelado</option>
+                                <option value="finalizado" {{ old('estado', $draft['estado'] ?? '') == 'finalizado' ? 'selected' : '' }}>Liquidado</option>
                             </select>
                         </article>
                     </section>
@@ -125,40 +125,71 @@
                         <article class="input-wrapper">
                             <label for="tipo_evento">Tipo de Evento *</label>
                             <select id="tipo_evento" name="tipo_evento" class="form-control" required>
-                                <option value="Bautizo">Bautizo</option>
-                                <option value="Presentación">Presentación</option>
-                                <option value="Cumpleaños">Cumpleaños</option>
-                                <option value="Comunión">Comunión</option>
-                                <option value="Otro">Otro</option>
+                                <option value="Bautizo" {{ old('tipo_evento', $draft['tipo_evento'] ?? '') == 'Bautizo' ? 'selected' : '' }}>Bautizo</option>
+                                <option value="Presentación" {{ old('tipo_evento', $draft['tipo_evento'] ?? '') == 'Presentación' ? 'selected' : '' }}>Presentación</option>
+                                <option value="Cumpleaños" {{ old('tipo_evento', $draft['tipo_evento'] ?? '') == 'Cumpleaños' ? 'selected' : '' }}>Cumpleaños</option>
+                                <option value="Comunión" {{ old('tipo_evento', $draft['tipo_evento'] ?? '') == 'Comunión' ? 'selected' : '' }}>Comunión</option>
+                                <option value="Otro" {{ old('tipo_evento', $draft['tipo_evento'] ?? '') == 'Otro' ? 'selected' : '' }}>Otro</option>
                             </select>
                         </article>
                         <article class="input-wrapper">
                             <label for="festejado">Nombre del festejado(a) *</label>
-                            <input type="text" id="festejado" name="festejado" class="form-control" required>
+                            <input type="text" id="festejado" name="festejado" class="form-control" required value="{{ old('festejado', $draft['festejado'] ?? '') }}">
                         </article>
                         <article class="input-wrapper">
                             <label for="evento_fecha">Fecha del evento *</label>
-                            <input type="date" id="evento_fecha" name="evento_fecha" class="form-control" required>
+                            <input type="date" id="evento_fecha" name="evento_fecha" class="form-control" required value="{{ old('evento_fecha', $draft['evento_fecha'] ?? '') }}">
                         </article>
                         <article class="input-wrapper">
                             <label for="paquete_no">Paquete No.</label>
-                            <input type="text" id="paquete_no" name="paquete_no" class="form-control">
+                            <input type="text" id="paquete_no" name="paquete_no" class="form-control" value="{{ old('paquete_no', $draft['paquete_no'] ?? '') }}">
                         </article>
                     </section>
-                    <section class="input-grid grid-3" style="margin-top: 1.5rem;">
+                    <section class="input-grid grid-4" style="margin-top: 1.5rem;">
                         <article class="input-wrapper">
                             <label for="horas_evento">Horas de servicio *</label>
-                            <input type="number" id="horas_evento" name="horas_evento" class="form-control" required min="1" value="5">
+                            <input type="number" id="horas_evento" name="horas_evento" class="form-control" required min="1" value="{{ old('horas_evento', $draft['horas_evento'] ?? 5) }}">
                         </article>
                         <article class="input-wrapper">
                             <label for="recepcion_hora">Hora de Bienvenida</label>
-                            <input type="time" id="recepcion_hora" name="recepcion_hora" class="form-control">
+                            <input type="time" id="recepcion_hora" name="recepcion_hora" class="form-control" value="{{ old('recepcion_hora', $draft['recepcion_hora'] ?? '') }}">
                         </article>
                         <article class="input-wrapper">
-                            <label for="inicio_hora">Hora Inicio del Evento *</label>
-                            <input type="time" id="inicio_hora" name="inicio_hora" class="form-control" required>
+                            <label for="inicio_hora">Hora Inicio del Evento</label>
+                            <input type="time" id="inicio_hora" name="inicio_hora" class="form-control" value="{{ old('inicio_hora', $draft['inicio_hora'] ?? '') }}">
+                        </article>
+                        <article class="input-wrapper">
+                            <label for="invitacion">Invitación</label>
+                            <input type="text" id="invitacion" name="invitacion" class="form-control" value="{{ old('invitacion', $draft['invitacion'] ?? '') }}">
                         </article>
                     </section>
+                    
+                    <section class="input-grid grid-6" style="margin-top: 0.5rem; margin-bottom: 1.5rem;">
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="hora_por_definir" id="hora_por_definir" value="1"> Hora por definir</label></article>
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="tiene_misa" value="1"> Misa</label></article>
+                    </section>
+                    
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const cbPorDefinir = document.getElementById('hora_por_definir');
+                            const inputRecepcion = document.getElementById('recepcion_hora');
+                            const inputInicio = document.getElementById('inicio_hora');
+                            
+                            if(cbPorDefinir) {
+                                cbPorDefinir.addEventListener('change', function() {
+                                    if(this.checked) {
+                                        inputRecepcion.disabled = true;
+                                        inputInicio.disabled = true;
+                                        inputRecepcion.value = '';
+                                        inputInicio.value = '';
+                                    } else {
+                                        inputRecepcion.disabled = false;
+                                        inputInicio.disabled = false;
+                                    }
+                                });
+                            }
+                        });
+                    </script>
                     
                     <section class="input-grid grid-4" style="margin-top: 1.5rem;">
                         <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_pinata" value="1"> Piñata</label></article>
@@ -177,17 +208,17 @@
                             <select id="servicio_gastronomico" name="servicio_gastronomico" class="form-control" required>
                                 <option value="">-- Selecciona el Servicio --</option>
                                 @foreach($serviciosGastronomicos as $sg)
-                                    <option value="{{ $sg->id }}">{{ $sg->nombre }}</option>
+                                    <option value="{{ $sg->id }}" {{ old('servicio_gastronomico', $draft['servicio_gastronomico'] ?? '') == $sg->id ? 'selected' : '' }}>{{ $sg->nombre }}</option>
                                 @endforeach
                             </select>
                         </article>
                         <article class="input-wrapper">
                             <label for="num_adultos">Para (Adultos) *</label>
-                            <input type="number" id="num_adultos" name="num_adultos" class="form-control" required min="0">
+                            <input type="number" id="num_adultos" name="num_adultos" class="form-control" required min="0" value="{{ old('num_adultos', $draft['num_adultos'] ?? 0) }}">
                         </article>
                         <article class="input-wrapper">
                             <label for="num_ninos">Buffet infantil de niños para *</label>
-                            <input type="number" id="num_ninos" name="num_ninos" class="form-control" required min="0">
+                            <input type="number" id="num_ninos" name="num_ninos" class="form-control" required min="0" value="{{ old('num_ninos', $draft['num_ninos'] ?? 0) }}">
                         </article>
                     </section>
 
@@ -329,9 +360,6 @@
                             <label for="recibo_transferencia">No. de Recibo o Transferencia</label>
                             <input type="text" id="recibo_transferencia" name="recibo_transferencia" class="form-control">
                         </article>
-                        <article class="input-wrapper">
-                            <label for="invitacion">Invitación</label>
-                            <input type="text" id="invitacion" name="invitacion" class="form-control">
                         </article>
                     </section>
                 </fieldset>
@@ -380,17 +408,26 @@
                 </section>
 
                 <!-- BOTONES DE ACCIÓN -->
-                <footer class="form-actions" style="gap: 1rem;">
+                <footer class="form-actions" style="gap: 1rem; display: flex; flex-wrap: wrap;">
                     <!-- Botón de Imprimir -->
                     <button type="button" class="btn-print" onclick="window.print()">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
                         </svg>
-                        Imprimir Contrato
+                        Imprimir
                     </button>
-                    <!-- Botón de Guardar -->
-                    <button type="submit" class="btn-submit">
-                        Continuar al Paso 2: Configurar Menú
+
+                    <!-- Botón de Guardar y Salir -->
+                    <button type="submit" name="action" value="save_only" class="btn-submit" style="background: var(--accent-yellow); color: var(--primary-purple);">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24" style="margin-right: 0.5rem;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Solo Guardar
+                    </button>
+
+                    <!-- Botón de Guardar y Continuar -->
+                    <button type="submit" name="action" value="continue" class="btn-submit">
+                        Guardar y Continuar al Menú
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                         </svg>

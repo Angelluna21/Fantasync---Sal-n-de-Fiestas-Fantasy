@@ -58,8 +58,8 @@ Route::middleware('auth')->group(function () {
     Route::get('contratos/crear', [ContratoBuilderController::class, 'create'])->name('contratos.crear');
     Route::post('contratos/crear', [ContratoBuilderController::class, 'store'])->name('contratos.crear.store');
     Route::post('/contratos/guardar', [ContratoBuilderController::class, 'store'])->name('contratos.store');
-
     Route::get('contratos', [ContratoController::class, 'index'])->name('contratos.index');
+    Route::get('contratos/{contrato}/editar', [ContratoBuilderController::class, 'edit'])->name('contratos.edit');
     Route::get('contratos/{contrato}', [ContratoController::class, 'show'])->name('contratos.show');
     Route::delete('contratos/{contrato}', [ContratoController::class, 'destroy'])->name('contratos.destroy');
     Route::post('/insumos/store-ajax', [PlatilloController::class, 'storeAjax'])->name('insumos.storeAjax');

@@ -44,8 +44,8 @@ class ContratoBuilderService
             'correo' => trim($data['correo']),
             'telefono' => trim($data['telefono']),
             'evento_fecha' => $data['evento_fecha'],
-            'recepcion_hora' => trim($data['recepcion_hora']),
-            'inicio_hora' => trim($data['inicio_hora']),
+            'recepcion_hora' => trim($data['recepcion_hora'] ?? ''),
+            'inicio_hora' => trim($data['inicio_hora'] ?? ''),
             'tipo_evento' => trim($data['tipo_evento']),
             'festejado' => trim($data['festejado']),
             'estado' => $data['estado'],
@@ -93,26 +93,44 @@ class ContratoBuilderService
                 [
                     'nombre_completo' => trim($data['cliente']),
                     'celular' => trim($data['telefono']),
+                    'telefono_casa' => trim($data['tel_casa'] ?? ''),
+                    'codigo_postal' => trim($data['cp'] ?? ''),
                     'domicilio' => trim($data['cliente_domicilio'] ?? ''),
                     'ine_numero' => trim($data['cliente_ine'] ?? '')
                 ]
             );
 
             // 3. Crear o actualizar Evento
+            $horaInicio = trim($data['inicio_hora'] ?? '00:00');
+            $horaRecepcion = trim($data['recepcion_hora'] ?? '00:00');
+            $notasAdicionales = '';
+            
+            if (!empty($data['hora_por_definir'])) {
+                $horaInicio = '00:00';
+                $horaRecepcion = '00:00';
+                $notasAdicionales .= ' (Hora por definir)';
+            }
+            if (!empty($data['tiene_misa'])) {
+                $notasAdicionales .= ' (Misa solicitada)';
+            }
+            if (!empty($data['invitacion'])) {
+                $notasAdicionales .= ' Invitación: ' . trim($data['invitacion']) . '.';
+            }
+
             $evento = Evento::updateOrCreate(
                 ['id' => $eventoId],
                 [
                     'cliente_id' => $cliente->id,
                     'fecha' => $data['evento_fecha'],
-                    'hora_recepcion' => trim($data['recepcion_hora']),
-                    'hora_inicio' => trim($data['inicio_hora']),
+                    'hora_recepcion' => $horaRecepcion,
+                    'hora_inicio' => $horaInicio,
                     'horas_duracion' => (int) $data['horas_evento'],
                     'tipo_evento' => trim($data['tipo_evento']),
                     'nombre_festejado' => trim($data['festejado']),
                     'estado' => $data['estado'],
                     'color_manteleria' => trim($data['manteleria_color'] ?? ''),
                     'titulo' => trim($data['tipo_evento']) . ' de ' . trim($data['festejado']),
-                    'notas' => 'Servicio Gastronómico: ' . ($data['servicio_gastronomico'] ?? 'N/A') . '. Platillos: ' . implode(', ', $platilloIds) . '. Extras: ' . json_encode($extras)
+                    'notas' => 'Servicio Gastronómico: ' . ($data['servicio_gastronomico'] ?? 'N/A') . '. Platillos: ' . implode(', ', $platilloIds) . '. Extras: ' . json_encode($extras) . $notasAdicionales
                 ]
             );
 

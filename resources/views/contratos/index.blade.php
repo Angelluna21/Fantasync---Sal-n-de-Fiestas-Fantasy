@@ -10,30 +10,33 @@
     <figure class="dashboard-background" aria-hidden="true"></figure>
     
     <main class="dashboard-layout">
-        <!-- Navegación superior -->
-        <nav class="top-nav" aria-label="Menú superior">
-            <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
-            </a>
+        <!-- Navegación superior y Encabezado Unificado -->
+        <div class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+            <!-- Lado Izquierdo: Logo y Botón Volver -->
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+                <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
+                </a>
+                <a href="{{ route('dashboard') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Volver al Panel
+                </a>
+            </div>
 
-            <x-user-menu />
-        </nav>
+            <!-- Centro: Encabezado -->
+            <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
+                <hgroup>
+                    <p class="eyebrow" style="margin-bottom: 0;">Gestión Legal</p>
+                    <h1 class="dashboard-title" style="font-size: 2.5rem; margin-top: 0.2rem;">Módulo de Contratos</h1>
+                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.05rem;">Revisa, previsualiza en PDF y administra los contratos de todos tus eventos.</p>
+                </hgroup>
+            </header>
 
-        <!-- Volver al Panel -->
-        <nav class="eventos-back-nav">
-            <a href="{{ route('dashboard') }}" class="btn-back-nav">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Volver al Panel
-            </a>
-        </nav>
-
-        <header class="dashboard-header">
-            <hgroup>
-                <p class="eyebrow">Gestión Legal</p>
-                <h1 class="dashboard-title">Módulo de Contratos</h1>
-                <p class="dashboard-description">Revisa, previsualiza en PDF y administra los contratos de todos tus eventos.</p>
-            </hgroup>
-        </header>
+            <!-- Lado Derecho: Menú Usuario -->
+            <div style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+                <x-user-menu />
+            </div>
+        </div>
 
         <!-- Sección de Indicadores (KPIs) -->
         <section class="metrics-grid" aria-label="Tarjetas de Indicadores de Contratos">
@@ -75,10 +78,30 @@
                 </aside>
             @endif
 
-            <form action="{{ route('contratos.index') }}" method="GET" class="search-form" style="margin-bottom: 2rem; display: flex; gap: 1rem;">
-                <input type="text" name="search" value="{{ $search }}" placeholder="Buscar por cliente o evento..." class="form-control" style="flex: 1; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;">
-                <button type="submit" class="btn-submit" style="width: auto; padding: 0.75rem 1.5rem;">Buscar</button>
-            </form>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
+                <form action="{{ route('contratos.index') }}" method="GET" class="search-form" style="display: flex; gap: 1rem; flex: 1; min-width: 300px;">
+                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Buscar por cliente o evento..." class="form-control" style="flex: 1; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;">
+                    
+                    <select name="month" class="form-control" style="width: auto; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;">
+                        <option value="">Todos los meses</option>
+                        @for($m=1; $m<=12; $m++)
+                            <option value="{{ $m }}" {{ ($month ?? '') == $m ? 'selected' : '' }}>{{ \Carbon\Carbon::create()->month($m)->locale('es')->monthName }}</option>
+                        @endfor
+                    </select>
+
+                    <select name="year" class="form-control" style="width: auto; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;">
+                        <option value="">Todos los años</option>
+                        @for($y=date('Y')-2; $y<=date('Y')+2; $y++)
+                            <option value="{{ $y }}" {{ ($year ?? '') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                        @endfor
+                    </select>
+
+                    <button type="submit" class="btn-submit" style="width: auto; padding: 0.75rem 1.5rem;">Filtrar</button>
+                </form>
+                <a href="{{ route('contratos.crear') }}" class="btn-submit" style="width: auto; padding: 0.75rem 1.5rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; background: var(--accent-yellow); color: var(--primary-purple); font-weight: 800; border-radius: 8px; box-shadow: 0 4px 15px rgba(255, 213, 79, 0.4); transition: all 0.3s ease;">
+                    + Nuevo Contrato
+                </a>
+            </div>
 
             <section class="table-wrapper">
                 <table class="eventos-table">
@@ -88,7 +111,7 @@
                             <th>Evento</th>
                             <th>Cliente</th>
                             <th>Monto Total</th>
-                            <th>Saldo Pendiente</th>
+                            <th>Estatus</th>
                             <th class="table-center">Acciones</th>
                         </tr>
                     </thead>
@@ -113,17 +136,32 @@
                                     <span class="finance-total">${{ number_format($contrato->monto_total, 2) }}</span>
                                 </td>
                                 <td>
-                                    @if($contrato->saldo_pendiente > 0)
-                                        <span class="finance-pending">${{ number_format($contrato->saldo_pendiente, 2) }}</span>
-                                    @else
-                                        <span class="finance-positive">Pagado</span>
-                                    @endif
+                                    @php
+                                        $estado = strtolower($contrato->evento->estado ?? 'cotizacion');
+                                        $badgeClass = match($estado) {
+                                            'cotizacion' => 'cotizacion',
+                                            'confirmado' => 'confirmado',
+                                            'cancelado' => 'cancelado',
+                                            'finalizado' => 'finalizado',
+                                            default => 'cotizacion'
+                                        };
+                                        $label = match($estado) {
+                                            'finalizado' => 'Liquidado',
+                                            default => ucfirst($estado)
+                                        };
+                                    @endphp
+                                    <span class="event-badge {{ $badgeClass }}">{{ $label }}</span>
                                 </td>
                                 <td class="table-center">
                                     <menu class="actions-group" style="justify-content: center;">
                                         <a href="{{ route('contratos.show', $contrato->id) }}" target="_blank" class="btn-event-link" title="Ver PDF">
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                                             Ver PDF
+                                        </a>
+
+                                        <a href="{{ route('contratos.edit', $contrato->id) }}" class="btn-event-link" style="background: var(--accent-yellow); color: var(--primary-purple) !important; box-shadow: 0 4px 10px rgba(255, 213, 79, 0.4);" title="Editar Contrato">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                            Editar
                                         </a>
 
                                         <form action="{{ route('contratos.destroy', $contrato->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas anular este contrato? Se cancelará el evento.');" style="display:inline;">
