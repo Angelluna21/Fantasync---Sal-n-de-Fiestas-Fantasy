@@ -183,14 +183,46 @@ class ContratoBuilderService
                 ->first();
 
             if ($eventoSalon && !empty($platilloIds)) {
-                $porciones = ((int) $data['num_adultos']) + ((int) $data['num_ninos']);
+                $numAdultos = (int) $data['num_adultos'];
+                $numNinos = (int) $data['num_ninos'];
+                $porcionesTotal = $numAdultos + $numNinos;
+                
+                $platillosModelos = \App\Models\Platillo::with('categoriaPlatillo')->whereIn('id', $platilloIds)->get();
+                
                 $syncPlatillos = [];
-                foreach ($platilloIds as $pId) {
-                    $syncPlatillos[$pId] = [
+                foreach ($platillosModelos as $platilloModelo) {
+                    $catNombre = strtolower(trim($platilloModelo->categoriaPlatillo->nombre ?? ''));
+                    if (in_array($catNombre, ['menú infantil', 'menu infantil', 'buffet infantil'])) {
+                        $porciones = max($numNinos, 1);
+                    } else {
+                        $porciones = $porcionesTotal;
+                    }
+
+                    $syncPlatillos[$platilloModelo->id] = [
                         'porciones_plan' => $porciones,
                         'orden' => 0
                     ];
                 }
+
+                // Si el servicio es 2 o 3 Tiempos, Paso 1 solo envía Bebidas e Infantil.
+                // Debemos preservar los platillos que el usuario ya configuró en el Paso 2 (Entradas, Fuertes, etc.)
+                if (in_array((int) $data['servicio_gastronomico'], [2, 3])) {
+                    $existingPlatillos = $eventoSalon->platillos()->with('categoriaPlatillo')->get();
+                    foreach ($existingPlatillos as $p) {
+                        $cat = strtolower(trim($p->categoriaPlatillo->nombre ?? ''));
+                        if (!in_array($cat, ['menú infantil', 'menu infantil', 'buffet infantil', 'bebidas'])) {
+                            // Si no está ya en el sync array, lo agregamos para no perderlo
+                            if (!array_key_exists($p->id, $syncPlatillos)) {
+                                $syncPlatillos[$p->id] = [
+                                    'porciones_plan' => $p->pivot->porciones_plan,
+                                    'orden' => $p->pivot->orden,
+                                    'notas' => $p->pivot->notas
+                                ];
+                            }
+                        }
+                    }
+                }
+
                 $eventoSalon->platillos()->sync($syncPlatillos);
             }
 

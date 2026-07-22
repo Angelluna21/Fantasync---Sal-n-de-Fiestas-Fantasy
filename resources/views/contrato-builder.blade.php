@@ -298,6 +298,36 @@
                                 </select>
                             </article>
                         </section>
+
+                        <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 1.5rem 0;">
+
+                        <!-- Menú Infantil y Bebidas (Global) -->
+                        <section id="menu-extras" class="menu-opciones input-grid grid-2">
+                            <article class="input-wrapper">
+                                <label style="display:block; margin-bottom: 0.5rem; font-weight: 600;">Opciones Infantiles (Opcional)</label>
+                                <details class="dropdown-multi" id="dropdown_buffet_infantil">
+                                    <summary class="form-control" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="selected-text">-- Seleccionar menú/buffet infantil --</span>
+                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </summary>
+                                    <section class="dropdown-content platillo-checkbox-container" data-target="buffet_infantil">
+                                        <!-- Llenado por JS -->
+                                    </section>
+                                </details>
+                            </article>
+                            <article class="input-wrapper">
+                                <label style="display:block; margin-bottom: 0.5rem; font-weight: 600;">Bebidas (Hasta 2 sabores)</label>
+                                <details class="dropdown-multi" id="dropdown_bebidas_extras">
+                                    <summary class="form-control" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="selected-text">-- Seleccionar bebidas --</span>
+                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </summary>
+                                    <section class="dropdown-content platillo-checkbox-container" data-target="bebidas_extras">
+                                        <!-- Llenado por JS -->
+                                    </section>
+                                </details>
+                            </article>
+                        </section>
                     </section>
                     
                     <!-- Campo oculto para los platillos seleccionados -->
@@ -793,6 +823,8 @@
                 });
             }
 
+            const draftPlatillos = @json($draft['platillo_ids'] ?? []);
+
             function fillCheckboxes(containerElement, filteredPlatillos) {
                 if (!containerElement) return;
                 containerElement.innerHTML = '';
@@ -806,6 +838,9 @@
                     checkbox.type = 'checkbox';
                     checkbox.value = p.id;
                     checkbox.className = 'platillo-checkbox';
+                    if (draftPlatillos.includes(p.id)) {
+                        checkbox.checked = true;
+                    }
                     checkbox.addEventListener('change', updateHiddenField);
                     
                     label.appendChild(checkbox);
@@ -868,6 +903,42 @@
                 document.querySelectorAll('.platillo-select').forEach(select => {
                     select.innerHTML = ''; 
                 });
+
+                // Llenar Extras Universales (Menú Infantil y Bebidas) si hay servicio seleccionado
+                if (sId) {
+                    const extraBuffet = platillos.filter(p => p.categoria_platillo && (p.categoria_platillo.nombre.toLowerCase() === 'buffet infantil' || p.categoria_platillo.nombre.toLowerCase() === 'menú infantil'));
+                    const extraBebidas = platillos.filter(p => p.categoria_platillo && p.categoria_platillo.nombre.toLowerCase() === 'bebidas');
+                    fillCheckboxes(document.querySelector('.platillo-checkbox-container[data-target="buffet_infantil"]'), extraBuffet);
+                    fillCheckboxes(document.querySelector('.platillo-checkbox-container[data-target="bebidas_extras"]'), extraBebidas);
+
+                    // Add limitation to 2 drinks for universal section
+                    const bebidasContainer = document.querySelector('.platillo-checkbox-container[data-target="bebidas_extras"]');
+                    if (bebidasContainer) {
+                        bebidasContainer.addEventListener('change', function(e) {
+                            if (e.target.type === 'checkbox') {
+                                const checkedBoxes = bebidasContainer.querySelectorAll('input[type="checkbox"]:checked');
+                                const allBoxes = bebidasContainer.querySelectorAll('input[type="checkbox"]');
+                                if (checkedBoxes.length >= 2) {
+                                    allBoxes.forEach(box => {
+                                        if (!box.checked) box.disabled = true;
+                                    });
+                                } else {
+                                    allBoxes.forEach(box => {
+                                        box.disabled = false;
+                                    });
+                                }
+                            }
+                        });
+                        
+                        // Inicializar limitación por si ya venían pre-seleccionados de draft
+                        const checkedBoxes = bebidasContainer.querySelectorAll('input[type="checkbox"]:checked');
+                        if (checkedBoxes.length >= 2) {
+                            bebidasContainer.querySelectorAll('input[type="checkbox"]').forEach(box => {
+                                if (!box.checked) box.disabled = true;
+                            });
+                        }
+                    }
+                }
                 
                 if (sId === 1) { // Taquiza / Parrillada
                     menuTaquiza.style.display = 'grid'; // changed from block to grid for 2 columns
@@ -875,6 +946,7 @@
                     const taquizaGuarniciones = platillos.filter(p => p.servicios_gastronomicos.some(sg => sg.id === 1) && p.categoria_platillo && p.categoria_platillo.nombre === 'Guarniciones');
                     fillCheckboxes(document.querySelector('.platillo-checkbox-container[data-target="platillos_taquiza"]'), taquizaPlatillos);
                     fillCheckboxes(document.querySelector('.platillo-checkbox-container[data-target="guarniciones_taquiza"]'), taquizaGuarniciones);
+
                 }
                 else if (sId === 2) { // 2 Tiempos
                     menu2Tiempos.style.display = 'grid';

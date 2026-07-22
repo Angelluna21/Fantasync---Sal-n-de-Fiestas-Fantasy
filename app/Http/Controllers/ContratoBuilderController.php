@@ -44,7 +44,8 @@ class ContratoBuilderController extends Controller
 
         $salones = Salon::query()->with('sucursal')->orderBy('nombre')->get();
         $platillos = Platillo::query()->with(['categoriaPlatillo', 'serviciosGastronomicos'])->orderBy('nombre')->get();
-        $serviciosGastronomicos = \App\Models\ServicioGastronomico::orderBy('id')->get();
+        $serviciosGastronomicos = \App\Models\ServicioGastronomico::whereNotIn('nombre', ['Menú Infantil', 'Bebidas', 'Buffet Infantil'])
+            ->orderBy('id')->get();
 
         return view('contrato-builder', compact('salones', 'platillos', 'serviciosGastronomicos', 'draft'));
     }

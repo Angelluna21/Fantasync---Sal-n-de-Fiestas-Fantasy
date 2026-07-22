@@ -91,13 +91,9 @@
             </menu>
 
             @php
-                // Títulos para las secciones según el ID del servicio
-                $nombresServicios = [
-                    1 => 'Menús a 2 Tiempos',
-                    2 => 'Menús a 3 Tiempos',
-                    3 => 'Taquizas',
-                    4 => 'Parrilladas'
-                ];
+                // Extraer dinámicamente los servicios disponibles para las pestañas
+                // Las llaves serán los IDs y los valores serán los nombres de los servicios
+                $nombresServicios = \App\Models\ServicioGastronomico::pluck('nombre', 'id')->toArray();
             @endphp
 
             <!-- 1. Vista de Cuadrícula (Grid) -->

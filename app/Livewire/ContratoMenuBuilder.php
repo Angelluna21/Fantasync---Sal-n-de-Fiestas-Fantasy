@@ -32,10 +32,10 @@ class ContratoMenuBuilder extends Component
             'servicio_id' => 'required|exists:servicios_gastronomicos,id',
         ];
 
-        if ($this->servicio_id == 2) { // 2 = 2 Tiempos
+        if ($this->servicio_id == 2) { // 2 Tiempos
             $reglas['entrada_id'] = 'required|exists:platillos,id';
             $reglas['plato_fuerte_id'] = 'required|exists:platillos,id';
-        } elseif ($this->servicio_id == 3) { // 3 = 3 Tiempos
+        } elseif ($this->servicio_id == 3) { // 3 Tiempos
             $reglas['entrada_id'] = 'required|exists:platillos,id';
             $reglas['plato_fuerte_id'] = 'required|exists:platillos,id';
             $reglas['postre_id'] = 'required|exists:platillos,id';
@@ -70,15 +70,30 @@ class ContratoMenuBuilder extends Component
 
             $syncData = [];
 
-            foreach ($platillosSeleccionados as $index => $platilloId) {
-                // TIEMPOS: Cada invitado recibe 1 porción entera
-                $porcionesPorPlatillo = $totalPorciones;
+            // Get categories for selected platillos to determine portions
+            $platillosModelos = \App\Models\Platillo::with('categoriaPlatillo')->whereIn('id', $platillosSeleccionados)->get()->keyBy('id');
 
+            foreach ($platillosSeleccionados as $index => $platilloId) {
                 $syncData[$platilloId] = [
-                    'porciones_plan' => (int) ceil($porcionesPorPlatillo),
+                    'porciones_plan' => (int) ceil($totalPorciones),
                     'orden'          => $index + 1,
                     'notas'          => 'Registrado desde el configurador dinámico'
                 ];
+            }
+
+            // Preservar Bebidas y Menú Infantil que fueron configurados en el Paso 1
+            $existingPlatillos = $eventoSalonPivot->platillos()->with('categoriaPlatillo')->get();
+            foreach ($existingPlatillos as $p) {
+                $cat = strtolower(trim($p->categoriaPlatillo->nombre ?? ''));
+                if (in_array($cat, ['menú infantil', 'menu infantil', 'buffet infantil', 'bebidas'])) {
+                    if (!array_key_exists($p->id, $syncData)) {
+                        $syncData[$p->id] = [
+                            'porciones_plan' => $p->pivot->porciones_plan,
+                            'orden' => $p->pivot->orden,
+                            'notas' => $p->pivot->notas
+                        ];
+                    }
+                }
             }
 
             $eventoSalonPivot->platillos()->sync($syncData);
@@ -92,7 +107,7 @@ class ContratoMenuBuilder extends Component
     {
         return view('livewire.contrato-menu-builder', [
             'servicios' => ServicioGastronomico::whereIn('id', [1, 2, 3])->get(),
-            'categorias' => CategoriaPlatillo::whereIn('id', [31, 32, 33])->with(['platillos' => function ($query) {
+            'categorias' => CategoriaPlatillo::with(['platillos' => function ($query) {
                 $query->orderBy('nombre');
             }])->orderBy('orden')->get()
         ]);
