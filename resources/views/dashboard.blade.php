@@ -46,7 +46,7 @@
                 </span>
                 <h2>Contratos</h2>
                 <p>Genera, edita y previsualiza los borradores de contratos y cotizaciones de eventos.</p>
-                <a href="{{ route('contratos.crear') }}">Generar contrato</a>
+                <a href="{{ route('contratos.index') }}">Generar contrato</a>
             </article>
 
             <!-- 2. Eventos -->

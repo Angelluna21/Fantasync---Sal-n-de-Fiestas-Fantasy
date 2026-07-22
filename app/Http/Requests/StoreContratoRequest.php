@@ -22,8 +22,8 @@ class StoreContratoRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $stringFields = [
-            'cliente', 'correo', 'telefono', 'recepcion_hora', 'inicio_hora', 
-            'tipo_evento', 'festejado', 'cliente_domicilio', 'cliente_ine', 'manteleria_color'
+            'cliente', 'correo', 'telefono', 'tel_casa', 'recepcion_hora', 'inicio_hora', 
+            'tipo_evento', 'festejado', 'cliente_domicilio', 'cliente_ine', 'manteleria_color', 'cp', 'invitacion'
         ];
 
         foreach ($stringFields as $field) {
@@ -46,9 +46,12 @@ class StoreContratoRequest extends FormRequest
             'cliente' => 'required|string|max:150',
             'correo' => 'required|email|max:150',
             'telefono' => 'required|string|max:40',
+            'tel_casa' => 'required|string|max:40',
+            'cp' => 'required|string|max:10',
+            'invitacion' => 'nullable|string|max:255',
             'evento_fecha' => 'required|date',
-            'recepcion_hora' => 'required|string|max:20',
-            'inicio_hora' => 'required|string|max:20',
+            'recepcion_hora' => 'nullable|string|max:20',
+            'inicio_hora' => 'nullable|string|max:20',
             'tipo_evento' => 'required|string|max:80',
             'festejado' => 'required|string|max:120',
             'estado' => 'required|in:cotizacion,confirmado,finalizado,cancelado',
@@ -64,6 +67,29 @@ class StoreContratoRequest extends FormRequest
             'servicio_gastronomico' => 'required|integer|exists:servicios_gastronomicos,id',
             'extras' => 'sometimes|array',
             'extras.*' => 'nullable|boolean',
+            'hora_por_definir' => 'nullable|boolean',
+            'tiene_misa' => 'nullable|boolean',
+            'c_renta_salon' => 'nullable|numeric|min:0',
+            'c_otras_bebidas' => 'nullable|numeric|min:0',
+            'c_pinata' => 'nullable|numeric|min:0',
+            'c_mesa_dulces' => 'nullable|numeric|min:0',
+            'c_show' => 'nullable|numeric|min:0',
+            'c_usb_video' => 'nullable|numeric|min:0',
+            'c_album_digital' => 'nullable|numeric|min:0',
+            'c_album_paquete' => 'nullable|numeric|min:0',
+            'c_derecho_pista' => 'nullable|numeric|min:0',
+            'c_hora_extra' => 'nullable|numeric|min:0',
+            'c_camara_360' => 'nullable|numeric|min:0',
+            'c_amenizacion' => 'nullable|numeric|min:0',
+            'c_personas_adicionales' => 'nullable|numeric|min:0',
+            'c_cafe' => 'nullable|numeric|min:0',
+            'c_mickey_movil' => 'nullable|numeric|min:0',
+            'c_otros' => 'nullable|numeric|min:0',
+            'pagos' => 'nullable|array',
+            'pagos.*.monto' => 'required_with:pagos|numeric|min:0',
+            'pagos.*.recibo' => 'nullable|string|max:100',
+            'pagos.*.fecha' => 'required_with:pagos|date',
+            'monto_total' => 'nullable|string',
         ];
     }
 }

@@ -14,6 +14,8 @@ class ContratoController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $month = $request->input('month');
+        $year = $request->input('year');
 
         $query = Contrato::with(['evento.cliente', 'evento.salones.sucursal']);
 
@@ -27,12 +29,23 @@ class ContratoController extends Controller
             });
         }
 
+        if ($month || $year) {
+            $query->whereHas('evento', function ($q) use ($month, $year) {
+                if ($month) {
+                    $q->whereMonth('fecha', $month);
+                }
+                if ($year) {
+                    $q->whereYear('fecha', $year);
+                }
+            });
+        }
+
         $contratos = $query->orderBy('created_at', 'desc')->paginate(10);
         $totalContratado = Contrato::sum('monto_total');
         $saldoPendiente = Contrato::sum('saldo_pendiente');
         $contratosActivos = Contrato::count();
 
-        return view('contratos.index', compact('contratos', 'search', 'totalContratado', 'saldoPendiente', 'contratosActivos'));
+        return view('contratos.index', compact('contratos', 'search', 'month', 'year', 'totalContratado', 'saldoPendiente', 'contratosActivos'));
     }
 
     /**
