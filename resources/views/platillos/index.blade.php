@@ -15,34 +15,35 @@
 
     <main class="dashboard-layout">
         <!-- Navegación superior y Encabezado Unificado -->
-        <div class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
-            <!-- Lado Izquierdo: Logo y Botón Volver -->
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+        <nav class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+            <!-- Lado Izquierdo: Logo y Botones Nav -->
+            <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
                 <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
                     <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
                 </a>
-                <a href="{{ route('dashboard') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                    Volver al Panel
-                </a>
-            </div>
+                
+                <section style="display: flex; gap: 0.5rem;">
+                    <a href="{{ route('dashboard') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        Panel
+                    </a>
+                </section>
+            </section>
 
             <!-- Centro: Encabezado -->
             <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
                 <hgroup>
-                    <p class="eyebrow" style="margin-bottom: 0;">Administración de Menú</p>
-                    <h1 class="dashboard-title" style="font-size: 2.5rem; margin-top: 0.2rem;">Platillos</h1>
-                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.05rem;">Gestiona el catálogo de platillos, categorías e ingredientes para crear menús personalizados para tus eventos.</p>
+                    <p class="eyebrow" style="margin-bottom: 0;">Catálogo Maestro</p>
+                    <h1 class="dashboard-title" style="font-size: 2.5rem; margin-top: 0.2rem;">Platillos & Bebidas</h1>
+                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.05rem;">Gestión centralizada del menú. Define insumos base, porciones y costos de cada elemento culinario.</p>
                 </hgroup>
             </header>
 
             <!-- Lado Derecho: Menú Usuario -->
-            <div style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+            <aside style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
                 <x-user-menu />
-            </div>
-        </div>
+            </aside>
+        </nav>
 
         <!-- Contenedor Principal de Platillos -->
         <section class="platillos-section" aria-label="Listado de platillos" style="margin-top: 7rem;">
@@ -117,19 +118,18 @@
                             
                             <h3 style="color: var(--primary-purple, #7A288A); margin: 2rem 0 1rem 0; font-size: 1.25rem; border-bottom: 2px solid #f0eaef; padding-bottom: 5px;">{{ $titulo }}</h3>
                             
-                            <!-- El div interno hereda tu clase CSS de grid -->
-                            <div class="platillos-grid group-container">
+                            <section class="platillos-grid group-container">
                                 @foreach($platillosAgrupados[$idServicio] as $platillo)
                                     <article class="platillo-card" data-nombre="{{ $platillo->nombre }}">
                                         <header class="card-header">
                                             <h3 class="card-title">{{ $platillo->nombre }}</h3>
-                                            <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                                            <section style="display: flex; gap: 4px; flex-wrap: wrap;">
                                                 @if($platillo->categoriaPlatillo)
                                                     <span class="badge">{{ $platillo->categoriaPlatillo->nombre }}</span>
                                                 @else
                                                     <span class="badge badge-gray">Sin categoría</span>
                                                 @endif
-                                            </div>
+                                            </section>
                                         </header>
 
                                         <section class="card-body">
@@ -191,7 +191,7 @@
                                         </footer>
                                     </article>
                                 @endforeach
-                            </div>
+                            </section>
                         @endif
                     @endforeach
                 @endif

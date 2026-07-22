@@ -12,9 +12,9 @@
 
     <main class="dashboard-layout">
         <!-- Navegación superior y Encabezado Unificado -->
-        <div class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+        <nav class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
             <!-- Lado Izquierdo: Logo y Botón Volver -->
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+            <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
                 <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
                     <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
                 </a>
@@ -22,7 +22,7 @@
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Volver al Catálogo
                 </a>
-            </div>
+            </section>
 
             <!-- Centro: Encabezado -->
             <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
@@ -34,10 +34,10 @@
             </header>
 
             <!-- Lado Derecho: Menú Usuario -->
-            <div style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+            <aside style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
                 <x-user-menu />
-            </div>
-        </div>
+            </aside>
+        </nav>
 
         <!-- Detalles del Platillo -->
         <section aria-label="Ficha de detalles del platillo" style="margin-top: 7rem;">
@@ -64,13 +64,13 @@
 
                     <article class="detail-block detail-full-width">
                         <span class="detail-label">Servicio(s) Gastronómico(s) Asignado(s)</span>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 0.5rem;">
+                        <section style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 0.5rem;">
                             @forelse($platillo->serviciosGastronomicos as $servicio)
                                 <span class="badge" style="background-color: var(--primary-purple, #7A288A); color: white;">{{ $servicio->nombre }}</span>
                             @empty
                                 <span class="badge badge-gray">Sin servicios asociados</span>
                             @endforelse
-                        </div>
+                        </section>
                     </article>
 
                     @if($platillo->descripcion)
@@ -92,10 +92,10 @@
                         <section class="ingredients-grid" aria-label="Grid de ingredientes de la receta" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 1rem;">
                             @foreach($platillo->ingredientes as $ingrediente)
                                 <article class="ingredient-card" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(122, 40, 138, 0.04); border-radius: 8px; border: 1px solid rgba(122, 40, 138, 0.15);">
-                                    <div>
+                                    <section>
                                         <h4 style="margin: 0; font-weight: 600; color: var(--text-main, #3d1b4a);">{{ $ingrediente->nombre }}</h4>
                                         <span style="font-size: 0.85em; color: var(--text-muted, #6a4a75);">Cantidad base: {{ $ingrediente->pivot->cantidad_por_base }} {{ $ingrediente->unidad }}</span>
-                                    </div>
+                                    </section>
                                     <span class="unit-badge {{ $ingrediente->unidad }}">{{ $ingrediente->unidad }}</span>
                                 </article>
                             @endforeach

@@ -14,9 +14,9 @@
 
     <main class="dashboard-layout">
         <!-- Navegación superior y Encabezado Unificado -->
-        <div class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+        <nav class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
             <!-- Lado Izquierdo: Logo y Botón Volver -->
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+            <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
                 <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
                     <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
                 </a>
@@ -24,60 +24,60 @@
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Volver al Catálogo
                 </a>
-            </div>
+            </section>
 
             <!-- Centro: Encabezado -->
             <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
                 <hgroup>
                     <p class="eyebrow" style="margin-bottom: 0;">Administración de Menú</p>
                     <h1 class="dashboard-title" style="font-size: 2.5rem; margin-top: 0.2rem;">Nuevo Platillo</h1>
-                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.05rem;">Agrega una nueva opción al catálogo asignándole su servicio y categoría.</p>
+                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.05rem;">Registra un nuevo elemento para el menú, definiendo su nombre, categoría e insumos requeridos.</p>
                 </hgroup>
             </header>
 
             <!-- Lado Derecho: Menú Usuario -->
-            <div style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+            <aside style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
                 <x-user-menu />
-            </div>
-        </div>
+            </aside>
+        </nav>
 
         <section class="platillos-section" aria-label="Formulario de creación" style="margin-top: 7rem;">
             <style>
                 .form-input, .form-textarea { max-width: 600px; }
             </style>
-            <div class="form-card" style="max-width: 900px; margin: 0 auto;">
+            <article class="form-card" style="max-width: 900px; margin: 0 auto;">
                 <form action="{{ route('platillos.store') }}" method="POST">
                     @csrf
 
                     @if ($errors->any())
-                    <div style="background: #ffebee; color: #d32f2f; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #d32f2f;">
+                    <aside style="background: #ffebee; color: #d32f2f; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #d32f2f;">
                         <p style="margin-top: 0; font-weight: bold;">Por favor corrige los siguientes errores:</p>
                         <ul style="margin-bottom: 0;">
                             @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                             @endforeach
                         </ul>
-                    </div>
+                    </aside>
                     @endif
 
-                    <div class="form-group">
+                    <fieldset class="form-group">
                         <label class="form-label">NOMBRE DEL PLATILLO</label>
                         <input type="text" name="nombre" class="form-input" placeholder="Ej. Pechuga Cordon Bleu en salsa chipotle" value="{{ old('nombre') }}" required>
-                    </div>
+                    </fieldset>
 
-                    <div class="form-group">
+                    <fieldset class="form-group">
                         <label class="form-label">SERVICIO(S) GASTRONÓMICO(S) (Define la sección donde aparecerá)</label>
-                        <div style="display: flex; flex-direction: column; gap: 8px; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                        <section style="display: flex; flex-direction: column; gap: 8px; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
                             @foreach($servicios as $servicio)
                             <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer;">
                                 <input type="checkbox" name="servicio_gastronomico_id[]" value="{{ $servicio->id }}">
                                 {{ $servicio->nombre }}
                             </label>
                             @endforeach
-                        </div>
-                    </div>
+                        </section>
+                    </fieldset>
 
-                    <div class="form-group">
+                    <fieldset class="form-group">
                         <label class="form-label">CATEGORÍA DE MENÚ</label>
                         <select name="categoria_platillo_id" class="form-input" required>
                             <option value="">Selecciona una categoría...</option>
@@ -89,17 +89,17 @@
                             </optgroup>
                             @endforeach
                         </select>
-                    </div>
+                    </fieldset>
 
-                    <div class="form-group">
+                    <fieldset class="form-group">
                         <label class="form-label">DESCRIPCIÓN</label>
                         <textarea name="descripcion" class="form-input form-textarea" placeholder="Ingresa los detalles principales del platillo, guarniciones incluidas, etc.">{{ old('descripcion') }}</textarea>
-                    </div>
+                    </fieldset>
 
-                    <div class="form-group">
+                    <fieldset class="form-group">
                         <label class="form-label">FÓRMULA / INSUMOS DEL ALMACÉN</label>
-                        <div id="contenedor-insumos">
-                            <div class="ingrediente-row" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <section id="contenedor-insumos">
+                            <article class="ingrediente-row" style="display: flex; gap: 10px; margin-bottom: 10px;">
                                 <select class="form-input ingrediente-select" name="ingredientes[id][]" style="flex: 2;">
                                     <option value="">Selecciona insumo...</option>
                                     @if(isset($insumos) && $insumos->count() > 0)
@@ -108,49 +108,48 @@
                                     @endforeach
                                     @endif
                                 </select>
-                                <input type="text" class="form-input ingrediente-input" name="ingredientes[cantidad][]" placeholder="Cantidad" style="flex: 1;">
-                                <button type="button" class="btn-remove-ingrediente" style="background: #ffebee; color: #d32f2f; border: none; border-radius: 8px; padding: 0 15px; font-weight: bold; cursor: pointer;">X</button>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 10px; margin-top: 10px;">
-                            <button type="button" onclick="abrirModalInsumo()" style="border: 1px solid var(--primary-purple); border-radius: 8px; background: var(--primary-purple, #7A288A); color: white; padding: 10px; width: 50%; cursor: pointer;">+ Crear Nuevo Insumo</button>
-                            <button type="button" id="btn-agregar-fila" style="border: 1px dashed rgba(122, 40, 138, 0.4); border-radius: 8px; background: transparent; color: var(--primary-purple, #7A288A); padding: 10px; width: 50%; cursor: pointer;">+ Añadir fila</button>
-                        </div>
-                    </div>
+                                <input type="number" step="0.001" min="0" class="form-input" name="ingredientes[cantidad][]" placeholder="Cant." style="flex: 1;" title="Cantidad Base por Porción">
+                                <button type="button" class="btn-remove-ingrediente" style="background: none; border: none; color: #d32f2f; cursor: pointer; padding: 0 10px; font-size: 1.2rem;">&times;</button>
+                            </article>
+                        </section>
+                        <menu style="display: flex; gap: 10px; margin-top: 10px; padding: 0; list-style: none;">
+                            <button type="button" onclick="abrirModalInsumo()" class="btn-back-nav" style="background: rgba(122, 40, 138, 0.1); color: var(--primary-purple); border-color: transparent;">+ Crear Nuevo Insumo</button>
+                            <button type="button" id="btn-agregar-fila" class="btn-submit" style="background: var(--accent-yellow); color: var(--primary-purple);">+ Añadir fila</button>
+                        </menu>
+                    </fieldset>
 
-                    <div class="form-actions" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; border-top: none; margin-top: 2rem;">
-                        <a href="{{ route('platillos.index') }}" class="btn-cancel" style="width: 200px; text-align: center;">Cancelar</a>
-                        <button type="submit" class="btn-save" style="width: 200px;">Crear Platillo</button>
-                    </div>
+                    <menu class="form-actions" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; border-top: none; margin-top: 2rem; padding: 0; list-style: none;">
+                        <button type="submit" class="btn-submit btn-large generate" style="min-width: 250px; font-size: 1.1rem; padding: 1rem 2rem;">Guardar Platillo</button>
+                        <a href="{{ route('platillos.index') }}" class="btn-back" style="margin-top: 0;">Cancelar</a>
+                    </menu>
                 </form>
-            </div>
+            </article>
         </section>
     </main>
 
-    <!-- Modal para crear insumo -->
-    <div id="modal-insumo" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
-        <div style="background: white; padding: 30px; border-radius: 12px; width: 400px; max-width: 90%;">
-            <h3 style="margin-bottom: 20px; color: #7A288A; font-family: sans-serif; font-weight: bold;">Crear Insumo en Almacén</h3>
-            <div class="form-group">
-                <label class="form-label" style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 5px; display: block;">NOMBRE DEL INSUMO</label>
-                <input type="text" id="modal-nombre" class="form-input" placeholder="Ej. Pechuga de pollo" style="width: 100%; box-sizing: border-box;">
-            </div>
-            <div class="form-group" style="margin-top: 15px;">
-                <label class="form-label" style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 5px; display: block;">UNIDAD DE MEDIDA</label>
-                <select id="modal-unidad" class="form-input" style="width: 100%; box-sizing: border-box;">
+    <dialog id="modal-insumo" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; border: none;">
+        <article style="background: white; padding: 30px; border-radius: 12px; width: 400px; max-width: 90%;">
+            <h3 style="margin-top: 0; color: var(--primary-purple);">Crear Nuevo Insumo</h3>
+            <section class="form-group">
+                <label class="form-label">Nombre del Insumo</label>
+                <input type="text" id="modal-nombre" class="form-input" placeholder="Ej. Jitomate, Crema, Pollo...">
+            </section>
+            <section class="form-group" style="margin-top: 15px;">
+                <label class="form-label">Unidad de Medida</label>
+                <select id="modal-unidad" class="form-input">
                     <option value="kg">Kilogramos (kg)</option>
-                    <option value="g">Gramos (g)</option>
+                    <option value="gr">Gramos (gr)</option>
                     <option value="lt">Litros (lt)</option>
-                    <option value="pza">Pieza (pza)</option>
-                    <option value="manojo">Manojo</option>
+                    <option value="ml">Mililitros (ml)</option>
+                    <option value="pza">Piezas (pza)</option>
                 </select>
-            </div>
-            <div style="display: flex; gap: 10px; margin-top: 25px;">
-                <button type="button" onclick="cerrarModalInsumo()" style="border: 1px solid #ccc; background: white; padding: 10px; border-radius: 8px; flex: 1; cursor: pointer; font-weight: bold; color: #666;">Cancelar</button>
-                <button type="button" onclick="simularGuardadoInsumo()" style="border: none; background: #7A288A; color: white; padding: 10px; border-radius: 8px; flex: 1; cursor: pointer; font-weight: bold;">Guardar Insumo</button>
-            </div>
-        </div>
-    </div>
+            </section>
+            <menu style="display: flex; gap: 10px; margin-top: 25px; padding: 0; list-style: none;">
+                <button type="button" onclick="simularGuardadoInsumo()" class="btn-submit" style="flex: 1; padding: 10px;">Guardar</button>
+                <button type="button" onclick="cerrarModalInsumo()" class="btn-back" style="flex: 1; margin: 0; padding: 10px;">Cancelar</button>
+            </menu>
+        </article>
+    </dialog>
 
     <script>
         document.getElementById('btn-agregar-fila').addEventListener('click', function() {
@@ -158,7 +157,7 @@
             const filaOriginal = contenedor.querySelector('.ingrediente-row');
             const nuevaFila = filaOriginal.cloneNode(true);
             nuevaFila.querySelector('select').value = '';
-            nuevaFila.querySelector('input[type="text"]').value = '';
+            nuevaFila.querySelector('input[type="number"]').value = '';
             contenedor.appendChild(nuevaFila);
         });
 
@@ -170,7 +169,7 @@
                 } else {
                     const fila = e.target.closest('.ingrediente-row');
                     fila.querySelector('select').value = '';
-                    fila.querySelector('input[type="text"]').value = '';
+                    fila.querySelector('input[type="number"]').value = '';
                 }
             }
         });

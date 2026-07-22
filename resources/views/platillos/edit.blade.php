@@ -12,9 +12,9 @@
 
 <main class="dashboard-layout">
 <!-- Navegación superior y Encabezado Unificado -->
-<div class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+<nav class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
 <!-- Lado Izquierdo: Logo y Botón Volver -->
-<div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+<section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
 <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
 <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
 </a>
@@ -22,7 +22,7 @@
 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
 Volver al Catálogo
 </a>
-</div>
+</section>
 
 <!-- Centro: Encabezado -->
 <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
@@ -34,10 +34,10 @@ Volver al Catálogo
 </header>
 
 <!-- Lado Derecho: Menú Usuario -->
-<div style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+<aside style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
 <x-user-menu />
-</div>
-</div>
+</aside>
+</nav>
 
 <!-- Formulario -->
 <section aria-label="Formulario de edición de platillo" style="margin-top: 7rem;">
@@ -71,7 +71,7 @@ value="{{ old('precio', $platillo->precio) }}" required>
 <!-- Campo: Servicio(s) Gastronómico(s) -->
 <fieldset class="form-group">
 <legend class="form-label">Servicio(s) Gastronómico(s) *</legend>
-<div style="display: flex; flex-direction: column; gap: 8px; padding: 10px; border: 1px solid rgba(122, 40, 138, 0.15); background: rgba(122, 40, 138, 0.03); border-radius: 8px;">
+<section style="display: flex; flex-direction: column; gap: 8px; padding: 10px; border: 1px solid rgba(122, 40, 138, 0.15); background: rgba(122, 40, 138, 0.03); border-radius: 8px;">
 @foreach($servicios as $servicio)
 <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer; color: var(--text-main, #3d1b4a);">
 <input type="checkbox" name="servicio_gastronomico_id[]" value="{{ $servicio->id }}"
@@ -79,7 +79,7 @@ value="{{ old('precio', $platillo->precio) }}" required>
 {{ $servicio->nombre }}
 </label>
 @endforeach
-</div>
+</section>
 @error('servicio_gastronomico_id')
 <output class="form-error">{{ $message }}</output>
 @enderror
