@@ -159,6 +159,13 @@
                             <input type="time" id="inicio_hora" name="inicio_hora" class="form-control" required>
                         </article>
                     </section>
+                    
+                    <section class="input-grid grid-4" style="margin-top: 1.5rem;">
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_pinata" value="1"> Piñata</label></article>
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_show" value="1"> Show</label></article>
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="arco_globos" value="1"> Arco globos</label></article>
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="derecho_pista_check" value="1"> Der. pista</label></article>
+                    </section>
                 </fieldset>
 
                 <!-- SECCIÓN 3: ALIMENTOS Y CONFIGURACIÓN -->
@@ -271,13 +278,6 @@
                     
                     <!-- Campo oculto para los platillos seleccionados -->
                     <select name="platillo_ids[]" id="platillo_ids_hidden" multiple style="display: none;"></select>
-                    <!-- Eliminada selección estática de guisados y bebidas, ahora se maneja en el Paso 2 -->
-                    <section class="input-grid grid-4" style="margin-top: 1.5rem;">
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_pinata" value="1"> Piñata</label></article>
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_show" value="1"> Show</label></article>
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="arco_globos" value="1"> Arco globos</label></article>
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="derecho_pista_check" value="1"> Der. pista</label></article>
-                    </section>
                 </fieldset>
 
                 <!-- SECCIÓN 4: DESGLOSE DE COSTOS -->
