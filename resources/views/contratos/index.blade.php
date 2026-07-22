@@ -98,7 +98,7 @@
 
                     <button type="submit" class="btn-submit" style="width: auto; padding: 0.75rem 1.5rem;">Filtrar</button>
                 </form>
-                <a href="{{ route('contratos.crear') }}" class="btn-submit" style="width: auto; padding: 0.75rem 1.5rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; background: var(--accent-yellow); color: var(--primary-purple); font-weight: 800; border-radius: 8px; box-shadow: 0 4px 15px rgba(255, 213, 79, 0.4); transition: all 0.3s ease;">
+                <a href="{{ route('contratos.crear', ['new' => 1]) }}" class="btn-submit" style="width: auto; padding: 0.75rem 1.5rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; background: var(--accent-yellow); color: var(--primary-purple); font-weight: 800; border-radius: 8px; box-shadow: 0 4px 15px rgba(255, 213, 79, 0.4); transition: all 0.3s ease;">
                     + Nuevo Contrato
                 </a>
             </header>

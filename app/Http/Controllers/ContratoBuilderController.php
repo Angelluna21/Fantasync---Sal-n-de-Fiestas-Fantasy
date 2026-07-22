@@ -21,24 +21,24 @@ class ContratoBuilderController extends Controller
         }
         
         $draft = session('contract_draft', [
-            'cliente' => 'Carmelo Pérez',
+            'cliente' => '',
             'correo' => '',
             'telefono' => '',
-            'evento_fecha' => date('Y-m-d'),
-            'recepcion_hora' => '15:00',
-            'inicio_hora' => '16:30',
-            'tipo_evento' => 'Comunión',
+            'evento_fecha' => '',
+            'recepcion_hora' => '',
+            'inicio_hora' => '',
+            'tipo_evento' => '',
             'festejado' => '',
             'estado' => 'cotizacion',
             'salon_id' => null,
             'platillo_ids' => [],
             'extras' => [],
             'horas_evento' => 5,
-            'num_adultos' => 50,
-            'num_ninos' => 20,
+            'num_adultos' => 0,
+            'num_ninos' => 0,
             'cliente_domicilio' => '',
             'cliente_ine' => '',
-            'manteleria_color' => 'Blanco',
+            'manteleria_color' => '',
         ]);
 
         $salones = Salon::query()->with('sucursal')->orderBy('nombre')->get();
@@ -134,10 +134,12 @@ class ContratoBuilderController extends Controller
             $evento = $service->crearOActualizarContrato($request->validated());
 
             if ($request->input('action') === 'save_only') {
+                session()->forget('contract_draft');
                 return redirect()->route('contratos.index')
                                  ->with('success', 'Contrato guardado correctamente.');
             }
 
+            session()->forget('contract_draft');
             return redirect()->route('eventos.menu', ['evento' => $evento->id])
                              ->with('status', 'Contrato guardado. Por favor, configura el menú.');
         } catch (Exception $e) {
