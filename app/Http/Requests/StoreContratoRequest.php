@@ -57,6 +57,7 @@ class StoreContratoRequest extends FormRequest
             'estado' => 'required|in:cotizacion,confirmado,finalizado,cancelado',
             'salon_id' => 'required|integer|exists:salones,id',
             'horas_evento' => 'required|integer|min:1',
+            'horas_adicionales' => 'nullable|integer|min:0',
             'num_adultos' => 'required|integer|min:0',
             'num_ninos' => 'required|integer|min:0',
             'cliente_domicilio' => 'nullable|string|max:255',

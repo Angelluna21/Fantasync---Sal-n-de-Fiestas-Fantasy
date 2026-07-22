@@ -147,6 +147,11 @@ class ContratoBuilderService
                 $notasAdicionales .= ' Invitación: ' . trim($data['invitacion']) . '.';
             }
 
+            if (!empty($data['tiene_misa'])) $extras['tiene_misa'] = true;
+            if (!empty($data['invitacion'])) $extras['invitacion'] = $data['invitacion'];
+
+            $extras['horas_adicionales'] = (int) ($data['horas_adicionales'] ?? 0);
+
             $evento = Evento::updateOrCreate(
                 ['id' => $eventoId],
                 [
