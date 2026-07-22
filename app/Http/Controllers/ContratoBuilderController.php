@@ -101,6 +101,28 @@ class ContratoBuilderController extends Controller
             'invitacion' => $invitacion,
         ];
 
+        // Migración en memoria: Si existe historial_pagos usarlo, sino generar uno si hay anticipo > 0
+        if (!empty($contrato->servicios_extras['historial_pagos'])) {
+            $draft['pagos'] = $contrato->servicios_extras['historial_pagos'];
+        } else if (($contrato->anticipo ?? 0) > 0) {
+            $draft['pagos'] = [
+                [
+                    'monto' => $contrato->anticipo,
+                    'recibo' => $contrato->servicios_extras['recibo_transferencia'] ?? '',
+                    'fecha' => $contrato->created_at ? $contrato->created_at->format('Y-m-d') : date('Y-m-d')
+                ]
+            ];
+        } else {
+            $draft['pagos'] = [];
+        }
+
+        // Añadir los costos de vuelta al draft si existen
+        if (!empty($contrato->servicios_extras['desglose_costos'])) {
+            foreach ($contrato->servicios_extras['desglose_costos'] as $k => $v) {
+                $draft[$k] = $v;
+            }
+        }
+
         session(['contract_draft' => $draft]);
 
         return redirect()->route('contratos.crear');

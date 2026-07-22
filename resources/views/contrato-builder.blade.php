@@ -316,25 +316,25 @@
                     <legend>Desglose de Costos ($)</legend>
                     <p class="section-desc">Presiona "Enter" en cualquier costo para sumarlo automáticamente. (No incluye anticipo).</p>
                     <section class="input-grid grid-4">
-                        <article class="input-wrapper"><label>Renta de Salón</label><input type="number" step="0.01" min="0" name="c_renta_salon" class="form-control cost-input"></article>
-                        <article class="input-wrapper"><label>Otras Bebidas</label><input type="number" step="0.01" min="0" name="c_otras_bebidas" class="form-control cost-input"></article>
-                        <article class="input-wrapper"><label>Piñata</label><input type="number" step="0.01" min="0" name="c_pinata" class="form-control cost-input"></article>
-                        <article class="input-wrapper"><label>Mesa de Dulces</label><input type="number" step="0.01" min="0" name="c_mesa_dulces" class="form-control cost-input"></article>
+                        <article class="input-wrapper"><label>Renta de Salón</label><input type="number" step="0.01" min="0" name="c_renta_salon" class="form-control cost-input" value="{{ old('c_renta_salon', $draft['c_renta_salon'] ?? '') }}"></article>
+                        <article class="input-wrapper"><label>Otras Bebidas</label><input type="number" step="0.01" min="0" name="c_otras_bebidas" class="form-control cost-input" value="{{ old('c_otras_bebidas', $draft['c_otras_bebidas'] ?? '') }}"></article>
+                        <article class="input-wrapper"><label>Piñata</label><input type="number" step="0.01" min="0" name="c_pinata" class="form-control cost-input" value="{{ old('c_pinata', $draft['c_pinata'] ?? '') }}"></article>
+                        <article class="input-wrapper"><label>Mesa de Dulces</label><input type="number" step="0.01" min="0" name="c_mesa_dulces" class="form-control cost-input" value="{{ old('c_mesa_dulces', $draft['c_mesa_dulces'] ?? '') }}"></article>
 
-                        <article class="input-wrapper"><label>Show</label><input type="number" step="0.01" min="0" name="c_show" class="form-control cost-input"></article>
-                        <article class="input-wrapper"><label>USB Video c/reseña</label><input type="number" step="0.01" min="0" name="c_usb_video" class="form-control cost-input"></article>
-                        <article class="input-wrapper"><label>Álbum Digital</label><input type="number" step="0.01" min="0" name="c_album_digital" class="form-control cost-input"></article>
-                        <article class="input-wrapper"><label>Paquete Álbum</label><input type="number" step="0.01" min="0" name="c_album_paquete" class="form-control cost-input"></article>
+                        <article class="input-wrapper"><label>Show</label><input type="number" step="0.01" min="0" name="c_show" class="form-control cost-input" value="{{ old('c_show', $draft['c_show'] ?? '') }}"></article>
+                        <article class="input-wrapper"><label>USB Video c/reseña</label><input type="number" step="0.01" min="0" name="c_usb_video" class="form-control cost-input" value="{{ old('c_usb_video', $draft['c_usb_video'] ?? '') }}"></article>
+                        <article class="input-wrapper"><label>Álbum Digital</label><input type="number" step="0.01" min="0" name="c_album_digital" class="form-control cost-input" value="{{ old('c_album_digital', $draft['c_album_digital'] ?? '') }}"></article>
+                        <article class="input-wrapper"><label>Paquete Álbum</label><input type="number" step="0.01" min="0" name="c_album_paquete" class="form-control cost-input" value="{{ old('c_album_paquete', $draft['c_album_paquete'] ?? '') }}"></article>
 
-                        <article class="input-wrapper"><label>Derecho de Pista</label><input type="number" step="0.01" min="0" name="c_derecho_pista" class="form-control cost-input"></article>
-                        <article class="input-wrapper"><label>Hora Extra</label><input type="number" step="0.01" min="0" name="c_hora_extra" class="form-control cost-input"></article>
-                        <article class="input-wrapper"><label>Cámara 360°</label><input type="number" step="0.01" min="0" name="c_camara_360" class="form-control cost-input"></article>
-                        <article class="input-wrapper"><label>Amenización</label><input type="number" step="0.01" min="0" name="c_amenizacion" class="form-control cost-input"></article>
+                        <article class="input-wrapper"><label>Derecho de Pista</label><input type="number" step="0.01" min="0" name="c_derecho_pista" class="form-control cost-input" value="{{ old('c_derecho_pista', $draft['c_derecho_pista'] ?? '') }}"></article>
+                        <article class="input-wrapper"><label>Hora Extra</label><input type="number" step="0.01" min="0" name="c_hora_extra" class="form-control cost-input" value="{{ old('c_hora_extra', $draft['c_hora_extra'] ?? '') }}"></article>
+                        <article class="input-wrapper"><label>Cámara 360°</label><input type="number" step="0.01" min="0" name="c_camara_360" class="form-control cost-input" value="{{ old('c_camara_360', $draft['c_camara_360'] ?? '') }}"></article>
+                        <article class="input-wrapper"><label>Amenización</label><input type="number" step="0.01" min="0" name="c_amenizacion" class="form-control cost-input" value="{{ old('c_amenizacion', $draft['c_amenizacion'] ?? '') }}"></article>
 
-                        <article class="input-wrapper"><label>Personas Adic.</label><input type="number" step="0.01" min="0" name="c_personas_adicionales" class="form-control cost-input"></article>
-                        <article class="input-wrapper"><label>Café</label><input type="number" step="0.01" min="0" name="c_cafe" class="form-control cost-input"></article>
-                        <article class="input-wrapper"><label>Mickey Móvil</label><input type="number" step="0.01" min="0" name="c_mickey_movil" class="form-control cost-input"></article>
-                        <article class="input-wrapper"><label>Otros</label><input type="number" step="0.01" min="0" name="c_otros" class="form-control cost-input"></article>
+                        <article class="input-wrapper"><label>Personas Adic.</label><input type="number" step="0.01" min="0" name="c_personas_adicionales" class="form-control cost-input" value="{{ old('c_personas_adicionales', $draft['c_personas_adicionales'] ?? '') }}"></article>
+                        <article class="input-wrapper"><label>Café</label><input type="number" step="0.01" min="0" name="c_cafe" class="form-control cost-input" value="{{ old('c_cafe', $draft['c_cafe'] ?? '') }}"></article>
+                        <article class="input-wrapper"><label>Mickey Móvil</label><input type="number" step="0.01" min="0" name="c_mickey_movil" class="form-control cost-input" value="{{ old('c_mickey_movil', $draft['c_mickey_movil'] ?? '') }}"></article>
+                        <article class="input-wrapper"><label>Otros</label><input type="number" step="0.01" min="0" name="c_otros" class="form-control cost-input" value="{{ old('c_otros', $draft['c_otros'] ?? '') }}"></article>
                     </section>
                     <section class="input-grid grid-2" style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
                         <article class="input-wrapper">
@@ -349,19 +349,61 @@
                 </fieldset>
 
                 <!-- SECCIÓN 5: PAGOS, NOTAS Y CIERRE -->
-                <fieldset class="form-section">
+                <fieldset class="form-section" id="pagos-section">
                     <legend>Pagos, Notas y Cierre</legend>
-                    <section class="input-grid grid-3">
-                        <article class="input-wrapper">
-                            <label for="anticipo">Anticipo de Reserva ($)</label>
-                            <input type="number" step="0.01" min="0" id="anticipo" name="anticipo" class="form-control cost-input" required>
-                        </article>
-                        <article class="input-wrapper">
-                            <label for="recibo_transferencia">No. de Recibo o Transferencia</label>
-                            <input type="text" id="recibo_transferencia" name="recibo_transferencia" class="form-control">
-                        </article>
-                        </article>
-                    </section>
+                    <p class="section-desc">Agrega los pagos realizados para este contrato. El sistema lo marcará como liquidado automáticamente si el total pagado cubre el monto total.</p>
+                    
+                    <div id="pagos-container">
+                        @php
+                            $pagos = old('pagos', $draft['pagos'] ?? []);
+                            if (empty($pagos)) {
+                                // Siempre mostramos al menos un campo vacío por defecto
+                                $pagos[] = ['monto' => '', 'recibo' => '', 'fecha' => date('Y-m-d')];
+                            }
+                        @endphp
+                        
+                        @foreach($pagos as $index => $pago)
+                        <section class="input-grid grid-4 pago-row" style="margin-bottom: 1rem; align-items: end;">
+                            <article class="input-wrapper">
+                                <label>Monto Abonado ($)</label>
+                                <input type="number" step="0.01" min="0" name="pagos[{{ $index }}][monto]" class="form-control pago-monto" value="{{ $pago['monto'] ?? '' }}" required>
+                            </article>
+                            <article class="input-wrapper">
+                                <label>No. de Recibo / Transferencia</label>
+                                <input type="text" name="pagos[{{ $index }}][recibo]" class="form-control pago-recibo" value="{{ $pago['recibo'] ?? '' }}">
+                            </article>
+                            <article class="input-wrapper">
+                                <label>Fecha de Pago</label>
+                                <input type="date" name="pagos[{{ $index }}][fecha]" class="form-control pago-fecha" value="{{ $pago['fecha'] ?? date('Y-m-d') }}" required>
+                            </article>
+                            <article class="input-wrapper" style="text-align: center;">
+                                @if($index > 0)
+                                <button type="button" class="btn-remove-pago" style="background: rgba(220, 38, 38, 0.1); color: #f87171; border: 1px solid rgba(220, 38, 38, 0.2); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer;">Eliminar</button>
+                                @endif
+                            </article>
+                        </section>
+                        @endforeach
+                    </div>
+                    
+                    <button type="button" id="btn-add-pago" style="background: var(--accent-yellow); color: var(--primary-purple); font-weight: 800; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 213, 79, 0.4); margin-top: 1rem;">
+                        + Agregar Pago
+                    </button>
+                    
+                    <div style="margin-top: 2rem; display: flex; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <div style="text-align: center; flex: 1;">
+                            <p style="margin:0; font-size: 0.8rem; color: #a0a0a0; text-transform: uppercase;">Total Pagado</p>
+                            <p id="display-total-pagado" style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #10b981;">$0.00</p>
+                        </div>
+                        <div style="text-align: center; flex: 1;">
+                            <p style="margin:0; font-size: 0.8rem; color: #a0a0a0; text-transform: uppercase;">Saldo Pendiente</p>
+                            <p id="display-saldo-pendiente" style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #f87171;">$0.00</p>
+                        </div>
+                        <div style="text-align: center; flex: 1; display: flex; align-items: center; justify-content: center;">
+                            <span id="badge-liquidado" style="display: none; background: #10b981; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; font-size: 0.9rem;">
+                                ¡LIQUIDADO!
+                            </span>
+                        </div>
+                    </div>
                 </fieldset>
 
                 <!-- SECCIÓN 6: CLÁUSULAS (Imprimible) -->
@@ -626,6 +668,9 @@
                 });
             });
 
+            // Initialize total on load
+            calcularTotal();
+
             const checkboxesAgua = document.querySelectorAll('.sabor-checkbox');
             checkboxesAgua.forEach(function(box) {
                 box.addEventListener('change', function() {
@@ -636,6 +681,103 @@
                     }
                 });
             });
+
+            /* ==== LÓGICA DE PAGOS DINÁMICOS ==== */
+            const pagosContainer = document.getElementById('pagos-container');
+            const btnAddPago = document.getElementById('btn-add-pago');
+            const totalPagadoDisplay = document.getElementById('display-total-pagado');
+            const saldoPendienteDisplay = document.getElementById('display-saldo-pendiente');
+            const badgeLiquidado = document.getElementById('badge-liquidado');
+            
+            let pagoIndex = document.querySelectorAll('.pago-row').length;
+
+            function calcularTotalesPagos() {
+                // 1. Obtener el monto total actual de los costos
+                let montoTotal = 0;
+                costInputs.forEach(function(input) {
+                    if (input.value !== '') {
+                        let valor = parseFloat(input.value);
+                        if (!isNaN(valor)) montoTotal += valor;
+                    }
+                });
+
+                // 2. Obtener la suma de los pagos
+                let totalPagado = 0;
+                document.querySelectorAll('.pago-monto').forEach(input => {
+                    if (input.value !== '') {
+                        let valor = parseFloat(input.value);
+                        if (!isNaN(valor)) totalPagado += valor;
+                    }
+                });
+
+                // 3. Calcular saldo pendiente
+                let saldoPendiente = Math.max(0, montoTotal - totalPagado);
+
+                // 4. Actualizar interfaz
+                totalPagadoDisplay.textContent = '$' + totalPagado.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                saldoPendienteDisplay.textContent = '$' + saldoPendiente.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                // Mostrar badge de liquidado
+                if (montoTotal > 0 && totalPagado >= montoTotal) {
+                    badgeLiquidado.style.display = 'inline-block';
+                } else {
+                    badgeLiquidado.style.display = 'none';
+                }
+            }
+
+            // Escuchar cambios en los inputs de costos para recalcular saldos
+            costInputs.forEach(function(input) {
+                input.addEventListener('input', calcularTotalesPagos);
+            });
+
+            // Escuchar cambios en los montos de pagos existentes
+            pagosContainer.addEventListener('input', function(e) {
+                if (e.target.classList.contains('pago-monto')) {
+                    calcularTotalesPagos();
+                }
+            });
+
+            // Eliminar fila de pago
+            pagosContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn-remove-pago')) {
+                    e.target.closest('.pago-row').remove();
+                    calcularTotalesPagos();
+                }
+            });
+
+            // Agregar nueva fila de pago
+            btnAddPago.addEventListener('click', function() {
+                const row = document.createElement('section');
+                row.className = 'input-grid grid-4 pago-row';
+                row.style.marginBottom = '1rem';
+                row.style.alignItems = 'end';
+                
+                const today = new Date().toISOString().split('T')[0];
+
+                row.innerHTML = `
+                    <article class="input-wrapper">
+                        <label>Monto Abonado ($)</label>
+                        <input type="number" step="0.01" min="0" name="pagos[${pagoIndex}][monto]" class="form-control pago-monto" required>
+                    </article>
+                    <article class="input-wrapper">
+                        <label>No. de Recibo / Transferencia</label>
+                        <input type="text" name="pagos[${pagoIndex}][recibo]" class="form-control pago-recibo">
+                    </article>
+                    <article class="input-wrapper">
+                        <label>Fecha de Pago</label>
+                        <input type="date" name="pagos[${pagoIndex}][fecha]" class="form-control pago-fecha" value="${today}" required>
+                    </article>
+                    <article class="input-wrapper" style="text-align: center;">
+                        <button type="button" class="btn-remove-pago" style="background: rgba(220, 38, 38, 0.1); color: #f87171; border: 1px solid rgba(220, 38, 38, 0.2); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer;">Eliminar</button>
+                    </article>
+                `;
+                
+                pagosContainer.appendChild(row);
+                pagoIndex++;
+            });
+
+            // Inicializar totales de pagos al cargar
+            calcularTotalesPagos();
 
             /* ==== LOGICA DINÁMICA DE SERVICIOS GASTRONÓMICOS ==== */
             const platillos = @json($platillos);

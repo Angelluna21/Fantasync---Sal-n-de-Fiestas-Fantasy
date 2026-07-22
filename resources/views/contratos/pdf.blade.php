@@ -214,7 +214,34 @@
     @endif
 
     <h2 class="section-title">Resumen Financiero</h2>
-    <section class="totals-box">
+
+    @if(!empty($contrato->servicios_extras['historial_pagos']))
+        <div style="float: left; width: 60%; padding-right: 20px;">
+            <p style="margin: 0 0 5px; font-weight: bold; font-size: 11px; color: #7a288a;">Historial de Pagos</p>
+            <table class="table" style="margin-top: 0;">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Recibo / Ref</th>
+                        <th>Monto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($contrato->servicios_extras['historial_pagos'] as $pago)
+                        @if(!empty($pago['monto']))
+                            <tr>
+                                <td>{{ $pago['fecha'] ?? 'N/A' }}</td>
+                                <td>{{ $pago['recibo'] ?? 'N/A' }}</td>
+                                <td>${{ number_format((float)$pago['monto'], 2) }}</td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
+
+    <section class="totals-box" style="float: right; width: 35%;">
         <p class="totals-row">
             <span>Subtotal:</span>
             <span>${{ number_format($contrato->monto_total, 2) }}</span>
@@ -240,12 +267,12 @@
     <table class="signatures">
         <tr>
             <td>
-                <div class="sign-line">{{ $contrato->evento->cliente->nombre_completo ?? 'El Cliente' }}</div>
-                <div class="sign-title">Firma del Cliente (Conformidad)</div>
+                <p class="sign-line">{{ $contrato->evento->cliente->nombre_completo ?? 'El Cliente' }}</p>
+                <p class="sign-title">Firma del Cliente (Conformidad)</p>
             </td>
             <td>
-                <div class="sign-line">FantaSync Eventos</div>
-                <div class="sign-title">Representante Autorizado</div>
+                <p class="sign-line">FantaSync Eventos</p>
+                <p class="sign-title">Representante Autorizado</p>
             </td>
         </tr>
     </table>

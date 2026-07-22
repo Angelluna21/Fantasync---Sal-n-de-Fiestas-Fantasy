@@ -28,16 +28,40 @@ class ContratoBuilderService
             $extras[$key] = ! empty($data['extras'][$key]);
         }
 
-        // Calcular el total
-        $subtotalPlatillos = Platillo::query()->whereIn('id', $platilloIds)->sum('precio');
-        $extrasDefinition = config('fantasync.extras');
-        $subtotalExtras = 0;
-        foreach ($extras as $key => $isSelected) {
-            if ($isSelected) {
-                $subtotalExtras += $extrasDefinition[$key]['precio'] ?? 0;
+        $costosKeys = [
+            'c_renta_salon', 'c_otras_bebidas', 'c_pinata', 'c_mesa_dulces',
+            'c_show', 'c_usb_video', 'c_album_digital', 'c_album_paquete',
+            'c_derecho_pista', 'c_hora_extra', 'c_camara_360', 'c_amenizacion',
+            'c_personas_adicionales', 'c_cafe', 'c_mickey_movil', 'c_otros'
+        ];
+        
+        $desgloseCostos = [];
+        $totalCostos = 0;
+        foreach ($costosKeys as $key) {
+            $val = floatval($data[$key] ?? 0);
+            if ($val > 0) {
+                $desgloseCostos[$key] = $val;
+                $totalCostos += $val;
             }
         }
-        $total = $subtotalPlatillos + $subtotalExtras;
+        
+        $extras['desglose_costos'] = $desgloseCostos;
+        
+        // El total es exactamente lo que el usuario ingresó en el desglose
+        $total = $totalCostos;
+
+        $pagos = $data['pagos'] ?? [];
+        $totalPagado = 0;
+        foreach ($pagos as $pago) {
+            $totalPagado += floatval($pago['monto'] ?? 0);
+        }
+        
+        $extras['historial_pagos'] = $pagos;
+
+        $estadoEvento = $data['estado'];
+        if ($total > 0 && $totalPagado >= $total) {
+            $estadoEvento = 'finalizado';
+        }
 
         $contractData = [
             'cliente' => trim($data['cliente']),
@@ -48,7 +72,7 @@ class ContratoBuilderService
             'inicio_hora' => trim($data['inicio_hora'] ?? ''),
             'tipo_evento' => trim($data['tipo_evento']),
             'festejado' => trim($data['festejado']),
-            'estado' => $data['estado'],
+            'estado' => $estadoEvento,
             'salon_id' => (int) $data['salon_id'],
             'horas_evento' => (int) $data['horas_evento'],
             'num_adultos' => (int) $data['num_adultos'],
@@ -59,9 +83,11 @@ class ContratoBuilderService
             'platillos' => $platilloIds,
             'extras' => $extras,
             'total' => $total,
+            'pagos' => $pagos,
+            'totalPagado' => $totalPagado,
         ];
 
-        return DB::transaction(function () use ($data, $platilloIds, $extras, $total, $contractData) {
+        return DB::transaction(function () use ($data, $platilloIds, $extras, $total, $contractData, $desgloseCostos) {
             // Bloqueo pesimista para evitar Condiciones de Carrera (duplicidad de reservas en el mismo instante)
             DB::table('salones')->where('id', $data['salon_id'])->lockForUpdate()->first();
 
@@ -127,7 +153,7 @@ class ContratoBuilderService
                     'horas_duracion' => (int) $data['horas_evento'],
                     'tipo_evento' => trim($data['tipo_evento']),
                     'nombre_festejado' => trim($data['festejado']),
-                    'estado' => $data['estado'],
+                    'estado' => $contractData['estado'],
                     'color_manteleria' => trim($data['manteleria_color'] ?? ''),
                     'titulo' => trim($data['tipo_evento']) . ' de ' . trim($data['festejado']),
                     'notas' => 'Servicio Gastronómico: ' . ($data['servicio_gastronomico'] ?? 'N/A') . '. Platillos: ' . implode(', ', $platilloIds) . '. Extras: ' . json_encode($extras) . $notasAdicionales
@@ -160,13 +186,14 @@ class ContratoBuilderService
             }
 
             // 5. Crear o actualizar Contrato
+            
             $contract = Contrato::updateOrCreate(
                 ['id' => session('contract_draft.contract_id')],
                 [
                     'evento_id' => $evento->id,
                     'monto_total' => $total,
-                    'anticipo' => 2500, // Anticipo mínimo base estipulado
-                    'saldo_pendiente' => max(0, $total - 2500),
+                    'anticipo' => $contractData['totalPagado'],
+                    'saldo_pendiente' => max(0, $total - $contractData['totalPagado']),
                     'bebidas' => [],
                     'servicios_extras' => $extras,
                     'consentimiento_imagen' => true,
@@ -175,6 +202,13 @@ class ContratoBuilderService
             );
 
             // 6. Actualizar sesión (se mantiene aquí por ser parte del flujo de estado global)
+            // Agregar pagos al draft
+            
+            // También agregar desgloseCostos al draft para que se mantengan al fallar la validación
+            foreach ($desgloseCostos as $k => $v) {
+                $contractData[$k] = $v;
+            }
+
             $draft = array_merge($contractData, ['contract_id' => $contract->id]);
             session(['contract_draft' => $draft]);
 
