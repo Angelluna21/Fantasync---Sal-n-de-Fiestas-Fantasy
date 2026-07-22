@@ -57,6 +57,10 @@ class ContratoBuilderService
         }
         
         $extras['historial_pagos'] = $pagos;
+        
+        if (isset($data['servicio_gastronomico'])) {
+            $extras['servicio_gastronomico_id'] = (int) $data['servicio_gastronomico'];
+        }
 
         $estadoEvento = $data['estado'];
         if ($total > 0 && $totalPagado >= $total) {

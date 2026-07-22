@@ -17,6 +17,15 @@
             </a>
             <section class="nav-actions" aria-label="Acciones de navegación">
                 <x-user-menu />
+                @php $contrato = \App\Models\Contrato::where('evento_id', $evento->id)->first(); @endphp
+                @if($contrato)
+                <a href="{{ route('contratos.edit', $contrato->id) }}" class="btn-back" style="background: rgba(255,255,255,0.2); margin-right: 10px;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                    </svg>
+                    Editar Contrato
+                </a>
+                @endif
                 <a href="{{ route('dashboard') }}" class="btn-back">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>

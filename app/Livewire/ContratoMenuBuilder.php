@@ -19,6 +19,11 @@ class ContratoMenuBuilder extends Component
     public function mount($eventoId)
     {
         $this->eventoId = $eventoId;
+        
+        $evento = Evento::find($eventoId);
+        if ($evento && preg_match('/Servicio Gastronómico:\s*(\d+)/', $evento->notas, $matches)) {
+            $this->servicio_id = $matches[1];
+        }
     }
 
     public function guardarMenu()
@@ -27,10 +32,10 @@ class ContratoMenuBuilder extends Component
             'servicio_id' => 'required|exists:servicios_gastronomicos,id',
         ];
 
-        if ($this->servicio_id == 1) { // 1 = 2 Tiempos
+        if ($this->servicio_id == 2) { // 2 = 2 Tiempos
             $reglas['entrada_id'] = 'required|exists:platillos,id';
             $reglas['plato_fuerte_id'] = 'required|exists:platillos,id';
-        } elseif ($this->servicio_id == 2) { // 2 = 3 Tiempos
+        } elseif ($this->servicio_id == 3) { // 3 = 3 Tiempos
             $reglas['entrada_id'] = 'required|exists:platillos,id';
             $reglas['plato_fuerte_id'] = 'required|exists:platillos,id';
             $reglas['postre_id'] = 'required|exists:platillos,id';
@@ -41,10 +46,16 @@ class ContratoMenuBuilder extends Component
         // Intentamos buscar el evento en la base de datos
         $evento = Evento::with('salones')->find($this->eventoId);
 
+        // Si es Taquiza (ID 1) o Menú Infantil, los platillos ya se guardaron en el paso 1
+        if ($this->servicio_id == 1 || $this->servicio_id == 4) {
+            return redirect()->route('reportes.insumos', $this->eventoId)
+                ->with('exito', 'Servicio guardado correctamente.');
+        }
+
         $platillosSeleccionados = [];
-        if ($this->servicio_id == 1) {
+        if ($this->servicio_id == 2) {
             $platillosSeleccionados = array_filter([$this->entrada_id, $this->plato_fuerte_id]);
-        } elseif ($this->servicio_id == 2) {
+        } elseif ($this->servicio_id == 3) {
             $platillosSeleccionados = array_filter([$this->entrada_id, $this->plato_fuerte_id, $this->postre_id]);
         }
 
@@ -80,7 +91,7 @@ class ContratoMenuBuilder extends Component
     public function render()
     {
         return view('livewire.contrato-menu-builder', [
-            'servicios' => ServicioGastronomico::whereIn('id', [1, 2])->get(), // Solo 2 tiempos y 3 tiempos
+            'servicios' => ServicioGastronomico::whereIn('id', [1, 2, 3])->get(),
             'categorias' => CategoriaPlatillo::whereIn('id', [31, 32, 33])->with(['platillos' => function ($query) {
                 $query->orderBy('nombre');
             }])->orderBy('orden')->get()

@@ -20,7 +20,7 @@
 
 
 
-        @if($servicio_id == 1 || $servicio_id == 2)
+        @if($servicio_id == 2 || $servicio_id == 3)
         <fieldset class="form-section animated-section" wire:key="servicio-tiempos-section">
             <legend>Menú Estructurado por Tiempos</legend>
             
@@ -51,7 +51,7 @@
                     @enderror
                 </article>
                 
-                @if($servicio_id == 2)
+                @if($servicio_id == 3)
                 <article class="input-wrapper">
                     <label class="tiempo-label">3er Tiempo (Postre)</label>
                     <select wire:model="postre_id" class="form-control select-margin">
