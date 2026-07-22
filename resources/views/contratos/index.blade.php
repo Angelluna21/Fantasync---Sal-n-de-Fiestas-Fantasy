@@ -154,12 +154,12 @@
                                 </td>
                                 <td class="table-center">
                                     <menu class="actions-group" style="display: flex; flex-direction: row; gap: 0.5rem; justify-content: center; align-items: center; margin: 0; padding: 0; list-style: none;">
-                                        <a href="{{ route('contratos.show', $contrato->id) }}" target="_blank" class="btn-event-link" title="Ver PDF" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; background: rgba(122, 40, 138, 0.05); color: var(--primary-purple); border: 1px solid rgba(122, 40, 138, 0.15); gap: 0.25rem; transition: all 0.2s;">
+                                        <a href="{{ route('contratos.show', $contrato->id) }}" target="_blank" class="btn-event-link" title="Ver PDF" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; background: var(--primary-purple); color: white; border: none; box-shadow: 0 4px 10px rgba(122, 40, 138, 0.3); gap: 0.25rem; transition: all 0.2s;">
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                                             Ver PDF
                                         </a>
 
-                                        <a href="{{ route('contratos.edit', $contrato->id) }}" class="btn-event-link" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; background: var(--accent-yellow); color: var(--primary-purple); border: 1px solid var(--accent-yellow); box-shadow: 0 4px 10px rgba(255, 213, 79, 0.4); gap: 0.25rem; transition: all 0.2s;" title="Editar Contrato">
+                                        <a href="{{ route('contratos.edit', $contrato->id) }}" class="btn-event-link" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; background: var(--accent-yellow); color: var(--primary-purple); border: none; box-shadow: 0 4px 10px rgba(255, 213, 79, 0.4); gap: 0.25rem; transition: all 0.2s;" title="Editar Contrato">
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                             Editar
                                         </a>
@@ -167,7 +167,7 @@
                                         <form action="{{ route('contratos.destroy', $contrato->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas anular este contrato? Se cancelará el evento.');" style="display: inline-flex; margin: 0;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn-event-link" title="Anular Contrato" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.4rem; border-radius: 6px; border: 1px solid rgba(220, 38, 38, 0.2); background: rgba(220, 38, 38, 0.1); color: #f87171; cursor: pointer; transition: all 0.2s;">
+                                            <button type="submit" class="btn-event-link" title="Anular Contrato" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.4rem; border-radius: 6px; border: none; background: #ef4444; color: white; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); cursor: pointer; transition: all 0.2s;">
                                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                             </button>
                                         </form>
