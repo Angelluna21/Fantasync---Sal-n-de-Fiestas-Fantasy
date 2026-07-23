@@ -165,8 +165,8 @@
                     </section>
                     
                     <section class="input-grid grid-6" style="margin-top: 0.5rem; margin-bottom: 1.5rem;">
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="hora_por_definir" id="hora_por_definir" value="1" {{ old('hora_por_definir', $draft['hora_por_definir'] ?? '') ? 'checked' : '' }}> Hora por definir</label></article>
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="tiene_misa" id="tiene_misa" value="1" {{ old('tiene_misa', $draft['tiene_misa'] ?? '') ? 'checked' : '' }}> Misa</label></article>
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="hora_por_definir" id="hora_por_definir" value="1" {{ old('hora_por_definir', $draft['extras']['hora_por_definir'] ?? '') ? 'checked' : '' }}> Hora por definir</label></article>
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="tiene_misa" id="tiene_misa" value="1" {{ old('tiene_misa', $draft['extras']['tiene_misa'] ?? '') ? 'checked' : '' }}> Misa</label></article>
                     </section>
                     
                     <script>
@@ -217,10 +217,10 @@
                     </script>
                     
                     <section class="input-grid grid-4" style="margin-top: 1.5rem;">
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_pinata" value="1"> Piñata</label></article>
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_show" value="1"> Show</label></article>
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="arco_globos" value="1"> Arco globos</label></article>
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="derecho_pista_check" value="1"> Der. pista</label></article>
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_pinata" value="1" {{ old('tiene_pinata', $draft['extras']['tiene_pinata'] ?? '') ? 'checked' : '' }}> Piñata</label></article>
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_show" value="1" {{ old('tiene_show', $draft['extras']['tiene_show'] ?? '') ? 'checked' : '' }}> Show</label></article>
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="arco_globos" value="1" {{ old('arco_globos', $draft['extras']['arco_globos'] ?? '') ? 'checked' : '' }}> Arco globos</label></article>
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="derecho_pista_check" value="1" {{ old('derecho_pista_check', $draft['extras']['derecho_pista_check'] ?? '') ? 'checked' : '' }}> Der. pista</label></article>
                     </section>
                 </fieldset>
 
@@ -519,12 +519,21 @@
                 <!-- BOTONES DE ACCIÓN -->
                 <footer class="form-actions" style="gap: 1rem; display: flex; flex-wrap: wrap;">
                     <!-- Botón de Imprimir -->
-                    <button type="button" class="btn-print" onclick="window.print()">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
-                        </svg>
-                        Imprimir
-                    </button>
+                    @if(isset($draft['contract_id']))
+                        <a href="{{ route('contratos.show', $draft['contract_id']) }}" target="_blank" class="btn-print" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                            </svg>
+                            Imprimir PDF
+                        </a>
+                    @else
+                        <button type="button" class="btn-print" onclick="alert('Por favor guarda el contrato primero para poder generar e imprimir el PDF.')">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                            </svg>
+                            Imprimir PDF
+                        </button>
+                    @endif
 
                     <!-- Botón de Guardar y Salir -->
                     <button type="submit" name="action" value="save_only" class="btn-submit" style="background: var(--accent-yellow); color: var(--primary-purple);">

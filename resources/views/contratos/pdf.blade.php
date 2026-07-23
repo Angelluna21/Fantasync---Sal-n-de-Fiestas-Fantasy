@@ -4,275 +4,435 @@
     <meta charset="UTF-8">
     <title>Contrato de Evento #{{ str_pad($contrato->id, 5, '0', STR_PAD_LEFT) }}</title>
     <style>
+        @page {
+            margin: 30px;
+        }
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            color: #333;
-            line-height: 1.3;
+            color: #222;
+            line-height: 1.2;
             margin: 0;
-            padding: 10px 20px;
-            font-size: 12px;
+            padding: 0;
+            font-size: 10px;
         }
-        .header {
-            text-align: center;
+        
+        /* Typography */
+        h1, h2, h3, p { margin: 0; padding: 0; }
+        
+        /* Brand Colors */
+        .primary { color: #7a288a; }
+        .bg-primary { background-color: #7a288a; color: white; }
+        .bg-light { background-color: #f4f0f5; }
+        
+        /* Header */
+        .header-table {
+            width: 100%;
             border-bottom: 2px solid #7a288a;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
             margin-bottom: 15px;
         }
-        .header h1 {
-            color: #7a288a;
-            margin: 0;
-            font-size: 18px;
+        .header-table td {
+            vertical-align: bottom;
+        }
+        .title {
+            font-size: 16px;
+            font-weight: bold;
             text-transform: uppercase;
-        }
-        .header p {
-            margin: 4px 0 0;
-            color: #666;
-            font-size: 11px;
-        }
-        .section-title {
-            background-color: #f8f9fa;
             color: #7a288a;
-            padding: 6px 10px;
+        }
+        .subtitle {
+            font-size: 9px;
+            color: #555;
+            letter-spacing: 0.5px;
+        }
+        .folio-box {
+            text-align: right;
+        }
+        .folio-box div {
             font-size: 14px;
             font-weight: bold;
-            border-left: 4px solid #7a288a;
-            margin: 15px 0 8px;
+            color: #333;
         }
-        .info-grid {
+        .folio-box span {
+            font-size: 9px;
+            color: #666;
+        }
+
+        /* Sections */
+        .section-header {
+            background-color: #7a288a;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            margin: 10px 0 5px;
+            border-radius: 3px;
+        }
+        
+        /* Two Column Layout (Client / Event) */
+        .split-table {
             width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 15px;
+            border-collapse: separate;
+            border-spacing: 10px 0;
+            margin-left: -10px;
+            margin-bottom: 10px;
         }
-        .info-grid td {
-            padding: 5px;
-            vertical-align: top;
+        .split-table td.col {
             width: 50%;
+            vertical-align: top;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px;
+            background-color: #fafafa;
+        }
+        
+        .info-row {
+            margin-bottom: 4px;
         }
         .label {
             font-weight: bold;
             color: #555;
-            display: block;
-            font-size: 11px;
-            text-transform: uppercase;
+            display: inline-block;
+            width: 90px;
         }
         .value {
-            font-size: 13px;
             color: #111;
         }
-        .table {
+
+        /* Compact Grids (Extras, Menu, Finance) */
+        .grid-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 10px 0;
-            font-size: 11px;
-        }
-        .table th, .table td {
+            margin-bottom: 10px;
+            border-radius: 4px;
+            overflow: hidden;
             border: 1px solid #ddd;
-            padding: 6px 8px;
-            text-align: left;
         }
-        .table th {
-            background-color: #7a288a;
-            color: white;
+        .grid-table th {
+            background-color: #f4f0f5;
+            color: #7a288a;
             font-weight: bold;
+            font-size: 9px;
+            text-transform: uppercase;
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            text-align: center;
+        }
+        .grid-table td {
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+            border-right: 1px solid #eee;
+            text-align: center;
+            font-size: 9px;
+        }
+        .grid-table th:last-child, .grid-table td:last-child {
+            border-right: none;
+        }
+        .grid-table tr:last-child td {
+            border-bottom: none;
+        }
+        .text-left { text-align: left !important; }
+        .text-right { text-align: right !important; }
+
+        /* Finance Layout */
+        .finance-wrapper {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .payments-side {
+            width: 58%;
+            float: left;
+        }
+        .totals-side {
+            width: 40%;
+            float: right;
         }
         .totals-box {
-            float: right;
-            width: 250px;
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
+            border: 1px solid #7a288a;
+            border-radius: 4px;
+            background-color: #fdfafc;
+            padding: 8px;
         }
-        .totals-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
+        .total-row {
+            width: 100%;
+            margin-bottom: 4px;
         }
-        .totals-row.grand-total {
-            font-size: 16px;
+        .total-label {
+            display: inline-block;
+            width: 60%;
+            font-weight: bold;
+            color: #555;
+            text-align: right;
+        }
+        .total-val {
+            display: inline-block;
+            width: 38%;
+            text-align: right;
+        }
+        .grand-total {
+            border-top: 1px solid #7a288a;
+            margin-top: 4px;
+            padding-top: 4px;
+            font-size: 12px;
+            color: #7a288a;
+        }
+        .grand-total .total-label, .grand-total .total-val {
             font-weight: bold;
             color: #7a288a;
-            border-top: 2px solid #ddd;
-            padding-top: 5px;
-            margin-top: 5px;
         }
-        .clauses {
-            font-size: 10px;
+        
+        .clear { clear: both; }
+
+        /* Clauses */
+        .clauses-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 15px 0;
+            margin-left: -15px;
+            margin-top: 15px;
+        }
+        .clauses-table td {
+            width: 50%;
+            vertical-align: top;
+            font-size: 7.5px;
             color: #555;
             text-align: justify;
-            margin-top: 25px;
-            clear: both;
         }
-        .clauses h3 {
-            font-size: 12px;
+        .clauses-title {
+            font-weight: bold;
+            font-size: 8px;
             color: #333;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
-        .clauses p {
-            margin: 4px 0;
-        }
+
+        /* Signatures */
         .signatures {
-            margin-top: 35px;
             width: 100%;
-            border-collapse: collapse;
+            margin-top: 25px;
             page-break-inside: avoid;
         }
         .signatures td {
-            text-align: center;
             width: 50%;
-            padding: 15px;
+            text-align: center;
+            vertical-align: bottom;
+            padding: 10px;
         }
         .sign-line {
-            border-top: 1px solid #333;
-            width: 80%;
-            margin: 0 auto;
-            padding-top: 6px;
-            font-weight: bold;
-            font-size: 13px;
+            border-bottom: 1px solid #333;
+            width: 75%;
+            margin: 0 auto 5px;
+            height: 35px;
         }
-        .sign-title {
-            font-size: 11px;
-            color: #666;
+        .sign-name {
+            font-size: 10px;
+            font-weight: bold;
+            color: #222;
+        }
+        .sign-desc {
+            font-size: 8px;
+            color: #777;
+        }
+        
+        .badge {
+            background: #7a288a;
+            color: white;
+            padding: 1px 4px;
+            border-radius: 2px;
+            font-size: 8px;
         }
     </style>
 </head>
 <body>
 
-    <header class="header">
-        <h1>FantaSync Eventos</h1>
-        <p>Contrato de Prestación de Servicios para Salón de Fiestas</p>
-        <p>Folio: <strong>#CNT-{{ str_pad($contrato->id, 5, '0', STR_PAD_LEFT) }}</strong> | Fecha: {{ $contrato->created_at->format('d/m/Y') }}</p>
-    </header>
-
-    <h2 class="section-title">Datos del Cliente</h2>
-    <table class="info-grid">
+    <!-- Header -->
+    <table class="header-table">
         <tr>
-            <td>
-                <span class="label">Nombre Completo</span>
-                <span class="value">{{ $contrato->evento->cliente->nombre_completo ?? 'N/A' }}</span>
+            <td style="width: 60%;">
+                <div class="title">FantaSync Eventos</div>
+                <div class="subtitle">CONTRATO DE ARRENDAMIENTO Y PRESTACIÓN DE SERVICIOS</div>
             </td>
-            <td>
-                <span class="label">Teléfono / Celular</span>
-                <span class="value">{{ $contrato->evento->cliente->celular ?? 'N/A' }}</span>
+            <td class="folio-box" style="width: 40%;">
+                <span>FOLIO DEL CONTRATO</span>
+                <div>#CNT-{{ str_pad($contrato->id, 5, '0', STR_PAD_LEFT) }}</div>
+                <span>FECHA: {{ $contrato->created_at->format('d / m / Y') }}</span>
             </td>
         </tr>
     </table>
 
-    <h2 class="section-title">Detalles del Evento</h2>
-    <table class="info-grid">
+    <!-- Declaracion -->
+    <p style="font-size: 9px; text-align: justify; margin-bottom: 10px; color: #444;">
+        Conste por el presente documento, el Contrato de Prestación de Servicios que celebran 
+        <strong>FantaSync Eventos</strong> y el/la C. <strong>{{ $contrato->evento->cliente->nombre_completo ?? '___________________________' }}</strong> ("EL CLIENTE"), 
+        sujetándose a las declaraciones y cláusulas operativas detalladas a continuación.
+    </p>
+
+    <!-- Client and Event Details (2 Columns) -->
+    <table class="split-table">
         <tr>
-            <td>
-                <span class="label">Tipo de Evento</span>
-                <span class="value">{{ $contrato->evento->titulo }}</span>
+            <!-- Columna Izquierda: Cliente -->
+            <td class="col">
+                <div class="section-header" style="margin-top: 0;">1. Datos del Cliente</div>
+                <div class="info-row"><span class="label">Titular:</span> <span class="value">{{ mb_strtoupper($contrato->evento->cliente->nombre_completo ?? 'N/A') }}</span></div>
+                <div class="info-row"><span class="label">Teléfono:</span> <span class="value">{{ $contrato->evento->cliente->celular ?? 'N/A' }}</span></div>
+                <div class="info-row"><span class="label">Domicilio:</span> <span class="value">{{ $contrato->evento->cliente->domicilio ?? 'N/A' }}</span></div>
+                <div class="info-row"><span class="label">INE/Folio:</span> <span class="value">{{ $contrato->evento->cliente->ine_numero ?? 'N/A' }}</span></div>
             </td>
-            <td>
-                <span class="label">Fecha y Hora</span>
-                <span class="value">{{ $contrato->evento->fecha->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($contrato->evento->hora_inicio)->format('H:i') }} a {{ \Carbon\Carbon::parse($contrato->evento->hora_fin)->format('H:i') }}</span>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span class="label">Salones Asignados</span>
-                <span class="value">
-                    @foreach($contrato->evento->salones as $salon)
-                        {{ $salon->nombre }} ({{ $salon->sucursal->nombre ?? 'N/A' }})<br>
-                    @endforeach
-                </span>
-            </td>
-            <td>
-                <span class="label">Invitados</span>
-                <span class="value">
-                    @php
-                        $totalAdultos = $contrato->evento->salones->sum('pivot.adultos');
-                        $totalNinos = $contrato->evento->salones->sum('pivot.ninos');
-                    @endphp
-                    Adultos: {{ $totalAdultos }} | Niños: {{ $totalNinos }}<br>
-                    Total: {{ $totalAdultos + $totalNinos }} personas
-                </span>
+            
+            <!-- Columna Derecha: Evento -->
+            <td class="col">
+                <div class="section-header" style="margin-top: 0;">2. Detalles del Evento</div>
+                <div class="info-row"><span class="label">Tipo/Festejado:</span> <span class="value">{{ mb_strtoupper($contrato->evento->titulo) }} / {{ $contrato->servicios_extras['festejado'] ?? 'N/A' }}</span></div>
+                <div class="info-row"><span class="label">Fecha y Horario:</span> <span class="value">{{ $contrato->evento->fecha->format('d/m/Y') }} | {{ \Carbon\Carbon::parse($contrato->evento->hora_inicio)->format('H:i') }} a {{ \Carbon\Carbon::parse($contrato->evento->hora_fin)->format('H:i') }} hrs</span></div>
+                <div class="info-row">
+                    <span class="label">Salón(es):</span> 
+                    <span class="value">
+                        @foreach($contrato->evento->salones as $salon)
+                            {{ $salon->nombre }}@if(!$loop->last), @endif
+                        @endforeach
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Capacidad:</span> 
+                    <span class="value">
+                        @php
+                            $totalAdultos = $contrato->evento->salones->sum('pivot.adultos');
+                            $totalNinos = $contrato->evento->salones->sum('pivot.ninos');
+                        @endphp
+                        {{ $totalAdultos }} Adultos, {{ $totalNinos }} Niños <span class="badge">Total: {{ $totalAdultos + $totalNinos }}</span>
+                    </span>
+                </div>
             </td>
         </tr>
     </table>
 
+    <!-- Configuration Matrix -->
+    <div class="section-header">3. Especificaciones Operativas y Complementos</div>
+    <table class="grid-table">
+        <tr>
+            <th>Horas Base</th>
+            <th>H. Adicionales</th>
+            <th>Hrs Recepción</th>
+            <th>Hrs Inicio</th>
+            <th>Invitación</th>
+            <th>Misa</th>
+            <th>Piñata</th>
+            <th>Show</th>
+            <th>Globos</th>
+        </tr>
+        <tr>
+            <td><strong>{{ $contrato->servicios_extras['horas_evento'] ?? 'N/A' }} hrs</strong></td>
+            <td><strong>{{ $contrato->servicios_extras['horas_adicionales'] ?? '0' }} hrs</strong></td>
+            <td>{{ $contrato->servicios_extras['recepcion_hora'] ?? '--:--' }}</td>
+            <td>{{ $contrato->servicios_extras['inicio_hora'] ?? '--:--' }}</td>
+            <td>{{ $contrato->servicios_extras['invitacion'] ?? 'No' }}</td>
+            <td>{!! !empty($contrato->servicios_extras['tiene_misa']) ? '<span style="color:#7a288a;font-weight:bold;">Sí</span>' : 'No' !!}</td>
+            <td>{!! !empty($contrato->servicios_extras['tiene_pinata']) ? '<span style="color:#7a288a;font-weight:bold;">Sí</span>' : 'No' !!}</td>
+            <td>{!! !empty($contrato->servicios_extras['tiene_show']) ? '<span style="color:#7a288a;font-weight:bold;">Sí</span>' : 'No' !!}</td>
+            <td>{!! !empty($contrato->servicios_extras['arco_globos']) ? '<span style="color:#7a288a;font-weight:bold;">Sí</span>' : 'No' !!}</td>
+        </tr>
+    </table>
+
+    <!-- Menu -->
     @if($contrato->evento->eventoSalones->isNotEmpty() && $contrato->evento->eventoSalones->first()->platillos->isNotEmpty())
-        <h2 class="section-title">Servicio Gastronómico Seleccionado</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Platillo / Guisado</th>
-                    <th>Porciones Estimadas</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($contrato->evento->eventoSalones->first()->platillos as $platillo)
-                    <tr>
-                        <td>{{ $platillo->nombre }}</td>
-                        <td>{{ $platillo->pivot->porciones_plan }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+    <div class="section-header">4. Servicio Gastronómico Acordado</div>
+    <table class="grid-table">
+        <tr>
+            <th class="text-left" style="width: 80%;">Menú / Elemento Gastronómico</th>
+            <th style="width: 20%;">Porciones</th>
+        </tr>
+        @foreach($contrato->evento->eventoSalones->first()->platillos as $platillo)
+        <tr>
+            <td class="text-left">{{ $platillo->nombre }}</td>
+            <td><strong>{{ $platillo->pivot->porciones_plan }}</strong></td>
+        </tr>
+        @endforeach
+    </table>
     @endif
 
-    <h2 class="section-title">Resumen Financiero</h2>
-
-    @if(!empty($contrato->servicios_extras['historial_pagos']))
-        <section style="float: left; width: 60%; padding-right: 20px;">
-            <p style="margin: 0 0 5px; font-weight: bold; font-size: 11px; color: #7a288a;">Historial de Pagos</p>
-            <table class="table" style="margin-top: 0;">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Recibo / Ref</th>
-                        <th>Monto</th>
-                    </tr>
-                </thead>
-                <tbody>
+    <!-- Finance -->
+    <div class="section-header">5. Resumen Financiero y Pagos</div>
+    <div class="finance-wrapper">
+        <div class="payments-side">
+            <table class="grid-table" style="margin-bottom: 0;">
+                <tr>
+                    <th colspan="3" class="text-left" style="background:#fff; border:none; padding-bottom:5px;">HISTORIAL DE PAGOS / ABONOS</th>
+                </tr>
+                <tr>
+                    <th class="text-left">Fecha</th>
+                    <th class="text-left">Recibo / Referencia</th>
+                    <th class="text-right">Monto</th>
+                </tr>
+                @if(!empty($contrato->servicios_extras['historial_pagos']))
                     @foreach($contrato->servicios_extras['historial_pagos'] as $pago)
                         @if(!empty($pago['monto']))
-                            <tr>
-                                <td>{{ $pago['fecha'] ?? 'N/A' }}</td>
-                                <td>{{ $pago['recibo'] ?? 'N/A' }}</td>
-                                <td>${{ number_format((float)$pago['monto'], 2) }}</td>
-                            </tr>
+                        <tr>
+                            <td class="text-left">{{ $pago['fecha'] ?? 'N/A' }}</td>
+                            <td class="text-left">{{ $pago['recibo'] ?? 'N/A' }}</td>
+                            <td class="text-right">${{ number_format((float)$pago['monto'], 2) }}</td>
+                        </tr>
                         @endif
                     @endforeach
-                </tbody>
+                @else
+                    <tr>
+                        <td colspan="3" class="text-left" style="color: #888; font-style: italic;">No se han registrado abonos.</td>
+                    </tr>
+                @endif
             </table>
-        </section>
-    @endif
+        </div>
 
-    <section class="totals-box" style="float: right; width: 35%;">
-        <p class="totals-row">
-            <span>Subtotal:</span>
-            <span>${{ number_format($contrato->monto_total, 2) }}</span>
-        </p>
-        <p class="totals-row">
-            <span>Anticipo Pagado:</span>
-            <span>${{ number_format($contrato->monto_total - $contrato->saldo_pendiente, 2) }}</span>
-        </p>
-        <p class="totals-row grand-total">
-            <span>Saldo Pendiente:</span>
-            <span>${{ number_format($contrato->saldo_pendiente, 2) }}</span>
-        </p>
-    </section>
-    <br style="clear: both;">
+        <div class="totals-side">
+            <div class="totals-box">
+                <div class="total-row">
+                    <span class="total-label">Costo Total del Evento:</span>
+                    <span class="total-val">${{ number_format($contrato->monto_total, 2) }}</span>
+                </div>
+                <div class="total-row">
+                    <span class="total-label">Abonos Recibidos:</span>
+                    <span class="total-val">-${{ number_format($contrato->monto_total - $contrato->saldo_pendiente, 2) }}</span>
+                </div>
+                <div class="total-row grand-total">
+                    <span class="total-label">SALDO PENDIENTE:</span>
+                    <span class="total-val">${{ number_format($contrato->saldo_pendiente, 2) }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
 
-    <article class="clauses">
-        <h3>Términos y Condiciones Generales</h3>
-        <p><strong>1. PRESTACIÓN DEL SERVICIO:</strong> El prestador se compromete a facilitar el salón y los servicios descritos en este contrato en la fecha y hora acordadas. El cliente se compromete a respetar las instalaciones y el horario establecido.</p>
-        <p><strong>2. PAGOS Y CANCELACIONES:</strong> El saldo pendiente debe ser liquidado en su totalidad a más tardar 15 días antes de la fecha del evento. En caso de cancelación por parte del cliente, el anticipo no será reembolsable por concepto de gastos administrativos y bloqueo de fecha.</p>
-        <p><strong>3. RESPONSABILIDAD:</strong> El cliente asume la responsabilidad por cualquier daño causado a las instalaciones, mobiliario o equipo por él o cualquiera de sus invitados durante el desarrollo del evento.</p>
-    </article>
+    <!-- Clauses (2 columns) -->
+    <table class="clauses-table">
+        <tr>
+            <td>
+                <div class="clauses-title">PRIMERA. PRESTACIÓN DEL SERVICIO Y AFORO</div>
+                El prestador se compromete a facilitar las instalaciones del salón y los servicios descritos en este contrato. EL CLIENTE se compromete a utilizar las instalaciones exclusivamente para el propósito declarado y a respetar la capacidad máxima permitida de invitados. Si se excede, el prestador se reserva el derecho de negar el acceso a personas adicionales por motivos de protección civil.
+                
+                <br><br><div class="clauses-title">SEGUNDA. PAGOS Y CANCELACIONES</div>
+                El saldo pendiente debe ser liquidado íntegramente a más tardar 15 días previos a la realización del evento. De no cumplirse este plazo, el prestador podrá cancelar el evento sin responsabilidad. En caso de cancelación o aplazamiento por parte de EL CLIENTE, los anticipos no serán reembolsables bajo ninguna circunstancia, aplicando como penalización por gastos administrativos y bloqueo de la fecha.
+            </td>
+            <td>
+                <div class="clauses-title">TERCERA. DAÑOS Y RESPONSABILIDAD</div>
+                EL CLIENTE asume la responsabilidad total por cualquier daño, deterioro o pérdida causada a las instalaciones, mobiliario, equipo de audio y decoración durante el desarrollo del evento, ya sea provocado por él mismo o por sus invitados. FantaSync no se hace responsable por pérdida de objetos personales, regalos o valores dentro de las instalaciones, salón o estacionamiento.
+                
+                <br><br><div class="clauses-title">CUARTA. TIEMPO ADICIONAL</div>
+                Las horas adicionales al servicio pactado originalmente estarán sujetas a la disponibilidad del recinto y del personal operativo. Toda hora o fracción adicional deberá solicitarse durante el evento y pagarse en efectivo en ese momento, tabulándose según las tarifas vigentes el día del evento.
+            </td>
+        </tr>
+    </table>
 
+    <!-- Signatures -->
     <table class="signatures">
         <tr>
             <td>
-                <p class="sign-line">{{ $contrato->evento->cliente->nombre_completo ?? 'El Cliente' }}</p>
-                <p class="sign-title">Firma del Cliente (Conformidad)</p>
+                <div class="sign-line"></div>
+                <div class="sign-name">{{ mb_strtoupper($contrato->evento->cliente->nombre_completo ?? 'EL CLIENTE') }}</div>
+                <div class="sign-desc">Firma de Conformidad - EL CLIENTE</div>
             </td>
             <td>
-                <p class="sign-line">FantaSync Eventos</p>
-                <p class="sign-title">Representante Autorizado</p>
+                <div class="sign-line"></div>
+                <div class="sign-name">FANTASYNC EVENTOS</div>
+                <div class="sign-desc">Firma de Representante Autorizado</div>
             </td>
         </tr>
     </table>

@@ -78,7 +78,7 @@ class ContratoBuilderService
             'festejado' => trim($data['festejado']),
             'estado' => $estadoEvento,
             'salon_id' => (int) $data['salon_id'],
-            'horas_evento' => (int) $data['horas_evento'],
+            'horas_evento' => (float) $data['horas_evento'],
             'num_adultos' => (int) $data['num_adultos'],
             'num_ninos' => (int) $data['num_ninos'],
             'cliente_domicilio' => trim($data['cliente_domicilio'] ?? ''),
