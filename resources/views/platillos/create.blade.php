@@ -108,23 +108,23 @@
                                     @endforeach
                                     @endif
                                 </select>
-                                <input type="number" step="0.001" min="0" class="form-input" name="ingredientes[cantidad][]" placeholder="Cant." style="flex: 1;" title="Cantidad Base por Porción">
+                                <input type="number" step="0.001" min="0" class="form-input" name="ingredientes[cantidad][]" placeholder="Cant. (100 px)" style="flex: 1;" title="Cantidad necesaria para 100 porciones/personas">
                                 <button type="button" class="btn-remove-ingrediente" style="background: none; border: none; color: #d32f2f; cursor: pointer; padding: 0 10px; font-size: 1.2rem;">&times;</button>
                             </article>
                         </section>
                     </fieldset>
 
                     <menu class="form-actions" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; border-top: none; margin-top: 2rem; padding: 0; list-style: none;">
-                        <div style="display: flex; gap: 1rem; justify-content: center; width: 100%;">
+                        <section style="display: flex; gap: 1rem; justify-content: center; width: 100%;">
                             <button type="button" onclick="abrirModalInsumo()" class="btn-back-nav" style="background: rgba(122, 40, 138, 0.1); color: var(--primary-purple); border-color: transparent; margin: 0; min-width: 150px; flex: 1; max-width: 250px; text-align: center; padding: 0.8rem; font-size: 1rem;">+ Crear Insumo</button>
                             <button type="button" id="btn-agregar-fila" class="btn-submit" style="background: var(--accent-yellow); color: var(--primary-purple); margin: 0; min-width: 150px; flex: 1; max-width: 250px; text-align: center; padding: 0.8rem; font-size: 1rem;">+ Añadir fila</button>
-                        </div>
-                        <div style="display: flex; justify-content: center; width: 100%;">
+                        </section>
+                        <section style="display: flex; justify-content: center; width: 100%;">
                             <button type="submit" class="btn-submit btn-large generate" style="font-size: 1rem; padding: 0.8rem; margin: 0; min-width: 250px; text-align: center; display: flex; justify-content: center; align-items: center;">Guardar</button>
-                        </div>
-                        <div style="display: flex; justify-content: center; width: 100%; margin-top: 0.5rem;">
+                        </section>
+                        <section style="display: flex; justify-content: center; width: 100%; margin-top: 0.5rem;">
                             <a href="{{ route('platillos.index') }}" class="btn-back" style="margin: 0; font-size: 1rem;">Cancelar</a>
-                        </div>
+                        </section>
                     </menu>
                 </form>
             </article>

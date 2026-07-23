@@ -83,7 +83,7 @@
                         {{ $grupo }}
                     </h3>
 
-                    <div class="platillos-grid group-container">
+                    <section class="platillos-grid group-container">
                         @foreach($items as $categoria)
                             <article class="platillo-card" data-nombre="{{ $categoria->nombre }}">
                                 <header class="card-header">
@@ -124,7 +124,7 @@
                                 </footer>
                             </article>
                         @endforeach
-                    </div>
+                    </section>
                 @endforeach
             @endif
         </section>

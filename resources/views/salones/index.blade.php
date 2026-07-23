@@ -10,31 +10,36 @@
     <figure class="dashboard-background" aria-hidden="true"></figure>
     
     <main class="dashboard-layout">
-        <!-- Navegación superior -->
-        <nav class="top-nav" aria-label="Menú superior">
-            <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
-            </a>
+        <!-- Navegación superior y Encabezado Unificado -->
+        <nav class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+            <!-- Lado Izquierdo: Logo y Botones Nav -->
+            <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+                <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
+                </a>
+                
+                <section style="display: flex; gap: 0.5rem;">
+                    <a href="{{ route('dashboard') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        Panel
+                    </a>
+                </section>
+            </section>
 
-            <x-user-menu />
+            <!-- Centro: Encabezado -->
+            <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none; text-align: center;">
+                <hgroup style="text-align: center;">
+                    <p class="eyebrow" style="margin: 0 auto; color: rgba(255, 255, 255, 0.8);">Gestión de Espacios</p>
+                    <h1 class="dashboard-title" style="margin: 0 auto; font-size: 2.5rem; color: white;">Salones</h1>
+                    <p class="dashboard-description" style="margin: 0.5rem auto 0; max-width: 600px; color: rgba(255, 255, 255, 0.9);">Administra los salones disponibles, su capacidad y los eventos asociados a cada espacio.</p>
+                </hgroup>
+            </header>
+
+            <!-- Lado Derecho: Menú Usuario -->
+            <aside style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+                <x-user-menu />
+            </aside>
         </nav>
-
-        <!-- Volver al Panel -->
-        <nav class="salones-section back-nav-container" aria-label="Navegación de retorno">
-            <a href="{{ route('dashboard') }}" class="btn-back-nav">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Volver al Panel
-            </a>
-        </nav>
-
-        <!-- Encabezado -->
-        <header class="dashboard-header">
-            <hgroup>
-                <p class="eyebrow">Gestión de Espacios</p>
-                <h1 class="dashboard-title">Salones</h1>
-                <p class="dashboard-description">Administra los salones disponibles, su capacidad y los eventos asociados a cada espacio.</p>
-            </hgroup>
-        </header>
 
         <!-- Sección de acciones -->
         <section class="salones-section" aria-label="Gestión de salones">
@@ -84,24 +89,6 @@
                                 </p>
                             </section>
 
-                            <section class="events-section">
-                                <p class="events-label">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                    Disponibilidad (Eventos Ocupados)
-                                </p>
-                                @if($salon->eventos->count() > 0)
-                                    <ul class="events-list">
-                                        @foreach($salon->eventos as $evento)
-                                            <li class="event-badge event-badge-busy">
-                                                <strong>{{ $evento->titulo }}</strong>
-                                                <span>{{ $evento->fecha ? $evento->fecha->format('d/m/Y') : 'Sin fecha' }}</span>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                @else
-                                    <p class="no-events no-events-text">🟢 Salón Libre - Sin eventos</p>
-                                @endif
-                            </section>
                         </section>
 
                         <footer class="card-footer">

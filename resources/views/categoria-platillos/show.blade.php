@@ -37,7 +37,7 @@
         </header>
 
         <section class="platillos-section" aria-label="Detalle de la categoría" style="max-width: 700px; margin: 0 auto;">
-            <div class="platillo-card" style="padding: 2rem;">
+            <section class="platillo-card" style="padding: 2rem;">
                 <menu class="card-actions-menu" style="justify-content: flex-end;">
                     <li>
                         <a href="{{ route('categorias.edit', $categoria->id) }}" class="btn-action btn-edit" title="Editar Categoría">
@@ -77,7 +77,7 @@
                         @endforeach
                     </menu>
                 @endif
-            </div>
+            </section>
         </section>
     </main>
 

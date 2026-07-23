@@ -98,7 +98,26 @@
                 <!-- SECCIÓN 2: LOGÍSTICA Y DETALLES DEL EVENTO -->
                 <fieldset class="form-section">
                     <legend>Detalles del Evento</legend>
-                    <section class="input-grid grid-4" style="margin-top: 1.5rem;">
+                    <section class="input-grid grid-3" style="margin-top: 1.5rem;">
+                        <article class="input-wrapper">
+                            <label for="salon_id">Salón Asignado *</label>
+                            <select id="salon_id" name="salon_id" class="form-control" required>
+                                @foreach($salones as $salon)
+                                    <option value="{{ $salon->id }}" {{ old('salon_id', $draft['salon_id'] ?? '') == $salon->id ? 'selected' : '' }}>
+                                        {{ $salon->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </article>
+                        <article class="input-wrapper">
+                            <label for="estado">Estado del Contrato *</label>
+                            <select id="estado" name="estado" class="form-control" required>
+                                <option value="cotizacion" {{ old('estado', $draft['estado'] ?? '') == 'cotizacion' ? 'selected' : '' }}>Cotización</option>
+                                <option value="confirmado" {{ old('estado', $draft['estado'] ?? '') == 'confirmado' ? 'selected' : '' }}>Confirmado</option>
+                                <option value="finalizado" {{ old('estado', $draft['estado'] ?? '') == 'finalizado' ? 'selected' : '' }}>Liquidado</option>
+                                <option value="cancelado" {{ old('estado', $draft['estado'] ?? '') == 'cancelado' ? 'selected' : '' }}>Cancelado</option>
+                            </select>
+                        </article>
                         <article class="input-wrapper">
                             <label for="tipo_evento">Tipo de Evento *</label>
                             <select id="tipo_evento" name="tipo_evento" class="form-control" required>

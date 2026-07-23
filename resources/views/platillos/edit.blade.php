@@ -150,7 +150,7 @@ selectHtml += `</select>`;
 
 row.innerHTML = `
 ${selectHtml}
-<input type="number" step="0.01" min="0.01" name="ingredientes[cantidad][]" value="${cantidad}" class="form-input ingrediente-input" placeholder="Cantidad para 100 porciones" required>
+    <input type="number" step="0.001" min="0" name="ingredientes[cantidad][]" class="form-input" placeholder="Cant. (100 px)" value="${cantidad}" title="Cantidad necesaria para 100 porciones/personas" required>
 <button type="button" class="btn-remove btn-remove-ingrediente">X</button>
 `;
 

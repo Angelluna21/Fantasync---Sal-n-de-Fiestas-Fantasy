@@ -37,7 +37,7 @@
         </header>
 
         <section class="platillos-section" aria-label="Formulario de categoría" style="max-width: 520px; margin: 0 auto;">
-            <div class="platillo-card" style="padding: 2rem;">
+            <section class="platillo-card" style="padding: 2rem;">
                 <form action="{{ route('categorias.store') }}" method="POST">
                     @csrf
 
@@ -101,12 +101,12 @@
                         <p style="color:#c0392b; font-size: 0.85rem; margin: 6px 0 0;">{{ $message }}</p>
                     @enderror
 
-                    <div style="display:flex; justify-content:flex-end; gap:12px; margin-top: 24px;">
+                    <section style="display:flex; justify-content:flex-end; gap:12px; margin-top: 24px;">
                         <a href="{{ route('categorias.index') }}" class="btn-back-nav">Cancelar</a>
                         <button type="submit" class="btn-create">Guardar Categoría</button>
-                    </div>
+                    </section>
                 </form>
-            </div>
+            </section>
         </section>
     </main>
 

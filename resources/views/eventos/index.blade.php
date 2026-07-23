@@ -9,11 +9,11 @@
 <body>
     <figure class="dashboard-background" aria-hidden="true"></figure>
     
-    <main class="dashboard-layout">
+    <main class="dashboard-layout" style="max-width: 95%; margin: 0 auto; padding: 2rem;">
         <!-- Navegación superior y Encabezado Unificado -->
-        <div class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+        <section class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
             <!-- Lado Izquierdo: Logo y Botón Volver -->
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+            <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
                 <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
                     <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
                 </a>
@@ -21,7 +21,7 @@
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Volver al Panel
                 </a>
-            </div>
+            </section>
 
             <!-- Centro: Encabezado -->
             <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
@@ -33,10 +33,10 @@
             </header>
 
             <!-- Lado Derecho: Menú Usuario -->
-            <div style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+            <section style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
                 <x-user-menu />
-            </div>
-        </div>
+            </section>
+        </section>
 
         <!-- Sección de Indicadores (KPIs) -->
         <section class="metrics-grid" aria-label="Tarjetas de Indicadores Financieros y Operativos" style="margin-top: 7rem;">
@@ -94,6 +94,26 @@
                 Control de Agenda y Finanzas
             </h2>
 
+            <style>
+                .actions-group {
+                    display: flex;
+                    gap: 0.5rem;
+                    justify-content: center;
+                    flex-wrap: nowrap;
+                }
+                .actions-group .btn-event-link {
+                    padding: 0.3rem 0.5rem;
+                    font-size: 0.75rem;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.25rem;
+                    white-space: nowrap;
+                }
+                .actions-group .btn-event-link svg {
+                    width: 14px;
+                    height: 14px;
+                }
+            </style>
             <section class="table-wrapper">
                 <table class="eventos-table">
                     <thead>
