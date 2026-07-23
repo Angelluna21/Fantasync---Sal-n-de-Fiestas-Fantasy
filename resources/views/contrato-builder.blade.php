@@ -144,11 +144,11 @@
                     <section class="input-grid grid-4" style="margin-top: 1.5rem;">
                         <article class="input-wrapper">
                             <label for="horas_evento">Horas de servicio *</label>
-                            <input type="number" id="horas_evento" name="horas_evento" class="form-control" required min="1" value="{{ old('horas_evento', $draft['horas_evento'] ?? 6) }}">
+                            <input type="number" id="horas_evento" name="horas_evento" class="form-control" required min="1" step="0.5" value="{{ old('horas_evento', $draft['horas_evento'] ?? 6) }}">
                         </article>
                         <article class="input-wrapper">
                             <label for="horas_adicionales">Horas Adicionales</label>
-                            <input type="number" id="horas_adicionales" name="horas_adicionales" class="form-control" min="0" value="{{ old('horas_adicionales', $draft['horas_adicionales'] ?? 0) }}">
+                            <input type="number" id="horas_adicionales" name="horas_adicionales" class="form-control" min="0" step="0.5" value="{{ old('horas_adicionales', $draft['horas_adicionales'] ?? 0) }}">
                         </article>
                         <article class="input-wrapper">
                             <label for="recepcion_hora">Hora de Bienvenida</label>
@@ -165,8 +165,8 @@
                     </section>
                     
                     <section class="input-grid grid-6" style="margin-top: 0.5rem; margin-bottom: 1.5rem;">
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="hora_por_definir" id="hora_por_definir" value="1"> Hora por definir</label></article>
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="tiene_misa" value="1"> Misa</label></article>
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="hora_por_definir" id="hora_por_definir" value="1" {{ old('hora_por_definir', $draft['hora_por_definir'] ?? '') ? 'checked' : '' }}> Hora por definir</label></article>
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="tiene_misa" id="tiene_misa" value="1" {{ old('tiene_misa', $draft['tiene_misa'] ?? '') ? 'checked' : '' }}> Misa</label></article>
                     </section>
                     
                     <script>
@@ -174,6 +174,8 @@
                             const cbPorDefinir = document.getElementById('hora_por_definir');
                             const inputRecepcion = document.getElementById('recepcion_hora');
                             const inputInicio = document.getElementById('inicio_hora');
+                            const cbMisa = document.getElementById('tiene_misa');
+                            const inputHorasEvento = document.getElementById('horas_evento');
                             
                             if(cbPorDefinir) {
                                 cbPorDefinir.addEventListener('change', function() {
@@ -186,6 +188,29 @@
                                         inputRecepcion.disabled = false;
                                         inputInicio.disabled = false;
                                     }
+                                });
+                            }
+                            
+                            if (cbMisa && inputHorasEvento) {
+                                cbMisa.addEventListener('change', function() {
+                                    let currentHoras = parseFloat(inputHorasEvento.value) || 0;
+                                    if(this.checked) {
+                                        inputHorasEvento.value = currentHoras + 0.5;
+                                    } else {
+                                        inputHorasEvento.value = Math.max(1, currentHoras - 0.5);
+                                    }
+                                });
+                            }
+
+                            const inputHorasAdicionales = document.getElementById('horas_adicionales');
+                            if (inputHorasAdicionales && inputHorasEvento) {
+                                let lastAdicionales = parseFloat(inputHorasAdicionales.value) || 0;
+                                inputHorasAdicionales.addEventListener('change', function() {
+                                    let newAdicionales = parseFloat(this.value) || 0;
+                                    let diff = newAdicionales - lastAdicionales;
+                                    let currentEvento = parseFloat(inputHorasEvento.value) || 0;
+                                    inputHorasEvento.value = Math.max(1, currentEvento + diff);
+                                    lastAdicionales = newAdicionales;
                                 });
                             }
                         });
