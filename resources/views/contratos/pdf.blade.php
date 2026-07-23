@@ -393,8 +393,8 @@
                     <span class="total-val">-${{ number_format($contrato->monto_total - $contrato->saldo_pendiente, 2) }}</span>
                 </div>
                 <div class="total-row grand-total">
-                    <span class="total-label">SALDO PENDIENTE:</span>
-                    <span class="total-val">${{ number_format($contrato->saldo_pendiente, 2) }}</span>
+                    <span class="total-label">{{ $contrato->saldo_pendiente < 0 ? 'SALDO A FAVOR:' : 'SALDO PENDIENTE:' }}</span>
+                    <span class="total-val">${{ number_format(abs($contrato->saldo_pendiente), 2) }}</span>
                 </div>
             </div>
         </div>

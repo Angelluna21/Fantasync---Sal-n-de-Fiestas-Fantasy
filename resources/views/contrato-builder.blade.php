@@ -787,11 +787,17 @@
                 });
 
                 // 3. Calcular saldo pendiente
-                let saldoPendiente = Math.max(0, montoTotal - totalPagado);
+                let saldoPendiente = montoTotal - totalPagado;
 
                 // 4. Actualizar interfaz
                 totalPagadoDisplay.textContent = '$' + totalPagado.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                saldoPendienteDisplay.textContent = '$' + saldoPendiente.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                if (saldoPendiente < 0) {
+                    saldoPendienteDisplay.textContent = '-$' + Math.abs(saldoPendiente).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' (A favor)';
+                    saldoPendienteDisplay.style.color = '#3b82f6';
+                } else {
+                    saldoPendienteDisplay.textContent = '$' + saldoPendiente.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    saldoPendienteDisplay.style.color = '#ef4444';
+                }
 
                 // Mostrar badge de liquidado
                 if (montoTotal > 0 && totalPagado >= montoTotal) {

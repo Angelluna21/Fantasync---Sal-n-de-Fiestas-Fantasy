@@ -234,7 +234,7 @@ class ContratoBuilderService
                     'evento_id' => $evento->id,
                     'monto_total' => $total,
                     'anticipo' => $contractData['totalPagado'],
-                    'saldo_pendiente' => max(0, $total - $contractData['totalPagado']),
+                    'saldo_pendiente' => $total - $contractData['totalPagado'],
                     'bebidas' => [],
                     'servicios_extras' => $extras,
                     'consentimiento_imagen' => true,
