@@ -77,6 +77,11 @@ class ContratoBuilderController extends Controller
             $invitacion = $matches[1];
         }
 
+        $extras = $contrato->servicios_extras ?? [];
+        if ($hora_por_definir) {
+            $extras['hora_por_definir'] = true;
+        }
+
         $draft = [
             'contract_id' => $contrato->id,
             'cliente' => $evento->cliente->nombre_completo ?? '',
@@ -92,9 +97,9 @@ class ContratoBuilderController extends Controller
             'salon_id' => $salon_id,
             'platillo_ids' => $platillos,
             'servicio_gastronomico' => $servicioGastronomico,
-            'extras' => $contrato->servicios_extras ?? [],
+            'extras' => $extras,
             'horas_evento' => $evento->horas_duracion ?? 6,
-            'horas_adicionales' => $contrato->servicios_extras['horas_adicionales'] ?? 0,
+            'horas_adicionales' => $extras['horas_adicionales'] ?? 0,
             'num_adultos' => $num_adultos,
             'num_ninos' => $num_ninos,
             'cliente_domicilio' => $evento->cliente->domicilio ?? '',

@@ -15,6 +15,12 @@ class ContratoMenuBuilder extends Component
     public $entrada_id = '';
     public $plato_fuerte_id = '';
     public $postre_id = '';
+    
+    // Novedades para taquiza, bebidas e infantil
+    public $taquiza_guisados = [];
+    public $taquiza_guarniciones = [];
+    public $infantil = [];
+    public $bebidas = [];
 
     public function mount($eventoId)
     {
@@ -46,18 +52,17 @@ class ContratoMenuBuilder extends Component
         // Intentamos buscar el evento en la base de datos
         $evento = Evento::with('salones')->find($this->eventoId);
 
-        // Si es Taquiza (ID 1) o Menú Infantil, los platillos ya se guardaron en el paso 1
-        if ($this->servicio_id == 1 || $this->servicio_id == 4) {
-            return redirect()->route('reportes.insumos', $this->eventoId)
-                ->with('exito', 'Servicio guardado correctamente.');
-        }
-
         $platillosSeleccionados = [];
-        if ($this->servicio_id == 2) {
+        if ($this->servicio_id == 1) {
+            $platillosSeleccionados = array_merge($this->taquiza_guisados, $this->taquiza_guarniciones);
+        } elseif ($this->servicio_id == 2) {
             $platillosSeleccionados = array_filter([$this->entrada_id, $this->plato_fuerte_id]);
         } elseif ($this->servicio_id == 3) {
             $platillosSeleccionados = array_filter([$this->entrada_id, $this->plato_fuerte_id, $this->postre_id]);
         }
+
+        // Add infantil and bebidas (up to 2 bebidas logic could be validated in $reglas, or limited in UI)
+        $platillosSeleccionados = array_merge($platillosSeleccionados, $this->infantil, $this->bebidas);
 
         foreach ($evento->salones as $salon) {
             $eventoSalonPivot = $salon->pivot;
@@ -70,30 +75,24 @@ class ContratoMenuBuilder extends Component
 
             $syncData = [];
 
-            // Get categories for selected platillos to determine portions
             $platillosModelos = \App\Models\Platillo::with('categoriaPlatillo')->whereIn('id', $platillosSeleccionados)->get()->keyBy('id');
 
             foreach ($platillosSeleccionados as $index => $platilloId) {
+                if(!isset($platillosModelos[$platilloId])) continue;
+                $platillo = $platillosModelos[$platilloId];
+                
+                $catNombre = strtolower(trim($platillo->categoriaPlatillo->nombre ?? ''));
+                if (in_array($catNombre, ['menú infantil', 'menu infantil', 'buffet infantil'])) {
+                    $porciones = max($ninos, 1);
+                } else {
+                    $porciones = (int) ceil($totalPorciones);
+                }
+
                 $syncData[$platilloId] = [
-                    'porciones_plan' => (int) ceil($totalPorciones),
+                    'porciones_plan' => $porciones,
                     'orden'          => $index + 1,
                     'notas'          => 'Registrado desde el configurador dinámico'
                 ];
-            }
-
-            // Preservar Bebidas y Menú Infantil que fueron configurados en el Paso 1
-            $existingPlatillos = $eventoSalonPivot->platillos()->with('categoriaPlatillo')->get();
-            foreach ($existingPlatillos as $p) {
-                $cat = strtolower(trim($p->categoriaPlatillo->nombre ?? ''));
-                if (in_array($cat, ['menú infantil', 'menu infantil', 'buffet infantil', 'bebidas'])) {
-                    if (!array_key_exists($p->id, $syncData)) {
-                        $syncData[$p->id] = [
-                            'porciones_plan' => $p->pivot->porciones_plan,
-                            'orden' => $p->pivot->orden,
-                            'notas' => $p->pivot->notas
-                        ];
-                    }
-                }
             }
 
             $eventoSalonPivot->platillos()->sync($syncData);

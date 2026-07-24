@@ -139,6 +139,9 @@ class ContratoBuilderService
                 $horaInicio = '00:00';
                 $horaRecepcion = '00:00';
                 $notasAdicionales .= ' (Hora por definir)';
+                $extras['hora_por_definir'] = true;
+            } else {
+                $extras['hora_por_definir'] = false;
             }
             if (!empty($data['tiene_misa'])) {
                 $notasAdicionales .= ' (Misa solicitada)';
@@ -150,7 +153,7 @@ class ContratoBuilderService
             if (!empty($data['tiene_misa'])) $extras['tiene_misa'] = true;
             if (!empty($data['invitacion'])) $extras['invitacion'] = $data['invitacion'];
 
-            $extras['horas_adicionales'] = (int) ($data['horas_adicionales'] ?? 0);
+            $extras['horas_adicionales'] = (float) ($data['horas_adicionales'] ?? 0);
 
             $evento = Evento::updateOrCreate(
                 ['id' => $eventoId],
@@ -159,7 +162,7 @@ class ContratoBuilderService
                     'fecha' => $data['evento_fecha'],
                     'hora_recepcion' => $horaRecepcion,
                     'hora_inicio' => $horaInicio,
-                    'horas_duracion' => (int) $data['horas_evento'],
+                    'horas_duracion' => (float) $data['horas_evento'],
                     'tipo_evento' => trim($data['tipo_evento']),
                     'nombre_festejado' => trim($data['festejado']),
                     'estado' => $contractData['estado'],
@@ -177,54 +180,6 @@ class ContratoBuilderService
                 ]
             ]);
 
-            // 4.5 Asociar Platillos al EventoSalon (Comanda)
-            $eventoSalon = EventoSalon::where('evento_id', $evento->id)
-                ->where('salon_id', (int) $data['salon_id'])
-                ->first();
-
-            if ($eventoSalon && !empty($platilloIds)) {
-                $numAdultos = (int) $data['num_adultos'];
-                $numNinos = (int) $data['num_ninos'];
-                $porcionesTotal = $numAdultos + $numNinos;
-                
-                $platillosModelos = \App\Models\Platillo::with('categoriaPlatillo')->whereIn('id', $platilloIds)->get();
-                
-                $syncPlatillos = [];
-                foreach ($platillosModelos as $platilloModelo) {
-                    $catNombre = strtolower(trim($platilloModelo->categoriaPlatillo->nombre ?? ''));
-                    if (in_array($catNombre, ['menú infantil', 'menu infantil', 'buffet infantil'])) {
-                        $porciones = max($numNinos, 1);
-                    } else {
-                        $porciones = $porcionesTotal;
-                    }
-
-                    $syncPlatillos[$platilloModelo->id] = [
-                        'porciones_plan' => $porciones,
-                        'orden' => 0
-                    ];
-                }
-
-                // Si el servicio es 2 o 3 Tiempos, Paso 1 solo envía Bebidas e Infantil.
-                // Debemos preservar los platillos que el usuario ya configuró en el Paso 2 (Entradas, Fuertes, etc.)
-                if (in_array((int) $data['servicio_gastronomico'], [2, 3])) {
-                    $existingPlatillos = $eventoSalon->platillos()->with('categoriaPlatillo')->get();
-                    foreach ($existingPlatillos as $p) {
-                        $cat = strtolower(trim($p->categoriaPlatillo->nombre ?? ''));
-                        if (!in_array($cat, ['menú infantil', 'menu infantil', 'buffet infantil', 'bebidas'])) {
-                            // Si no está ya en el sync array, lo agregamos para no perderlo
-                            if (!array_key_exists($p->id, $syncPlatillos)) {
-                                $syncPlatillos[$p->id] = [
-                                    'porciones_plan' => $p->pivot->porciones_plan,
-                                    'orden' => $p->pivot->orden,
-                                    'notas' => $p->pivot->notas
-                                ];
-                            }
-                        }
-                    }
-                }
-
-                $eventoSalon->platillos()->sync($syncPlatillos);
-            }
 
             // 5. Crear o actualizar Contrato
             
