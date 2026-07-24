@@ -107,7 +107,7 @@ class ContratoMenuBuilder extends Component
         return view('livewire.contrato-menu-builder', [
             'servicios' => ServicioGastronomico::whereIn('id', [1, 2, 3])->get(),
             'categorias' => CategoriaPlatillo::with(['platillos' => function ($query) {
-                $query->orderBy('nombre');
+                $query->with('serviciosGastronomicos')->orderBy('nombre');
             }])->orderBy('orden')->get()
         ]);
     }

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CategoriaPlatilloController;
 use App\Http\Controllers\ContratoBuilderController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\IngredienteController;
@@ -39,7 +38,6 @@ Route::middleware('auth')->group(function () {
     // Recursos generales
     Route::resource('sucursales', SucursalController::class)->parameters(['sucursales' => 'sucursal']);
     Route::resource('salones', SalonController::class)->parameters(['salones' => 'salon']);
-    Route::resource('categorias', CategoriaPlatilloController::class);
     Route::resource('platillos', PlatilloController::class);
     Route::resource('ingredientes', IngredienteController::class);
     Route::resource('eventos', EventoController::class);

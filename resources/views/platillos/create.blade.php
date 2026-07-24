@@ -108,7 +108,11 @@
                                     @endforeach
                                     @endif
                                 </select>
-                                <input type="number" step="0.001" min="0" class="form-input" name="ingredientes[cantidad][]" placeholder="Cant. (100 px)" style="flex: 1;" title="Cantidad necesaria para 100 porciones/personas">
+                                <input type="number" step="0.001" min="0" class="form-input" name="ingredientes[cantidad][]" placeholder="Cantidad" style="flex: 1;" title="Cantidad base (ej. para 100 pax o para todo el evento)">
+                                <select class="form-input" name="ingredientes[es_fijo][]" style="flex: 1;" title="Tipo de cálculo: Proporcional escala con la cantidad de personas (Regla de 3), Fijo se cobra/usa la misma cantidad siempre por evento.">
+                                    <option value="0">Proporcional</option>
+                                    <option value="1">Fijo por evento</option>
+                                </select>
                                 <button type="button" class="btn-remove-ingrediente" style="background: none; border: none; color: #d32f2f; cursor: pointer; padding: 0 10px; font-size: 1.2rem;">&times;</button>
                             </article>
                         </section>
@@ -160,7 +164,10 @@
             const contenedor = document.getElementById('contenedor-insumos');
             const filaOriginal = contenedor.querySelector('.ingrediente-row');
             const nuevaFila = filaOriginal.cloneNode(true);
-            nuevaFila.querySelector('select').value = '';
+            nuevaFila.querySelectorAll('select').forEach(sel => {
+                if (sel.name === 'ingredientes[id][]') sel.value = '';
+                if (sel.name === 'ingredientes[es_fijo][]') sel.value = '0';
+            });
             nuevaFila.querySelector('input[type="number"]').value = '';
             contenedor.appendChild(nuevaFila);
         });
@@ -172,7 +179,10 @@
                     e.target.closest('.ingrediente-row').remove();
                 } else {
                     const fila = e.target.closest('.ingrediente-row');
-                    fila.querySelector('select').value = '';
+                    fila.querySelectorAll('select').forEach(sel => {
+                        if (sel.name === 'ingredientes[id][]') sel.value = '';
+                        if (sel.name === 'ingredientes[es_fijo][]') sel.value = '0';
+                    });
                     fila.querySelector('input[type="number"]').value = '';
                 }
             }

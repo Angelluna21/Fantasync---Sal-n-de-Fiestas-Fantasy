@@ -41,7 +41,7 @@ class Platillo extends Model
     public function ingredientes(): BelongsToMany
     {
         return $this->belongsToMany(Ingrediente::class, 'platillo_ingrediente')
-                    ->withPivot('cantidad_por_base', 'nota')
+                    ->withPivot('cantidad_por_base', 'nota', 'es_fijo')
                     ->withTimestamps();
     }
 }

@@ -97,18 +97,6 @@
                 <a href="{{ route('salones.index') }}">Ver salones</a>
             </article>
 
-            <!-- 6. Categorías -->
-            <article class="dashboard-card">
-                <span class="card-icon" aria-hidden="true">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                    </svg>
-                </span>
-                <h2>Categorías</h2>
-                <p>Clasifica los platillos por tiempos (guisados, bebidas, infantil, guarniciones, etc.).</p>
-                <a href="{{ route('categorias.index') }}">Ver categorías</a>
-            </article>
-
             <!-- 7. Servicios Gastronómicos -->
             <article class="dashboard-card">
                 <span class="card-icon" aria-hidden="true">

@@ -136,11 +136,11 @@ const btnAdd = document.getElementById('btn-add-ingrediente');
 const ingredientesCat = @json($ingredientes);
 const platilloIngredientes = @json($platillo->ingredientes);
 
-function addRow(selectedId = '', cantidad = '') {
+function addRow(selectedId = '', cantidad = '', esFijo = 0) {
 const row = document.createElement('article');
 row.className = 'ingrediente-row';
 
-let selectHtml = `<select name="ingredientes[id][]" class="form-input ingrediente-select" required>
+let selectHtml = `<select name="ingredientes[id][]" class="form-input ingrediente-select" style="flex: 2;" required>
 <option value="" disabled ${!selectedId ? 'selected' : ''}>Selecciona insumo...</option>`;
 ingredientesCat.forEach(ing => {
 const isSelected = ing.id == selectedId ? 'selected' : '';
@@ -150,7 +150,11 @@ selectHtml += `</select>`;
 
 row.innerHTML = `
 ${selectHtml}
-    <input type="number" step="0.001" min="0" name="ingredientes[cantidad][]" class="form-input" placeholder="Cant. (100 px)" value="${cantidad}" title="Cantidad necesaria para 100 porciones/personas" required>
+    <input type="number" step="0.001" min="0" name="ingredientes[cantidad][]" class="form-input" style="flex: 1;" placeholder="Cantidad" value="${cantidad}" title="Cantidad base (ej. para 100 pax o para todo el evento)" required>
+    <select name="ingredientes[es_fijo][]" class="form-input" style="flex: 1;" title="Tipo de cálculo">
+        <option value="0" ${esFijo == 0 ? 'selected' : ''}>Proporcional</option>
+        <option value="1" ${esFijo == 1 ? 'selected' : ''}>Fijo por evento</option>
+    </select>
 <button type="button" class="btn-remove btn-remove-ingrediente">X</button>
 `;
 
@@ -162,7 +166,7 @@ btnAdd.addEventListener('click', () => addRow());
 // Cargar ingredientes existentes
 if(platilloIngredientes.length > 0) {
 platilloIngredientes.forEach(pi => {
-addRow(pi.id, pi.pivot.cantidad_por_base);
+addRow(pi.id, pi.pivot.cantidad_por_base, pi.pivot.es_fijo);
 });
 } else if(ingredientesCat.length > 0) {
 addRow();

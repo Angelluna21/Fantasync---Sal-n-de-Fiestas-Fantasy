@@ -25,11 +25,17 @@ class CalculadoraInsumosService
                 
                 foreach ($platillo->ingredientes as $ingrediente) {
                     $cantidadBase = $ingrediente->pivot->cantidad_por_base;
+                    $esFijo = $ingrediente->pivot->es_fijo ?? false;
                     $unidad = $ingrediente->unidad;
                     $nombreIngrediente = $ingrediente->nombre;
 
-                    // Regla de 3 para escalar ingredientes con base fija de 100
-                    $cantidadFinal = ($cantidadBase / 100) * $porcionesPlan;
+                    if ($esFijo) {
+                        // Si es fijo, la cantidad es exactamente la base, sin importar los invitados
+                        $cantidadFinal = $cantidadBase;
+                    } else {
+                        // Regla de 3 para escalar ingredientes proporcionales (base 100)
+                        $cantidadFinal = ($cantidadBase / 100) * $porcionesPlan;
+                    }
 
                     // Consolidación: Sumar ingredientes repetidos
                     if (!isset($listaInsumos[$nombreIngrediente])) {
@@ -67,14 +73,17 @@ class CalculadoraInsumosService
         foreach ($platillos as $platillo) {
             foreach ($platillo->ingredientes as $ingrediente) {
                 $cantidadBase = $ingrediente->pivot->cantidad_por_base;
+                $esFijo = $ingrediente->pivot->es_fijo ?? false;
                 $unidad = $ingrediente->unidad;
                 $nombreIngrediente = $ingrediente->nombre;
 
-                // Regla de 3 para escalar ingredientes con base fija de 100
-                // Asumimos que $totalPorciones se asigna completo a cada platillo seleccionado
-                // (Si fuera Taquiza se tendría que dividir entre guisados, pero para banquete rápido 
-                // asumimos la porción completa por invitado, o que el usuario ingresa la porción ajustada).
-                $cantidadFinal = ($cantidadBase / 100) * $totalPorciones;
+                if ($esFijo) {
+                    // Si es fijo, no multiplicamos por las porciones totales
+                    $cantidadFinal = $cantidadBase;
+                } else {
+                    // Regla de 3 para escalar ingredientes proporcionales (base 100)
+                    $cantidadFinal = ($cantidadBase / 100) * $totalPorciones;
+                }
 
                 // Consolidación: Sumar ingredientes repetidos
                 if (!isset($listaInsumos[$nombreIngrediente])) {

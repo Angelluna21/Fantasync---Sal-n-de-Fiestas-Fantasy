@@ -85,6 +85,7 @@ class PlatilloController extends Controller
             'descripcion' => 'nullable|string',
             'ingredientes.id.*' => 'nullable|integer|exists:ingredientes,id',
             'ingredientes.cantidad.*' => 'nullable|numeric|min:0.01',
+            'ingredientes.es_fijo.*' => 'nullable|boolean',
         ]);
 
         // Guardamos sin requerir precio (si no viene, se guarda como 0 o null)
@@ -102,7 +103,11 @@ class PlatilloController extends Controller
             foreach ($data['ingredientes']['id'] as $index => $ingredienteId) {
                 if (!empty($ingredienteId)) {
                     $cantidad = $data['ingredientes']['cantidad'][$index] ?? 1;
-                    $syncData[$ingredienteId] = ['cantidad_por_base' => $cantidad];
+                    $esFijo = isset($data['ingredientes']['es_fijo'][$index]) && $data['ingredientes']['es_fijo'][$index] ? 1 : 0;
+                    $syncData[$ingredienteId] = [
+                        'cantidad_por_base' => $cantidad,
+                        'es_fijo' => $esFijo
+                    ];
                 }
             }
             $platillo->ingredientes()->sync($syncData);
@@ -137,6 +142,7 @@ class PlatilloController extends Controller
             'descripcion' => 'nullable|string',
             'ingredientes.id.*' => 'nullable|integer|exists:ingredientes,id',
             'ingredientes.cantidad.*' => 'nullable|numeric|min:0.01',
+            'ingredientes.es_fijo.*' => 'nullable|boolean',
         ]);
 
         $platillo->update([
@@ -152,7 +158,11 @@ class PlatilloController extends Controller
             foreach ($data['ingredientes']['id'] as $index => $ingredienteId) {
                 if (!empty($ingredienteId)) {
                     $cantidad = $data['ingredientes']['cantidad'][$index] ?? 1;
-                    $syncData[$ingredienteId] = ['cantidad_por_base' => $cantidad];
+                    $esFijo = isset($data['ingredientes']['es_fijo'][$index]) && $data['ingredientes']['es_fijo'][$index] ? 1 : 0;
+                    $syncData[$ingredienteId] = [
+                        'cantidad_por_base' => $cantidad,
+                        'es_fijo' => $esFijo
+                    ];
                 }
             }
             $platillo->ingredientes()->sync($syncData);
