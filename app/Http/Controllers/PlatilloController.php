@@ -19,12 +19,11 @@ class PlatilloController extends Controller
         $platillosAgrupados = collect();
 
         foreach ($platillos as $platillo) {
-            foreach ($platillo->serviciosGastronomicos as $servicio) {
-                if (!$platillosAgrupados->has($servicio->id)) {
-                    $platillosAgrupados->put($servicio->id, collect());
-                }
-                $platillosAgrupados->get($servicio->id)->push($platillo);
+            $catId = $platillo->categoria_platillo_id ?? 0; // 0 para sin categoría
+            if (!$platillosAgrupados->has($catId)) {
+                $platillosAgrupados->put($catId, collect());
             }
+            $platillosAgrupados->get($catId)->push($platillo);
         }
 
         return view('platillos.index', compact('platillos', 'platillosAgrupados'));

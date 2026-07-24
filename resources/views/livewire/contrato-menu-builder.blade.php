@@ -49,7 +49,7 @@
                             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </summary>
                         <div style="position: absolute; z-index: 10; width: 100%; max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 0.5rem; background: white; margin-top: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                            @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['guarniciones']))->flatMap->platillos ?? [] as $guarnicion)
+                            @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['guarniciones (taquiza)', 'guarniciones']))->flatMap->platillos ?? [] as $guarnicion)
                                 <label style="display: block; padding: 0.25rem 0; cursor: pointer; border-bottom: 1px solid #eee;">
                                     <input type="checkbox" wire:model.live="taquiza_guarniciones" value="{{ $guarnicion->id }}"> {{ $guarnicion->nombre }}
                                 </label>
@@ -66,8 +66,24 @@
             <legend>Menú Estructurado por Tiempos</legend>
             
             <section class="input-grid grid-2 grid-margin-2">
+
+                @if($servicio_id == 3)
                 <article class="input-wrapper">
-                    <label class="tiempo-label">1er Tiempo (Entrada o Crema)</label>
+                    <label class="tiempo-label">1er Tiempo (Crema o Sopa)</label>
+                    <select wire:model="crema_sopa_id" class="form-control select-margin">
+                        <option value="">-- Selecciona una crema/sopa --</option>
+                        @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['cremas y sopas']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id)) ?? [] as $crema)
+                            <option value="{{ $crema->id }}">{{ $crema->nombre }}</option>
+                        @endforeach
+                    </select>
+                    @error('crema_sopa_id') 
+                        <span class="error-msg-3">{{ $message }}</span> 
+                    @enderror
+                </article>
+                @endif
+
+                <article class="input-wrapper">
+                    <label class="tiempo-label">{{ $servicio_id == 3 ? '2do Tiempo' : '1er Tiempo' }} (Entrada / Pasta / Ensalada)</label>
                     <select wire:model="entrada_id" class="form-control select-margin">
                         <option value="">-- Selecciona una entrada --</option>
                         @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['entradas']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id)) ?? [] as $entrada)
@@ -80,7 +96,7 @@
                 </article>
 
                 <article class="input-wrapper">
-                    <label class="tiempo-label">2do Tiempo (Plato Fuerte)</label>
+                    <label class="tiempo-label">{{ $servicio_id == 3 ? '3er Tiempo' : '2do Tiempo' }} (Plato Fuerte)</label>
                     <select wire:model="plato_fuerte_id" class="form-control select-margin">
                         <option value="">-- Selecciona el plato fuerte --</option>
                         @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['platos fuertes']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id)) ?? [] as $fuerte)
@@ -91,21 +107,19 @@
                         <span class="error-msg-3">{{ $message }}</span> 
                     @enderror
                 </article>
-                
-                @if($servicio_id == 3)
+
                 <article class="input-wrapper">
-                    <label class="tiempo-label">3er Tiempo (Postre)</label>
-                    <select wire:model="postre_id" class="form-control select-margin">
-                        <option value="">-- Selecciona el postre --</option>
-                        @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['postres']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id)) ?? [] as $postre)
-                            <option value="{{ $postre->id }}">{{ $postre->nombre }}</option>
+                    <label class="tiempo-label">Guarnición para Plato Fuerte</label>
+                    <select wire:model="guarnicion_formal_id" class="form-control select-margin">
+                        <option value="">-- Sin guarnición --</option>
+                        @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['guarniciones (formales)']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id)) ?? [] as $guar)
+                            <option value="{{ $guar->id }}">{{ $guar->nombre }}</option>
                         @endforeach
                     </select>
-                    @error('postre_id') 
+                    @error('guarnicion_formal_id') 
                         <span class="error-msg-3">{{ $message }}</span> 
                     @enderror
                 </article>
-                @endif
             </section>
         </fieldset>
 

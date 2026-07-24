@@ -14,7 +14,8 @@ class ContratoMenuBuilder extends Component
     public $guisados = [];
     public $entrada_id = '';
     public $plato_fuerte_id = '';
-    public $postre_id = '';
+    public $crema_sopa_id = '';
+    public $guarnicion_formal_id = '';
     
     // Novedades para taquiza, bebidas e infantil
     public $taquiza_guisados = [];
@@ -26,9 +27,35 @@ class ContratoMenuBuilder extends Component
     {
         $this->eventoId = $eventoId;
         
-        $evento = Evento::find($eventoId);
+        $evento = Evento::with('eventoSalones.platillos.categoriaPlatillo')->find($eventoId);
         if ($evento && preg_match('/Servicio Gastronómico:\s*(\d+)/', $evento->notas, $matches)) {
             $this->servicio_id = $matches[1];
+        }
+
+        if ($evento && $evento->eventoSalones->isNotEmpty()) {
+            $eventoSalonPivot = $evento->eventoSalones->first();
+            $platillos = $eventoSalonPivot->platillos;
+            
+            foreach($platillos as $p) {
+                $cat = strtolower(trim($p->categoriaPlatillo->nombre ?? ''));
+                if (in_array($cat, ['guisados', 'taquiza', 'parrillada (carnes)', 'parrillada'])) {
+                    $this->taquiza_guisados[] = (string) $p->id;
+                } elseif (in_array($cat, ['entradas', 'entrada'])) {
+                    $this->entrada_id = (string) $p->id;
+                } elseif (in_array($cat, ['plato fuerte', 'platos fuertes'])) {
+                    $this->plato_fuerte_id = (string) $p->id;
+                } elseif (in_array($cat, ['cremas y sopas', 'cremas / sopas', 'crema', 'sopa'])) {
+                    $this->crema_sopa_id = (string) $p->id;
+                } elseif (in_array($cat, ['guarniciones (taquiza)', 'guarniciones'])) {
+                    $this->taquiza_guarniciones[] = (string) $p->id;
+                } elseif (in_array($cat, ['guarniciones (formales)'])) {
+                    $this->guarnicion_formal_id = (string) $p->id;
+                } elseif (in_array($cat, ['menú infantil', 'menu infantil', 'buffet infantil'])) {
+                    $this->infantil[] = (string) $p->id;
+                } elseif (in_array($cat, ['bebidas', 'bebida', 'aguas', 'refrescos'])) {
+                    $this->bebidas[] = (string) $p->id;
+                }
+            }
         }
     }
 
@@ -41,10 +68,12 @@ class ContratoMenuBuilder extends Component
         if ($this->servicio_id == 2) { // 2 Tiempos
             $reglas['entrada_id'] = 'required|exists:platillos,id';
             $reglas['plato_fuerte_id'] = 'required|exists:platillos,id';
+            $reglas['guarnicion_formal_id'] = 'nullable|exists:platillos,id';
         } elseif ($this->servicio_id == 3) { // 3 Tiempos
+            $reglas['crema_sopa_id'] = 'required|exists:platillos,id';
             $reglas['entrada_id'] = 'required|exists:platillos,id';
             $reglas['plato_fuerte_id'] = 'required|exists:platillos,id';
-            $reglas['postre_id'] = 'required|exists:platillos,id';
+            $reglas['guarnicion_formal_id'] = 'nullable|exists:platillos,id';
         }
 
         $this->validate($reglas);
@@ -56,9 +85,9 @@ class ContratoMenuBuilder extends Component
         if ($this->servicio_id == 1) {
             $platillosSeleccionados = array_merge($this->taquiza_guisados, $this->taquiza_guarniciones);
         } elseif ($this->servicio_id == 2) {
-            $platillosSeleccionados = array_filter([$this->entrada_id, $this->plato_fuerte_id]);
+            $platillosSeleccionados = array_filter([$this->entrada_id, $this->plato_fuerte_id, $this->guarnicion_formal_id]);
         } elseif ($this->servicio_id == 3) {
-            $platillosSeleccionados = array_filter([$this->entrada_id, $this->plato_fuerte_id, $this->postre_id]);
+            $platillosSeleccionados = array_filter([$this->crema_sopa_id, $this->entrada_id, $this->plato_fuerte_id, $this->guarnicion_formal_id]);
         }
 
         // Add infantil and bebidas (up to 2 bebidas logic could be validated in $reglas, or limited in UI)
@@ -83,9 +112,14 @@ class ContratoMenuBuilder extends Component
                 
                 $catNombre = strtolower(trim($platillo->categoriaPlatillo->nombre ?? ''));
                 if (in_array($catNombre, ['menú infantil', 'menu infantil', 'buffet infantil'])) {
+                    // Exclusivo para niños
                     $porciones = max($ninos, 1);
-                } else {
+                } elseif (in_array($catNombre, ['bebidas', 'bebida', 'aguas', 'refrescos'])) {
+                    // Bebidas son generales (adultos + ninos*factor)
                     $porciones = (int) ceil($totalPorciones);
+                } else {
+                    // Taquiza, 2 Tiempos, 3 Tiempos son exclusivos de adultos
+                    $porciones = max($adultos, 1);
                 }
 
                 $syncData[$platilloId] = [

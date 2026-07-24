@@ -91,9 +91,9 @@
             </menu>
 
             @php
-                // Extraer dinámicamente los servicios disponibles para las pestañas
-                // Las llaves serán los IDs y los valores serán los nombres de los servicios
-                $nombresServicios = \App\Models\ServicioGastronomico::pluck('nombre', 'id')->toArray();
+                // Extraer dinámicamente las categorías disponibles
+                $nombresCategorias = \App\Models\CategoriaPlatillo::orderBy('orden')->pluck('nombre', 'id')->toArray();
+                $nombresCategorias[0] = 'Sin Categoría';
             @endphp
 
             <!-- 1. Vista de Cuadrícula (Grid) -->
@@ -109,21 +109,23 @@
                         <a href="{{ route('platillos.create') }}" class="btn-create">Crear Primer Platillo</a>
                     </article>
                 @else
-                    @foreach($nombresServicios as $idServicio => $titulo)
-                        @if(isset($platillosAgrupados[$idServicio]) && $platillosAgrupados[$idServicio]->count() > 0)
+                    @foreach($nombresCategorias as $idCat => $titulo)
+                        @if(isset($platillosAgrupados[$idCat]) && $platillosAgrupados[$idCat]->count() > 0)
                             
                             <h3 style="color: var(--primary-purple, #7A288A); margin: 2rem 0 1rem 0; font-size: 1.25rem; border-bottom: 2px solid #f0eaef; padding-bottom: 5px;">{{ $titulo }}</h3>
                             
                             <section class="platillos-grid group-container">
-                                @foreach($platillosAgrupados[$idServicio] as $platillo)
+                                @foreach($platillosAgrupados[$idCat] as $platillo)
                                     <article class="platillo-card" data-nombre="{{ $platillo->nombre }}">
                                         <header class="card-header">
                                             <h3 class="card-title">{{ $platillo->nombre }}</h3>
                                             <section style="display: flex; gap: 4px; flex-wrap: wrap;">
-                                                @if($platillo->categoriaPlatillo)
-                                                    <span class="badge">{{ $platillo->categoriaPlatillo->nombre }}</span>
+                                                @if($platillo->serviciosGastronomicos->count() > 0)
+                                                    @foreach($platillo->serviciosGastronomicos as $serv)
+                                                        <span class="badge">{{ $serv->nombre }}</span>
+                                                    @endforeach
                                                 @else
-                                                    <span class="badge badge-gray">Sin categoría</span>
+                                                    <span class="badge badge-gray">Sin servicio asignado</span>
                                                 @endif
                                             </section>
                                         </header>
@@ -211,22 +213,24 @@
                             </tr>
                         </tbody>
                     @else
-                        @foreach($nombresServicios as $idServicio => $titulo)
-                            @if(isset($platillosAgrupados[$idServicio]) && $platillosAgrupados[$idServicio]->count() > 0)
+                        @foreach($nombresCategorias as $idCat => $titulo)
+                            @if(isset($platillosAgrupados[$idCat]) && $platillosAgrupados[$idCat]->count() > 0)
                                 <tbody class="group-container">
                                     <!-- Fila separadora de grupo -->
                                     <tr style="background: rgba(122, 40, 138, 0.05);">
                                         <td colspan="4" style="font-weight: bold; color: var(--primary-purple, #7A288A); padding: 12px 16px;">{{ $titulo }}</td>
                                     </tr>
                                     
-                                    @foreach($platillosAgrupados[$idServicio] as $platillo)
+                                    @foreach($platillosAgrupados[$idCat] as $platillo)
                                         <tr class="table-row-item" data-nombre="{{ $platillo->nombre }}">
                                             <td class="col-name">{{ $platillo->nombre }}</td>
                                             <td class="col-category">
-                                                @if($platillo->categoriaPlatillo)
-                                                    <span class="badge">{{ $platillo->categoriaPlatillo->nombre }}</span>
+                                                @if($platillo->serviciosGastronomicos->count() > 0)
+                                                    @foreach($platillo->serviciosGastronomicos as $serv)
+                                                        <span class="badge">{{ $serv->nombre }}</span>
+                                                    @endforeach
                                                 @else
-                                                    <span class="badge badge-gray">Sin categoría</span>
+                                                    <span class="badge badge-gray">Sin servicio</span>
                                                 @endif
                                             </td>
                                             <td>
