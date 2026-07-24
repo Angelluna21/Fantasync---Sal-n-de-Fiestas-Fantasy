@@ -23,7 +23,8 @@ class StoreContratoRequest extends FormRequest
     {
         $stringFields = [
             'cliente', 'correo', 'telefono', 'tel_casa', 'recepcion_hora', 'inicio_hora', 
-            'tipo_evento', 'festejado', 'cliente_domicilio', 'cliente_ine', 'manteleria_color', 'cp', 'invitacion'
+            'tipo_evento', 'festejado', 'cliente_domicilio', 'cliente_ine', 'manteleria_color', 'cp', 
+            'invitacion_estado', 'invitacion_detalle'
         ];
 
         foreach ($stringFields as $field) {
@@ -48,7 +49,8 @@ class StoreContratoRequest extends FormRequest
             'telefono' => 'required|string|max:40',
             'tel_casa' => 'required|string|max:40',
             'cp' => 'required|string|max:10',
-            'invitacion' => 'nullable|string|max:255',
+            'invitacion_estado' => 'nullable|string|max:50',
+            'invitacion_detalle' => 'nullable|string|max:255',
             'evento_fecha' => 'required|date',
             'recepcion_hora' => 'nullable|string|max:20',
             'inicio_hora' => 'nullable|string|max:20',

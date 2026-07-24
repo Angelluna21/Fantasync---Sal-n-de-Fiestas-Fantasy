@@ -146,12 +146,19 @@ class ContratoBuilderService
             if (!empty($data['tiene_misa'])) {
                 $notasAdicionales .= ' (Misa solicitada)';
             }
-            if (!empty($data['invitacion'])) {
-                $notasAdicionales .= ' Invitación: ' . trim($data['invitacion']) . '.';
+            if (!empty($data['invitacion_estado'])) {
+                $invStr = trim($data['invitacion_estado']);
+                if (!empty($data['invitacion_detalle'])) {
+                    $invStr .= ' - ' . trim($data['invitacion_detalle']);
+                }
+                $notasAdicionales .= ' Invitación: ' . $invStr . '.';
             }
 
             if (!empty($data['tiene_misa'])) $extras['tiene_misa'] = true;
-            if (!empty($data['invitacion'])) $extras['invitacion'] = $data['invitacion'];
+            if (!empty($data['invitacion_estado'])) {
+                $extras['invitacion_estado'] = $data['invitacion_estado'];
+                $extras['invitacion_detalle'] = $data['invitacion_detalle'] ?? '';
+            }
 
             $extras['horas_adicionales'] = (float) ($data['horas_adicionales'] ?? 0);
 

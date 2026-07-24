@@ -159,8 +159,16 @@
                             <input type="time" id="inicio_hora" name="inicio_hora" class="form-control" value="{{ old('inicio_hora', $draft['inicio_hora'] ?? '') }}">
                         </article>
                         <article class="input-wrapper">
-                            <label for="invitacion">Invitación</label>
-                            <input type="text" id="invitacion" name="invitacion" class="form-control" value="{{ old('invitacion', $draft['invitacion'] ?? '') }}">
+                            <label for="invitacion_estado">Invitación (Estado)</label>
+                            <select id="invitacion_estado" name="invitacion_estado" class="form-control">
+                                <option value="">-- Seleccionar --</option>
+                                <option value="Entregada" {{ (old('invitacion_estado', $draft['invitacion_estado'] ?? '')) == 'Entregada' ? 'selected' : '' }}>Entregada</option>
+                                <option value="Pendiente" {{ (old('invitacion_estado', $draft['invitacion_estado'] ?? '')) == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
+                            </select>
+                        </article>
+                        <article class="input-wrapper">
+                            <label for="invitacion_detalle">Invitación (Detalle/Notas)</label>
+                            <input type="text" id="invitacion_detalle" name="invitacion_detalle" class="form-control" placeholder="Ej. Faltan pases..." value="{{ old('invitacion_detalle', $draft['invitacion_detalle'] ?? '') }}">
                         </article>
                     </section>
                     

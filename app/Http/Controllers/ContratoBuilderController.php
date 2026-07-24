@@ -72,9 +72,17 @@ class ContratoBuilderController extends Controller
         
         $hora_por_definir = str_contains($notas, '(Hora por definir)');
 
-        $invitacion = '';
+        $invitacion_estado = '';
+        $invitacion_detalle = '';
         if (preg_match('/Invitación:\s*(.*?)\./', $notas, $matches)) {
-            $invitacion = $matches[1];
+            $invFull = $matches[1];
+            if (str_contains($invFull, ' - ')) {
+                $parts = explode(' - ', $invFull, 2);
+                $invitacion_estado = $parts[0];
+                $invitacion_detalle = $parts[1];
+            } else {
+                $invitacion_estado = $invFull;
+            }
         }
 
         $extras = $contrato->servicios_extras ?? [];
@@ -106,7 +114,8 @@ class ContratoBuilderController extends Controller
             'cp' => $evento->cliente->codigo_postal ?? '',
             'cliente_ine' => $evento->cliente->ine_numero ?? '',
             'manteleria_color' => $evento->color_manteleria ?? 'Blanco',
-            'invitacion' => $invitacion,
+            'invitacion_estado' => $invitacion_estado,
+            'invitacion_detalle' => $invitacion_detalle,
         ];
 
         // Migración en memoria: Si existe historial_pagos usarlo, sino generar uno si hay anticipo > 0

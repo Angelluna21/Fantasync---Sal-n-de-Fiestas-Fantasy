@@ -322,11 +322,20 @@
             <th>Globos</th>
         </tr>
         <tr>
-            <td><strong>{{ $contrato->servicios_extras['horas_evento'] ?? 'N/A' }} hrs</strong></td>
+            <td><strong>6 hrs</strong></td>
             <td><strong>{{ $contrato->servicios_extras['horas_adicionales'] ?? '0' }} hrs</strong></td>
             <td>{{ $contrato->servicios_extras['recepcion_hora'] ?? '--:--' }}</td>
             <td>{{ $contrato->servicios_extras['inicio_hora'] ?? '--:--' }}</td>
-            <td>{{ $contrato->servicios_extras['invitacion'] ?? 'No' }}</td>
+            <td>
+                @if(!empty($contrato->servicios_extras['invitacion_estado']))
+                    {{ $contrato->servicios_extras['invitacion_estado'] }}
+                    @if(!empty($contrato->servicios_extras['invitacion_detalle']))
+                        ({{ $contrato->servicios_extras['invitacion_detalle'] }})
+                    @endif
+                @else
+                    {{ $contrato->servicios_extras['invitacion'] ?? 'No' }}
+                @endif
+            </td>
             <td>{!! !empty($contrato->servicios_extras['tiene_misa']) ? '<span style="color:#7a288a;font-weight:bold;">Sí</span>' : 'No' !!}</td>
             <td>{!! !empty($contrato->servicios_extras['tiene_pinata']) ? '<span style="color:#7a288a;font-weight:bold;">Sí</span>' : 'No' !!}</td>
             <td>{!! !empty($contrato->servicios_extras['tiene_show']) ? '<span style="color:#7a288a;font-weight:bold;">Sí</span>' : 'No' !!}</td>
@@ -339,13 +348,11 @@
     <div class="section-header">4. Servicio Gastronómico Acordado</div>
     <table class="grid-table">
         <tr>
-            <th class="text-left" style="width: 80%;">Menú / Elemento Gastronómico</th>
-            <th style="width: 20%;">Porciones</th>
+            <th class="text-left" style="width: 100%;">Menú / Elemento Gastronómico</th>
         </tr>
         @foreach($contrato->evento->eventoSalones->first()->platillos as $platillo)
         <tr>
             <td class="text-left">{{ $platillo->nombre }}</td>
-            <td><strong>{{ $platillo->pivot->porciones_plan }}</strong></td>
         </tr>
         @endforeach
     </table>
