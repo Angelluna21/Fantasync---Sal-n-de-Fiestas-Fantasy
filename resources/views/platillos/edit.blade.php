@@ -41,8 +41,8 @@ Volver al Catálogo
 
 <!-- Formulario -->
 <section aria-label="Formulario de edición de platillo" style="margin-top: 7rem;">
-<article class="form-card medium-container">
-<form action="{{ route('platillos.update', $platillo->id) }}" method="POST" style="max-width: 550px; margin: 0 auto;">
+<article class="form-card" style="max-width: 900px; margin: 0 auto;">
+<form action="{{ route('platillos.update', $platillo->id) }}" method="POST">
 @csrf
 @method('PUT')
 
@@ -123,7 +123,10 @@ placeholder="Describe los ingredientes principales y guarniciones">{{ old('descr
 <section id="ingredientes-container" class="ingredientes-container">
 <!-- Las filas se agregarán aquí por JS -->
 </section>
-<button type="button" id="btn-add-ingrediente" class="btn-add-ingrediente">+ Añadir Insumo</button>
+<section style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+<button type="button" id="btn-add-ingrediente" class="btn-add-ingrediente" style="flex: 1; background: var(--accent-yellow); color: var(--primary-purple); border-color: var(--accent-yellow); font-weight: 800;">+ Añadir fila</button>
+<button type="button" onclick="abrirModalInsumo()" class="btn-add-ingrediente" style="flex: 1; background: rgba(122, 40, 138, 0.05); color: var(--primary-purple); border-color: rgba(122, 40, 138, 0.2); font-weight: 800;">+ Crear Insumo</button>
+</section>
 @error('ingredientes')
 <output class="form-error">{{ $message }}</output>
 @enderror
@@ -175,17 +178,92 @@ container.innerHTML = '<p class="multiselect-empty">No hay ingredientes registra
 btnAdd.style.display = 'none';
 }
 });
+
+function abrirModalInsumo() {
+document.getElementById('modal-insumo').style.display = 'flex';
+}
+
+function cerrarModalInsumo() {
+document.getElementById('modal-insumo').style.display = 'none';
+document.getElementById('modal-nombre').value = '';
+}
+
+function simularGuardadoInsumo() {
+const nombre = document.getElementById('modal-nombre').value; 
+const unidad = document.getElementById('modal-unidad').value;
+
+if (!nombre || nombre.trim() === '') {
+alert('Por favor, ingresa el nombre del insumo.');
+return;
+}
+
+fetch("{{ route('insumos.storeAjax') }}", {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+'X-CSRF-TOKEN': '{{ csrf_token() }}'
+},
+body: JSON.stringify({ nombre: nombre, unidad: unidad })
+})
+.then(response => response.json())
+.then(data => {
+// Agregar opción a todos los selects de ingredientes
+const selects = document.querySelectorAll('.ingrediente-select');
+selects.forEach(select => {
+const option = document.createElement('option');
+option.value = data.id;
+option.text = `${data.nombre} (${data.unidad})`;
+select.appendChild(option);
+});
+
+// Auto-seleccionar el insumo creado en el último select o agregar fila si no hay
+if (selects.length > 0) {
+selects[selects.length - 1].value = data.id;
+} else {
+if (typeof addRow === 'function') addRow(data.id, '', 0);
+}
+cerrarModalInsumo();
+})
+.catch(error => {
+alert("Hubo un error al guardar el insumo en el servidor.");
+console.error("Error:", error);
+});
+}
 </script>
 
 <!-- Acciones del Formulario -->
-<footer class="form-actions">
-<a href="{{ route('platillos.index') }}" class="btn-cancel">Cancelar</a>
-<button type="submit" class="btn-save">Guardar Cambios</button>
+<footer class="form-actions" style="display: flex; gap: 1rem; width: 100%; justify-content: center;">
+<a href="{{ route('platillos.index') }}" class="btn-cancel" style="flex: 1; text-align: center; max-width: 400px;">Cancelar</a>
+<button type="submit" class="btn-save" style="flex: 1; text-align: center; max-width: 400px;">Guardar Cambios</button>
 </footer>
 </form>
 </article>
 </section>
 </main>
+
+<dialog id="modal-insumo" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; border: none;">
+<article style="background: white; padding: 30px; border-radius: 12px; width: 400px; max-width: 90%;">
+<h3 style="margin-top: 0; color: var(--primary-purple);">Crear Nuevo Insumo</h3>
+<section class="form-group">
+<label class="form-label">Nombre del Insumo</label>
+<input type="text" id="modal-nombre" class="form-input" placeholder="Ej. Jitomate, Crema, Pollo...">
+</section>
+<section class="form-group" style="margin-top: 15px;">
+<label class="form-label">Unidad de Medida</label>
+<select id="modal-unidad" class="form-input">
+<option value="kg">Kilogramos (kg)</option>
+<option value="gr">Gramos (gr)</option>
+<option value="lt">Litros (lt)</option>
+<option value="ml">Mililitros (ml)</option>
+<option value="pza">Piezas (pza)</option>
+</select>
+</section>
+<menu style="display: flex; flex-direction: row; gap: 10px; margin-top: 25px; padding: 0; list-style: none;">
+<button type="button" onclick="cerrarModalInsumo()" class="btn-cancel" style="flex: 1; text-align: center; padding: 10px;">Cancelar</button>
+<button type="button" onclick="simularGuardadoInsumo()" class="btn-save" style="flex: 1; text-align: center; padding: 10px;">Guardar</button>
+</menu>
+</article>
+</dialog>
 
 <!-- Footer -->
 <footer class="dashboard-footer">

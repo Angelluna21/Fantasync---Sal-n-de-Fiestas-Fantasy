@@ -22,7 +22,7 @@
                 </a>
                 <a href="{{ route('platillos.index') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                    Volver al Catálogo
+                    Regresar
                 </a>
             </section>
 
@@ -116,20 +116,16 @@
                                 <button type="button" class="btn-remove-ingrediente" style="background: none; border: none; color: #d32f2f; cursor: pointer; padding: 0 10px; font-size: 1.2rem;">&times;</button>
                             </article>
                         </section>
+                        <section style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                            <button type="button" id="btn-agregar-fila" class="btn-add-ingrediente" style="flex: 1; background: var(--accent-yellow); color: var(--primary-purple); border-color: var(--accent-yellow); font-weight: 800;">+ Añadir fila</button>
+                            <button type="button" onclick="abrirModalInsumo()" class="btn-add-ingrediente" style="flex: 1; background: rgba(122, 40, 138, 0.05); color: var(--primary-purple); border-color: rgba(122, 40, 138, 0.2); font-weight: 800;">+ Crear Insumo</button>
+                        </section>
                     </fieldset>
 
-                    <menu class="form-actions" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; border-top: none; margin-top: 2rem; padding: 0; list-style: none;">
-                        <section style="display: flex; gap: 1rem; justify-content: center; width: 100%;">
-                            <button type="button" onclick="abrirModalInsumo()" class="btn-back-nav" style="background: rgba(122, 40, 138, 0.1); color: var(--primary-purple); border-color: transparent; margin: 0; min-width: 150px; flex: 1; max-width: 250px; text-align: center; padding: 0.8rem; font-size: 1rem;">+ Crear Insumo</button>
-                            <button type="button" id="btn-agregar-fila" class="btn-submit" style="background: var(--accent-yellow); color: var(--primary-purple); margin: 0; min-width: 150px; flex: 1; max-width: 250px; text-align: center; padding: 0.8rem; font-size: 1rem;">+ Añadir fila</button>
-                        </section>
-                        <section style="display: flex; justify-content: center; width: 100%;">
-                            <button type="submit" class="btn-submit btn-large generate" style="font-size: 1rem; padding: 0.8rem; margin: 0; min-width: 250px; text-align: center; display: flex; justify-content: center; align-items: center;">Guardar</button>
-                        </section>
-                        <section style="display: flex; justify-content: center; width: 100%; margin-top: 0.5rem;">
-                            <a href="{{ route('platillos.index') }}" class="btn-back" style="margin: 0; font-size: 1rem;">Cancelar</a>
-                        </section>
-                    </menu>
+                    <footer class="form-actions" style="display: flex; gap: 1rem; width: 100%; justify-content: center;">
+                        <a href="{{ route('platillos.index') }}" class="btn-cancel" style="flex: 1; text-align: center; max-width: 400px;">Cancelar</a>
+                        <button type="submit" class="btn-save" style="flex: 1; text-align: center; max-width: 400px;">Guardar</button>
+                    </footer>
                 </form>
             </article>
         </section>
@@ -152,9 +148,9 @@
                     <option value="pza">Piezas (pza)</option>
                 </select>
             </section>
-            <menu style="display: flex; gap: 10px; margin-top: 25px; padding: 0; list-style: none;">
-                <button type="button" onclick="simularGuardadoInsumo()" class="btn-submit" style="flex: 1; padding: 10px;">Guardar</button>
-                <button type="button" onclick="cerrarModalInsumo()" class="btn-back" style="flex: 1; margin: 0; padding: 10px;">Cancelar</button>
+            <menu style="display: flex; flex-direction: row; gap: 10px; margin-top: 25px; padding: 0; list-style: none;">
+                <button type="button" onclick="cerrarModalInsumo()" class="btn-cancel" style="flex: 1; text-align: center; padding: 10px;">Cancelar</button>
+                <button type="button" onclick="simularGuardadoInsumo()" class="btn-save" style="flex: 1; text-align: center; padding: 10px;">Guardar</button>
             </menu>
         </article>
     </dialog>
