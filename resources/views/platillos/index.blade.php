@@ -33,7 +33,7 @@
             <!-- Centro: Encabezado -->
             <header class="dashboard-header" style="margin: 3rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
                 <hgroup>
-                    <p class="eyebrow" style="margin-bottom: 0;">Catálogo Maestro</p>
+                    <p class="eyebrow" style="margin-bottom: 0;">Catálogo Fantasy</p>
                     <h1 class="dashboard-title" style="font-size: 2.5rem; margin-top: 0.2rem;">Platillos & Bebidas</h1>
                     <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.05rem;">Gestión centralizada del menú. Define insumos base, porciones y costos de cada elemento culinario.</p>
                 </hgroup>
