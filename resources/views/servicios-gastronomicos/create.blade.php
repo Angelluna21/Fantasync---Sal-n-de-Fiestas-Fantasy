@@ -65,9 +65,9 @@
                         <p class="form-error-msg">{{ $message }}</p>
                     @enderror
 
-                    <footer class="form-footer-actions">
-                        <a href="{{ route('servicios-gastronomicos.index') }}" class="btn-back-nav">Cancelar</a>
-                        <button type="submit" class="btn-create">Guardar Servicio</button>
+                    <footer class="form-actions" style="display: flex; gap: 1rem; width: 100%; justify-content: center; margin-top: 2rem;">
+                        <a href="{{ route('servicios-gastronomicos.index') }}" class="btn-cancel" style="flex: 1; text-align: center; max-width: 300px;">Cancelar</a>
+                        <button type="submit" class="btn-save" style="flex: 1; text-align: center; max-width: 300px;">Guardar Servicio</button>
                     </footer>
                 </form>
             </article>
