@@ -28,15 +28,13 @@
             </a>
         </nav>
 
-        <header class="dashboard-header">
-            <hgroup>
-                <p class="eyebrow">Recursos Humanos</p>
-                <h1 class="dashboard-title">Nóminas</h1>
-                <p class="dashboard-description">Gestión de empleados, sueldos y horas extra para eventos.</p>
-            </hgroup>
-        </header>
+        <section class="eventos-section" aria-label="Lista de Nóminas" style="margin-top: 2rem;">
+            <header style="border-bottom: 2px solid rgba(122, 40, 138, 0.15); padding-bottom: 1.5rem; margin-bottom: 2rem; text-align: center;">
+                <p class="eyebrow" style="color: var(--accent-magenta); margin-bottom: 0.2rem; font-size: 0.95rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em;">Recursos Humanos</p>
+                <h1 style="color: var(--primary-purple); font-size: 2.5rem; font-weight: 800; margin: 0 0 0.5rem 0; line-height: 1.2;">Nóminas</h1>
+                <p style="color: var(--text-main); font-size: 1.1rem; margin: 0 auto; max-width: 600px;">Gestión de empleados, sueldos y horas extra para eventos.</p>
+            </header>
 
-        <section class="eventos-section" aria-label="Lista de Nóminas">
             @if(session('success'))
                 <aside class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
                     <span class="block sm:inline">{{ session('success') }}</span>
