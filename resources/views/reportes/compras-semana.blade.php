@@ -153,7 +153,7 @@
                     </a>
 
                     <a href="{{ route('eventos.index') }}" class="btn-back-nav-glass" style="margin: 0; padding: 0.4rem 1rem; font-size: 0.85rem;">
-                        🎉 Lista de Eventos
+                        Lista de Eventos
                     </a>
                 </section>
             </section>
@@ -163,7 +163,7 @@
                 <x-user-menu />
                 <button class="btn-back-nav-glass no-print" onclick="window.print();" style="background: linear-gradient(135deg, var(--accent-yellow), #fbc02d); color: var(--primary-purple); border: none; font-size: 1rem; padding: 0.65rem 1.5rem; box-shadow: var(--shadow-yellow); cursor: pointer; font-weight: 800;">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20" style="margin-right: 0.4rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                    🖨️ Imprimir Lista para la Central de Abastos
+                    Imprimir Lista para la Central de Abastos
                 </button>
             </section>
         </nav>
@@ -172,7 +172,7 @@
         <section class="filter-date-card no-print">
             <form action="{{ route('reportes.compras-semana') }}" method="GET" class="filter-form">
                 <div class="form-group-inline">
-                    <label for="fecha_inicio">📅 Desde:</label>
+                    <label for="fecha_inicio">Desde:</label>
                     <input type="date" id="fecha_inicio" name="fecha_inicio" value="{{ $fechaInicio }}" class="date-input" required>
                 </div>
                 <div class="form-group-inline">
@@ -180,7 +180,7 @@
                     <input type="date" id="fecha_fin" name="fecha_fin" value="{{ $fechaFin }}" class="date-input" required>
                 </div>
                 <button type="submit" class="btn-filter">
-                    🔍 Filtrar Compras de este Período
+                    Filtrar Compras de este Período
                 </button>
             </form>
         </section>
@@ -189,23 +189,23 @@
         <section class="reportes-section">
             <article class="sucursal-card main-report-card" style="padding: 2rem;">
                 <header style="border-bottom: 2px solid rgba(122, 40, 138, 0.15); padding-bottom: 1.5rem; margin-bottom: 2rem;">
-                    <p class="eyebrow" style="color: var(--accent-magenta); margin-bottom: 0.2rem; font-size: 0.95rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em;">🛒 Compras y Almacén · Central de Abastos</p>
+                    <p class="eyebrow" style="color: var(--accent-magenta); margin-bottom: 0.2rem; font-size: 0.95rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em;">Compras y Almacén · Central de Abastos</p>
                     <h1 style="color: var(--primary-purple); font-size: 2.2rem; font-weight: 800; margin: 0 0 0.5rem 0; line-height: 1.2;">Lista Consolidada de Compras Semanales / por Período</h1>
                     <p style="color: var(--text-main); font-size: 1.1rem; margin: 0;">Período seleccionado: <strong style="color: var(--primary-purple);">{{ \Carbon\Carbon::parse($fechaInicio)->format('d/m/Y') }} al {{ \Carbon\Carbon::parse($fechaFin)->format('d/m/Y') }}</strong></p>
                 </header>
 
                 <header class="card-header-report" style="margin-bottom: 2rem; padding-bottom: 0; border: none;">
-                    <h2 class="card-title" style="font-size: 1.2rem; margin-bottom: 0.8rem;">🎉 Eventos incluidos en esta compra ({{ count($eventos) }}):</h2>
+                    <h2 class="card-title" style="font-size: 1.2rem; margin-bottom: 0.8rem;">Eventos incluidos en esta compra ({{ count($eventos) }}):</h2>
                     @if(count($eventos) > 0)
                         <section style="display: flex; flex-wrap: wrap; gap: 0.6rem;">
                             @foreach($eventos as $ev)
                                 <span class="event-pill">
-                                    📅 {{ $ev->fecha->format('d/m/Y') }} — <strong>{{ $ev->titulo }}</strong>
+                                    {{ $ev->fecha->format('d/m/Y') }} — <strong>{{ $ev->titulo }}</strong>
                                 </span>
                             @endforeach
                         </section>
                     @else
-                        <p style="color: #c62828; font-weight: 700;">⚠️ No se encontraron eventos programados con salones asignados en este rango de fechas.</p>
+                        <p style="color: #c62828; font-weight: 700;">No se encontraron eventos programados con salones asignados en este rango de fechas.</p>
                     @endif
                 </header>
 
@@ -215,7 +215,7 @@
                         @foreach($sortedGroups as $categoria => $insumos)
                             <article class="category-group-card" style="margin-bottom: 2rem;">
                                 <h3 class="category-group-title" style="background: var(--primary-purple); color: white; padding: 0.75rem 1.25rem; margin: 0; border-radius: 1rem 1rem 0 0; font-size: 1.15rem;">
-                                    ▫️ {{ $categoria }}
+                                    {{ $categoria }}
                                 </h3>
                                 <figure class="table-responsive" style="margin: 0;">
                                     <table class="tabla-reporte" style="width: 100%; border-collapse: collapse;">
