@@ -10,17 +10,33 @@
     <figure class="dashboard-background" aria-hidden="true"></figure>
     
     <main class="dashboard-layout">
-        <nav class="top-nav" aria-label="Menú superior">
-            <a href="{{ route('dashboard') }}" class="logo-link"><img src="{{ asset('img/logo.png') }}" class="nav-logo"></a>
-            <x-user-menu />
-        </nav>
-        <nav class="eventos-back-nav">
-            <a href="{{ route('nominas.index') }}" class="btn-back-nav">Volver a Nóminas</a>
-        </nav>
+        <!-- Navegación superior y Encabezado Unificado -->
+        <section class="top-nav" style="align-items: flex-start; margin-bottom: 2rem; padding-bottom: 0;">
+            <!-- Lado Izquierdo: Logo y Botón Volver -->
+            <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+                <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
+                </a>
+                <a href="{{ route('nominas.index') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Volver a Nóminas
+                </a>
+            </section>
 
-        <header class="dashboard-header">
-            <h1 class="dashboard-title">Alta de Nómina</h1>
-        </header>
+            <!-- Centro: Encabezado -->
+            <header class="dashboard-header" style="margin: 2rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
+                <hgroup>
+                    <p class="eyebrow" style="margin-bottom: 0;">Recursos Humanos</p>
+                    <h1 class="dashboard-title" style="font-size: 2.8rem; margin-top: 0.2rem;">Alta de Nómina</h1>
+                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.1rem;">Registra un nuevo empleado o pago de evento en el sistema de nóminas.</p>
+                </hgroup>
+            </header>
+
+            <!-- Lado Derecho: Menú Usuario -->
+            <section style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+                <x-user-menu />
+            </section>
+        </section>
 
         <section class="eventos-section">
             <form action="{{ route('nominas.store') }}" method="POST" class="nomina-form-container">
