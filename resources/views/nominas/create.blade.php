@@ -38,7 +38,7 @@
             </section>
         </section>
 
-        <section class="eventos-section" style="margin-top: 6rem;">
+        <section class="eventos-section" style="margin-top: 8.5rem;">
             <form action="{{ route('nominas.store') }}" method="POST" class="nomina-form-container">
                 @csrf
                 <fieldset class="form-group border-0 p-0 m-0 form-fieldset">

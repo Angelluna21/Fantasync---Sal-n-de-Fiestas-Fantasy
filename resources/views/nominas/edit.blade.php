@@ -38,7 +38,7 @@
             </section>
         </section>
 
-        <section class="eventos-section" style="margin-top: 6rem;">
+        <section class="eventos-section" style="margin-top: 8.5rem;">
             <form action="{{ route('nominas.update', $nomina) }}" method="POST" class="nomina-form-container">
                 @csrf
                 @method('PUT')
