@@ -125,7 +125,7 @@ class ContratoMenuBuilder extends Component
                 $syncData[$platilloId] = [
                     'porciones_plan' => $porciones,
                     'orden'          => $index + 1,
-                    'notas'          => 'Registrado desde el configurador dinámico'
+                    'notas'          => null
                 ];
             }
 

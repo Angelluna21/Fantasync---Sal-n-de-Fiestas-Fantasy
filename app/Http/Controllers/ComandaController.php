@@ -13,8 +13,8 @@ class ComandaController extends Controller
      */
     public function showByContrato(Contrato $contrato)
     {
-        // 1. Cargamos el contrato con su evento y cliente
-        $contrato->load('evento.cliente');
+        // 1. Cargamos el contrato con su evento, salones, sucursal y cliente
+        $contrato->load('evento.cliente', 'evento.salones.sucursal');
 
         // 2. Extraemos las comandas del contrato usando el mutator creado
         $salonesConComanda = $contrato->comandas;
@@ -52,6 +52,27 @@ class ComandaController extends Controller
 
         // Agrupamos la colección final por categoría para que la cocina tenga orden
         $comandaGlobal = $platillosAgrupados->groupBy('categoria');
+
+        // Orden profesional de cocina (Tiempos, Taquiza/Buffet, Infantil, Bebidas, Dulces/Postres)
+        $ordenDeseado = [
+            'Entradas',
+            'Cremas y Sopas',
+            'Platos Fuertes',
+            'Guarniciones (Formales)',
+            'Guisados',
+            'Parrillada (Carnes)',
+            'Guarniciones',
+            'Menú Infantil',
+            'Buffet Infantil',
+            'Bebidas',
+            'Dulces',
+            'Postres',
+        ];
+
+        $comandaGlobal = $comandaGlobal->sortBy(function ($platillos, $categoria) use ($ordenDeseado) {
+            $pos = array_search($categoria, $ordenDeseado);
+            return $pos === false ? 999 : $pos;
+        });
 
         return view('reportes.comanda', compact('contrato', 'comandaGlobal', 'salonesConComanda'));
     }

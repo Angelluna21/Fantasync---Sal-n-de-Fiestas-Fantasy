@@ -9,7 +9,7 @@ class EventoController extends Controller
 {
     public function index()
     {
-        $eventos = Evento::with(['cliente', 'salones.sucursal', 'contrato'])
+        $eventos = Evento::with(['cliente', 'salones.sucursal', 'contrato', 'eventoSalones.platillos'])
             ->orderBy('fecha', 'desc')
             ->get();
 

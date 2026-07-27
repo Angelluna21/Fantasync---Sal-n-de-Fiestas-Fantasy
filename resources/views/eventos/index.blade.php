@@ -96,22 +96,35 @@
 
             <style>
                 .actions-group {
-                    display: flex;
-                    gap: 0.5rem;
-                    justify-content: center;
-                    flex-wrap: nowrap;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 0.4rem;
+                    margin: 0;
+                    padding: 0;
                 }
                 .actions-group .btn-event-link {
-                    padding: 0.3rem 0.5rem;
-                    font-size: 0.75rem;
-                    display: inline-flex;
+                    padding: 0.3rem;
+                    font-size: 0.65rem;
+                    display: flex;
                     align-items: center;
-                    gap: 0.25rem;
-                    white-space: nowrap;
+                    justify-content: center;
+                    gap: 0.2rem;
+                    white-space: normal;
+                    text-align: center;
+                    border-radius: 0.4rem;
+                    width: 100%;
+                    height: 100%;
+                    box-sizing: border-box;
+                    line-height: 1.1;
+                    flex-direction: row; /* Icon and text side-by-side */
                 }
                 .actions-group .btn-event-link svg {
-                    width: 14px;
-                    height: 14px;
+                    width: 15px;
+                    height: 15px;
+                    flex-shrink: 0;
+                }
+                .form-grid-item {
+                    display: contents;
                 }
             </style>
             <section class="table-wrapper">
@@ -209,29 +222,49 @@
                                         @if($evento->salones->count() > 0)
                                             <a href="{{ route('salones.show', $evento->salones->first()->id) }}" class="btn-event-link" title="Ver en Calendario">
                                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                                Ver Agenda
+                                                Agenda
                                             </a>
+                                        @else
+                                            <button type="button" class="btn-event-link" style="opacity: 0.5; cursor: not-allowed;" disabled>
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                                Agenda
+                                            </button>
                                         @endif
 
                                         @if($evento->contrato)
-                                            <a href="{{ route('contratos.show', $evento->contrato->id) }}" class="btn-event-link" title="Ver Contrato / Cotización">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                                Ver Contrato
+                                            <a href="{{ route('contratos.show', $evento->contrato->id) }}" class="btn-event-link generate" title="Ver Contrato" style="background: rgba(76, 175, 80, 0.1); color: #2e7d32; border: 1px solid rgba(76, 175, 80, 0.3);">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                                Contrato Vigente
                                             </a>
                                             
-                                            <a href="{{ route('reportes.insumos', $evento->id) }}" class="btn-event-link" title="Reporte de Insumos / Lista de Compras">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                                Insumos
-                                            </a>
+                                            @php
+                                                $tieneInsumos = $evento->eventoSalones->sum(function($es) { return $es->platillos->count(); }) > 0;
+                                            @endphp
+                                            @if($tieneInsumos)
+                                                <a href="{{ route('reportes.insumos', $evento->id) }}" class="btn-event-link" title="Reporte de Insumos">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                                    Insumos
+                                                </a>
+                                            @else
+                                                <button type="button" class="btn-event-link" title="Reporte de Insumos" onclick="alert('Aún no hay platillos e insumos registrados para este evento. Añade platillos al contrato primero.');" style="opacity: 0.6; cursor: not-allowed;">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                                    Insumos
+                                                </button>
+                                            @endif
                                         @else
                                             <a href="{{ route('contratos.crear', ['new' => 1]) }}" class="btn-event-link generate" title="Generar Contrato">
                                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                                 Generar Contrato
                                             </a>
+                                            
+                                            <button type="button" class="btn-event-link" title="Reporte de Insumos" onclick="alert('Genera un contrato primero para poder calcular los insumos.');" style="opacity: 0.6; cursor: not-allowed;">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                                Insumos
+                                            </button>
                                         @endif
                                         
                                         <!-- Botón Eliminar Evento -->
-                                        <form action="{{ route('eventos.destroy', $evento->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de querer eliminar este evento? Esta acción no se puede deshacer.');">
+                                        <form action="{{ route('eventos.destroy', $evento->id) }}" method="POST" class="form-grid-item" onsubmit="return confirm('¿Estás seguro de querer eliminar este evento? Esta acción no se puede deshacer.');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn-event-link delete" title="Eliminar Evento">

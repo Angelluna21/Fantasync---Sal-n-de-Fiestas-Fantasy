@@ -11,40 +11,44 @@
     
     <main class="dashboard-layout">
         <!-- Navegación superior -->
-        <nav class="top-nav" aria-label="Menú superior">
-            <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
-            </a>
-            <x-user-menu />
-        </nav>
-
-        <!-- Navegación de regreso -->
-        <nav class="navigation-buttons">
-            <a href="javascript:history.back()" class="btn-back-nav-glass">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="nav-icon"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                Regresar a la Vista Anterior
-            </a>
+        <nav class="top-nav" aria-label="Menú superior" style="align-items: flex-start; margin-bottom: 2rem;">
+            <!-- Lado izquierdo: Logo y Botones de navegación -->
+            <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+                <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
+                </a>
+                
+                <section style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                    <a href="javascript:history.back()" class="btn-back-nav-glass" style="margin: 0; padding: 0.4rem 1rem; font-size: 0.85rem;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="nav-icon"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        Regresar
+                    </a>
+                    
+                    <a href="{{ route('dashboard') }}" class="btn-back-nav-glass btn-dashboard" style="margin: 0; padding: 0.4rem 1rem; font-size: 0.85rem;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="nav-icon"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        Dashboard
+                    </a>
+                </section>
+            </section>
             
-            <a href="{{ route('dashboard') }}" class="btn-back-nav-glass btn-dashboard">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="nav-icon"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                Ir al Dashboard
-            </a>
+            <!-- Lado derecho: Menú de usuario -->
+            <section style="flex: 1; display: flex; justify-content: flex-end;">
+                <x-user-menu />
+            </section>
         </nav>
-
-        <!-- Encabezado -->
-        <header class="dashboard-header">
-            <hgroup>
-                <p class="eyebrow">Producción de Cocina</p>
-                <h1 class="dashboard-title">Lista Consolidada de Insumos</h1>
-                <p class="dashboard-description">Evento: <strong>{{ $evento->titulo }}</strong> ({{ $evento->fecha->format('d/m/Y') }})</p>
-            </hgroup>
-        </header>
 
         <!-- Sección de reporte -->
         <section class="reportes-section">
             <article class="sucursal-card main-report-card">
                 
-                <header class="card-header-report">
+                <!-- Encabezado integrado al contenedor -->
+                <header style="border-bottom: 2px solid rgba(122, 40, 138, 0.15); padding-bottom: 1.5rem; margin-bottom: 2rem;">
+                    <p class="eyebrow" style="color: var(--accent-magenta); margin-bottom: 0.2rem; font-size: 0.95rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em;">Producción de Cocina</p>
+                    <h1 style="color: var(--primary-purple); font-size: 2.2rem; font-weight: 800; margin: 0 0 0.5rem 0; line-height: 1.2;">Lista de Insumos</h1>
+                    <p style="color: var(--text-main); font-size: 1.1rem; margin: 0;">Evento: <strong style="color: var(--primary-purple);">{{ $evento->titulo }}</strong> ({{ $evento->fecha->format('d/m/Y') }})</p>
+                </header>
+
+                <header class="card-header-report" style="margin-bottom: 1.5rem; padding-bottom: 0; border: none;">
                     <h2 class="card-title">Salones Reservados:</h2>
                     <section class="salones-badges-container">
                         @foreach($evento->salones as $salon)
@@ -56,23 +60,61 @@
                 </header>
 
                 <section class="platillos-preparar-card">
-                    <h3 class="platillos-title">Platillos a Preparar:</h3>
-                    <ul class="platillos-list-badges">
-                        @php $tienePlatillos = false; @endphp
-                        @foreach($evento->eventoSalones as $eventoSalon)
-                            @foreach($eventoSalon->platillos as $platillo)
-                                @php $tienePlatillos = true; @endphp
-                                <li class="platillo-chip">
-                                    <strong>{{ $platillo->nombre }}</strong>
-                                    <span class="platillo-details">({{ $platillo->pivot->porciones_plan }} porciones en {{ $eventoSalon->salon->nombre ?? 'Salón' }})</span>
-                                </li>
-                            @endforeach
-                        @endforeach
-                        
-                        @if(!$tienePlatillos)
-                            <li class="no-platillos-item">No hay platillos asignados a este evento aún.</li>
+                    <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <h3 class="platillos-title" style="margin: 0;">Platillos a Preparar:</h3>
+                        @if($evento->contrato)
+                            <a href="{{ route('reportes.comanda', $evento->contrato->id) }}" style="background: linear-gradient(135deg, var(--primary-purple), #4a148c); color: white; padding: 0.55rem 1.25rem; border-radius: 2rem; text-decoration: none; font-weight: 800; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px rgba(122, 40, 138, 0.3); transition: all 0.3s ease;">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                                Imprimir pedido del cliente
+                            </a>
                         @endif
-                    </ul>
+                    </header>
+                    @php
+                        $platillosList = collect();
+                        foreach($evento->eventoSalones as $es) {
+                            foreach($es->platillos as $pl) {
+                                $cat = $pl->categoriaPlatillo ? $pl->categoriaPlatillo->nombre : 'Sin Categoría';
+                                $id = $pl->id;
+                                if(!$platillosList->has($id)) {
+                                    $platillosList->put($id, [
+                                        'nombre' => $pl->nombre,
+                                        'categoria' => $cat,
+                                        'porciones' => 0,
+                                    ]);
+                                }
+                                $item = $platillosList->get($id);
+                                $item['porciones'] += $pl->pivot->porciones_plan;
+                                $platillosList->put($id, $item);
+                            }
+                        }
+                        $ordenDeseado = ['Entradas', 'Cremas y Sopas', 'Platos Fuertes', 'Guarniciones (Formales)', 'Guisados', 'Parrillada (Carnes)', 'Guarniciones', 'Menú Infantil', 'Buffet Infantil', 'Bebidas', 'Dulces', 'Postres'];
+                        $platillosPorCat = $platillosList->groupBy('categoria')->sortBy(function($val, $cat) use ($ordenDeseado) {
+                            $pos = array_search($cat, $ordenDeseado);
+                            return $pos === false ? 999 : $pos;
+                        });
+                    @endphp
+
+                    @if($platillosPorCat->isEmpty())
+                        <p class="no-platillos-item" style="margin: 0; padding: 0.5rem 0;">No hay platillos asignados a este evento aún.</p>
+                    @else
+                        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                            @foreach($platillosPorCat as $catName => $items)
+                                <div>
+                                    <h4 style="margin: 0 0 0.3rem 0; font-size: 0.8rem; color: var(--accent-magenta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 800;">
+                                        ▫️ {{ $catName }}
+                                    </h4>
+                                    <ul class="platillos-list-badges" style="margin: 0;">
+                                        @foreach($items as $platillo)
+                                            <li class="platillo-chip">
+                                                <strong>{{ $platillo['nombre'] }}</strong>
+                                                <span class="platillo-details">({{ $platillo['porciones'] }} porciones)</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </section>
 
                 @php
@@ -96,8 +138,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Materia Prima / Insumo</th>
-                                                <th>Matemático (Exacto)</th>
-                                                <th>Seguro (+10% Merma)</th>
+                                                <th>Exacto</th>
+                                                <th>Sugerido</th>
                                             </tr>
                                         </thead>
                                         <tbody>
