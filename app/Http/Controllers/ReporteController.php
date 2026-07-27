@@ -117,4 +117,78 @@ class ReporteController extends Controller
 
         return view('reportes.comanda-rapida', compact('reporteInsumos', 'comandaSession', 'platillos'));
     }
+
+    /**
+     * Procesa y consolida la lista global de compras (Central de Abastos) para un rango de fechas o semana.
+     */
+    public function comprasSemanal(\Illuminate\Http\Request $request)
+    {
+        // Por defecto: desde el inicio de esta semana hasta dos semanas en adelante para abarcar todos los eventos próximos
+        $fechaInicio = $request->input('fecha_inicio', \Carbon\Carbon::now()->startOfWeek()->format('Y-m-d'));
+        $fechaFin = $request->input('fecha_fin', \Carbon\Carbon::now()->endOfWeek()->addWeeks(2)->format('Y-m-d'));
+
+        // Cargamos los eventos dentro del rango que tengan salones asignados
+        $eventos = Evento::with(['salones', 'eventoSalones.platillos.categoriaPlatillo', 'eventoSalones.salon'])
+            ->whereBetween('fecha', [$fechaInicio, $fechaFin])
+            ->orderBy('fecha', 'asc')
+            ->get();
+
+        $listaGlobal = [];
+        $margenSeguridad = 1.10; // 10% extra por mermas y seguridad
+
+        foreach ($eventos as $evento) {
+            $insumosEvento = $this->calculadora->calcularParaEvento($evento);
+
+            foreach ($insumosEvento as $nombre => $datos) {
+                if (!isset($listaGlobal[$nombre])) {
+                    $ingredienteModel = \App\Models\Ingrediente::where('nombre', $nombre)->first();
+                    $categoria = $ingredienteModel && $ingredienteModel->categoria ? $ingredienteModel->categoria : 'Otros';
+
+                    $listaGlobal[$nombre] = [
+                        'nombre' => $nombre,
+                        'unidad' => $datos['unidad'],
+                        'categoria' => $categoria,
+                        'exacto_total' => 0,
+                        'eventos_desglose' => []
+                    ];
+                }
+
+                $listaGlobal[$nombre]['exacto_total'] += $datos['cantidad'];
+                
+                // Guardamos la cantidad que va para este evento específico (aplicando ya merma)
+                $listaGlobal[$nombre]['eventos_desglose'][] = [
+                    'evento_titulo' => $evento->titulo,
+                    'evento_fecha' => $evento->fecha->format('d/m'),
+                    'format' => $this->calculadora->formatearCantidad($datos['cantidad'] * $margenSeguridad, $datos['unidad'])
+                ];
+            }
+        }
+
+        $reporteConsolidado = [];
+        foreach ($listaGlobal as $nombre => $item) {
+            $exacto = $item['exacto_total'];
+            $seguro = $exacto * $margenSeguridad;
+            $comprarComercial = $seguro > 0 ? $this->calculadora->calcularCompraComercial($seguro, $item['unidad']) : 0;
+
+            $reporteConsolidado[] = [
+                'nombre' => $nombre,
+                'unidad' => $item['unidad'],
+                'categoria' => $item['categoria'],
+                'exacto_format' => $this->calculadora->formatearCantidad($exacto, $item['unidad']),
+                'seguro_format' => $this->calculadora->formatearCantidad($seguro, $item['unidad']),
+                'comprar_format' => $this->calculadora->formatearCantidad($comprarComercial, $item['unidad']),
+                'eventos_desglose' => $item['eventos_desglose']
+            ];
+        }
+
+        // Agrupamos y ordenamos por categoría de supermercado/central de abastos
+        $groupedInsumos = collect($reporteConsolidado)->groupBy('categoria');
+        $categoriaOrder = ['Frutas y Verduras', 'Carnes', 'Cremería', 'Abarrotes', 'Otros'];
+        $sortedGroups = $groupedInsumos->sortBy(function($val, $key) use ($categoriaOrder) {
+            $pos = array_search($key, $categoriaOrder);
+            return $pos === false ? 99 : $pos;
+        });
+
+        return view('reportes.compras-semana', compact('eventos', 'sortedGroups', 'fechaInicio', 'fechaFin'));
+    }
 }

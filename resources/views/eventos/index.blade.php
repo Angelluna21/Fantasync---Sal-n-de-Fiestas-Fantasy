@@ -90,9 +90,15 @@
 
         <!-- Tabla de Eventos -->
         <section class="eventos-section" aria-label="Tabla de Gestión Administrativa">
-            <h2 class="section-title eventos-table-title">
-                Control de Agenda y Finanzas
-            </h2>
+            <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                <h2 class="section-title eventos-table-title" style="margin: 0;">
+                    Control de Agenda y Finanzas
+                </h2>
+                <a href="{{ route('reportes.compras-semana') }}" style="background: linear-gradient(135deg, var(--primary-purple), #4a148c); color: white; padding: 0.75rem 1.75rem; border-radius: 2rem; text-decoration: none; font-weight: 800; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 15px rgba(122, 40, 138, 0.4); transition: all 0.3s ease;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    🛒 Lista de Compras Semanal (Central de Abastos)
+                </a>
+            </header>
 
             <style>
                 .actions-group {
