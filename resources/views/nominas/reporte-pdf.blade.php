@@ -18,7 +18,7 @@
 <body>
 
     <header class="header">
-        <h1>FantaSync</h1>
+        <h1>Fantasy</h1>
         <h2>Reporte de Nóminas y Pagos</h2>
         <p>Fecha de generación: {{ date('d/m/Y H:i') }}</p>
         @if($search)
