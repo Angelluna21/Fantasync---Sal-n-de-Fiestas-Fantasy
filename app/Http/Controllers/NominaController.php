@@ -105,7 +105,7 @@ class NominaController extends Controller
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('nominas.reporte-pdf', compact(
             'nominas', 'totalEmpleados', 'totalAPagar', 'operacionTotal', 'cocinaTotal', 'oficinaTotal', 'search'
-        ));
+        ))->setPaper('a4', 'landscape');
         
         return $pdf->stream('reporte_nominas_' . date('Y-m-d') . '.pdf');
     }

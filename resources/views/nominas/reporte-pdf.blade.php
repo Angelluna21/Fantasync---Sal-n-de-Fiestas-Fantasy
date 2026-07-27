@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <title>Reporte de Nóminas - FantaSync</title>
     <style>
+        @page { size: A4 landscape; margin: 15px; }
         {!! file_get_contents(public_path('css/pdf-reportes.css')) !!}
+        table.data-table th, table.data-table td { padding: 10px; }
+        .signature-box {
+            background-color: #ffffff !important;
+            border: 1px solid #888888 !important;
+            height: 35px;
+            width: 200px;
+        }
     </style>
 </head>
 <body>
@@ -48,17 +56,19 @@
                 <th>Evento</th>
                 <th>Fecha</th>
                 <th>Estado</th>
+                <th style="width: 200px; text-align: center;">Firma de Recibido</th>
             </tr>
         </thead>
         <tbody>
             @foreach($nominas as $nomina)
                 <tr>
-                    <td>{{ $nomina->nombre_empleado }}</td>
+                    <td><strong>{{ $nomina->nombre_empleado }}</strong></td>
                     <td>{{ $nomina->puesto }}</td>
-                    <td>${{ number_format($nomina->monto_total, 2) }}</td>
+                    <td><strong>${{ number_format($nomina->monto_total, 2) }}</strong></td>
                     <td>{{ $nomina->evento->titulo ?? 'N/A' }}</td>
                     <td>{{ \Carbon\Carbon::parse($nomina->fecha_trabajo)->format('d/m/Y') }}</td>
                     <td class="status-{{ strtolower($nomina->estado_pago) }}">{{ $nomina->estado_pago }}</td>
+                    <td class="signature-box"></td>
                 </tr>
             @endforeach
         </tbody>
