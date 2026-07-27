@@ -75,7 +75,7 @@
                                 <th>Usuario</th>
                                 <th>Acción</th>
                                 <th>Registro Modificado</th>
-                                <th>Detalles (JSON)</th>
+                                <th>Detalle</th>
                                 <th>Fecha y Hora</th>
                             </tr>
                         </thead>
