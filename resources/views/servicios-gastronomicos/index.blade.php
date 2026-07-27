@@ -14,33 +14,35 @@
     <figure class="dashboard-background" aria-hidden="true"></figure>
 
     <main class="dashboard-layout">
-        <!-- Navegación superior -->
-        <nav class="top-nav" aria-label="Menú superior">
-            <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
-            </a>
+        <!-- Navegación superior y Encabezado Unificado -->
+        <section class="top-nav" aria-label="Menú superior" style="align-items: flex-start;">
+            <!-- Lado Izquierdo: Logo y Botón Volver -->
+            <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+                <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
+                </a>
+                <a href="{{ route('dashboard') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Volver al Panel
+                </a>
+            </section>
 
-            <x-user-menu />
-        </nav>
+            <!-- Centro: Encabezado -->
+            <header class="dashboard-header" style="margin: 2rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
+                <hgroup>
+                    <p class="eyebrow" style="margin-bottom: 0;">Administración de Menú</p>
+                    <h1 class="dashboard-title" style="font-size: 2.8rem; margin-top: 0.2rem;">Servicios Gastronómicos</h1>
+                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.1rem;">Gestiona los tipos de servicio (ej. Menús a 2 Tiempos, Taquizas) que puedes ofrecer en tus eventos.</p>
+                </hgroup>
+            </header>
 
-        <!-- Volver al Panel -->
-        <nav aria-label="Navegación de retorno" class="platillos-section">
-            <a href="{{ route('dashboard') }}" class="btn-back-nav">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                Volver al Panel
-            </a>
-        </nav>
-
-        <!-- Encabezado -->
-        <header class="dashboard-header">
-            <hgroup>
-                <p class="eyebrow">Administración de Menú</p>
-                <h1 class="dashboard-title">Servicios Gastronómicos</h1>
-                <p class="dashboard-description">Gestiona los tipos de servicio (ej. Menús a 2 Tiempos, Taquizas) que puedes ofrecer en tus eventos.</p>
-            </hgroup>
-        </header>
+            <!-- Lado Derecho: Menú Usuario -->
+            <section style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+                <x-user-menu />
+            </section>
+        </section>
 
         @if (session('success'))
             <p class="alert-success-msg">
@@ -55,7 +57,7 @@
         @endif
 
         <!-- Contenedor Principal -->
-        <section class="platillos-section" aria-label="Listado de servicios gastronómicos">
+        <section class="platillos-section" aria-label="Listado de servicios gastronómicos" style="margin-top: 7rem;">
 
             <menu class="action-bar" aria-label="Acciones del catálogo">
                 <li>

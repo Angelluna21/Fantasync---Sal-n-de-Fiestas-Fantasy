@@ -12,31 +12,37 @@
     <figure class="dashboard-background" aria-hidden="true"></figure>
 
     <main class="dashboard-layout">
-        <nav class="top-nav" aria-label="Menú superior">
-            <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo">
-            </a>
-            <x-user-menu />
-        </nav>
+        <!-- Navegación superior y Encabezado Unificado -->
+        <section class="top-nav" aria-label="Menú superior" style="align-items: flex-start;">
+            <!-- Lado Izquierdo: Logo y Botón Volver -->
+            <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+                <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
+                </a>
+                <a href="{{ route('servicios-gastronomicos.index') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Volver a Servicios
+                </a>
+            </section>
 
-        <nav aria-label="Navegación de retorno" class="platillos-section">
-            <a href="{{ route('servicios-gastronomicos.index') }}" class="btn-back-nav">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                Volver a Servicios
-            </a>
-        </nav>
+            <!-- Centro: Encabezado -->
+            <header class="dashboard-header" style="margin: 2rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; max-width: none;">
+                <hgroup>
+                    <p class="eyebrow" style="margin-bottom: 0;">Administración de Menú</p>
+                    <h1 class="dashboard-title" style="font-size: 2.8rem; margin-top: 0.2rem;">Crear Servicio</h1>
+                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.1rem;">Dale un nombre al nuevo tipo de servicio gastronómico.</p>
+                </hgroup>
+            </header>
 
-        <header class="dashboard-header">
-            <hgroup>
-                <p class="eyebrow">Administración de Menú</p>
-                <h1 class="dashboard-title">Crear Servicio</h1>
-                <p class="dashboard-description">Dale un nombre al nuevo tipo de servicio gastronómico.</p>
-            </hgroup>
-        </header>
+            <!-- Lado Derecho: Menú Usuario -->
+            <section style="flex: 1; display: flex; justify-content: flex-end; padding-top: 15px;">
+                <x-user-menu />
+            </section>
+        </section>
 
-        <section class="platillos-section form-section-narrow" aria-label="Formulario de servicio">
+        <section class="platillos-section form-section-narrow" aria-label="Formulario de servicio" style="margin-top: 7rem;">
             <article class="platillo-card card-padded">
                 <form action="{{ route('servicios-gastronomicos.store') }}" method="POST">
                     @csrf
