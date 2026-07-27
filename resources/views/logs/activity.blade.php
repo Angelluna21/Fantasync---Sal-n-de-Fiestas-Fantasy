@@ -31,22 +31,33 @@
         <!-- Fondo Abstracto Animado -->
         <figure class="dashboard-background" aria-hidden="true"></figure>
 
-        <!-- Encabezado Principal -->
-        <header class="top-nav header-unified" style="padding: 2rem 2rem 0;">
-            <a href="{{ route('dashboard') }}" style="display: flex; align-items: center; gap: 0.5rem; color: white; text-decoration: none; font-weight: bold; padding: 0.5rem 1rem; background: rgba(255,255,255,0.1); border-radius: 9999px; transition: background 0.3s;">
-                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Dashboard
-            </a>
+        <!-- Navegación superior y Encabezado Unificado -->
+        <section class="top-nav" aria-label="Menú superior" style="align-items: flex-start; margin-bottom: 2rem; padding: 2rem 2rem 0; width: 100%; box-sizing: border-box;">
+            <!-- Lado Izquierdo: Logo y Botón Volver -->
+            <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1; align-items: flex-start;">
+                <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
+                </a>
+                <a href="{{ route('dashboard') }}" class="btn-back-nav" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white; display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 8px; text-decoration: none; transition: all 0.3s;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Volver al Panel
+                </a>
+            </section>
 
-            <hgroup class="header-titles" style="text-align: center; color: white;">
-                <p class="eyebrow" style="color: rgba(255,255,255,0.8); margin: 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em;">Administración</p>
-                <h1 class="dashboard-title" style="color: white; margin: 0; font-size: 2rem;">Bitácora de Actividades</h1>
-            </hgroup>
+            <!-- Centro: Encabezado -->
+            <header class="dashboard-header" style="margin: 2rem 0 0 0; flex: 2; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; max-width: none;">
+                <hgroup style="text-align: center;">
+                    <p class="eyebrow" style="margin-bottom: 0; text-align: center; color: rgba(255,255,255,0.8); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.1em;">Administración</p>
+                    <h1 class="dashboard-title" style="font-size: 2.8rem; margin-top: 0.2rem; text-align: center; color: white;">Bitácora de Actividades</h1>
+                    <p class="dashboard-description" style="margin: 0.5rem auto 0; font-size: 1.1rem; text-align: center; color: rgba(255,255,255,0.9);">Supervisa y audita en tiempo real todos los movimientos y cambios del sistema.</p>
+                </hgroup>
+            </header>
 
-            <nav aria-label="Opciones de usuario">
+            <!-- Lado Derecho: Menú Usuario -->
+            <section style="flex: 1; display: flex; justify-content: flex-end; align-items: flex-start; padding-top: 15px;">
                 <x-user-menu />
-            </nav>
-        </header>
+            </section>
+        </section>
 
         <main role="main" class="main-logs">
             <section class="logs-container" style="max-width: 1000px;">
