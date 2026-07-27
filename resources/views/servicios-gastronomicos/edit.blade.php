@@ -65,9 +65,13 @@
                         <p class="form-error-msg">{{ $message }}</p>
                     @enderror
 
-                    <footer class="form-actions" style="display: flex; gap: 1rem; width: 100%; justify-content: center; margin-top: 2rem;">
-                        <a href="{{ route('servicios-gastronomicos.index') }}" class="btn-cancel" style="flex: 1; text-align: center; max-width: 300px;">Cancelar</a>
-                        <button type="submit" class="btn-save" style="flex: 1; text-align: center; max-width: 300px;">Guardar Cambios</button>
+                    <footer style="display: flex !important; flex-direction: row !important; gap: 1.5rem; justify-content: center; align-items: center; width: 100%; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
+                        <a href="{{ route('servicios-gastronomicos.index') }}" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.8rem 2rem; background-color: #f1f5f9; color: #475569; font-weight: 700; font-size: 0.95rem; border: 1px solid #cbd5e1; border-radius: 2rem; text-decoration: none; transition: all 0.2s; min-width: 160px;">
+                            Cancelar
+                        </a>
+                        <button type="submit" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.8rem 2.5rem; background: linear-gradient(135deg, #7a288a, #d81b60); color: #ffffff; font-weight: 800; font-size: 0.95rem; border: none; border-radius: 2rem; cursor: pointer; box-shadow: 0 4px 15px rgba(122, 40, 138, 0.3); transition: all 0.2s; min-width: 180px;">
+                            Guardar Cambios
+                        </button>
                     </footer>
                 </form>
             </article>
