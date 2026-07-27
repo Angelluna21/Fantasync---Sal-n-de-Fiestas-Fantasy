@@ -40,11 +40,11 @@
             <!-- Lado Derecho: Acciones y Volver al Panel -->
             <section class="nav-actions" aria-label="Acciones de navegación" style="flex: 1; display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem;">
                 <x-user-menu />
-                <a href="{{ route('dashboard') }}" class="btn-back" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem;">
+                <a href="{{ route('contratos.index') }}" class="btn-back" style="width: fit-content; margin-bottom: 0; padding: 0.4rem 1rem; font-size: 0.85rem;">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
-                    Volver al Panel
+                    Volver a Contratos
                 </a>
             </section>
         </nav>
