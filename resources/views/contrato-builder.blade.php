@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Contratos | FantaSync</title>
     @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/css/contract.css'])
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
 </head>
 
 <body class="contract-page">
@@ -151,12 +153,12 @@
                             <input type="number" id="horas_adicionales" name="horas_adicionales" class="form-control" min="0" step="0.5" value="{{ old('horas_adicionales', $draft['horas_adicionales'] ?? 0) }}">
                         </article>
                         <article class="input-wrapper">
-                            <label for="recepcion_hora">Hora de Bienvenida</label>
-                            <input type="time" id="recepcion_hora" name="recepcion_hora" class="form-control" value="{{ old('recepcion_hora', $draft['recepcion_hora'] ?? '') }}">
+                            <label for="recepcion_hora">Hora de Recepción</label>
+                            <input type="text" id="recepcion_hora" name="recepcion_hora" class="form-control" placeholder="Seleccionar hora..." value="{{ old('recepcion_hora', $draft['recepcion_hora'] ?? '') }}" {{ old('hora_por_definir', $draft['extras']['hora_por_definir'] ?? '') ? 'disabled' : '' }}>
                         </article>
                         <article class="input-wrapper">
                             <label for="inicio_hora">Hora Inicio del Evento</label>
-                            <input type="time" id="inicio_hora" name="inicio_hora" class="form-control" value="{{ old('inicio_hora', $draft['inicio_hora'] ?? '') }}">
+                            <input type="text" id="inicio_hora" name="inicio_hora" class="form-control" placeholder="Seleccionar hora..." value="{{ old('inicio_hora', $draft['inicio_hora'] ?? '') }}" {{ old('hora_por_definir', $draft['extras']['hora_por_definir'] ?? '') ? 'disabled' : '' }}>
                         </article>
                         <article class="input-wrapper">
                             <label for="invitacion_estado">Invitación (Estado)</label>
@@ -185,18 +187,43 @@
                             const cbMisa = document.getElementById('tiene_misa');
                             const inputHorasEvento = document.getElementById('horas_evento');
                             
+                            const fpConfig = {
+                                enableTime: true,
+                                noCalendar: true,
+                                dateFormat: "H:i",
+                                altInput: true,
+                                altFormat: "h:i K",
+                                time_24hr: false,
+                                minuteIncrement: 1,
+                                locale: "es",
+                                allowInput: true
+                            };
+                            const fpRecepcion = typeof flatpickr !== 'undefined' && inputRecepcion ? flatpickr(inputRecepcion, fpConfig) : null;
+                            const fpInicio = typeof flatpickr !== 'undefined' && inputInicio ? flatpickr(inputInicio, fpConfig) : null;
+
                             if(cbPorDefinir) {
-                                cbPorDefinir.addEventListener('change', function() {
-                                    if(this.checked) {
+                                const toggleHoras = () => {
+                                    if(cbPorDefinir.checked) {
+                                        if(fpRecepcion) { fpRecepcion.clear(); fpRecepcion._input.disabled = true; }
+                                        if(fpInicio) { fpInicio.clear(); fpInicio._input.disabled = true; }
                                         inputRecepcion.disabled = true;
                                         inputInicio.disabled = true;
                                         inputRecepcion.value = '';
                                         inputInicio.value = '';
                                     } else {
+                                        if(fpRecepcion) { fpRecepcion._input.disabled = false; }
+                                        if(fpInicio) { fpInicio._input.disabled = false; }
                                         inputRecepcion.disabled = false;
                                         inputInicio.disabled = false;
                                     }
-                                });
+                                };
+                                cbPorDefinir.addEventListener('change', toggleHoras);
+                                if(cbPorDefinir.checked) {
+                                    if(fpRecepcion) { fpRecepcion._input.disabled = true; }
+                                    if(fpInicio) { fpInicio._input.disabled = true; }
+                                    inputRecepcion.disabled = true;
+                                    inputInicio.disabled = true;
+                                }
                             }
                             
                             function recalcularHoras() {

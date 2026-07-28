@@ -183,7 +183,7 @@ class ReporteController extends Controller
 
         // Agrupamos y ordenamos por categoría de supermercado/central de abastos
         $groupedInsumos = collect($reporteConsolidado)->groupBy('categoria');
-        $categoriaOrder = ['Frutas y Verduras', 'Carnes', 'Cremería', 'Abarrotes', 'Otros'];
+        $categoriaOrder = ['Frutas y Verduras', 'Carnes', 'Cremería', 'Abarrotes', 'General', 'Otros'];
         $sortedGroups = $groupedInsumos->sortBy(function($val, $key) use ($categoriaOrder) {
             $pos = array_search($key, $categoriaOrder);
             return $pos === false ? 99 : $pos;

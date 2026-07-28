@@ -79,7 +79,7 @@
 
                 @php
                 $groupedInsumos = collect($reporteInsumos)->groupBy('categoria');
-                $categoriaOrder = ['Frutas y Verduras', 'Cremería', 'Abarrotes', 'Carnes', 'Otros'];
+                $categoriaOrder = ['Frutas y Verduras', 'Carnes', 'Cremería', 'Abarrotes', 'General', 'Otros'];
                 $sortedGroups = $groupedInsumos->sortBy(function($val, $key) use ($categoriaOrder) {
                 $pos = array_search($key, $categoriaOrder);
                 return $pos === false ? 99 : $pos;

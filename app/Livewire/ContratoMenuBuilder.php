@@ -19,6 +19,7 @@ class ContratoMenuBuilder extends Component
     
     // Novedades para taquiza, bebidas e infantil
     public $taquiza_guisados = [];
+    public $taquiza_parrillada = [];
     public $taquiza_guarniciones = [];
     public $infantil = [];
     public $bebidas = [];
@@ -34,12 +35,15 @@ class ContratoMenuBuilder extends Component
 
         if ($evento && $evento->eventoSalones->isNotEmpty()) {
             $eventoSalonPivot = $evento->eventoSalones->first();
+            $eventoSalonPivot->load('platillos.categoriaPlatillo');
             $platillos = $eventoSalonPivot->platillos;
             
             foreach($platillos as $p) {
                 $cat = strtolower(trim($p->categoriaPlatillo->nombre ?? ''));
-                if (in_array($cat, ['guisados', 'taquiza', 'parrillada (carnes)', 'parrillada'])) {
+                if (in_array($cat, ['guisados', 'taquiza'])) {
                     $this->taquiza_guisados[] = (string) $p->id;
+                } elseif (in_array($cat, ['parrillada (carnes)', 'parrillada', 'parrilladas', 'carnes'])) {
+                    $this->taquiza_parrillada[] = (string) $p->id;
                 } elseif (in_array($cat, ['entradas', 'entrada'])) {
                     $this->entrada_id = (string) $p->id;
                 } elseif (in_array($cat, ['plato fuerte', 'platos fuertes'])) {
@@ -83,7 +87,7 @@ class ContratoMenuBuilder extends Component
 
         $platillosSeleccionados = [];
         if ($this->servicio_id == 1) {
-            $platillosSeleccionados = array_merge($this->taquiza_guisados, $this->taquiza_guarniciones);
+            $platillosSeleccionados = array_merge($this->taquiza_guisados, $this->taquiza_parrillada, $this->taquiza_guarniciones);
         } elseif ($this->servicio_id == 2) {
             $platillosSeleccionados = array_filter([$this->entrada_id, $this->plato_fuerte_id, $this->guarnicion_formal_id]);
         } elseif ($this->servicio_id == 3) {
