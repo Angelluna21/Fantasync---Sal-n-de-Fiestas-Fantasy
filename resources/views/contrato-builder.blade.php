@@ -110,6 +110,10 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <input type="checkbox" id="servicio_externo" name="servicio_externo" value="1" {{ old('servicio_externo', !empty($draft['extras']['servicio_externo'])) ? 'checked' : '' }}>
+                                <label for="servicio_externo" style="font-size: 0.85rem; color: var(--text-color); margin: 0; font-weight: normal; cursor: pointer;">Servicio Externo</label>
+                            </div>
                         </article>
                         <article class="input-wrapper">
                             <label for="estado">Estado del Contrato *</label>
@@ -186,6 +190,7 @@
                             const inputInicio = document.getElementById('inicio_hora');
                             const cbMisa = document.getElementById('tiene_misa');
                             const inputHorasEvento = document.getElementById('horas_evento');
+                            const cbServicioExterno = document.getElementById('servicio_externo');
                             
                             const fpConfig = {
                                 enableTime: true,
@@ -227,6 +232,21 @@
                             }
                             
                             function recalcularHoras() {
+                                if (cbServicioExterno && cbServicioExterno.checked) {
+                                    if (inputHorasEvento) {
+                                        inputHorasEvento.value = 0;
+                                        inputHorasEvento.closest('.input-wrapper').style.display = 'none';
+                                    }
+                                    if (inputHorasAdicionales) {
+                                        inputHorasAdicionales.value = 0;
+                                        inputHorasAdicionales.closest('.input-wrapper').style.display = 'none';
+                                    }
+                                    return;
+                                } else {
+                                    if (inputHorasEvento) inputHorasEvento.closest('.input-wrapper').style.display = '';
+                                    if (inputHorasAdicionales) inputHorasAdicionales.closest('.input-wrapper').style.display = '';
+                                }
+
                                 let base = 6.0;
                                 let misaExtra = (cbMisa && cbMisa.checked) ? 0.5 : 0;
                                 let adicionales = 0;
@@ -244,6 +264,9 @@
 
                             if (cbMisa) {
                                 cbMisa.addEventListener('change', recalcularHoras);
+                            }
+                            if (cbServicioExterno) {
+                                cbServicioExterno.addEventListener('change', recalcularHoras);
                             }
 
                             const inputHorasAdicionales = document.getElementById('horas_adicionales');

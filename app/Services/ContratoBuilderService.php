@@ -103,17 +103,24 @@ class ContratoBuilderService
                     $eventoId = $existingContract->evento_id;
                 }
             }
+            
+            $isServicioExterno = !empty($data['servicio_externo']);
+            if ($isServicioExterno) {
+                $extras['servicio_externo'] = true;
+            }
 
-            $salonOcupado = EventoSalon::where('salon_id', $data['salon_id'])
-                ->whereHas('evento', function ($q) use ($data, $eventoId) {
-                    $q->where('fecha', $data['evento_fecha']);
-                    if ($eventoId) {
-                        $q->where('id', '!=', $eventoId);
-                    }
-                })->exists();
+            if (!$isServicioExterno) {
+                $salonOcupado = EventoSalon::where('salon_id', $data['salon_id'])
+                    ->whereHas('evento', function ($q) use ($data, $eventoId) {
+                        $q->where('fecha', $data['evento_fecha']);
+                        if ($eventoId) {
+                            $q->where('id', '!=', $eventoId);
+                        }
+                    })->exists();
 
-            if ($salonOcupado) {
-                throw new Exception("El salón seleccionado ya está reservado para esta fecha.");
+                if ($salonOcupado) {
+                    throw new Exception("El salón seleccionado ya está reservado para esta fecha. Si es en otra ubicación, marque 'Servicio Externo'.");
+                }
             }
             // -------------------------------------------------------------------------
 
