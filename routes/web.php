@@ -23,7 +23,7 @@ Route::get('/', function () {
 // Rutas para invitados (Login)
 Route::middleware('guest')->group(function () {
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [LoginController::class, 'login'])->name('login.submit');
+    Route::post('login', [LoginController::class, 'login'])->middleware('throttle:5,1')->name('login.submit');
     Route::get('auth/google', [\App\Http\Controllers\Auth\SocialLoginController::class, 'redirectToGoogle'])->name('google.redirect');
     Route::get('auth/google/callback', [\App\Http\Controllers\Auth\SocialLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 });
