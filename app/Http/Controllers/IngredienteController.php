@@ -24,7 +24,7 @@ class IngredienteController extends Controller
     {
         $data = $request->validate([
             'nombre' => 'required|string|max:120',
-            'unidad' => 'required|in:kg,gr,l,ml,pz',
+            'unidad' => 'required|in:kg,gr,l,ml,pz,manojo,cabeza',
             'categoria' => 'required|string|max:50',
             'platillo_ids' => 'sometimes|array',
             'platillo_ids.*' => 'integer|exists:platillos,id',
@@ -56,7 +56,7 @@ class IngredienteController extends Controller
     {
         $data = $request->validate([
             'nombre' => 'required|string|max:120',
-            'unidad' => 'required|in:kg,gr,l,ml,pz',
+            'unidad' => 'required|in:kg,gr,l,ml,pz,manojo,cabeza',
             'categoria' => 'required|string|max:50',
             'platillo_ids' => 'sometimes|array',
             'platillo_ids.*' => 'integer|exists:platillos,id',

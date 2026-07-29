@@ -146,6 +146,8 @@
                     <option value="lt">Litros (lt)</option>
                     <option value="ml">Mililitros (ml)</option>
                     <option value="pza">Piezas (pza)</option>
+                    <option value="manojo">Manojos (manojo)</option>
+                    <option value="cabeza">Cabezas (cabeza)</option>
                 </select>
             </section>
             <menu style="display: flex; flex-direction: row; gap: 10px; margin-top: 25px; padding: 0; list-style: none;">

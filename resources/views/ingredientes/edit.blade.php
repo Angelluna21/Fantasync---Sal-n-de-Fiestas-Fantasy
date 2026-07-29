@@ -64,6 +64,8 @@
                             <option value="l" {{ old('unidad', $ingrediente->unidad) === 'l' ? 'selected' : '' }}>Litros (l)</option>
                             <option value="ml" {{ old('unidad', $ingrediente->unidad) === 'ml' ? 'selected' : '' }}>Mililitros (ml)</option>
                             <option value="pz" {{ old('unidad', $ingrediente->unidad) === 'pz' ? 'selected' : '' }}>Piezas (pz)</option>
+                            <option value="manojo" {{ old('unidad', $ingrediente->unidad) === 'manojo' ? 'selected' : '' }}>Manojos (manojo)</option>
+                            <option value="cabeza" {{ old('unidad', $ingrediente->unidad) === 'cabeza' ? 'selected' : '' }}>Cabezas (cabeza)</option>
                         </select>
                         @error('unidad')
                             <p class="form-error-msg">{{ $message }}</p>
