@@ -157,6 +157,16 @@
                                 </td>
                                 <td class="table-center">
                                     <menu class="actions-group" style="display: flex; flex-direction: row; gap: 0.5rem; justify-content: center; align-items: center; margin: 0; padding: 0; list-style: none;">
+                                        
+                                        <a href="{{ route('eventos.menu', $contrato->evento_id) }}" class="btn-event-link" title="Pedido de Platillos" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; background: #00bcd4; color: white; border: none; box-shadow: 0 4px 10px rgba(0, 188, 212, 0.3); gap: 0.25rem; transition: all 0.2s;">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                                            Platillos
+                                        </a>
+                                        
+                                        <a href="{{ route('reportes.insumos', $contrato->evento_id) }}" target="_blank" class="btn-event-link" title="Reporte de Insumos" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; background: #4caf50; color: white; border: none; box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3); gap: 0.25rem; transition: all 0.2s;">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                                            Insumos
+                                        </a>
                                         <a href="{{ route('contratos.show', $contrato->id) }}" target="_blank" class="btn-event-link" title="Ver PDF" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; background: var(--primary-purple); color: white; border: none; box-shadow: 0 4px 10px rgba(122, 40, 138, 0.3); gap: 0.25rem; transition: all 0.2s;">
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                                             Ver PDF
