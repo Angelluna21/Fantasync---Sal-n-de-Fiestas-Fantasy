@@ -112,7 +112,19 @@ class CalculadoraInsumosService
     {
         if (strtolower($unidad) === 'kg' && $cantidad > 0) {
             $kilos = floor($cantidad);
-            $gramos = round(($cantidad - $kilos) * 1000);
+            $decimal = $cantidad - $kilos;
+            
+            $fraccionStr = '';
+            if (abs($decimal - 0.25) < 0.001) $fraccionStr = '1/4';
+            elseif (abs($decimal - 0.5) < 0.001) $fraccionStr = '1/2';
+            elseif (abs($decimal - 0.75) < 0.001) $fraccionStr = '3/4';
+            
+            if ($fraccionStr !== '') {
+                if ($kilos == 0) return "{$fraccionStr} kg";
+                return "{$kilos} {$fraccionStr} kg";
+            }
+            
+            $gramos = round($decimal * 1000);
             
             if ($kilos == 0) {
                 return "{$gramos} g";
@@ -138,17 +150,17 @@ class CalculadoraInsumosService
         $unidad = strtolower(trim($unidad));
         
         // Unidades que no se pueden fraccionar en el supermercado
-        $unidadesDiscretas = ['pz', 'pieza', 'piezas', 'manojo', 'manojos', 'lata', 'latas', 'paquete', 'paquetes', 'frasco', 'botella'];
+        $unidadesDiscretas = ['pz', 'pieza', 'piezas', 'manojo', 'manojos', 'lata', 'latas', 'paquete', 'paquetes', 'frasco', 'botella', 'cabeza', 'cabezas'];
 
         if (in_array($unidad, $unidadesDiscretas)) {
             // Siempre redondear hacia arriba al entero más próximo
             return ceil($cantidadRequeridaSegura);
         } elseif ($unidad === 'kg' || $unidad === 'l') {
-            // Para kilos y litros, redondear al 0.5 más cercano hacia arriba para facilitar compra (ej. 1.2 -> 1.5)
-            return ceil($cantidadRequeridaSegura * 2) / 2;
+            // Para kilos y litros, redondear en cuartos (0.25, 0.50, 0.75, 1.00)
+            return ceil($cantidadRequeridaSegura * 4) / 4;
         } elseif ($unidad === 'gr' || $unidad === 'g' || $unidad === 'ml') {
-            // Para gramos, redondear a los 50g más cercanos hacia arriba
-            return ceil($cantidadRequeridaSegura / 50) * 50;
+            // Para gramos, redondear a múltiplos de 250g hacia arriba
+            return ceil($cantidadRequeridaSegura / 250) * 250;
         }
 
         // Por defecto, redondear a 2 decimales

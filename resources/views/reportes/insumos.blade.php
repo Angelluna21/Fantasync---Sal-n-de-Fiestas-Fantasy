@@ -154,7 +154,7 @@
                                                 <tr>
                                                     <td><strong>{{ $insumo['nombre'] }}</strong></td>
                                                     <td class="col-requerido">{{ $insumo['exacto_format'] }}</td>
-                                                    <td class="col-margen">{{ $insumo['seguro_format'] }}</td>
+                                                    <td class="col-margen">{{ $insumo['comprar_format'] }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
