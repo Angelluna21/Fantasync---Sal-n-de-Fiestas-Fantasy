@@ -23,14 +23,20 @@ class ContratoMenuBuilder extends Component
     public $taquiza_guarniciones = [];
     public $infantil = [];
     public $bebidas = [];
+    public $descorche = false;
 
     public function mount($eventoId)
     {
         $this->eventoId = $eventoId;
         
         $evento = Evento::with('eventoSalones.platillos.categoriaPlatillo')->find($eventoId);
-        if ($evento && preg_match('/Servicio Gastronómico:\s*(\d+)/', $evento->notas, $matches)) {
-            $this->servicio_id = $matches[1];
+        if ($evento) {
+            if (preg_match('/Servicio Gastronómico:\s*(\d+)/', $evento->notas, $matches)) {
+                $this->servicio_id = $matches[1];
+            }
+            if (strpos($evento->notas, 'Descorche: Sí') !== false) {
+                $this->descorche = true;
+            }
         }
 
         if ($evento && $evento->eventoSalones->isNotEmpty()) {
@@ -136,6 +142,20 @@ class ContratoMenuBuilder extends Component
             }
 
             $eventoSalonPivot->platillos()->sync($syncData);
+        }
+
+        if ($evento) {
+            $notas = $evento->notas;
+            if ($this->descorche) {
+                if (strpos($notas, 'Descorche: Sí') === false) {
+                    $notas .= "\nDescorche: Sí";
+                }
+            } else {
+                $notas = str_replace("\nDescorche: Sí", "", $notas);
+                $notas = str_replace("Descorche: Sí", "", $notas);
+            }
+            $evento->notas = trim($notas);
+            $evento->save();
         }
 
         return redirect()->route('reportes.insumos', $this->eventoId)

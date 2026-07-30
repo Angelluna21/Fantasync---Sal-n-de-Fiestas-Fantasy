@@ -144,7 +144,7 @@
 
         @if($servicio_id)
         <fieldset class="form-section animated-section" wire:key="servicio-extras-section">
-            <legend>Extras del Banquete</legend>
+            <legend>Infantil y Extras</legend>
             <section class="input-grid grid-2 grid-margin-2">
                 <article class="input-wrapper">
                     <label class="tiempo-label">Opciones Infantiles (Opcional)</label>
@@ -178,6 +178,14 @@
                             @endforeach
                         </div>
                     </details>
+                </article>
+                
+                <article class="input-wrapper" style="grid-column: span 2;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; background: rgba(122, 40, 138, 0.05); padding: 1rem; border-radius: 8px; border: 1px solid rgba(122, 40, 138, 0.2);">
+                        <input type="checkbox" wire:model.live="descorche" style="width: 20px; height: 20px; accent-color: var(--primary-purple);">
+                        <span style="font-weight: 600; color: var(--primary-purple);">Servicio de Descorche (Permitir ingreso de alcohol propio)</span>
+                    </label>
+                    <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; padding-left: 2rem;">Sugerencia: Para 100 adultos se recomienda comprar aproximadamente de 3 a 4 kg de limones.</p>
                 </article>
             </section>
         </fieldset>

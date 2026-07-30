@@ -57,17 +57,6 @@ value="{{ old('nombre', $platillo->nombre) }}" required>
 @enderror
 </fieldset>
 
-<!-- Campo: Precio -->
-<fieldset class="form-group">
-<legend class="form-label">Precio Unitario ($) *</legend>
-<input type="number" step="0.01" min="0" id="precio" name="precio" class="form-input"
-placeholder="Ej. 45.00"
-value="{{ old('precio', $platillo->precio) }}" required>
-@error('precio')
-<output class="form-error">{{ $message }}</output>
-@enderror
-</fieldset>
-
 <!-- Campo: Servicio(s) Gastronómico(s) -->
 <fieldset class="form-group">
 <legend class="form-label">Servicio(s) Gastronómico(s) *</legend>
