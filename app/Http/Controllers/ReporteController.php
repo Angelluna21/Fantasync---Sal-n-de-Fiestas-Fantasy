@@ -129,7 +129,7 @@ class ReporteController extends Controller
 
         // Cargamos los eventos dentro del rango que tengan salones asignados
         $eventos = Evento::with(['salones', 'eventoSalones.platillos.categoriaPlatillo', 'eventoSalones.salon'])
-            ->whereBetween('fecha', [$fechaInicio, $fechaFin])
+            ->whereBetween('fecha', [$fechaInicio . ' 00:00:00', $fechaFin . ' 23:59:59'])
             ->orderBy('fecha', 'asc')
             ->get();
 

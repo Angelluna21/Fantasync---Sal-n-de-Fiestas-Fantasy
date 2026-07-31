@@ -97,6 +97,10 @@
             display: inline-block;
         }
         @media print {
+            @page {
+                size: landscape;
+                margin: 1cm;
+            }
             .no-print {
                 display: none !important;
             }
