@@ -190,6 +190,13 @@
                 background: none !important;
                 color: #000 !important;
             }
+            .comanda-card {
+                padding: 0 !important;
+                border: none !important;
+            }
+            .comanda-category-section {
+                margin-bottom: 1rem !important;
+            }
         }
         /* Nuevos estilos compactos para la lista de platillos */
         .comanda-list {
@@ -334,52 +341,54 @@
                     <p style="font-size: 1.2rem; color: var(--text-muted); font-weight: 700;">Este contrato aún no tiene platillos asignados en la comanda.</p>
                 </article>
             @else
-                @foreach($comandaGlobal as $categoria => $platillos)
-                    @php
-                        if (in_array($categoria, ['Entradas', 'Cremas y Sopas', 'Platos Fuertes', 'Guarniciones (Formales)'])) {
-                            $grupoLabel = 'Servicio en Tiempos';
-                        } elseif (in_array($categoria, ['Guisados', 'Parrillada (Carnes)', 'Guarniciones'])) {
-                            $grupoLabel = 'Taquiza / Buffet';
-                        } elseif (in_array($categoria, ['Menú Infantil', 'Buffet Infantil'])) {
-                            $grupoLabel = 'Menú Infantil';
-                        } elseif (in_array($categoria, ['Bebidas'])) {
-                            $grupoLabel = 'Bar y Bebidas';
-                        } elseif (in_array($categoria, ['Dulces', 'Postres'])) {
-                            $grupoLabel = 'Postres y Dulces';
-                        } else {
-                            $grupoLabel = 'Otros Platillos';
-                        }
-                    @endphp
+                <article class="sucursal-card main-report-card comanda-card">
+                    @foreach($comandaGlobal as $categoria => $platillos)
+                        @php
+                            if (in_array($categoria, ['Entradas', 'Cremas y Sopas', 'Platos Fuertes', 'Guarniciones (Formales)'])) {
+                                $grupoLabel = 'Servicio en Tiempos';
+                            } elseif (in_array($categoria, ['Guisados', 'Parrillada (Carnes)', 'Guarniciones'])) {
+                                $grupoLabel = 'Taquiza / Buffet';
+                            } elseif (in_array($categoria, ['Menú Infantil', 'Buffet Infantil'])) {
+                                $grupoLabel = 'Menú Infantil';
+                            } elseif (in_array($categoria, ['Bebidas'])) {
+                                $grupoLabel = 'Bar y Bebidas';
+                            } elseif (in_array($categoria, ['Dulces', 'Postres'])) {
+                                $grupoLabel = 'Postres y Dulces';
+                            } else {
+                                $grupoLabel = 'Otros Platillos';
+                            }
+                        @endphp
 
-                    <article class="sucursal-card main-report-card comanda-card">
-                        <header class="card-header" style="border-bottom: 1px solid rgba(122, 40, 138, 0.1); padding-bottom: 0.75rem; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
-                            <h2 class="card-title" style="margin: 0; display: flex; align-items: center; gap: 0.5rem; font-size: 1.25rem; font-weight: 800;">
-                                <span>{{ $categoria }}</span>
-                                <span class="category-badge-group" style="font-size: 0.7rem; padding: 0.2rem 0.6rem;">{{ $grupoLabel }}</span>
-                            </h2>
-                            <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">{{ count($platillos) }} platillo(s)</span>
-                        </header>
+                        <div class="comanda-category-section" style="margin-bottom: 2rem;">
+                            <header class="card-header" style="border-bottom: 2px solid rgba(122, 40, 138, 0.15); padding-bottom: 0.5rem; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+                                <h2 class="card-title" style="margin: 0; display: flex; align-items: center; gap: 0.5rem; font-size: 1.35rem; font-weight: 900; color: var(--primary-purple);">
+                                    <span>{{ $categoria }}</span>
+                                    <span class="category-badge-group" style="font-size: 0.75rem; padding: 0.2rem 0.6rem; background: rgba(122, 40, 138, 0.08);">{{ $grupoLabel }}</span>
+                                </h2>
+                                <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); background: #f0f0f0; padding: 0.2rem 0.6rem; border-radius: 12px;">{{ count($platillos) }} platillo(s)</span>
+                            </header>
 
-                        <div class="comanda-list">
-                            @foreach($platillos as $platillo)
-                                <div class="comanda-list-item">
-                                    <div class="comanda-checkbox print-checkbox" title="Marcar como listo"></div>
-                                    <div class="comanda-details">
-                                        <p class="comanda-name">{{ $platillo['nombre'] }}</p>
-                                        @foreach($platillo['salones'] as $salon)
-                                            @if($salon['notas'] && !str_contains($salon['notas'], 'Registrado desde el configurador'))
-                                                <span class="nota-box" style="margin-top: 0.2rem; display: inline-block; padding: 0.2rem 0.5rem; font-size: 0.75rem;">Nota: {{ $salon['notas'] }}</span>
-                                            @endif
-                                        @endforeach
+                            <div class="comanda-list">
+                                @foreach($platillos as $platillo)
+                                    <div class="comanda-list-item">
+                                        <div class="comanda-checkbox print-checkbox" title="Marcar como listo"></div>
+                                        <div class="comanda-details">
+                                            <p class="comanda-name">{{ $platillo['nombre'] }}</p>
+                                            @foreach($platillo['salones'] as $salon)
+                                                @if($salon['notas'] && !str_contains($salon['notas'], 'Registrado desde el configurador'))
+                                                    <span class="nota-box" style="margin-top: 0.2rem; display: inline-block; padding: 0.2rem 0.5rem; font-size: 0.75rem;">Nota: {{ $salon['notas'] }}</span>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                        <div class="comanda-portions">
+                                            {{ $platillo['porciones_totales'] }}
+                                        </div>
                                     </div>
-                                    <div class="comanda-portions">
-                                        {{ $platillo['porciones_totales'] }}
-                                    </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
-                    </article>
-                @endforeach
+                    @endforeach
+                </article>
             @endif
 
             <!-- Pie de página con acciones -->
