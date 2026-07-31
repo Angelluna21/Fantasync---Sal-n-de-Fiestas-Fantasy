@@ -191,7 +191,7 @@
             <article class="sucursal-card main-report-card" style="padding: 2rem;">
                 <header style="border-bottom: 2px solid rgba(122, 40, 138, 0.15); padding-bottom: 1.5rem; margin-bottom: 2rem;">
                     <p class="eyebrow" style="color: var(--accent-magenta); margin-bottom: 0.2rem; font-size: 0.95rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em;">Compras y Almacén · Central de Abastos</p>
-                    <h1 style="color: var(--primary-purple); font-size: 2.2rem; font-weight: 800; margin: 0 0 0.5rem 0; line-height: 1.2;">Lista Consolidada de Compras Semanales / por Período</h1>
+                    <h1 style="color: var(--primary-purple); font-size: 2.2rem; font-weight: 800; margin: 0 0 0.5rem 0; line-height: 1.2;">Lista de Compras Semanales</h1>
                     <p style="color: var(--text-main); font-size: 1.1rem; margin: 0;">Período seleccionado: <strong style="color: var(--primary-purple);">{{ \Carbon\Carbon::parse($fechaInicio)->format('d/m/Y') }} al {{ \Carbon\Carbon::parse($fechaFin)->format('d/m/Y') }}</strong></p>
                 </header>
 
