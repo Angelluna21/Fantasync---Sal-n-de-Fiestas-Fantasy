@@ -181,7 +181,7 @@ class ContratoBuilderService
                     'nombre_festejado' => trim($data['festejado']),
                     'estado' => $contractData['estado'],
                     'color_manteleria' => trim($data['manteleria_color'] ?? ''),
-                    'titulo' => trim($data['tipo_evento']) . ' de ' . trim($data['festejado']),
+                    'titulo' => trim($data['cliente']),
                     'notas' => 'Servicio Gastronómico: ' . ($data['servicio_gastronomico'] ?? 'N/A') . '. Platillos: ' . implode(', ', $platilloIds) . '. Extras: ' . json_encode($extras) . $notasAdicionales
                 ]
             );

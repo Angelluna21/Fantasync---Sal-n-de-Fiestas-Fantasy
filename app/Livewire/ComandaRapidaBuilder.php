@@ -52,7 +52,7 @@ class ComandaRapidaBuilder extends Component
 
         // Crear el evento
         $evento = Evento::create([
-            'titulo' => $this->nombreCliente ? ('Banquete: ' . $this->nombreCliente) : 'Banquete Independiente',
+            'titulo' => $this->nombreCliente ?: 'Banquete Independiente',
             'fecha' => $this->fechaEvento,
             'estado' => 'confirmado',
             'tipo_evento' => $this->es_externo ? 'banquete_externo' : 'banquete_interno',
