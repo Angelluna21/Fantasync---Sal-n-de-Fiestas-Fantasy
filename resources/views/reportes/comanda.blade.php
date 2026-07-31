@@ -179,7 +179,65 @@
                 border: 2px solid #000 !important;
                 width: 18px !important;
                 height: 18px !important;
+                border-radius: 50% !important;
             }
+            .comanda-list-item {
+                border-bottom: 1px solid #000 !important;
+                break-inside: avoid;
+            }
+            .comanda-portions {
+                border: 1px solid #000 !important;
+                background: none !important;
+                color: #000 !important;
+            }
+        }
+        /* Nuevos estilos compactos para la lista de platillos */
+        .comanda-list {
+            display: flex;
+            flex-direction: column;
+        }
+        .comanda-list-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            gap: 1rem;
+        }
+        .comanda-list-item:last-child {
+            border-bottom: none;
+        }
+        .comanda-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+        .comanda-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .comanda-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.2;
+        }
+        .comanda-portions {
+            background: rgba(122, 40, 138, 0.08);
+            color: var(--primary-purple);
+            font-size: 1rem;
+            font-weight: 800;
+            padding: 0.25rem 0.85rem;
+            border-radius: 1rem;
+            white-space: nowrap;
+        }
+        .comanda-card {
+            padding: 1.5rem !important;
         }
     </style>
 </head>
@@ -293,47 +351,33 @@
                         }
                     @endphp
 
-                    <article class="sucursal-card main-report-card" style="padding: 2rem;">
-                        <header class="card-header" style="border-bottom: 2px solid rgba(122, 40, 138, 0.15); padding-bottom: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
-                            <h2 class="card-title" style="margin: 0; display: flex; align-items: center; gap: 0.5rem; font-size: 1.5rem;">
+                    <article class="sucursal-card main-report-card comanda-card">
+                        <header class="card-header" style="border-bottom: 1px solid rgba(122, 40, 138, 0.1); padding-bottom: 0.75rem; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+                            <h2 class="card-title" style="margin: 0; display: flex; align-items: center; gap: 0.5rem; font-size: 1.25rem; font-weight: 800;">
                                 <span>{{ $categoria }}</span>
-                                <span class="category-badge-group">{{ $grupoLabel }}</span>
+                                <span class="category-badge-group" style="font-size: 0.7rem; padding: 0.2rem 0.6rem;">{{ $grupoLabel }}</span>
                             </h2>
-                            <span style="font-size: 0.9rem; font-weight: 700; color: var(--text-muted);">{{ count($platillos) }} platillo(s) en categoría</span>
+                            <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">{{ count($platillos) }} platillo(s)</span>
                         </header>
 
-                        <figure class="table-responsive" style="margin: 0;">
-                            <table class="tabla-reporte" style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 60px; text-align: center;">Listo</th>
-                                        <th>Platillo / Preparación</th>
-                                        <th style="width: 180px; text-align: center;">Porciones Totales</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($platillos as $platillo)
-                                        <tr>
-                                            <td style="text-align: center; vertical-align: middle;">
-                                                <span class="print-checkbox" title="Marcar como preparado/listo"></span>
-                                            </td>
-                                            <td style="vertical-align: middle;">
-                                                <strong style="font-size: 1.15rem; color: var(--primary-purple); display: block; margin-bottom: 0.2rem;">{{ $platillo['nombre'] }}</strong>
-                                                <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">{{ $categoria }}</span>
-                                                @foreach($platillo['salones'] as $salon)
-                                                    @if($salon['notas'] && !str_contains($salon['notas'], 'Registrado desde el configurador'))
-                                                        <span class="nota-box" style="margin-top: 0.4rem; display: inline-block;">Nota especial: {{ $salon['notas'] }}</span>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                            <td style="text-align: center; vertical-align: middle;">
-                                                <span class="porciones-badge" style="font-size: 1.35rem; padding: 0.5rem 1.25rem;">{{ $platillo['porciones_totales'] }}</span>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </figure>
+                        <div class="comanda-list">
+                            @foreach($platillos as $platillo)
+                                <div class="comanda-list-item">
+                                    <div class="comanda-checkbox print-checkbox" title="Marcar como listo"></div>
+                                    <div class="comanda-details">
+                                        <p class="comanda-name">{{ $platillo['nombre'] }}</p>
+                                        @foreach($platillo['salones'] as $salon)
+                                            @if($salon['notas'] && !str_contains($salon['notas'], 'Registrado desde el configurador'))
+                                                <span class="nota-box" style="margin-top: 0.2rem; display: inline-block; padding: 0.2rem 0.5rem; font-size: 0.75rem;">Nota: {{ $salon['notas'] }}</span>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    <div class="comanda-portions">
+                                        {{ $platillo['porciones_totales'] }}
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </article>
                 @endforeach
             @endif
