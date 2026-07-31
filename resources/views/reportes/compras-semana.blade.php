@@ -233,7 +233,7 @@
                                                             Adultos: {{ $ev->adultos_total }} <br>
                                                             Niños: {{ $ev->ninos_total }}
                                                         </div>
-                                                        <strong>{{ $ev->nombre_festejado ?? $ev->titulo }}</strong><br>
+                                                        <strong>{{ $ev->cliente->nombre_completo ?? $ev->titulo }}</strong><br>
                                                         <span style="color: #666;">/ {{ strtoupper($ev->fecha->translatedFormat('l')) }}</span>
                                                     </th>
                                                 @endforeach

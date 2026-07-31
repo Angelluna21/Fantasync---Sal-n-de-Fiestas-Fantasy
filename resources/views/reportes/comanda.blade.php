@@ -308,8 +308,8 @@
                     <span class="comanda-meta-value">{{ $contrato->evento->fecha->format('d/m/Y') }}</span>
                 </div>
                 <div class="comanda-meta-item">
-                    <span class="comanda-meta-label">Festejado(a)</span>
-                    <span class="comanda-meta-value">{{ $contrato->evento->nombre_festejado }}</span>
+                    <span class="comanda-meta-label">Cliente</span>
+                    <span class="comanda-meta-value">{{ $contrato->evento->cliente->nombre_completo ?? $contrato->evento->titulo }}</span>
                 </div>
                 <div class="comanda-meta-item">
                     <span class="comanda-meta-label">Sucursal</span>

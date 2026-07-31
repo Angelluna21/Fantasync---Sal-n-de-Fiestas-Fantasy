@@ -442,8 +442,8 @@
                             <span class="event-meta-value capitalize">\${formattedDate}</span>
                         </article>
                         <article class="event-meta-item">
-                            <span class="event-meta-label">Festejado(a)</span>
-                            <span class="event-meta-value">\${event.nombre_festejado || 'No especificado'}</span>
+                            <span class="event-meta-label">Cliente</span>
+                            <span class="event-meta-value">\${event.titulo || 'No especificado'}</span>
                         </article>
                         <article class="event-meta-item">
                             <span class="event-meta-label">Recepción</span>

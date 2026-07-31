@@ -33,7 +33,7 @@
                 <hgroup>
                     <p class="eyebrow" style="margin-bottom: 0;">Paso 2 / 2</p>
                     <h1 class="contract-title" style="margin-top: 0.2rem;">Selección de Menú y Comanda</h1>
-                    <p class="contract-subtitle" style="color: white; margin-top: 0; opacity: 0.9;">Asigna el menú para el evento de {{ $evento->nombre_festejado }} ({{ \Carbon\Carbon::parse($evento->fecha)->format('d/m/Y') }})</p>
+                    <p class="contract-subtitle" style="color: white; margin-top: 0; opacity: 0.9;">Asigna el menú para el evento de {{ $evento->cliente->nombre_completo ?? $evento->titulo }} ({{ \Carbon\Carbon::parse($evento->fecha)->format('d/m/Y') }})</p>
                 </hgroup>
             </header>
 
