@@ -165,10 +165,7 @@
             <!-- Lado derecho: Botón Impresión y Usuario -->
             <section style="flex: 1; display: flex; flex-direction: column; align-items: flex-end; gap: 1rem;">
                 <x-user-menu />
-                <button class="btn-back-nav-glass no-print" onclick="window.print();" style="background: linear-gradient(135deg, var(--accent-yellow), #fbc02d); color: var(--primary-purple); border: none; font-size: 1rem; padding: 0.65rem 1.5rem; box-shadow: var(--shadow-yellow); cursor: pointer; font-weight: 800;">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20" style="margin-right: 0.4rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                    Imprimir Lista para la Central de Abastos
-                </button>
+
             </section>
         </nav>
 
