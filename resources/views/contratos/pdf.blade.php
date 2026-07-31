@@ -284,7 +284,7 @@
             <td class="col">
                 <div class="section-header" style="margin-top: 0;">2. Detalles del Evento</div>
                 <div class="info-row"><span class="label">Tipo/Festejado:</span> <span class="value">{{ mb_strtoupper($contrato->evento->titulo) }} / {{ $contrato->servicios_extras['festejado'] ?? 'N/A' }}</span></div>
-                <div class="info-row"><span class="label">Fecha y Horario:</span> <span class="value">{{ $contrato->evento->fecha->format('d/m/Y') }} | {{ \Carbon\Carbon::parse($contrato->evento->hora_inicio)->format('H:i') }} a {{ \Carbon\Carbon::parse($contrato->evento->hora_fin)->format('H:i') }} hrs</span></div>
+                <div class="info-row"><span class="label">Fecha y Horario:</span> <span class="value">{{ $contrato->evento->fecha->format('d/m/Y') }} | {{ \Carbon\Carbon::parse($contrato->evento->hora_inicio)->format('H:i') }} a {{ \Carbon\Carbon::parse($contrato->evento->hora_inicio)->addHours($contrato->evento->horas_duracion)->format('H:i') }} hrs</span></div>
                 <div class="info-row">
                     <span class="label">Salón(es):</span> 
                     <span class="value">
