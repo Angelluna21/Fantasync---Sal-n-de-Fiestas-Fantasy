@@ -62,7 +62,7 @@
 
                     <fieldset class="form-group">
                         <label class="form-label">NOMBRE DEL PLATILLO</label>
-                        <input type="text" name="nombre" class="form-input" placeholder="Ej. Pechuga Cordon Bleu en salsa chipotle" value="{{ old('nombre') }}" required>
+                        <input type="text" name="nombre" class="form-input" placeholder="Ej. Pechuga Cordon Bleu en salsa chipotle" value="{{ old('nombre') }}" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s/]+" title="El nombre solo debe contener letras, espacios y la diagonal (/)." required>
                     </fieldset>
 
                     <fieldset class="form-group">
@@ -81,7 +81,7 @@
                         <label class="form-label">CATEGORÍA DE MENÚ</label>
                         <select name="categoria_platillo_id" class="form-input" required>
                             <option value="">Selecciona una categoría...</option>
-                            @foreach($categorias->groupBy(fn($cat) => $cat->grupo ?? 'Sin Grupo') as $grupo => $items)
+                            @foreach($categorias->groupBy(fn($cat) => $cat->grupo ?? 'Salsas/Aderezos/Espejos') as $grupo => $items)
                             <optgroup label="{{ $grupo }}">
                                 @foreach($items as $categoria)
                                 <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
@@ -108,7 +108,7 @@
                                     @endforeach
                                     @endif
                                 </select>
-                                <input type="number" step="0.001" min="0" class="form-input" name="ingredientes[cantidad][]" placeholder="Cantidad" style="flex: 1;" title="Cantidad base (ej. para 100 pax o para todo el evento)">
+                                <input type="number" step="0.001" min="0" class="form-input" name="ingredientes[cantidad][]" placeholder="Cantidad para 100" style="flex: 1;" title="Cantidad base (ej. para 100 pax o para todo el evento)">
                                 <select class="form-input" name="ingredientes[es_fijo][]" style="flex: 1;" title="Tipo de cálculo: Proporcional escala con la cantidad de personas (Regla de 3), Fijo se cobra/usa la misma cantidad siempre por evento.">
                                     <option value="0">Proporcional</option>
                                     <option value="1">Fijo por evento</option>

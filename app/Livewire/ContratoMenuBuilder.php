@@ -23,6 +23,9 @@ class ContratoMenuBuilder extends Component
     public $taquiza_guarniciones = [];
     public $infantil = [];
     public $bebidas = [];
+    public $espejos = [];
+    public $salsas = [];
+    public $aderezos = [];
     public $descorche = false;
 
     public function mount($eventoId)
@@ -66,6 +69,12 @@ class ContratoMenuBuilder extends Component
                     $this->infantil[] = (string) $p->id;
                 } elseif (in_array($cat, ['bebidas', 'bebida', 'aguas', 'refrescos'])) {
                     $this->bebidas[] = (string) $p->id;
+                } elseif (in_array($cat, ['espejos', 'espejo'])) {
+                    $this->espejos[] = (string) $p->id;
+                } elseif (in_array($cat, ['salsas', 'salsa'])) {
+                    $this->salsas[] = (string) $p->id;
+                } elseif (in_array($cat, ['aderezos', 'aderezo'])) {
+                    $this->aderezos[] = (string) $p->id;
                 }
             }
         }
@@ -95,11 +104,13 @@ class ContratoMenuBuilder extends Component
 
         $platillosSeleccionados = [];
         if ($this->servicio_id == 1) {
-            $platillosSeleccionados = array_merge($this->taquiza_guisados, $this->taquiza_parrillada, $this->taquiza_guarniciones);
+            $platillosSeleccionados = array_merge($this->taquiza_guisados, $this->taquiza_parrillada, $this->taquiza_guarniciones, $this->salsas, $this->aderezos);
         } elseif ($this->servicio_id == 2) {
             $platillosSeleccionados = array_filter([$this->entrada_id, $this->plato_fuerte_id, $this->guarnicion_formal_id]);
+            $platillosSeleccionados = array_merge($platillosSeleccionados, $this->espejos, $this->salsas, $this->aderezos);
         } elseif ($this->servicio_id == 3) {
             $platillosSeleccionados = array_filter([$this->crema_sopa_id, $this->entrada_id, $this->plato_fuerte_id, $this->guarnicion_formal_id]);
+            $platillosSeleccionados = array_merge($platillosSeleccionados, $this->espejos, $this->salsas, $this->aderezos);
         }
 
         // Add infantil and bebidas (up to 2 bebidas logic could be validated in $reglas, or limited in UI)

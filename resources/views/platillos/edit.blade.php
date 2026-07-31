@@ -51,7 +51,7 @@ Volver al Catálogo
 <legend class="form-label">Nombre del Platillo</legend>
 <input type="text" id="nombre" name="nombre" class="form-input"
 placeholder="Ej. Filete de res en salsa pimienta"
-value="{{ old('nombre', $platillo->nombre) }}" required>
+value="{{ old('nombre', $platillo->nombre) }}" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s/]+" title="El nombre solo debe contener letras, espacios y la diagonal (/)." required>
 @error('nombre')
 <output class="form-error">{{ $message }}</output>
 @enderror
@@ -79,7 +79,7 @@ value="{{ old('nombre', $platillo->nombre) }}" required>
 <legend class="form-label">Categoría de Menú</legend>
 <select id="categoria_platillo_id" name="categoria_platillo_id" class="form-input" required>
 <option value="" disabled>Selecciona una categoría...</option>
-@foreach($categorias->groupBy(fn($cat) => $cat->grupo ?? 'Sin Grupo') as $grupo => $items)
+@foreach($categorias->groupBy(fn($cat) => $cat->grupo ?? 'Salsas/Aderezos/Espejos') as $grupo => $items)
 <optgroup label="{{ $grupo }}">
 @foreach($items as $categoria)
 <option value="{{ $categoria->id }}"
@@ -142,7 +142,7 @@ selectHtml += `</select>`;
 
 row.innerHTML = `
 ${selectHtml}
-    <input type="number" step="0.001" min="0" name="ingredientes[cantidad][]" class="form-input" style="flex: 1;" placeholder="Cantidad" value="${cantidad}" title="Cantidad base (ej. para 100 pax o para todo el evento)" required>
+    <input type="number" step="0.001" min="0" name="ingredientes[cantidad][]" class="form-input" style="flex: 1;" placeholder="Cantidad para 100" value="${cantidad}" title="Cantidad base (ej. para 100 pax o para todo el evento)" required>
     <select name="ingredientes[es_fijo][]" class="form-input" style="flex: 1;" title="Tipo de cálculo">
         <option value="0" ${esFijo == 0 ? 'selected' : ''}>Proporcional</option>
         <option value="1" ${esFijo == 1 ? 'selected' : ''}>Fijo por evento</option>

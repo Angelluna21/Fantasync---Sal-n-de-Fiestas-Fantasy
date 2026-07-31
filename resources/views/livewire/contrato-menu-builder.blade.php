@@ -74,6 +74,39 @@
                         </div>
                     </details>
                 </article>
+                <article class="input-wrapper">
+                    <label class="tiempo-label">Salsas (Opcional)</label>
+                    <details class="dropdown-multi" style="position: relative;" wire:ignore.self>
+                        <summary class="form-control" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; background-color: white;">
+                            <span>{{ count($salsas) == 0 ? '-- Seleccionar Salsas --' : count($salsas) . ' seleccionado(s)' }}</span>
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div style="position: absolute; z-index: 10; width: 100%; max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 0.5rem; background: white; margin-top: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['salsas', 'salsa']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id) || $p->serviciosGastronomicos->isEmpty()) ?? [] as $salsa)
+                                <label style="display: block; padding: 0.25rem 0; cursor: pointer; border-bottom: 1px solid #eee;">
+                                    <input type="checkbox" wire:model.live="salsas" value="{{ $salsa->id }}"> {{ $salsa->nombre }}
+                                </label>
+                            @endforeach
+                        </div>
+                    </details>
+                </article>
+
+                <article class="input-wrapper">
+                    <label class="tiempo-label">Aderezos (Opcional)</label>
+                    <details class="dropdown-multi" style="position: relative;" wire:ignore.self>
+                        <summary class="form-control" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; background-color: white;">
+                            <span>{{ count($aderezos) == 0 ? '-- Seleccionar Aderezos --' : count($aderezos) . ' seleccionado(s)' }}</span>
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div style="position: absolute; z-index: 10; width: 100%; max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 0.5rem; background: white; margin-top: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['aderezos', 'aderezo']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id) || $p->serviciosGastronomicos->isEmpty()) ?? [] as $aderezo)
+                                <label style="display: block; padding: 0.25rem 0; cursor: pointer; border-bottom: 1px solid #eee;">
+                                    <input type="checkbox" wire:model.live="aderezos" value="{{ $aderezo->id }}"> {{ $aderezo->nombre }}
+                                </label>
+                            @endforeach
+                        </div>
+                    </details>
+                </article>
             </section>
         </fieldset>
         @endif
@@ -136,6 +169,56 @@
                     @error('guarnicion_formal_id') 
                         <span class="error-msg-3">{{ $message }}</span> 
                     @enderror
+                </article>
+                <article class="input-wrapper">
+                    <label class="tiempo-label">Espejos (Opcional)</label>
+                    <details class="dropdown-multi" style="position: relative;" wire:ignore.self>
+                        <summary class="form-control" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; background-color: white;">
+                            <span>{{ count($espejos) == 0 ? '-- Seleccionar Espejos --' : count($espejos) . ' seleccionado(s)' }}</span>
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div style="position: absolute; z-index: 10; width: 100%; max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 0.5rem; background: white; margin-top: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['espejos', 'espejo']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id) || $p->serviciosGastronomicos->isEmpty()) ?? [] as $espejo)
+                                <label style="display: block; padding: 0.25rem 0; cursor: pointer; border-bottom: 1px solid #eee;">
+                                    <input type="checkbox" wire:model.live="espejos" value="{{ $espejo->id }}"> {{ $espejo->nombre }}
+                                </label>
+                            @endforeach
+                        </div>
+                    </details>
+                </article>
+
+                <article class="input-wrapper">
+                    <label class="tiempo-label">Salsas (Opcional)</label>
+                    <details class="dropdown-multi" style="position: relative;" wire:ignore.self>
+                        <summary class="form-control" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; background-color: white;">
+                            <span>{{ count($salsas) == 0 ? '-- Seleccionar Salsas --' : count($salsas) . ' seleccionado(s)' }}</span>
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div style="position: absolute; z-index: 10; width: 100%; max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 0.5rem; background: white; margin-top: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['salsas', 'salsa']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id) || $p->serviciosGastronomicos->isEmpty()) ?? [] as $salsa)
+                                <label style="display: block; padding: 0.25rem 0; cursor: pointer; border-bottom: 1px solid #eee;">
+                                    <input type="checkbox" wire:model.live="salsas" value="{{ $salsa->id }}"> {{ $salsa->nombre }}
+                                </label>
+                            @endforeach
+                        </div>
+                    </details>
+                </article>
+
+                <article class="input-wrapper">
+                    <label class="tiempo-label">Aderezos (Opcional)</label>
+                    <details class="dropdown-multi" style="position: relative;" wire:ignore.self>
+                        <summary class="form-control" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; background-color: white;">
+                            <span>{{ count($aderezos) == 0 ? '-- Seleccionar Aderezos --' : count($aderezos) . ' seleccionado(s)' }}</span>
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div style="position: absolute; z-index: 10; width: 100%; max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 0.5rem; background: white; margin-top: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['aderezos', 'aderezo']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id) || $p->serviciosGastronomicos->isEmpty()) ?? [] as $aderezo)
+                                <label style="display: block; padding: 0.25rem 0; cursor: pointer; border-bottom: 1px solid #eee;">
+                                    <input type="checkbox" wire:model.live="aderezos" value="{{ $aderezo->id }}"> {{ $aderezo->nombre }}
+                                </label>
+                            @endforeach
+                        </div>
+                    </details>
                 </article>
             </section>
         </fieldset>
