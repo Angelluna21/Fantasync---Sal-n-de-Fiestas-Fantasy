@@ -232,38 +232,38 @@
         @endphp
         <article class="comanda-header-card">
             <section style="flex: 1 1 280px;">
-                <p class="eyebrow" style="color: var(--accent-magenta); margin-bottom: 0.2rem; font-size: 0.95rem; text-transform: uppercase; font-weight: 800;">👨‍🍳 Orden de Producción Gastronómica</p>
+                <p class="eyebrow" style="color: var(--accent-magenta); margin-bottom: 0.2rem; font-size: 0.95rem; text-transform: uppercase; font-weight: 800;">Orden de Producción Gastronómica</p>
                 <h1 style="color: var(--primary-purple); font-size: 2.2rem; font-weight: 900; margin: 0 0 0.4rem 0; line-height: 1.1;">Comanda de Cocina</h1>
                 <p style="color: var(--text-main); font-size: 1.15rem; margin: 0;">Evento: <strong style="color: var(--primary-purple);">{{ $contrato->evento->titulo }}</strong></p>
             </section>
 
             <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.25rem; flex: 2 1 500px; background: rgba(122, 40, 138, 0.04); padding: 1.25rem; border-radius: 16px; border: 1px solid rgba(122, 40, 138, 0.15);">
                 <div class="comanda-meta-item">
-                    <span class="comanda-meta-label">📅 Fecha del Evento</span>
+                    <span class="comanda-meta-label">Fecha del Evento</span>
                     <span class="comanda-meta-value">{{ $contrato->evento->fecha->format('d/m/Y') }}</span>
                 </div>
                 <div class="comanda-meta-item">
-                    <span class="comanda-meta-label">🎉 Festejado(a)</span>
+                    <span class="comanda-meta-label">Festejado(a)</span>
                     <span class="comanda-meta-value">{{ $contrato->evento->nombre_festejado }}</span>
                 </div>
                 <div class="comanda-meta-item">
-                    <span class="comanda-meta-label">📍 Sucursal</span>
+                    <span class="comanda-meta-label">Sucursal</span>
                     <span class="comanda-meta-value">{{ $sucursales }}</span>
                 </div>
                 <div class="comanda-meta-item">
-                    <span class="comanda-meta-label">👥 Invitados Adultos</span>
+                    <span class="comanda-meta-label">Invitados Adultos</span>
                     <span class="comanda-meta-value">{{ $totAdultos }} <small style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">adultos</small></span>
                 </div>
                 <div class="comanda-meta-item">
-                    <span class="comanda-meta-label">🧒 Invitados Niños</span>
+                    <span class="comanda-meta-label">Invitados Niños</span>
                     <span class="comanda-meta-value">{{ $totNinos }} <small style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">niños</small></span>
                 </div>
                 <div class="comanda-meta-item">
-                    <span class="comanda-meta-label">🛎️ Recepción</span>
+                    <span class="comanda-meta-label">Recepción</span>
                     <span class="comanda-meta-value">{{ $hrec }}</span>
                 </div>
                 <div class="comanda-meta-item">
-                    <span class="comanda-meta-label">⏰ Hora de Inicio</span>
+                    <span class="comanda-meta-label">Hora de Inicio</span>
                     <span class="comanda-meta-value">{{ $hini }}</span>
                 </div>
             </section>
@@ -278,21 +278,15 @@
             @else
                 @foreach($comandaGlobal as $categoria => $platillos)
                     @php
-                        $grupoIcon = '🍴';
                         if (in_array($categoria, ['Entradas', 'Cremas y Sopas', 'Platos Fuertes', 'Guarniciones (Formales)'])) {
-                            $grupoIcon = '🍽️';
                             $grupoLabel = 'Servicio en Tiempos';
                         } elseif (in_array($categoria, ['Guisados', 'Parrillada (Carnes)', 'Guarniciones'])) {
-                            $grupoIcon = '🌮';
                             $grupoLabel = 'Taquiza / Buffet';
                         } elseif (in_array($categoria, ['Menú Infantil', 'Buffet Infantil'])) {
-                            $grupoIcon = '🧒';
                             $grupoLabel = 'Menú Infantil';
                         } elseif (in_array($categoria, ['Bebidas'])) {
-                            $grupoIcon = '🥤';
                             $grupoLabel = 'Bar y Bebidas';
                         } elseif (in_array($categoria, ['Dulces', 'Postres'])) {
-                            $grupoIcon = '🍰';
                             $grupoLabel = 'Postres y Dulces';
                         } else {
                             $grupoLabel = 'Otros Platillos';
@@ -302,7 +296,7 @@
                     <article class="sucursal-card main-report-card" style="padding: 2rem;">
                         <header class="card-header" style="border-bottom: 2px solid rgba(122, 40, 138, 0.15); padding-bottom: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
                             <h2 class="card-title" style="margin: 0; display: flex; align-items: center; gap: 0.5rem; font-size: 1.5rem;">
-                                <span>{{ $grupoIcon }} {{ $categoria }}</span>
+                                <span>{{ $categoria }}</span>
                                 <span class="category-badge-group">{{ $grupoLabel }}</span>
                             </h2>
                             <span style="font-size: 0.9rem; font-weight: 700; color: var(--text-muted);">{{ count($platillos) }} platillo(s) en categoría</span>
@@ -328,7 +322,7 @@
                                                 <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">{{ $categoria }}</span>
                                                 @foreach($platillo['salones'] as $salon)
                                                     @if($salon['notas'] && !str_contains($salon['notas'], 'Registrado desde el configurador'))
-                                                        <span class="nota-box" style="margin-top: 0.4rem; display: inline-block;">⚠️ Nota especial: {{ $salon['notas'] }}</span>
+                                                        <span class="nota-box" style="margin-top: 0.4rem; display: inline-block;">Nota especial: {{ $salon['notas'] }}</span>
                                                     @endif
                                                 @endforeach
                                             </td>
