@@ -137,6 +137,9 @@ class ReporteController extends Controller
         $margenSeguridad = 1.10; // 10% extra por mermas y seguridad
 
         foreach ($eventos as $evento) {
+            $evento->adultos_total = $evento->eventoSalones->sum('adultos');
+            $evento->ninos_total = $evento->eventoSalones->sum('ninos');
+            
             $insumosEvento = $this->calculadora->calcularParaEvento($evento);
 
             foreach ($insumosEvento as $nombre => $datos) {
@@ -155,12 +158,8 @@ class ReporteController extends Controller
 
                 $listaGlobal[$nombre]['exacto_total'] += $datos['cantidad'];
                 
-                // Guardamos la cantidad que va para este evento específico (aplicando ya merma)
-                $listaGlobal[$nombre]['eventos_desglose'][] = [
-                    'evento_titulo' => $evento->titulo,
-                    'evento_fecha' => $evento->fecha->format('d/m'),
-                    'format' => $this->calculadora->formatearCantidad($datos['cantidad'] * $margenSeguridad, $datos['unidad'])
-                ];
+                // Guardamos la cantidad formateada indexada por el ID del evento
+                $listaGlobal[$nombre]['eventos_desglose'][$evento->id] = $this->calculadora->formatearCantidad($datos['cantidad'] * $margenSeguridad, $datos['unidad']);
             }
         }
 

@@ -133,7 +133,7 @@
 <body>
     <figure class="dashboard-background no-print" aria-hidden="true"></figure>
     
-    <main class="dashboard-layout">
+    <main class="dashboard-layout" style="max-width: 95%;">
         <!-- Navegación superior -->
         <nav class="top-nav no-print" aria-label="Menú superior" style="align-items: flex-start; margin-bottom: 2rem;">
             <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
@@ -186,7 +186,7 @@
         </section>
 
         <!-- Tarjeta Principal del Reporte -->
-        <section class="reportes-section">
+        <section class="reportes-section" style="max-width: 100%;">
             <article class="sucursal-card main-report-card" style="padding: 2rem;">
                 <header style="border-bottom: 2px solid rgba(122, 40, 138, 0.15); padding-bottom: 1.5rem; margin-bottom: 2rem;">
                     <p class="eyebrow" style="color: var(--accent-magenta); margin-bottom: 0.2rem; font-size: 0.95rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em;">Compras y Almacén · Central de Abastos</p>
@@ -211,41 +211,61 @@
 
                 <!-- Tablas por Categoría de Supermercado -->
                 @if(count($sortedGroups) > 0)
-                    <section class="insumos-categories-container">
+                    <section class="insumos-categories-container" style="overflow-x: auto;">
                         @foreach($sortedGroups as $categoria => $insumos)
                             <article class="category-group-card" style="margin-bottom: 2rem;">
                                 <h3 class="category-group-title" style="background: var(--primary-purple); color: white; padding: 0.75rem 1.25rem; margin: 0; border-radius: 1rem 1rem 0 0; font-size: 1.15rem;">
                                     {{ $categoria }}
                                 </h3>
                                 <figure class="table-responsive" style="margin: 0;">
-                                    <table class="tabla-reporte" style="width: 100%; border-collapse: collapse;">
+                                    <table class="tabla-reporte" style="width: 100%; border-collapse: collapse; min-width: max-content;">
                                         <thead>
                                             <tr style="background: rgba(122, 40, 138, 0.05); text-align: left;">
-                                                <th style="padding: 0.8rem 1rem; width: 35%;">Materia Prima / Insumo</th>
-                                                <th style="padding: 0.8rem 1rem; width: 25%; text-align: center;">Total a Comprar (Sugerido Central)</th>
-                                                <th style="padding: 0.8rem 1rem; width: 40%;">Desglose por Evento (Para repartir en cocina)</th>
+                                                <th style="padding: 0.5rem; text-align: left; font-size: 0.8rem;">INGREDIENTE</th>
+                                                <th style="padding: 0.5rem; text-align: left; font-size: 0.8rem;">UNI</th>
+                                                @foreach($eventos as $ev)
+                                                    <th style="padding: 0.5rem; text-align: left; border-left: 1px solid #ddd; font-size: 0.75rem; vertical-align: bottom; min-width: 140px;">
+                                                        <div style="font-weight: normal; margin-bottom: 0.2rem;">
+                                                            Adultos: {{ $ev->adultos_total }} <br>
+                                                            Niños: {{ $ev->ninos_total }}
+                                                        </div>
+                                                        <strong>{{ $ev->nombre_festejado ?? $ev->titulo }}</strong><br>
+                                                        <span style="color: #666;">/ {{ strtoupper($ev->fecha->translatedFormat('l')) }}</span>
+                                                    </th>
+                                                @endforeach
+                                                <th style="padding: 0.5rem; text-align: left; border-left: 1px solid #ddd; font-size: 0.8rem; min-width: 100px;">TOTAL</th>
+                                                <th style="padding: 0.5rem; text-align: left; font-size: 0.8rem; min-width: 120px;">CANT. A PEDIR</th>
+                                                <th style="padding: 0.5rem; text-align: left; font-size: 0.8rem; min-width: 120px;">NOTAS</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($insumos as $insumo)
                                                 <tr style="border-bottom: 1px solid var(--border-color);">
-                                                    <td style="padding: 0.8rem 1rem; vertical-align: middle;">
-                                                        <strong style="font-size: 1.1rem; color: var(--primary-purple);">{{ $insumo['nombre'] }}</strong>
-                                                        <span style="display: block; font-size: 0.8rem; color: var(--text-muted);">Unidad: {{ $insumo['unidad'] }}</span>
+                                                    <td style="padding: 0.5rem; vertical-align: middle; font-size: 0.85rem;">
+                                                        <strong>{{ $insumo['nombre'] }}</strong>
                                                     </td>
-                                                    <td style="padding: 0.8rem 1rem; text-align: center; vertical-align: middle;">
-                                                        <span class="total-comprar-badge">
+                                                    <td style="padding: 0.5rem; vertical-align: middle; font-size: 0.85rem; color: #555;">
+                                                        {{ $insumo['unidad'] }}
+                                                    </td>
+                                                    @foreach($eventos as $ev)
+                                                        <td style="padding: 0.5rem; text-align: left; border-left: 1px solid #eee; font-size: 0.85rem; vertical-align: top;">
+                                                            @if(isset($insumo['eventos_desglose'][$ev->id]))
+                                                                {{ $insumo['eventos_desglose'][$ev->id] }}
+                                                            @else
+                                                                <span style="color: #bbb;">0</span>
+                                                            @endif
+                                                        </td>
+                                                    @endforeach
+                                                    <td style="padding: 0.5rem; text-align: left; border-left: 1px solid #ddd; font-size: 0.85rem; vertical-align: middle;">
+                                                        {{ $insumo['seguro_format'] }}
+                                                    </td>
+                                                    <td style="padding: 0.5rem; text-align: left; vertical-align: middle;">
+                                                        <span class="total-comprar-badge" style="font-size: 0.9rem; padding: 0.2rem 0.6rem;">
                                                             {{ $insumo['comprar_format'] }}
                                                         </span>
-                                                        <span style="display: block; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">(Exacto con merma: {{ $insumo['seguro_format'] }})</span>
                                                     </td>
-                                                    <td style="padding: 0.8rem 1rem; vertical-align: middle;">
-                                                        @foreach($insumo['eventos_desglose'] as $desglose)
-                                                            <div class="event-desglose-item">
-                                                                <span class="event-desglose-bullet"></span>
-                                                                <strong>{{ $desglose['format'] }}</strong> — <span>{{ $desglose['evento_titulo'] }} ({{ $desglose['evento_fecha'] }})</span>
-                                                            </div>
-                                                        @endforeach
+                                                    <td style="padding: 0.5rem; border-bottom: 1px dotted #ccc; width: 100px;">
+                                                        <!-- Espacio para notas manuales al imprimir -->
                                                     </td>
                                                 </tr>
                                             @endforeach
