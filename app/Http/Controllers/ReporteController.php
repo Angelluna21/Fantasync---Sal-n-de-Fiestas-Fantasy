@@ -190,4 +190,54 @@ class ReporteController extends Controller
 
         return view('reportes.compras-semana', compact('eventos', 'sortedGroups', 'fechaInicio', 'fechaFin'));
     }
+
+    /**
+     * Procesa y muestra el recetario global (lista de platillos con ingredientes).
+     */
+    public function recetario()
+    {
+        $platillos = \App\Models\Platillo::with(['categoriaPlatillo', 'ingredientes'])->orderBy('nombre')->get();
+        $recetario = [];
+
+        foreach ($platillos as $platillo) {
+            $catName = $platillo->categoriaPlatillo ? $platillo->categoriaPlatillo->nombre : 'Sin Categoría';
+            
+            if (!isset($recetario[$catName])) {
+                $recetario[$catName] = [];
+            }
+
+            $ingredientesList = [];
+            foreach ($platillo->ingredientes as $ingrediente) {
+                // En el recetario tomamos la cantidad base (para 100 personas usualmente)
+                $cantidadExacta = $ingrediente->pivot->cantidad_por_base;
+                $unidad = $ingrediente->unidad;
+                
+                // Usar redondeo comercial
+                $cantidadRedondeada = $cantidadExacta > 0 ? $this->calculadora->calcularCompraComercial($cantidadExacta, $unidad) : 0;
+                $cantidadFormat = $this->calculadora->formatearCantidad($cantidadRedondeada, $unidad);
+
+                $ingredientesList[] = [
+                    'nombre' => $ingrediente->nombre,
+                    'cantidad_raw' => $cantidadRedondeada,
+                    'format' => $cantidadFormat,
+                    'es_fijo' => $ingrediente->pivot->es_fijo
+                ];
+            }
+
+            $recetario[$catName][] = [
+                'platillo' => $platillo,
+                'ingredientes' => $ingredientesList
+            ];
+        }
+
+        // Ordenar categorías
+        $categoriaOrder = ['Platos Fuertes', 'Guisados', 'Guarniciones', 'Guarniciones (Taquiza)', 'Guarniciones (Formales)', 'Espejos', 'Salsas', 'Aderezos', 'Entradas', 'Cremas y Sopas', 'Dulces', 'Menú Infantil', 'Bebidas'];
+        
+        $recetarioSorted = collect($recetario)->sortBy(function($val, $key) use ($categoriaOrder) {
+            $pos = array_search($key, $categoriaOrder);
+            return $pos === false ? 99 : $pos;
+        })->toArray();
+
+        return view('reportes.recetario', compact('recetarioSorted'));
+    }
 }

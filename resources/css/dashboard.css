@@ -693,3 +693,34 @@ body {
     color: white;
     border: none;
 }
+
+/* Responsive Design Global */
+@media (max-width: 992px) {
+    .dashboard-layout {
+        padding: 1rem;
+    }
+    .top-nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        text-align: center;
+    }
+    .dashboard-header {
+        margin-top: 1rem !important;
+    }
+    .dashboard-header hgroup {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .nav-logo {
+        height: 80px;
+    }
+    .search-form {
+        flex-wrap: wrap;
+    }
+    .search-form .form-control {
+        width: 100% !important;
+    }
+}
+

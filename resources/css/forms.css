@@ -230,3 +230,19 @@ fieldset.form-group {
     width: 20px;
     height: 20px;
 }
+
+/* Responsive forms Global */
+@media (max-width: 768px) {
+    .input-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .btn-submit, .btn-action {
+        width: 100% !important;
+        justify-content: center;
+    }
+    .actions-group {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+

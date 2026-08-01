@@ -82,6 +82,13 @@
                 <form action="{{ route('contratos.index') }}" method="GET" class="search-form" style="display: flex; gap: 1rem; flex: 1; min-width: 300px;">
                     <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Buscar por cliente o evento..." class="form-control" style="flex: 1; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;">
                     
+                    <select name="periodo" class="form-control" style="width: auto; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;" title="Filtro rápido">
+                        <option value="">Cualquier fecha</option>
+                        <option value="semana" {{ ($periodo ?? '') == 'semana' ? 'selected' : '' }}>Esta Semana</option>
+                        <option value="mes" {{ ($periodo ?? '') == 'mes' ? 'selected' : '' }}>Este Mes</option>
+                        <option value="anio" {{ ($periodo ?? '') == 'anio' ? 'selected' : '' }}>Este Año</option>
+                    </select>
+
                     <select name="month" class="form-control" style="width: auto; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;">
                         <option value="">Todos los meses</option>
                         @for($m=1; $m<=12; $m++)
@@ -97,7 +104,7 @@
                     </select>
 
                     <button type="submit" class="btn-submit" style="width: auto; padding: 0.75rem 1.5rem;">Filtrar</button>
-                    @if(!empty($search) || !empty($month) || !empty($year))
+                    @if(!empty($search) || !empty($month) || !empty($year) || !empty($periodo))
                         <a href="{{ route('contratos.index') }}" class="btn-submit" style="width: auto; padding: 0.75rem 1.5rem; text-decoration: none; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; box-shadow: none;">Ver Todos</a>
                     @endif
                 </form>

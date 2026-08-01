@@ -63,7 +63,7 @@
                     <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
                         <h3 class="platillos-title" style="margin: 0;">Platillos a Preparar:</h3>
                         @if($evento->contrato)
-                            <a href="{{ route('reportes.comanda', $evento->contrato->id) }}" style="background: linear-gradient(135deg, var(--primary-purple), #4a148c); color: white; padding: 0.55rem 1.25rem; border-radius: 2rem; text-decoration: none; font-weight: 800; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px rgba(122, 40, 138, 0.3); transition: all 0.3s ease;">
+                            <a href="{{ route('reportes.comanda', $evento->contrato->id) }}" class="no-print" style="background: linear-gradient(135deg, var(--primary-purple), #4a148c); color: white; padding: 0.55rem 1.25rem; border-radius: 2rem; text-decoration: none; font-weight: 800; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px rgba(122, 40, 138, 0.3); transition: all 0.3s ease;">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                                 Imprimir pedido del cliente
                             </a>
@@ -145,8 +145,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Materia Prima / Insumo</th>
-                                                <th>Exacto</th>
-                                                <th>Sugerido</th>
+                                                <th class="col-requerido">Exacto</th>
+                                                <th class="col-margen">Sugerido</th>
                                             </tr>
                                         </thead>
                                         <tbody>

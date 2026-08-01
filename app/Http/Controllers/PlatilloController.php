@@ -80,13 +80,14 @@ class PlatilloController extends Controller
             'servicio_gastronomico_id' => 'required|array|min:1',
             'servicio_gastronomico_id.*' => 'integer|exists:servicios_gastronomicos,id',
             'categoria_platillo_id' => 'required|integer|exists:categoria_platillos,id',
-            'nombre' => 'required|string|max:100|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\/]+$/',
+            'nombre' => 'required|string|max:100|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\/]+$/|unique:platillos,nombre',
             'descripcion' => 'nullable|string',
             'ingredientes.id.*' => 'nullable|integer|exists:ingredientes,id',
             'ingredientes.cantidad.*' => 'nullable|numeric|min:0.01',
             'ingredientes.es_fijo.*' => 'nullable|boolean',
         ], [
-            'nombre.regex' => 'El nombre del platillo solo debe contener letras, espacios y la diagonal (/).'
+            'nombre.regex' => 'El nombre del platillo solo debe contener letras, espacios y la diagonal (/).',
+            'nombre.unique' => 'Ya existe un platillo registrado con este nombre.'
         ]);
 
         // Guardamos sin requerir precio (si no viene, se guarda como 0 o null)
@@ -139,13 +140,14 @@ class PlatilloController extends Controller
             'servicio_gastronomico_id' => 'required|array|min:1',
             'servicio_gastronomico_id.*' => 'integer|exists:servicios_gastronomicos,id',
             'categoria_platillo_id' => 'required|integer|exists:categoria_platillos,id',
-            'nombre' => 'required|string|max:100|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\/]+$/',
+            'nombre' => 'required|string|max:100|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\/]+$/|unique:platillos,nombre,' . $platillo->id,
             'descripcion' => 'nullable|string',
             'ingredientes.id.*' => 'nullable|integer|exists:ingredientes,id',
             'ingredientes.cantidad.*' => 'nullable|numeric|min:0.01',
             'ingredientes.es_fijo.*' => 'nullable|boolean',
         ], [
-            'nombre.regex' => 'El nombre del platillo solo debe contener letras, espacios y la diagonal (/).'
+            'nombre.regex' => 'El nombre del platillo solo debe contener letras, espacios y la diagonal (/).',
+            'nombre.unique' => 'Ya existe un platillo registrado con este nombre.'
         ]);
 
         $platillo->update([

@@ -66,6 +66,7 @@ Route::middleware('auth')->group(function () {
     Route::get('reportes/comanda/{contrato}', [\App\Http\Controllers\ComandaController::class, 'showByContrato'])->name('reportes.comanda');
     Route::get('reportes/comanda-rapida', [ReporteController::class, 'comandaRapida'])->name('reportes.comanda-rapida');
     Route::get('reportes/compras-semana', [ReporteController::class, 'comprasSemanal'])->name('reportes.compras-semana');
+    Route::get('reportes/recetario', [ReporteController::class, 'recetario'])->name('reportes.recetario');
     Route::get('eventos/{evento}/menu', [EventoController::class, 'menuConfig'])->name('eventos.menu');
 
     // Rutas protegidas por superadmin

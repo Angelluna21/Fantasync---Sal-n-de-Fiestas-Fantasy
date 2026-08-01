@@ -521,7 +521,8 @@
     .dashboard-footer,
     .eyebrow-accent,
     .card-subtitle,
-    .no-print {
+    .no-print,
+    .col-requerido {
         display: none !important;
     }
 

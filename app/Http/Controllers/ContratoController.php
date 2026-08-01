@@ -16,6 +16,7 @@ class ContratoController extends Controller
         $search = $request->input('search');
         $month = $request->input('month');
         $year = $request->input('year');
+        $periodo = $request->input('periodo');
 
         $query = Contrato::with(['evento.cliente', 'evento.salones.sucursal']);
 
@@ -40,12 +41,32 @@ class ContratoController extends Controller
             });
         }
 
-        $contratos = $query->orderBy('created_at', 'desc')->paginate(10);
-        $totalContratado = Contrato::sum('monto_total');
-        $saldoPendiente = Contrato::sum('saldo_pendiente');
-        $contratosActivos = Contrato::count();
+        // Filtro rápido de periodo (Semanal, Mensual, Anual) basado en la fecha del evento
+        if ($periodo === 'semana') {
+            $query->whereHas('evento', function ($q) {
+                $q->whereBetween('fecha', [now()->startOfWeek(), now()->endOfWeek()]);
+            });
+        } elseif ($periodo === 'mes') {
+            $query->whereHas('evento', function ($q) {
+                $q->whereMonth('fecha', now()->month)->whereYear('fecha', now()->year);
+            });
+        } elseif ($periodo === 'anio') {
+            $query->whereHas('evento', function ($q) {
+                $q->whereYear('fecha', now()->year);
+            });
+        }
 
-        return view('contratos.index', compact('contratos', 'search', 'month', 'year', 'totalContratado', 'saldoPendiente', 'contratosActivos'));
+        // Clonar el query base para los KPIs (usando los mismos filtros)
+        // Usar clone para no afectar la paginación ni el order_by si hiciéramos otras consultas
+        $kpiQuery = clone $query;
+        // Para remover los selects, with o joins si no son necesarios, pero Eloquent maneja bien el count/sum
+        $totalContratado = (clone $kpiQuery)->sum('monto_total');
+        $saldoPendiente = (clone $kpiQuery)->sum('saldo_pendiente');
+        $contratosActivos = (clone $kpiQuery)->count();
+
+        $contratos = $query->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('contratos.index', compact('contratos', 'search', 'month', 'year', 'periodo', 'totalContratado', 'saldoPendiente', 'contratosActivos'));
     }
 
     /**
