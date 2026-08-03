@@ -162,12 +162,10 @@ class ContratoBuilderService
             }
 
             if (!empty($data['tiene_misa'])) $extras['tiene_misa'] = true;
-            if (!empty($data['invitacion_estado'])) {
-                $extras['invitacion_estado'] = $data['invitacion_estado'];
-                $extras['invitacion_detalle'] = $data['invitacion_detalle'] ?? '';
-            }
-
             $extras['horas_adicionales'] = (float) ($data['horas_adicionales'] ?? 0);
+            $extras['invitacion_estado'] = $data['invitacion_estado'] ?? '';
+            $extras['invitacion_detalle'] = $data['invitacion_detalle'] ?? '';
+            $extras['quien_vendio_hora_extra'] = $data['quien_vendio_hora_extra'] ?? '';
 
             $evento = Evento::updateOrCreate(
                 ['id' => $eventoId],
@@ -210,6 +208,13 @@ class ContratoBuilderService
                     'fecha_firma' => date('Y-m-d')
                 ]
             );
+
+            // Sincronizar vendedoras
+            if (isset($data['vendedoras_ids']) && is_array($data['vendedoras_ids'])) {
+                $contract->vendedoras()->sync($data['vendedoras_ids']);
+            } else {
+                $contract->vendedoras()->detach();
+            }
 
             // 6. Actualizar sesión (se mantiene aquí por ser parte del flujo de estado global)
             // Agregar pagos al draft

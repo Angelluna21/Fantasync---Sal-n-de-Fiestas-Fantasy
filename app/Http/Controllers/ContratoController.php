@@ -70,9 +70,23 @@ class ContratoController extends Controller
     }
 
     /**
-     * Display the specified contract as a PDF preview/download.
+     * Display the specified contract details in a web view.
      */
     public function show($id)
+    {
+        $contrato = Contrato::with([
+            'evento.cliente', 
+            'evento.salones.sucursal', 
+            'evento.eventoSalones.platillos'
+        ])->findOrFail($id);
+
+        return view('contratos.show', compact('contrato'));
+    }
+
+    /**
+     * Display the specified contract as a PDF preview/download.
+     */
+    public function pdf($id)
     {
         $contrato = Contrato::with([
             'evento.cliente', 

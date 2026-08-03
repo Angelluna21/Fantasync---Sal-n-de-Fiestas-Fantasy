@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contrato;
 use App\Models\Platillo;
 use App\Models\Salon;
+use App\Models\Vendedora;
 use App\Http\Requests\StoreContratoRequest;
 use App\Services\ContratoBuilderService;
 use Exception;
@@ -33,6 +34,11 @@ class ContratoBuilderController extends Controller
             'salon_id' => null,
             'platillo_ids' => [],
             'extras' => [],
+            'c_album_paquete' => 0,
+            'c_derecho_pista' => 0,
+            'c_hora_extra' => 0,
+            'quien_vendio_hora_extra' => '',
+            'c_camara_360' => 0,
             'horas_evento' => 6,
             'horas_adicionales' => 0,
             'num_adultos' => 0,
@@ -40,14 +46,16 @@ class ContratoBuilderController extends Controller
             'cliente_domicilio' => '',
             'cliente_ine' => '',
             'manteleria_color' => '',
+            'vendedoras_ids' => [],
         ]);
 
         $salones = Salon::query()->with('sucursal')->orderBy('nombre')->get();
         $platillos = Platillo::query()->with(['categoriaPlatillo', 'serviciosGastronomicos'])->orderBy('nombre')->get();
         $serviciosGastronomicos = \App\Models\ServicioGastronomico::whereNotIn('nombre', ['Menú Infantil', 'Bebidas', 'Buffet Infantil'])
             ->orderBy('id')->get();
+        $vendedoras = Vendedora::where('estado', 'activo')->orderBy('nombre')->get();
 
-        return view('contrato-builder', compact('salones', 'platillos', 'serviciosGastronomicos', 'draft'));
+        return view('contrato-builder', compact('salones', 'platillos', 'serviciosGastronomicos', 'vendedoras', 'draft'));
     }
 
     public function edit(Contrato $contrato)
@@ -105,6 +113,11 @@ class ContratoBuilderController extends Controller
             'salon_id' => $salon_id,
             'platillo_ids' => $platillos,
             'servicio_gastronomico' => $servicioGastronomico,
+            'c_album_paquete' => $extras['c_album_paquete'] ?? 0,
+            'c_derecho_pista' => $extras['c_derecho_pista'] ?? 0,
+            'c_hora_extra' => $extras['c_hora_extra'] ?? 0,
+            'quien_vendio_hora_extra' => $extras['quien_vendio_hora_extra'] ?? '',
+            'c_camara_360' => $extras['c_camara_360'] ?? 0,
             'extras' => $extras,
             'horas_evento' => $evento->horas_duracion ?? 6,
             'horas_adicionales' => $extras['horas_adicionales'] ?? 0,
@@ -116,6 +129,7 @@ class ContratoBuilderController extends Controller
             'manteleria_color' => $evento->color_manteleria ?? 'Blanco',
             'invitacion_estado' => $invitacion_estado,
             'invitacion_detalle' => $invitacion_detalle,
+            'vendedoras_ids' => $contrato->vendedoras()->pluck('vendedoras.id')->toArray(),
         ];
 
         // Migración en memoria: Si existe historial_pagos usarlo, sino generar uno si hay anticipo > 0

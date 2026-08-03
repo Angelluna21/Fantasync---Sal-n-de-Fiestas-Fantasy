@@ -27,6 +27,7 @@ class ContratoMenuBuilder extends Component
     public $salsas = [];
     public $aderezos = [];
     public $descorche = false;
+    public $descorche_cerveza = false;
 
     public function mount($eventoId)
     {
@@ -39,6 +40,9 @@ class ContratoMenuBuilder extends Component
             }
             if (strpos($evento->notas, 'Descorche: Sí') !== false) {
                 $this->descorche = true;
+            }
+            if (strpos($evento->notas, 'Descorche Cerveza: Sí') !== false) {
+                $this->descorche_cerveza = true;
             }
         }
 
@@ -164,6 +168,15 @@ class ContratoMenuBuilder extends Component
             } else {
                 $notas = str_replace("\nDescorche: Sí", "", $notas);
                 $notas = str_replace("Descorche: Sí", "", $notas);
+            }
+
+            if ($this->descorche_cerveza) {
+                if (strpos($notas, 'Descorche Cerveza: Sí') === false) {
+                    $notas .= "\nDescorche Cerveza: Sí";
+                }
+            } else {
+                $notas = str_replace("\nDescorche Cerveza: Sí", "", $notas);
+                $notas = str_replace("Descorche Cerveza: Sí", "", $notas);
             }
             $evento->notas = trim($notas);
             $evento->save();

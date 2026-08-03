@@ -51,4 +51,13 @@ class Contrato extends Model
     {
         return app(\App\Services\CalculadoraInsumosService::class)->calcularParaEvento($this->evento);
     }
+
+    /**
+     * Vendedoras asociadas al contrato.
+     */
+    public function vendedoras(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Vendedora::class, 'contrato_vendedora')
+                    ->withTimestamps();
+    }
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\ServicioGastronomicoController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ContratoController;
 use App\Http\Controllers\NominaController;
+use App\Http\Controllers\VendedoraController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('ingredientes', IngredienteController::class);
     Route::resource('eventos', EventoController::class);
     Route::resource('servicios-gastronomicos', ServicioGastronomicoController::class);
+    Route::get('vendedoras/estadisticas', [VendedoraController::class, 'estadisticas'])->name('vendedoras.estadisticas');
+    Route::resource('vendedoras', VendedoraController::class);
 
     Route::get('nominas/reporte-pdf', [NominaController::class, 'reportePdf'])->name('nominas.reporte-pdf');
     Route::resource('nominas', NominaController::class);
@@ -59,6 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::get('contratos', [ContratoController::class, 'index'])->name('contratos.index');
     Route::get('contratos/{contrato}/editar', [ContratoBuilderController::class, 'edit'])->name('contratos.edit');
     Route::get('contratos/{contrato}', [ContratoController::class, 'show'])->name('contratos.show');
+    Route::get('contratos/{contrato}/pdf', [ContratoController::class, 'pdf'])->name('contratos.pdf');
     Route::delete('contratos/{contrato}', [ContratoController::class, 'destroy'])->name('contratos.destroy');
     Route::post('/insumos/store-ajax', [PlatilloController::class, 'storeAjax'])->name('insumos.storeAjax');
 

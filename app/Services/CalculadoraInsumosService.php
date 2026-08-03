@@ -50,6 +50,40 @@ class CalculadoraInsumosService
             }
         }
 
+        // REGLAS DE DESCORCHE Y CERVEZA
+        $tieneDescorche = strpos($evento->notas, 'Descorche: Sí') !== false;
+        $tieneCerveza = strpos($evento->notas, 'Descorche Cerveza: Sí') !== false;
+
+        if ($tieneDescorche || $tieneCerveza) {
+            $totalAdultos = $eventoSalones->sum('adultos');
+            $escalaSien = max(ceil($totalAdultos / 100), 1); // Escala por cada 100 adultos (mínimo 1)
+
+            if ($tieneDescorche) {
+                // 4 bolsas de hielo por cada 100 adultos
+                $bolsasHielo = $escalaSien * 4;
+                if (!isset($listaInsumos['Hielo en Cubos'])) {
+                    $listaInsumos['Hielo en Cubos'] = ['cantidad' => 0, 'unidad' => 'bolsa'];
+                }
+                $listaInsumos['Hielo en Cubos']['cantidad'] += $bolsasHielo;
+            }
+
+            if ($tieneCerveza) {
+                // $100 de molido por cada 100 adultos -> representamos como 1 Bulto/Carga
+                $bultosMolido = $escalaSien * 1;
+                if (!isset($listaInsumos['Hielo Molido ($100)'] )) {
+                    $listaInsumos['Hielo Molido ($100)'] = ['cantidad' => 0, 'unidad' => 'bulto'];
+                }
+                $listaInsumos['Hielo Molido ($100)']['cantidad'] += $bultosMolido;
+
+                // 3 kilos de limones por cada 100 adultos
+                $kilosLimon = $escalaSien * 3;
+                if (!isset($listaInsumos['Limón'])) {
+                    $listaInsumos['Limón'] = ['cantidad' => 0, 'unidad' => 'kg'];
+                }
+                $listaInsumos['Limón']['cantidad'] += $kilosLimon;
+            }
+        }
+
         // Redondear las cantidades a 3 decimales
         foreach ($listaInsumos as &$insumo) {
             $insumo['cantidad'] = round($insumo['cantidad'], 3);

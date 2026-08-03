@@ -146,6 +146,22 @@
                             <label for="paquete_no">Paquete No.</label>
                             <input type="text" id="paquete_no" name="paquete_no" class="form-control" value="{{ old('paquete_no', $draft['paquete_no'] ?? '') }}">
                         </article>
+                        <article class="input-wrapper" style="position: relative;">
+                            <label>Vendedora(s)</label>
+                            <div class="custom-multiselect-dropdown form-control" style="cursor: pointer; position: relative; padding-right: 30px; user-select: none; display: flex; align-items: center;" id="vendedoras_dropdown_btn">
+                                <span id="vendedoras_dropdown_text" style="color: var(--text-main);">Seleccionar vendedoras...</span>
+                                <span style="position: absolute; right: 10px; color: var(--primary-purple);">▼</span>
+                            </div>
+                            <div class="custom-multiselect-list" id="vendedoras_dropdown_list" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 1rem; z-index: 100; max-height: 200px; overflow-y: auto; padding: 0.5rem; box-shadow: var(--shadow-sm); margin-top: 5px;">
+                                @foreach($vendedoras as $vendedora)
+                                    <label class="checkbox-label custom-multiselect-item" style="display: flex; margin-bottom: 0.25rem; color: var(--text-main); font-size: 0.95rem; padding: 0.5rem; border-radius: 0.5rem; transition: background 0.2s; font-weight: normal;">
+                                        <input type="checkbox" name="vendedoras_ids[]" value="{{ $vendedora->id }}" class="vendedora-checkbox" style="width: 18px; height: 18px; accent-color: var(--primary-purple); margin-right: 0.5rem;"
+                                            {{ (is_array(old('vendedoras_ids', $draft['vendedoras_ids'] ?? [])) && in_array($vendedora->id, old('vendedoras_ids', $draft['vendedoras_ids'] ?? []))) ? 'checked' : '' }}>
+                                        {{ $vendedora->nombre }} {{ $vendedora->apellidos }}
+                                    </label>
+                                @endforeach
+                            </div>
+                        </article>
                     </section>
                     <section class="input-grid grid-4" style="margin-top: 1.5rem;">
                         <article class="input-wrapper">
@@ -283,6 +299,53 @@
                                 // Initial calculation on load just to be sure
                                 recalcularHoras();
                             }
+                            
+                            // Custom Multiselect Checkbox Logic
+                            const vBtn = document.getElementById('vendedoras_dropdown_btn');
+                            const vList = document.getElementById('vendedoras_dropdown_list');
+                            const vText = document.getElementById('vendedoras_dropdown_text');
+                            const vCheckboxes = document.querySelectorAll('.vendedora-checkbox');
+
+                            if (vBtn && vList) {
+                                // Toggle dropdown
+                                vBtn.addEventListener('click', function(e) {
+                                    e.stopPropagation();
+                                    vList.style.display = vList.style.display === 'none' ? 'block' : 'none';
+                                });
+
+                                // Update text
+                                const updateVText = () => {
+                                    const checked = Array.from(vCheckboxes).filter(cb => cb.checked);
+                                    if (checked.length === 0) {
+                                        vText.textContent = 'Seleccionar vendedoras...';
+                                    } else if (checked.length === 1) {
+                                        vText.textContent = checked[0].parentElement.textContent.trim();
+                                    } else {
+                                        vText.textContent = checked.length + ' vendedoras seleccionadas';
+                                    }
+                                };
+
+                                // Listeners for checkboxes
+                                vCheckboxes.forEach(cb => {
+                                    cb.addEventListener('change', updateVText);
+                                });
+
+                                // Close when clicking outside
+                                document.addEventListener('click', function(e) {
+                                    if (!vBtn.contains(e.target) && !vList.contains(e.target)) {
+                                        vList.style.display = 'none';
+                                    }
+                                });
+
+                                // Initial text update
+                                updateVText();
+                                
+                                // Hover effects for checkboxes
+                                document.querySelectorAll('.custom-multiselect-list label').forEach(lbl => {
+                                    lbl.addEventListener('mouseenter', () => lbl.style.background = 'rgba(122, 40, 138, 0.05)');
+                                    lbl.addEventListener('mouseleave', () => lbl.style.background = 'transparent');
+                                });
+                            }
                         });
                     </script>
                     
@@ -336,7 +399,21 @@
                         <article class="input-wrapper"><label>Paquete Álbum</label><input type="number" step="0.01" min="0" name="c_album_paquete" class="form-control cost-input" value="{{ old('c_album_paquete', $draft['c_album_paquete'] ?? '') }}"></article>
 
                         <article class="input-wrapper"><label>Derecho de Pista</label><input type="number" step="0.01" min="0" name="c_derecho_pista" class="form-control cost-input" value="{{ old('c_derecho_pista', $draft['c_derecho_pista'] ?? '') }}"></article>
-                        <article class="input-wrapper"><label>Hora Extra</label><input type="number" step="0.01" min="0" name="c_hora_extra" class="form-control cost-input" value="{{ old('c_hora_extra', $draft['c_hora_extra'] ?? '') }}"></article>
+                        <article class="input-wrapper"><label>Hora Extra ($)</label><input type="number" step="0.01" min="0" name="c_hora_extra" class="form-control cost-input" value="{{ old('c_hora_extra', $draft['c_hora_extra'] ?? '') }}"></article>
+                        <article class="input-wrapper">
+                            <label>¿Quién vendió Hr. Extra?</label>
+                            <select name="quien_vendio_hora_extra" class="form-control cost-input">
+                                <option value="">Ninguno / Incluido</option>
+                                <option value="capitan" {{ old('quien_vendio_hora_extra', $draft['quien_vendio_hora_extra'] ?? '') == 'capitan' ? 'selected' : '' }}>Capitán de Meseros</option>
+                                @if(isset($vendedoras))
+                                    @foreach($vendedoras as $v)
+                                        <option value="vendedora_{{ $v->id }}" {{ old('quien_vendio_hora_extra', $draft['quien_vendio_hora_extra'] ?? '') == 'vendedora_'.$v->id ? 'selected' : '' }}>
+                                            Vendedora: {{ $v->nombre }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </article>
                         <article class="input-wrapper"><label>Cámara 360°</label><input type="number" step="0.01" min="0" name="c_camara_360" class="form-control cost-input" value="{{ old('c_camara_360', $draft['c_camara_360'] ?? '') }}"></article>
                         <article class="input-wrapper"><label>Amenización</label><input type="number" step="0.01" min="0" name="c_amenizacion" class="form-control cost-input" value="{{ old('c_amenizacion', $draft['c_amenizacion'] ?? '') }}"></article>
 
