@@ -81,6 +81,12 @@
                             <option value="Cremería" {{ old('categoria', $ingrediente->categoria) === 'Cremería' ? 'selected' : '' }}>Cremería</option>
                             <option value="Abarrotes" {{ old('categoria', $ingrediente->categoria) === 'Abarrotes' ? 'selected' : '' }}>Abarrotes</option>
                             <option value="Carnes" {{ old('categoria', $ingrediente->categoria) === 'Carnes' ? 'selected' : '' }}>Carnes</option>
+                            <option value="Pollo" {{ old('categoria', $ingrediente->categoria) === 'Pollo' ? 'selected' : '' }}>Pollo</option>
+                            <option value="Abarrotes Moderna" {{ old('categoria', $ingrediente->categoria) === 'Abarrotes Moderna' ? 'selected' : '' }}>Abarrotes Moderna</option>
+                            <option value="Las Güeras" {{ old('categoria', $ingrediente->categoria) === 'Las Güeras' ? 'selected' : '' }}>Las Güeras</option>
+                            <option value="Jovis" {{ old('categoria', $ingrediente->categoria) === 'Jovis' ? 'selected' : '' }}>Jovis</option>
+                            <option value="El Talismán" {{ old('categoria', $ingrediente->categoria) === 'El Talismán' ? 'selected' : '' }}>El Talismán</option>
+                            <option value="Cremería La Rancherita" {{ old('categoria', $ingrediente->categoria) === 'Cremería La Rancherita' ? 'selected' : '' }}>Cremería La Rancherita</option>
                             <option value="Otros" {{ old('categoria', $ingrediente->categoria) === 'Otros' ? 'selected' : '' }}>Otros</option>
                         </select>
                         @error('categoria')

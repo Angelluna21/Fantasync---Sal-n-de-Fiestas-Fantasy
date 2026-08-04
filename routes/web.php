@@ -49,6 +49,11 @@ Route::middleware('auth')->group(function () {
     Route::get('nominas/reporte-pdf', [NominaController::class, 'reportePdf'])->name('nominas.reporte-pdf');
     Route::resource('nominas', NominaController::class);
 
+    Route::delete('juguetes/{juguete}/historial', [\App\Http\Controllers\JugueteController::class, 'limpiarHistorial'])->name('juguetes.limpiar-historial');
+    Route::get('juguetes/{juguete}/historial', [\App\Http\Controllers\JugueteController::class, 'historial'])->name('juguetes.historial');
+    Route::post('juguetes/{juguete}/restar', [\App\Http\Controllers\JugueteController::class, 'restarStock'])->name('juguetes.restar');
+    Route::resource('juguetes', \App\Http\Controllers\JugueteController::class);
+
 
     // Test de Livewire para Platillos
     Route::get('/test-platillos', function () {

@@ -80,6 +80,12 @@
                             <option value="Cremería" {{ old('categoria') === 'Cremería' ? 'selected' : '' }}>Cremería</option>
                             <option value="Abarrotes" {{ old('categoria') === 'Abarrotes' ? 'selected' : '' }}>Abarrotes</option>
                             <option value="Carnes" {{ old('categoria') === 'Carnes' ? 'selected' : '' }}>Carnes</option>
+                            <option value="Pollo" {{ old('categoria') === 'Pollo' ? 'selected' : '' }}>Pollo</option>
+                            <option value="Abarrotes Moderna" {{ old('categoria') === 'Abarrotes Moderna' ? 'selected' : '' }}>Abarrotes Moderna</option>
+                            <option value="Las Güeras" {{ old('categoria') === 'Las Güeras' ? 'selected' : '' }}>Las Güeras</option>
+                            <option value="Jovis" {{ old('categoria') === 'Jovis' ? 'selected' : '' }}>Jovis</option>
+                            <option value="El Talismán" {{ old('categoria') === 'El Talismán' ? 'selected' : '' }}>El Talismán</option>
+                            <option value="Cremería La Rancherita" {{ old('categoria') === 'Cremería La Rancherita' ? 'selected' : '' }}>Cremería La Rancherita</option>
                             <option value="Otros" {{ old('categoria') === 'Otros' ? 'selected' : '' }}>Otros</option>
                         </select>
                         @error('categoria')
