@@ -62,12 +62,19 @@
                 <section class="platillos-preparar-card">
                     <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
                         <h3 class="platillos-title" style="margin: 0;">Platillos a Preparar:</h3>
-                        @if($evento->contrato)
-                            <a href="{{ route('reportes.comanda', $evento->contrato->id) }}" class="no-print" style="background: linear-gradient(135deg, var(--primary-purple), #4a148c); color: white; padding: 0.55rem 1.25rem; border-radius: 2rem; text-decoration: none; font-weight: 800; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px rgba(122, 40, 138, 0.3); transition: all 0.3s ease;">
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <button onclick="window.print()" class="no-print" style="background: linear-gradient(135deg, #1565c0, #0d47a1); color: white; padding: 0.55rem 1.25rem; border-radius: 2rem; border: none; cursor: pointer; font-weight: 800; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3); transition: all 0.3s ease;">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                                Imprimir pedido del cliente
-                            </a>
-                        @endif
+                                Imprimir Insumos
+                            </button>
+                            
+                            @if($evento->contrato)
+                                <a href="{{ route('reportes.comanda', $evento->contrato->id) }}" class="no-print" style="background: linear-gradient(135deg, var(--primary-purple), #4a148c); color: white; padding: 0.55rem 1.25rem; border-radius: 2rem; text-decoration: none; font-weight: 800; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px rgba(122, 40, 138, 0.3); transition: all 0.3s ease;">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                                    Ver Cantidades a Picar (Comanda)
+                                </a>
+                            @endif
+                        </div>
                     </header>
                     @php
                         $platillosList = collect();

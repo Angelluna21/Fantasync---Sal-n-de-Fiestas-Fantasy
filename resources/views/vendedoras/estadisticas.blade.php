@@ -101,17 +101,30 @@
             </aside>
         </nav>
 
-        <section class="salones-section" style="max-width: 900px; margin: 0 auto;">
+        <section class="salones-section" style="max-width: 1000px; margin: 0 auto;">
             
             <!-- Filtro -->
-            <form action="{{ route('vendedoras.estadisticas') }}" method="GET" class="filter-form">
-                <label for="periodo" style="color: #7a288a; font-weight: 800;">Filtrar periodo:</label>
-                <select name="periodo" id="periodo" class="filter-select" onchange="this.form.submit()">
-                    <option value="todos" {{ $periodo == 'todos' ? 'selected' : '' }}>Histórico Completo (Todos)</option>
-                    <option value="semana" {{ $periodo == 'semana' ? 'selected' : '' }}>Esta Semana</option>
-                    <option value="mes" {{ $periodo == 'mes' ? 'selected' : '' }}>Este Mes</option>
-                    <option value="anio" {{ $periodo == 'anio' ? 'selected' : '' }}>Este Año</option>
-                </select>
+            <form action="{{ route('vendedoras.estadisticas') }}" method="GET" class="filter-form" style="flex-wrap: wrap;">
+                
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <label for="vendedora_id" style="color: #7a288a; font-weight: 800;">Vendedora:</label>
+                    <select name="vendedora_id" id="vendedora_id" class="filter-select" onchange="this.form.submit()">
+                        <option value="todas" {{ (isset($vendedoraId) && $vendedoraId == 'todas') ? 'selected' : '' }}>Todas las Vendedoras</option>
+                        @foreach($todasLasVendedoras as $v)
+                            <option value="{{ $v->id }}" {{ (isset($vendedoraId) && $vendedoraId == $v->id) ? 'selected' : '' }}>{{ $v->nombre }} {{ $v->apellidos }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <label for="periodo" style="color: #7a288a; font-weight: 800;">Periodo para Ventas:</label>
+                    <select name="periodo" id="periodo" class="filter-select" onchange="this.form.submit()">
+                        <option value="todos" {{ $periodo == 'todos' ? 'selected' : '' }}>Histórico Completo (Todos)</option>
+                        <option value="semana" {{ $periodo == 'semana' ? 'selected' : '' }}>Esta Semana</option>
+                        <option value="mes" {{ $periodo == 'mes' ? 'selected' : '' }}>Este Mes</option>
+                        <option value="anio" {{ $periodo == 'anio' ? 'selected' : '' }}>Este Año</option>
+                    </select>
+                </div>
             </form>
 
             <!-- Tabla de Estadísticas -->
@@ -120,7 +133,14 @@
                     <tr>
                         <th>Pos.</th>
                         <th>Vendedora</th>
-                        <th style="text-align: center;">Contratos Cerrados</th>
+                        @if($periodo === 'todos')
+                            <th style="text-align: center; border-left: 1px solid rgba(122, 40, 138, 0.2);" title="Vendidos Esta Semana">C. Sem</th>
+                            <th style="text-align: center;" title="Vendidos Este Mes">C. Mes</th>
+                            <th style="text-align: center;" title="Vendidos Este Año">C. Año</th>
+                            <th style="text-align: center; border-right: 1px solid rgba(122, 40, 138, 0.2);" title="Total Histórico">C. Total</th>
+                        @else
+                            <th style="text-align: center;">Contratos Cerrados</th>
+                        @endif
                         <th style="text-align: right;">Vendido Bruto</th>
                         <th style="text-align: right; color: #d81b60;">Desc. Hr Extra</th>
                         <th style="text-align: right; color: #2e7d32;">Bono (10%)</th>
@@ -128,11 +148,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $pos = 1; $totalVentas = 0; $totalContratos = 0; $totalDescuentos = 0; $totalBonos = 0; $totalComisiones = 0; @endphp
+                    @php 
+                        $pos = 1; 
+                        $totalVentas = 0; 
+                        $totalContratos = 0; 
+                        $totalSem = 0;
+                        $totalMes = 0;
+                        $totalAnio = 0;
+                        $totalHist = 0;
+                        $totalDescuentos = 0; 
+                        $totalBonos = 0; 
+                        $totalComisiones = 0; 
+                    @endphp
                     @forelse($stats as $stat)
                         @php
                             $totalVentas += $stat['monto_total'];
                             $totalContratos += $stat['cantidad_contratos'];
+                            $totalSem += $stat['cnt_semana'];
+                            $totalMes += $stat['cnt_mes'];
+                            $totalAnio += $stat['cnt_anio'];
+                            $totalHist += $stat['cnt_historico'];
                             $totalDescuentos += $stat['monto_descontado'];
                             $totalBonos += $stat['bono_extras'];
                             $totalComisiones += $stat['comisiones'];
@@ -145,9 +180,16 @@
                                     <span style="font-size: 0.75rem; color: #d81b60; margin-left: 0.5rem;">(Inactiva)</span>
                                 @endif
                             </td>
-                            <td style="text-align: center; font-size: 1.1rem; font-weight: 800; color: #3d1b4a;">
-                                {{ $stat['cantidad_contratos'] }}
-                            </td>
+                            @if($periodo === 'todos')
+                                <td style="text-align: center; color: #555; border-left: 1px dashed rgba(122, 40, 138, 0.1);">{{ $stat['cnt_semana'] }}</td>
+                                <td style="text-align: center; color: #555;">{{ $stat['cnt_mes'] }}</td>
+                                <td style="text-align: center; color: #555;">{{ $stat['cnt_anio'] }}</td>
+                                <td style="text-align: center; font-size: 1.1rem; font-weight: 800; color: #3d1b4a; border-right: 1px dashed rgba(122, 40, 138, 0.1);">{{ $stat['cnt_historico'] }}</td>
+                            @else
+                                <td style="text-align: center; font-size: 1.1rem; font-weight: 800; color: #3d1b4a;">
+                                    {{ $stat['cantidad_contratos'] }}
+                                </td>
+                            @endif
                             <td style="text-align: right; font-weight: 600;">
                                 ${{ number_format($stat['monto_total'], 2) }}
                             </td>
@@ -172,7 +214,14 @@
                 <tfoot>
                     <tr>
                         <th colspan="2" style="text-align: right; background: #fdfaf6; color: #3d1b4a;">TOTALES:</th>
-                        <th style="text-align: center; background: #fdfaf6; font-size: 1.1rem; color: #3d1b4a;">{{ $totalContratos }}</th>
+                        @if($periodo === 'todos')
+                            <th style="text-align: center; background: #fdfaf6; font-size: 1.1rem; color: #3d1b4a; border-left: 1px solid rgba(122, 40, 138, 0.2);">{{ $totalSem }}</th>
+                            <th style="text-align: center; background: #fdfaf6; font-size: 1.1rem; color: #3d1b4a;">{{ $totalMes }}</th>
+                            <th style="text-align: center; background: #fdfaf6; font-size: 1.1rem; color: #3d1b4a;">{{ $totalAnio }}</th>
+                            <th style="text-align: center; background: #fdfaf6; font-size: 1.1rem; color: #3d1b4a; border-right: 1px solid rgba(122, 40, 138, 0.2);">{{ $totalHist }}</th>
+                        @else
+                            <th style="text-align: center; background: #fdfaf6; font-size: 1.1rem; color: #3d1b4a;">{{ $totalContratos }}</th>
+                        @endif
                         <th style="text-align: right; background: #fdfaf6; font-size: 1.1rem; color: #3d1b4a; font-weight: 900;">
                             ${{ number_format($totalVentas, 2) }}
                         </th>

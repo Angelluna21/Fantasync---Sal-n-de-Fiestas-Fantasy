@@ -392,7 +392,7 @@
 }
 
 /* Estilos para Formularios (Nóminas / Generales) */
-.nomina-form-container { max-width: 600px; margin: 0 auto; background: var(--bg-card); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color); }
+.nomina-form-container { max-width: 950px; margin: 0 auto; background: var(--bg-card); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color); }
 .form-fieldset { margin-bottom: 1rem; }
 .form-fieldset-lg { margin-bottom: 1.5rem; }
 .form-fieldset-flex { flex: 1; }

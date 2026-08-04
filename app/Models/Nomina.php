@@ -8,19 +8,19 @@ class Nomina extends Model
 {
     protected $fillable = [
         'nombre_empleado',
-        'puesto',
-        'salario_base',
-        'horas_extra',
-        'fecha_trabajo',
-        'evento_id',
         'estado_pago',
+        'pagos_extra',
         'monto_total',
         'metodo_pago',
         'observaciones',
     ];
 
-    public function evento()
+    protected $casts = [
+        'pagos_extra' => 'array',
+    ];
+
+    public function detalles()
     {
-        return $this->belongsTo(Evento::class);
+        return $this->hasMany(NominaDetalle::class);
     }
 }

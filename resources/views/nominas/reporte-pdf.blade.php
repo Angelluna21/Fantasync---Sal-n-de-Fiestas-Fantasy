@@ -63,10 +63,10 @@
             @foreach($nominas as $nomina)
                 <tr>
                     <td><strong>{{ $nomina->nombre_empleado }}</strong></td>
-                    <td>{{ $nomina->puesto }}</td>
+                    <td>{{ $nomina->detalles->pluck('puesto')->unique()->implode(', ') ?: 'N/A' }}</td>
                     <td><strong>${{ number_format($nomina->monto_total, 2) }}</strong></td>
-                    <td>{{ $nomina->evento->titulo ?? 'N/A' }}</td>
-                    <td>{{ \Carbon\Carbon::parse($nomina->fecha_trabajo)->format('d/m/Y') }}</td>
+                    <td>{{ $nomina->detalles->pluck('evento.titulo')->filter()->unique()->implode(', ') ?: 'N/A' }}</td>
+                    <td>{{ $nomina->detalles->pluck('fecha_trabajo')->map(fn($d) => \Carbon\Carbon::parse($d)->format('d/m/Y'))->unique()->implode(', ') ?: 'N/A' }}</td>
                     <td class="status-{{ strtolower($nomina->estado_pago) }}">{{ $nomina->estado_pago }}</td>
                     <td class="signature-box"></td>
                 </tr>

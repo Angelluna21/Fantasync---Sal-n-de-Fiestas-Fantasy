@@ -28,10 +28,12 @@ new class extends Component {
 
     public function getBaseQueryProperty()
     {
-        return Nomina::with('evento')
+        return Nomina::with('detalles.evento')
             ->where(function($q) {
                 $q->where('nombre_empleado', 'like', '%' . $this->search . '%')
-                  ->orWhere('puesto', 'like', '%' . $this->search . '%');
+                  ->orWhereHas('detalles', function($dq) {
+                      $dq->where('puesto', 'like', '%' . $this->search . '%');
+                  });
             });
     }
 
@@ -44,17 +46,32 @@ new class extends Component {
 
     public function getOperacionTotalProperty()
     {
-        return (clone $this->baseQuery)->whereIn('puesto', ['Pista (meseros)', 'Dj', 'Puerta', 'Capitan de meseros', 'Barra', 'Nana'])->sum('monto_total');
+        return \App\Models\NominaDetalle::whereHas('nomina', function($q) {
+            $q->where('nombre_empleado', 'like', '%' . $this->search . '%')
+              ->orWhereHas('detalles', function($dq) {
+                  $dq->where('puesto', 'like', '%' . $this->search . '%');
+              });
+        })->whereIn('puesto', ['Pista (meseros)', 'Dj', 'Puerta', 'Capitan de meseros', 'Barra', 'Nana'])->sum('subtotal');
     }
 
     public function getCocinaTotalProperty()
     {
-        return (clone $this->baseQuery)->whereIn('puesto', ['Cocinera', 'Auxiliar de cocina'])->sum('monto_total');
+        return \App\Models\NominaDetalle::whereHas('nomina', function($q) {
+            $q->where('nombre_empleado', 'like', '%' . $this->search . '%')
+              ->orWhereHas('detalles', function($dq) {
+                  $dq->where('puesto', 'like', '%' . $this->search . '%');
+              });
+        })->whereIn('puesto', ['Cocinera', 'Auxiliar de cocina'])->sum('subtotal');
     }
 
     public function getOficinaTotalProperty()
     {
-        return (clone $this->baseQuery)->whereIn('puesto', ['Encargada', 'Oficina'])->sum('monto_total');
+        return \App\Models\NominaDetalle::whereHas('nomina', function($q) {
+            $q->where('nombre_empleado', 'like', '%' . $this->search . '%')
+              ->orWhereHas('detalles', function($dq) {
+                  $dq->where('puesto', 'like', '%' . $this->search . '%');
+              });
+        })->whereIn('puesto', ['Encargada', 'Oficina'])->sum('subtotal');
     }
 };
 ?>
@@ -132,10 +149,10 @@ new class extends Component {
             <thead>
                 <tr>
                     <th wire:click="sortBy('nombre_empleado')" class="th-sortable">Empleado @if($sortField === 'nombre_empleado') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
-                    <th wire:click="sortBy('puesto')" class="th-sortable">Puesto @if($sortField === 'puesto') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
-                    <th wire:click="sortBy('salario_base')" class="th-sortable">Salario @if($sortField === 'salario_base') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
-                    <th>Evento</th>
-                    <th wire:click="sortBy('fecha_trabajo')" class="th-sortable">Fecha @if($sortField === 'fecha_trabajo') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
+                    <th>Puestos</th>
+                    <th wire:click="sortBy('monto_total')" class="th-sortable">Total Recibo @if($sortField === 'monto_total') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
+                    <th>Eventos</th>
+                    <th>Fechas</th>
                     <th wire:click="sortBy('estado_pago')" class="th-sortable">Estado @if($sortField === 'estado_pago') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif</th>
                     <th class="table-center">Acciones</th>
                 </tr>
@@ -146,17 +163,29 @@ new class extends Component {
                         <td>
                             <h3 class="event-info-name">{{ $nomina->nombre_empleado }}</h3>
                         </td>
-                        <td><span class="finance-muted">{{ $nomina->puesto }}</span></td>
+                        <td>
+                            <span class="finance-muted">
+                                {{ $nomina->detalles->pluck('puesto')->unique()->implode(', ') ?: 'N/A' }}
+                            </span>
+                        </td>
                         <td class="table-cell">
                             <span class="font-medium-price">${{ number_format($nomina->monto_total, 2) }}</span>
-                            @if($nomina->horas_extra > 0)
-                                <span class="text-extras-green">(+{{ $nomina->horas_extra }} extras)</span>
+                            @php $totalExtras = $nomina->detalles->sum('horas_extra'); @endphp
+                            @if($totalExtras > 0)
+                                <span class="text-extras-green">(+{{ $totalExtras }} extras)</span>
                             @endif
                         </td>
                         <td>
-                            <span class="badge-sucursal">{{ $nomina->evento->titulo ?? 'N/A' }}</span>
+                            @foreach($nomina->detalles->pluck('evento.titulo')->filter()->unique() as $evTitulo)
+                                <span class="badge-sucursal" style="display:inline-block; margin-bottom:2px;">{{ $evTitulo }}</span>
+                            @endforeach
+                            @if($nomina->detalles->isEmpty()) <span class="badge-sucursal">N/A</span> @endif
                         </td>
-                        <td><span class="event-info-sub">{{ \Carbon\Carbon::parse($nomina->fecha_trabajo)->format('d/m/Y') }}</span></td>
+                        <td>
+                            <span class="event-info-sub">
+                                {{ $nomina->detalles->pluck('fecha_trabajo')->map(fn($d) => \Carbon\Carbon::parse($d)->format('d/m'))->unique()->implode(', ') ?: 'N/A' }}
+                            </span>
+                        </td>
                         <td>
                             <span class="event-badge {{ strtolower($nomina->estado_pago) === 'pagado' ? 'confirmado' : (strtolower($nomina->estado_pago) === 'cancelado' ? 'cancelado' : 'cotizacion') }}">
                                 {{ $nomina->estado_pago }}

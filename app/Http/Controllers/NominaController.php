@@ -25,21 +25,43 @@ class NominaController extends Controller
     {
         $validated = $request->validate([
             'nombre_empleado' => 'required|string|max:255',
-            'puesto' => 'required|string|max:255',
-            'salario_base' => 'required|numeric',
-            'horas_extra' => 'nullable|integer',
-            'fecha_trabajo' => 'required|date',
-            'evento_id' => 'required|exists:eventos,id',
             'estado_pago' => 'nullable|string',
             'monto_total' => 'nullable|numeric',
+            'pagos_extra' => 'nullable|array',
+            'pagos_extra.*.concepto' => 'required_with:pagos_extra|string|max:255',
+            'pagos_extra.*.monto' => 'required_with:pagos_extra|numeric|min:0',
+            'dias_trabajados' => 'required|array|min:1',
+            'dias_trabajados.*.evento_id' => 'required|exists:eventos,id',
+            'dias_trabajados.*.fecha_trabajo' => 'required|date',
+            'dias_trabajados.*.puesto' => 'required|string|max:255',
+            'dias_trabajados.*.salario_base' => 'required|numeric',
+            'dias_trabajados.*.horas_extra' => 'nullable|integer',
+            'dias_trabajados.*.subtotal' => 'required|numeric',
             'metodo_pago' => 'nullable|string',
             'observaciones' => 'nullable|string',
         ]);
 
-        $validated['horas_extra'] = $validated['horas_extra'] ?? 0;
         $validated['estado_pago'] = $validated['estado_pago'] ?? 'Pendiente';
 
-        Nomina::create($validated);
+        $nomina = Nomina::create([
+            'nombre_empleado' => $validated['nombre_empleado'],
+            'estado_pago' => $validated['estado_pago'],
+            'pagos_extra' => $validated['pagos_extra'] ?? null,
+            'monto_total' => $validated['monto_total'] ?? 0,
+            'metodo_pago' => $validated['metodo_pago'] ?? null,
+            'observaciones' => $validated['observaciones'] ?? null,
+        ]);
+
+        foreach ($validated['dias_trabajados'] as $dia) {
+            $nomina->detalles()->create([
+                'evento_id' => $dia['evento_id'],
+                'fecha_trabajo' => $dia['fecha_trabajo'],
+                'puesto' => $dia['puesto'],
+                'salario_base' => $dia['salario_base'],
+                'horas_extra' => $dia['horas_extra'] ?? 0,
+                'subtotal' => $dia['subtotal'],
+            ]);
+        }
 
         return redirect()->route('nominas.index')->with('success', 'Registro creado exitosamente.');
     }
@@ -54,20 +76,42 @@ class NominaController extends Controller
     {
         $validated = $request->validate([
             'nombre_empleado' => 'required|string|max:255',
-            'puesto' => 'required|string|max:255',
-            'salario_base' => 'required|numeric',
-            'horas_extra' => 'nullable|integer',
-            'fecha_trabajo' => 'required|date',
-            'evento_id' => 'required|exists:eventos,id',
             'estado_pago' => 'nullable|string',
             'monto_total' => 'nullable|numeric',
+            'pagos_extra' => 'nullable|array',
+            'pagos_extra.*.concepto' => 'required_with:pagos_extra|string|max:255',
+            'pagos_extra.*.monto' => 'required_with:pagos_extra|numeric|min:0',
+            'dias_trabajados' => 'required|array|min:1',
+            'dias_trabajados.*.evento_id' => 'required|exists:eventos,id',
+            'dias_trabajados.*.fecha_trabajo' => 'required|date',
+            'dias_trabajados.*.puesto' => 'required|string|max:255',
+            'dias_trabajados.*.salario_base' => 'required|numeric',
+            'dias_trabajados.*.horas_extra' => 'nullable|integer',
+            'dias_trabajados.*.subtotal' => 'required|numeric',
             'metodo_pago' => 'nullable|string',
             'observaciones' => 'nullable|string',
         ]);
 
-        $validated['horas_extra'] = $validated['horas_extra'] ?? 0;
+        $nomina->update([
+            'nombre_empleado' => $validated['nombre_empleado'],
+            'estado_pago' => $validated['estado_pago'] ?? 'Pendiente',
+            'pagos_extra' => $validated['pagos_extra'] ?? null,
+            'monto_total' => $validated['monto_total'] ?? 0,
+            'metodo_pago' => $validated['metodo_pago'] ?? null,
+            'observaciones' => $validated['observaciones'] ?? null,
+        ]);
 
-        $nomina->update($validated);
+        $nomina->detalles()->delete();
+        foreach ($validated['dias_trabajados'] as $dia) {
+            $nomina->detalles()->create([
+                'evento_id' => $dia['evento_id'],
+                'fecha_trabajo' => $dia['fecha_trabajo'],
+                'puesto' => $dia['puesto'],
+                'salario_base' => $dia['salario_base'],
+                'horas_extra' => $dia['horas_extra'] ?? 0,
+                'subtotal' => $dia['subtotal'],
+            ]);
+        }
 
         return redirect()->route('nominas.index')->with('success', 'Registro actualizado exitosamente.');
     }
@@ -82,12 +126,14 @@ class NominaController extends Controller
     {
         $search = $request->input('search');
 
-        $query = Nomina::with('evento');
+        $query = Nomina::with('detalles.evento');
 
         if ($search) {
             $query->where(function($q) use ($search) {
                 $q->where('nombre_empleado', 'like', '%' . $search . '%')
-                  ->orWhere('puesto', 'like', '%' . $search . '%');
+                  ->orWhereHas('detalles', function($dq) use ($search) {
+                      $dq->where('puesto', 'like', '%' . $search . '%');
+                  });
             });
         }
 
@@ -99,9 +145,21 @@ class NominaController extends Controller
         $puestosCocina = ['Cocinera', 'Auxiliar de cocina'];
         $puestosOficina = ['Encargada', 'Oficina'];
 
-        $operacionTotal = $nominas->whereIn('puesto', $puestosOperacion)->sum('monto_total');
-        $cocinaTotal = $nominas->whereIn('puesto', $puestosCocina)->sum('monto_total');
-        $oficinaTotal = $nominas->whereIn('puesto', $puestosOficina)->sum('monto_total');
+        $operacionTotal = 0;
+        $cocinaTotal = 0;
+        $oficinaTotal = 0;
+
+        foreach ($nominas as $nomina) {
+            foreach ($nomina->detalles as $detalle) {
+                if (in_array($detalle->puesto, $puestosOperacion)) {
+                    $operacionTotal += $detalle->subtotal;
+                } elseif (in_array($detalle->puesto, $puestosCocina)) {
+                    $cocinaTotal += $detalle->subtotal;
+                } elseif (in_array($detalle->puesto, $puestosOficina)) {
+                    $oficinaTotal += $detalle->subtotal;
+                }
+            }
+        }
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('nominas.reporte-pdf', compact(
             'nominas', 'totalEmpleados', 'totalAPagar', 'operacionTotal', 'cocinaTotal', 'oficinaTotal', 'search'

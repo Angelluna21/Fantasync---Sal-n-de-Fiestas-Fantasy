@@ -223,6 +223,63 @@
             </section>
         </fieldset>
 
+        @elseif($servicio_id == 7)
+        <fieldset class="form-section animated-section" wire:key="servicio-desayuno-section">
+            <legend>Desayuno / Brunch</legend>
+            <section class="input-grid grid-2 grid-margin-2">
+                <article class="input-wrapper">
+                    <label class="tiempo-label">Entrada (Fruta, Jugo, etc.)</label>
+                    <select wire:model="entrada_id" class="form-control select-margin">
+                        <option value="">-- Selecciona una entrada --</option>
+                        @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['entradas', 'entrada']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id) || $p->serviciosGastronomicos->isEmpty()) ?? [] as $entrada)
+                            <option value="{{ $entrada->id }}">{{ $entrada->nombre }}</option>
+                        @endforeach
+                    </select>
+                    @error('entrada_id') 
+                        <span class="error-msg-3">{{ $message }}</span> 
+                    @enderror
+                </article>
+
+                <article class="input-wrapper">
+                    <label class="tiempo-label">Plato Fuerte</label>
+                    <select wire:model="plato_fuerte_id" class="form-control select-margin">
+                        <option value="">-- Selecciona el plato fuerte --</option>
+                        @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['platos fuertes', 'plato fuerte']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id) || $p->serviciosGastronomicos->isEmpty()) ?? [] as $fuerte)
+                            <option value="{{ $fuerte->id }}">{{ $fuerte->nombre }}</option>
+                        @endforeach
+                    </select>
+                    @error('plato_fuerte_id') 
+                        <span class="error-msg-3">{{ $message }}</span> 
+                    @enderror
+                </article>
+
+                <article class="input-wrapper">
+                    <label class="tiempo-label">Proteína (Opcional)</label>
+                    <select wire:model="proteina_id" class="form-control select-margin">
+                        <option value="">-- Sin proteína --</option>
+                        @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['proteínas', 'proteinas', 'proteína', 'proteina']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id) || $p->serviciosGastronomicos->isEmpty()) ?? [] as $prot)
+                            <option value="{{ $prot->id }}">{{ $prot->nombre }}</option>
+                        @endforeach
+                    </select>
+                    @error('proteina_id') 
+                        <span class="error-msg-3">{{ $message }}</span> 
+                    @enderror
+                </article>
+
+                <article class="input-wrapper">
+                    <label class="tiempo-label">Complemento de Desayuno (Opcional)</label>
+                    <select wire:model="complemento_desayuno_id" class="form-control select-margin">
+                        <option value="">-- Sin complemento --</option>
+                        @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['complementos de desayuno', 'complemento de desayuno', 'complementos', 'complemento']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id) || $p->serviciosGastronomicos->isEmpty()) ?? [] as $comp)
+                            <option value="{{ $comp->id }}">{{ $comp->nombre }}</option>
+                        @endforeach
+                    </select>
+                    @error('complemento_desayuno_id') 
+                        <span class="error-msg-3">{{ $message }}</span> 
+                    @enderror
+                </article>
+            </section>
+        </fieldset>
         @endif
 
         @if($servicio_id)
@@ -236,12 +293,42 @@
                             <span>{{ count($infantil) == 0 ? '-- Seleccionar menú infantil --' : count($infantil) . ' seleccionado(s)' }}</span>
                             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </summary>
-                        <div style="position: absolute; z-index: 10; width: 100%; max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 0.5rem; background: white; margin-top: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                            @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['menú infantil', 'menu infantil', 'buffet infantil']))->flatMap->platillos ?? [] as $infantil_opt)
-                                <label style="display: block; padding: 0.25rem 0; cursor: pointer; border-bottom: 1px solid #eee;">
-                                    <input type="checkbox" wire:model.live="infantil" value="{{ $infantil_opt->id }}"> {{ $infantil_opt->nombre }}
-                                </label>
-                            @endforeach
+                        <div style="position: absolute; z-index: 10; width: 100%; max-height: 300px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 0.5rem; background: white; margin-top: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            @php
+                                $allPlatillos = $categorias->flatMap->platillos->unique('id');
+                                $menuInfantilOpts = $allPlatillos->filter(function($p) {
+                                    $servicios = $p->serviciosGastronomicos->pluck('nombre')->map(fn($n) => strtolower(trim($n)))->toArray();
+                                    $catNombre = strtolower(trim($p->categoriaPlatillo->nombre ?? ''));
+                                    return in_array('menú infantil', $servicios) || in_array('menu infantil', $servicios) || in_array($catNombre, ['menú infantil', 'menu infantil']);
+                                });
+                                $buffetInfantilOpts = $allPlatillos->filter(function($p) {
+                                    $servicios = $p->serviciosGastronomicos->pluck('nombre')->map(fn($n) => strtolower(trim($n)))->toArray();
+                                    $catNombre = strtolower(trim($p->categoriaPlatillo->nombre ?? ''));
+                                    return in_array('buffet infantil', $servicios) || $catNombre === 'buffet infantil';
+                                });
+                            @endphp
+
+                            @if($menuInfantilOpts->count() > 0)
+                                <h4 style="margin: 0.5rem 0 0.25rem 0; padding-bottom: 0.25rem; border-bottom: 1px solid #ddd; font-size: 0.9rem; color: var(--primary-purple);">Menú Infantil</h4>
+                                @foreach($menuInfantilOpts as $infantil_opt)
+                                    <label style="display: block; padding: 0.25rem 0; cursor: pointer; border-bottom: 1px dashed #eee;">
+                                        <input type="checkbox" wire:model.live="infantil" value="{{ $infantil_opt->id }}"> {{ $infantil_opt->nombre }}
+                                    </label>
+                                @endforeach
+                            @endif
+
+                            @if($buffetInfantilOpts->count() > 0)
+                                <h4 style="margin: 1rem 0 0.25rem 0; padding-bottom: 0.25rem; border-bottom: 1px solid #ddd; font-size: 0.9rem; color: var(--primary-purple);">Buffet Infantil</h4>
+                                @foreach($buffetInfantilOpts as $buffet_opt)
+                                    <label style="display: block; padding: 0.25rem 0; cursor: pointer; border-bottom: 1px dashed #eee;">
+                                        <input type="checkbox" wire:model.live="infantil" value="{{ $buffet_opt->id }}"> {{ $buffet_opt->nombre }}
+                                    </label>
+                                @endforeach
+                            @endif
+
+                            @if($menuInfantilOpts->isEmpty() && $buffetInfantilOpts->isEmpty())
+                                <p style="font-size: 0.85rem; color: #777; margin: 0; padding: 0.5rem 0;">No hay platillos clasificados como infantiles.</p>
+                            @endif
                         </div>
                     </details>
                 </article>
@@ -272,7 +359,11 @@
                         <input type="checkbox" wire:model.live="descorche_cerveza" style="width: 20px; height: 20px; accent-color: var(--primary-purple);">
                         <span style="font-weight: 600; color: var(--primary-purple);">Se ingresará Cerveza (Añade Hielo molido y Limones)</span>
                     </label>
-                    <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; padding-left: 2rem;">Al activar estas opciones, los insumos extra de Hielo (bolsa o molido) y Limones se calcularán automáticamente en tu reporte de insumos.</p>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; background: rgba(122, 40, 138, 0.05); padding: 1rem; border-radius: 8px; border: 1px solid rgba(122, 40, 138, 0.2); margin-top: 0.5rem;">
+                        <input type="checkbox" wire:model.live="cafe" style="width: 20px; height: 20px; accent-color: var(--primary-purple);">
+                        <span style="font-weight: 600; color: var(--primary-purple);">Mesa de Café (Añade Café, Azúcar, Canela al reporte de insumos)</span>
+                    </label>
+                    <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; padding-left: 2rem;">Al activar estas opciones, los insumos extra se calcularán y añadirán automáticamente en tu reporte de insumos logísticos.</p>
                 </article>
             </section>
         </fieldset>

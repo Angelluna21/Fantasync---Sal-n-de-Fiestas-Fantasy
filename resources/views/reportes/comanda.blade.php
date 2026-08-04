@@ -374,6 +374,20 @@
                                         <div class="comanda-checkbox print-checkbox" title="Marcar como listo"></div>
                                         <div class="comanda-details">
                                             <p class="comanda-name">{{ $platillo['nombre'] }}</p>
+                                            
+                                            @if(!empty($platillo['ingredientes']))
+                                                <div style="margin-top: 0.4rem; margin-bottom: 0.2rem; padding-left: 0.75rem; border-left: 3px solid rgba(122, 40, 138, 0.4);">
+                                                    <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary-purple); margin: 0 0 0.2rem 0; text-transform: uppercase; letter-spacing: 0.05em;">Ingredientes a picar / preparar:</p>
+                                                    <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                                                        @foreach($platillo['ingredientes'] as $nombreIng => $datosIng)
+                                                            <li style="font-size: 0.8rem; background: #f8f9fa; padding: 0.2rem 0.5rem; border-radius: 6px; border: 1px solid #e9ecef; display: inline-flex; gap: 0.3rem;">
+                                                                <strong style="color: #495057;">{{ $nombreIng }}:</strong> <span style="color: var(--primary-purple); font-weight: 700;">{{ $datosIng['format'] }}</span>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+
                                             @foreach($platillo['salones'] as $salon)
                                                 @if($salon['notas'] && !str_contains($salon['notas'], 'Registrado desde el configurador'))
                                                     <span class="nota-box" style="margin-top: 0.2rem; display: inline-block; padding: 0.2rem 0.5rem; font-size: 0.75rem;">Nota: {{ $salon['notas'] }}</span>

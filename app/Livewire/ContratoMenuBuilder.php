@@ -17,6 +17,10 @@ class ContratoMenuBuilder extends Component
     public $crema_sopa_id = '';
     public $guarnicion_formal_id = '';
     
+    // Novedades para desayuno
+    public $proteina_id = '';
+    public $complemento_desayuno_id = '';
+    
     // Novedades para taquiza, bebidas e infantil
     public $taquiza_guisados = [];
     public $taquiza_parrillada = [];
@@ -28,6 +32,7 @@ class ContratoMenuBuilder extends Component
     public $aderezos = [];
     public $descorche = false;
     public $descorche_cerveza = false;
+    public $cafe = false;
 
     public function mount($eventoId)
     {
@@ -43,6 +48,9 @@ class ContratoMenuBuilder extends Component
             }
             if (strpos($evento->notas, 'Descorche Cerveza: Sí') !== false) {
                 $this->descorche_cerveza = true;
+            }
+            if (strpos($evento->notas, 'Café: Sí') !== false) {
+                $this->cafe = true;
             }
         }
 
@@ -69,6 +77,10 @@ class ContratoMenuBuilder extends Component
                     } else {
                         $this->guarnicion_formal_id = (string) $p->id;
                     }
+                } elseif (in_array($cat, ['proteínas', 'proteinas', 'proteína', 'proteina'])) {
+                    $this->proteina_id = (string) $p->id;
+                } elseif (in_array($cat, ['complementos de desayuno', 'complemento de desayuno', 'complementos', 'complemento'])) {
+                    $this->complemento_desayuno_id = (string) $p->id;
                 } elseif (in_array($cat, ['menú infantil', 'menu infantil', 'buffet infantil'])) {
                     $this->infantil[] = (string) $p->id;
                 } elseif (in_array($cat, ['bebidas', 'bebida', 'aguas', 'refrescos'])) {
@@ -99,6 +111,11 @@ class ContratoMenuBuilder extends Component
             $reglas['entrada_id'] = 'required|exists:platillos,id';
             $reglas['plato_fuerte_id'] = 'required|exists:platillos,id';
             $reglas['guarnicion_formal_id'] = 'nullable|exists:platillos,id';
+        } elseif ($this->servicio_id == 7) { // Desayuno
+            $reglas['entrada_id'] = 'required|exists:platillos,id';
+            $reglas['plato_fuerte_id'] = 'required|exists:platillos,id';
+            $reglas['proteina_id'] = 'nullable|exists:platillos,id';
+            $reglas['complemento_desayuno_id'] = 'nullable|exists:platillos,id';
         }
 
         $this->validate($reglas);
@@ -114,6 +131,9 @@ class ContratoMenuBuilder extends Component
             $platillosSeleccionados = array_merge($platillosSeleccionados, $this->espejos, $this->salsas, $this->aderezos);
         } elseif ($this->servicio_id == 3) {
             $platillosSeleccionados = array_filter([$this->crema_sopa_id, $this->entrada_id, $this->plato_fuerte_id, $this->guarnicion_formal_id]);
+            $platillosSeleccionados = array_merge($platillosSeleccionados, $this->espejos, $this->salsas, $this->aderezos);
+        } elseif ($this->servicio_id == 7) {
+            $platillosSeleccionados = array_filter([$this->entrada_id, $this->plato_fuerte_id, $this->proteina_id, $this->complemento_desayuno_id]);
             $platillosSeleccionados = array_merge($platillosSeleccionados, $this->espejos, $this->salsas, $this->aderezos);
         }
 
@@ -178,6 +198,15 @@ class ContratoMenuBuilder extends Component
                 $notas = str_replace("\nDescorche Cerveza: Sí", "", $notas);
                 $notas = str_replace("Descorche Cerveza: Sí", "", $notas);
             }
+
+            if ($this->cafe) {
+                if (strpos($notas, 'Café: Sí') === false) {
+                    $notas .= "\nCafé: Sí";
+                }
+            } else {
+                $notas = str_replace("\nCafé: Sí", "", $notas);
+                $notas = str_replace("Café: Sí", "", $notas);
+            }
             $evento->notas = trim($notas);
             $evento->save();
         }
@@ -189,9 +218,9 @@ class ContratoMenuBuilder extends Component
     public function render()
     {
         return view('livewire.contrato-menu-builder', [
-            'servicios' => ServicioGastronomico::whereIn('id', [1, 2, 3])->get(),
+            'servicios' => ServicioGastronomico::whereIn('id', [1, 2, 3, 7])->get(),
             'categorias' => CategoriaPlatillo::with(['platillos' => function ($query) {
-                $query->with('serviciosGastronomicos')->orderBy('nombre');
+                $query->with(['serviciosGastronomicos', 'categoriaPlatillo'])->orderBy('nombre');
             }])->orderBy('orden')->get()
         ]);
     }

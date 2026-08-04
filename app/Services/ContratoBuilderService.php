@@ -138,6 +138,17 @@ class ContratoBuilderService
             );
 
             // 3. Crear o actualizar Evento
+            $eventoActual = null;
+            if ($eventoId) {
+                $eventoActual = Evento::find($eventoId);
+            }
+            $servicioGastronomicoAnterior = null;
+            if ($eventoActual) {
+                if (preg_match('/Servicio Gastronómico:\s*(\d+)/', $eventoActual->notas, $matches)) {
+                    $servicioGastronomicoAnterior = $matches[1];
+                }
+            }
+
             $horaInicio = trim($data['inicio_hora'] ?? '00:00');
             $horaRecepcion = trim($data['recepcion_hora'] ?? '00:00');
             $notasAdicionales = '';
@@ -167,22 +178,26 @@ class ContratoBuilderService
             $extras['invitacion_detalle'] = $data['invitacion_detalle'] ?? '';
             $extras['quien_vendio_hora_extra'] = $data['quien_vendio_hora_extra'] ?? '';
 
-            $evento = Evento::updateOrCreate(
-                ['id' => $eventoId],
-                [
-                    'cliente_id' => $cliente->id,
-                    'fecha' => $data['evento_fecha'],
-                    'hora_recepcion' => $horaRecepcion,
-                    'hora_inicio' => $horaInicio,
-                    'horas_duracion' => (float) $data['horas_evento'],
-                    'tipo_evento' => trim($data['tipo_evento']),
-                    'nombre_festejado' => trim($data['festejado']),
-                    'estado' => $contractData['estado'],
-                    'color_manteleria' => trim($data['manteleria_color'] ?? ''),
-                    'titulo' => trim($data['cliente']),
-                    'notas' => 'Servicio Gastronómico: ' . ($data['servicio_gastronomico'] ?? 'N/A') . '. Platillos: ' . implode(', ', $platilloIds) . '. Extras: ' . json_encode($extras) . $notasAdicionales
-                ]
-            );
+            $eventoData = [
+                'cliente_id' => $cliente->id,
+                'fecha' => $data['evento_fecha'],
+                'hora_recepcion' => $horaRecepcion,
+                'hora_inicio' => $horaInicio,
+                'horas_duracion' => (float) $data['horas_evento'],
+                'tipo_evento' => trim($data['tipo_evento']),
+                'nombre_festejado' => trim($data['festejado']),
+                'estado' => $contractData['estado'],
+                'color_manteleria' => trim($data['manteleria_color'] ?? ''),
+                'titulo' => trim($data['cliente']),
+                'notas' => 'Servicio Gastronómico: ' . ($data['servicio_gastronomico'] ?? 'N/A') . '. Platillos: ' . implode(', ', $platilloIds) . '. Extras: ' . json_encode($extras) . $notasAdicionales
+            ];
+
+            if ($eventoId) {
+                $evento = Evento::findOrFail($eventoId);
+                $evento->update($eventoData);
+            } else {
+                $evento = Evento::create($eventoData);
+            }
 
             // 4. Asociar/Sincronizar Evento con el Salón en la tabla pivot
             $evento->salones()->sync([
@@ -192,22 +207,35 @@ class ContratoBuilderService
                 ]
             ]);
 
+            // Si el servicio gastronómico cambió, limpiar los platillos para evitar platillos fantasma
+            $servicioGastronomicoNuevo = $data['servicio_gastronomico'] ?? null;
+            if ($eventoActual && $servicioGastronomicoAnterior != $servicioGastronomicoNuevo) {
+                $eventoSalonPivot = EventoSalon::where('evento_id', $evento->id)->first();
+                if ($eventoSalonPivot) {
+                    $eventoSalonPivot->platillos()->detach();
+                }
+            }
+
 
             // 5. Crear o actualizar Contrato
-            
-            $contract = Contrato::updateOrCreate(
-                ['id' => session('contract_draft.contract_id')],
-                [
-                    'evento_id' => $evento->id,
-                    'monto_total' => $total,
-                    'anticipo' => $contractData['totalPagado'],
-                    'saldo_pendiente' => $total - $contractData['totalPagado'],
-                    'bebidas' => [],
-                    'servicios_extras' => $extras,
-                    'consentimiento_imagen' => true,
-                    'fecha_firma' => date('Y-m-d')
-                ]
-            );
+            $contratoId = session('contract_draft.contract_id');
+            $contratoData = [
+                'evento_id' => $evento->id,
+                'monto_total' => $total,
+                'anticipo' => $contractData['totalPagado'],
+                'saldo_pendiente' => $total - $contractData['totalPagado'],
+                'bebidas' => [],
+                'servicios_extras' => $extras,
+                'consentimiento_imagen' => true,
+                'fecha_firma' => date('Y-m-d')
+            ];
+
+            if ($contratoId) {
+                $contract = Contrato::findOrFail($contratoId);
+                $contract->update($contratoData);
+            } else {
+                $contract = Contrato::create($contratoData);
+            }
 
             // Sincronizar vendedoras
             if (isset($data['vendedoras_ids']) && is_array($data['vendedoras_ids'])) {

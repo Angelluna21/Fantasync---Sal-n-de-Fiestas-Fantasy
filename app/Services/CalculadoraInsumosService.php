@@ -84,6 +84,14 @@ class CalculadoraInsumosService
             }
         }
 
+        // REGLAS DE CAFÉ
+        $tieneCafe = strpos($evento->notas, 'Café: Sí') !== false;
+        if ($tieneCafe) {
+            $listaInsumos['Café de Olla (Grano/Soluble)'] = ['cantidad' => 1, 'unidad' => 'A granel'];
+            $listaInsumos['Azúcar para Café'] = ['cantidad' => 1, 'unidad' => 'A granel'];
+            $listaInsumos['Canela para Café'] = ['cantidad' => 1, 'unidad' => 'A granel'];
+        }
+
         // Redondear las cantidades a 3 decimales
         foreach ($listaInsumos as &$insumo) {
             $insumo['cantidad'] = round($insumo['cantidad'], 3);
@@ -144,6 +152,10 @@ class CalculadoraInsumosService
      */
     public function formatearCantidad($cantidad, $unidad)
     {
+        if (strtolower(trim($unidad)) === 'a granel') {
+            return 'A granel / Al gusto';
+        }
+
         if (strtolower($unidad) === 'kg' && $cantidad > 0) {
             $kilos = floor($cantidad);
             $decimal = $cantidad - $kilos;

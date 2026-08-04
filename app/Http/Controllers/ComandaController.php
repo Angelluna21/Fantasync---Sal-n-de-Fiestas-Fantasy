@@ -13,19 +13,18 @@ class ComandaController extends Controller
      */
     public function showByContrato(Contrato $contrato)
     {
-        // 1. Cargamos el contrato con su evento, salones, sucursal y cliente
         $contrato->load('evento.cliente', 'evento.salones.sucursal');
-
-        // 2. Extraemos las comandas del contrato usando el mutator creado
         $salonesConComanda = $contrato->comandas;
-
-        // 3. (Opcional) Podemos agrupar todos los platillos globalmente si queremos
-        //    una lista unificada para la cocina.
+        $salonesConComanda->load(['platillos.categoriaPlatillo', 'platillos.ingredientes']);
+        
         $platillosAgrupados = collect();
+        
+        $calculadora = app(\App\Services\CalculadoraInsumosService::class);
         
         foreach ($salonesConComanda as $eventoSalon) {
             foreach ($eventoSalon->platillos as $platillo) {
                 $id = $platillo->id;
+                $porcionesPlan = $platillo->pivot->porciones_plan;
                 
                 if (!$platillosAgrupados->has($id)) {
                     $platillosAgrupados->put($id, [
@@ -33,22 +32,55 @@ class ComandaController extends Controller
                         'categoria' => $platillo->categoriaPlatillo ? $platillo->categoriaPlatillo->nombre : 'Sin Categoría',
                         'porciones_totales' => 0,
                         'salones' => [],
+                        'ingredientes' => []
                     ]);
                 }
 
                 $item = $platillosAgrupados->get($id);
-                $item['porciones_totales'] += $platillo->pivot->porciones_plan;
+                $item['porciones_totales'] += $porcionesPlan;
                 
                 // Guardamos para qué salón es y cuántas porciones
                 $item['salones'][] = [
                     'nombre' => $eventoSalon->salon->nombre ?? 'Sin nombre',
-                    'porciones' => $platillo->pivot->porciones_plan,
+                    'porciones' => $porcionesPlan,
                     'notas' => $platillo->pivot->notas
                 ];
+
+                // Calcular ingredientes para estas porciones
+                foreach ($platillo->ingredientes as $ingrediente) {
+                    $nombreIng = $ingrediente->nombre;
+                    $cantidadBase = $ingrediente->pivot->cantidad_por_base;
+                    $esFijo = $ingrediente->pivot->es_fijo ?? false;
+                    $unidad = $ingrediente->unidad;
+                    
+                    if ($esFijo) {
+                        $cantidadFinal = $cantidadBase;
+                    } else {
+                        $cantidadFinal = ($cantidadBase / 100) * $porcionesPlan;
+                    }
+
+                    if (!isset($item['ingredientes'][$nombreIng])) {
+                        $item['ingredientes'][$nombreIng] = [
+                            'cantidad' => 0,
+                            'unidad' => $unidad,
+                        ];
+                    }
+                    $item['ingredientes'][$nombreIng]['cantidad'] += $cantidadFinal;
+                }
 
                 $platillosAgrupados->put($id, $item);
             }
         }
+
+        // Formatear cantidades amigablemente
+        $platillosAgrupados->transform(function ($item) use ($calculadora) {
+            foreach ($item['ingredientes'] as $nombreIng => &$datos) {
+                // Redondear a 3 decimales internamente
+                $datos['cantidad'] = round($datos['cantidad'], 3);
+                $datos['format'] = $calculadora->formatearCantidad($datos['cantidad'], $datos['unidad']);
+            }
+            return $item;
+        });
 
         // Agrupamos la colección final por categoría para que la cocina tenga orden
         $comandaGlobal = $platillosAgrupados->groupBy('categoria');

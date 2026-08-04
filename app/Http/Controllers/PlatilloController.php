@@ -18,12 +18,33 @@ class PlatilloController extends Controller
 
         $platillosAgrupados = collect();
 
+        $catMenuInfantilId = CategoriaPlatillo::whereRaw('LOWER(TRIM(nombre)) IN (?, ?)', ['menú infantil', 'menu infantil'])->value('id');
+        $catBuffetInfantilId = CategoriaPlatillo::whereRaw('LOWER(TRIM(nombre)) = ?', ['buffet infantil'])->value('id');
+
         foreach ($platillos as $platillo) {
             $catId = $platillo->categoria_platillo_id ?? 0; // 0 para sin categoría
             if (!$platillosAgrupados->has($catId)) {
                 $platillosAgrupados->put($catId, collect());
             }
             $platillosAgrupados->get($catId)->push($platillo);
+
+            // Clonar para que aparezca en la sección de Menú Infantil y Buffet Infantil si tienen el servicio asignado
+            $serviciosNombres = $platillo->serviciosGastronomicos->pluck('nombre')->map(fn($n) => strtolower(trim($n)))->toArray();
+
+            if ($catMenuInfantilId && $catId != $catMenuInfantilId && (in_array('menú infantil', $serviciosNombres) || in_array('menu infantil', $serviciosNombres))) {
+                if (!$platillosAgrupados->has($catMenuInfantilId)) $platillosAgrupados->put($catMenuInfantilId, collect());
+                // Evitar duplicados exactos si por alguna razón entra doble
+                if (!$platillosAgrupados->get($catMenuInfantilId)->contains('id', $platillo->id)) {
+                    $platillosAgrupados->get($catMenuInfantilId)->push($platillo);
+                }
+            }
+
+            if ($catBuffetInfantilId && $catId != $catBuffetInfantilId && in_array('buffet infantil', $serviciosNombres)) {
+                if (!$platillosAgrupados->has($catBuffetInfantilId)) $platillosAgrupados->put($catBuffetInfantilId, collect());
+                if (!$platillosAgrupados->get($catBuffetInfantilId)->contains('id', $platillo->id)) {
+                    $platillosAgrupados->get($catBuffetInfantilId)->push($platillo);
+                }
+            }
         }
 
         return view('platillos.index', compact('platillos', 'platillosAgrupados'));

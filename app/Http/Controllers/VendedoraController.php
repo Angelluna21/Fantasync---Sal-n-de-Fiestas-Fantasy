@@ -23,20 +23,51 @@ class VendedoraController extends Controller
     public function estadisticas(\Illuminate\Http\Request $request)
     {
         $periodo = $request->get('periodo', 'todos'); // 'semana', 'mes', 'anio', 'todos'
+        $vendedoraId = $request->get('vendedora_id', 'todas');
         
-        // Obtener todas las vendedoras para comparar (incluye inactivas)
-        $vendedoras = Vendedora::all();
+        $todasLasVendedoras = Vendedora::with('contratos.evento')->get();
+
+        // Obtener vendedoras a procesar
+        $vendedoras = $todasLasVendedoras;
+        if ($vendedoraId !== 'todas') {
+            $vendedoras = $vendedoras->where('id', $vendedoraId);
+        }
 
         $stats = [];
         foreach ($vendedoras as $vendedora) {
+            // Todos los contratos para calcular desglose de cantidades
+            $todosLosContratos = $vendedora->contratos;
+            
+            $cntSemana = 0;
+            $cntMes = 0;
+            $cntAnio = 0;
+            $cntHistorico = $todosLosContratos->count();
+            
+            $now = now();
+            $startOfWeek = $now->copy()->startOfWeek();
+            $endOfWeek = $now->copy()->endOfWeek();
+            $startOfMonth = $now->copy()->startOfMonth();
+            $endOfMonth = $now->copy()->endOfMonth();
+            $startOfYear = $now->copy()->startOfYear();
+            $endOfYear = $now->copy()->endOfYear();
+
+            foreach($todosLosContratos as $c) {
+                if (!$c->fecha_firma) continue;
+                $fechaFirma = \Carbon\Carbon::parse($c->fecha_firma);
+                if ($fechaFirma->between($startOfWeek, $endOfWeek)) $cntSemana++;
+                if ($fechaFirma->between($startOfMonth, $endOfMonth)) $cntMes++;
+                if ($fechaFirma->between($startOfYear, $endOfYear)) $cntAnio++;
+            }
+
+            // Filtrar para los cálculos financieros
             $contratosQuery = $vendedora->contratos()->with('evento');
             
             if ($periodo === 'semana') {
-                $contratosQuery->whereBetween('contratos.fecha_firma', [now()->startOfWeek(), now()->endOfWeek()]);
+                $contratosQuery->whereBetween('contratos.fecha_firma', [$startOfWeek, $endOfWeek]);
             } elseif ($periodo === 'mes') {
-                $contratosQuery->whereBetween('contratos.fecha_firma', [now()->startOfMonth(), now()->endOfMonth()]);
+                $contratosQuery->whereBetween('contratos.fecha_firma', [$startOfMonth, $endOfMonth]);
             } elseif ($periodo === 'anio') {
-                $contratosQuery->whereBetween('contratos.fecha_firma', [now()->startOfYear(), now()->endOfYear()]);
+                $contratosQuery->whereBetween('contratos.fecha_firma', [$startOfYear, $endOfYear]);
             }
             
             $contratos = $contratosQuery->get();
@@ -87,7 +118,11 @@ class VendedoraController extends Controller
             
             $stats[] = [
                 'vendedora' => $vendedora,
-                'cantidad_contratos' => $contratos->count(),
+                'cantidad_contratos' => $contratos->count(), // Contratos en el periodo seleccionado
+                'cnt_semana' => $cntSemana,
+                'cnt_mes' => $cntMes,
+                'cnt_anio' => $cntAnio,
+                'cnt_historico' => $cntHistorico,
                 'monto_total' => $montoTotalVendido,
                 'monto_descontado' => $montoDescontado,
                 'bono_extras' => $bonoExtras,
@@ -100,7 +135,7 @@ class VendedoraController extends Controller
             return $b['monto_total'] <=> $a['monto_total'];
         });
 
-        return view('vendedoras.estadisticas', compact('stats', 'periodo'));
+        return view('vendedoras.estadisticas', compact('stats', 'periodo', 'todasLasVendedoras', 'vendedoraId'));
     }
 
     /**

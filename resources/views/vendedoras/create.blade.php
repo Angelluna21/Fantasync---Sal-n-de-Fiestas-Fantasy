@@ -48,6 +48,8 @@
                             class="form-input @error('nombre') form-input-error @enderror"
                             placeholder="Ej: Ana María"
                             value="{{ old('nombre') }}"
+                            pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"
+                            title="El nombre solo debe contener letras y espacios."
                             required
                         >
                         @error('nombre')
@@ -65,6 +67,8 @@
                             class="form-input @error('apellidos') form-input-error @enderror"
                             placeholder="Ej: Pérez García"
                             value="{{ old('apellidos') }}"
+                            pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"
+                            title="Los apellidos solo deben contener letras y espacios."
                             required
                         >
                         @error('apellidos')

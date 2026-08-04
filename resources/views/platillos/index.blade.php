@@ -48,8 +48,7 @@
         <!-- Contenedor Principal de Platillos -->
         <section class="platillos-section" aria-label="Listado de platillos" style="margin-top: 7rem;">
 
-            <!-- COMANDA RÁPIDA (Banquete Independiente) -->
-            @livewire('comanda-rapida-builder')
+
 
             <menu class="action-bar" aria-label="Acciones del catálogo">
                 <li>

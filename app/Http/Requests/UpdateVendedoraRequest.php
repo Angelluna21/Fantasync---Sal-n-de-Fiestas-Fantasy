@@ -23,11 +23,20 @@ class UpdateVendedoraRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre' => 'required|string|max:255',
-            'apellidos' => 'required|string|max:255',
+            'nombre' => 'required|string|max:255|regex:/^[\pL\s]+$/u',
+            'apellidos' => 'required|string|max:255|regex:/^[\pL\s]+$/u',
             'telefono' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
             'estado' => 'required|in:activo,inactivo',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'nombre.regex' => 'El nombre solo debe contener letras y espacios.',
+            'apellidos.regex' => 'Los apellidos solo deben contener letras y espacios.',
+            'email.email' => 'El correo electrónico debe tener un formato válido (ej. usuario@correo.com).',
         ];
     }
 }

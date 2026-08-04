@@ -64,8 +64,10 @@
             <!-- 3. Platillos -->
             <article class="dashboard-card">
                 <span class="card-icon" aria-hidden="true">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"></path>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke-width="2" d="M3 18h18" />
+                        <path stroke-width="2" d="M5 18a7 7 0 0 1 14 0" />
+                        <circle cx="12" cy="8" r="2" stroke-width="2" />
                     </svg>
                 </span>
                 <h2>Platillos</h2>
@@ -112,8 +114,14 @@
             <!-- 7. Servicios Gastronómicos -->
             <article class="dashboard-card">
                 <span class="card-icon" aria-hidden="true">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- Pot body -->
+                        <path stroke-width="2" d="M5 11v6a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-6" />
+                        <!-- Lid -->
+                        <path stroke-width="2" d="M3 11h18" />
+                        <path stroke-width="2" d="M7 11L9 7h6l2 4" />
+                        <!-- Handle -->
+                        <path stroke-width="2" d="M10 7V5h4v2" />
                     </svg>
                 </span>
                 <h2>Servicios Gastronómicos</h2>
