@@ -180,9 +180,15 @@ document.getElementById('modal-nombre').value = '';
 function simularGuardadoInsumo() {
 const nombre = document.getElementById('modal-nombre').value; 
 const unidad = document.getElementById('modal-unidad').value;
+const categoria = document.getElementById('modal-categoria').value;
 
 if (!nombre || nombre.trim() === '') {
 alert('Por favor, ingresa el nombre del insumo.');
+return;
+}
+
+if (!categoria || categoria.trim() === '') {
+alert('Por favor, selecciona una categoría de almacén.');
 return;
 }
 
@@ -192,7 +198,7 @@ headers: {
 'Content-Type': 'application/json',
 'X-CSRF-TOKEN': '{{ csrf_token() }}'
 },
-body: JSON.stringify({ nombre: nombre, unidad: unidad })
+body: JSON.stringify({ nombre: nombre, unidad: unidad, categoria: categoria })
 })
 .then(response => response.json())
 .then(data => {
@@ -247,6 +253,23 @@ console.error("Error:", error);
 <option value="pza">Piezas (pza)</option>
 <option value="manojo">Manojos (manojo)</option>
 <option value="cabeza">Cabezas (cabeza)</option>
+</select>
+</section>
+<section class="form-group" style="margin-top: 15px;">
+<label class="form-label">Categoría de Almacén</label>
+<select id="modal-categoria" class="form-input" required>
+<option value="" disabled selected>Selecciona una categoría...</option>
+<option value="Frutas y Verduras">Frutas y Verduras</option>
+<option value="Cremería">Cremería</option>
+<option value="Abarrotes">Abarrotes</option>
+<option value="Carnes">Carnes</option>
+<option value="Pollo">Pollo</option>
+<option value="Abarrotes Moderna">Abarrotes Moderna</option>
+<option value="Las Güeras">Las Güeras</option>
+<option value="Jovis">Jovis</option>
+<option value="El Talismán">El Talismán</option>
+<option value="Cremería La Rancherita">Cremería La Rancherita</option>
+<option value="Otros">Otros</option>
 </select>
 </section>
 <menu style="display: flex; flex-direction: row; gap: 10px; margin-top: 25px; padding: 0; list-style: none;">

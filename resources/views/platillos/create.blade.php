@@ -150,6 +150,23 @@
                     <option value="cabeza">Cabezas (cabeza)</option>
                 </select>
             </section>
+            <section class="form-group" style="margin-top: 15px;">
+                <label class="form-label">Categoría de Almacén</label>
+                <select id="modal-categoria" class="form-input" required>
+                    <option value="" disabled selected>Selecciona una categoría...</option>
+                    <option value="Frutas y Verduras">Frutas y Verduras</option>
+                    <option value="Cremería">Cremería</option>
+                    <option value="Abarrotes">Abarrotes</option>
+                    <option value="Carnes">Carnes</option>
+                    <option value="Pollo">Pollo</option>
+                    <option value="Abarrotes Moderna">Abarrotes Moderna</option>
+                    <option value="Las Güeras">Las Güeras</option>
+                    <option value="Jovis">Jovis</option>
+                    <option value="El Talismán">El Talismán</option>
+                    <option value="Cremería La Rancherita">Cremería La Rancherita</option>
+                    <option value="Otros">Otros</option>
+                </select>
+            </section>
             <menu style="display: flex; flex-direction: row; gap: 10px; margin-top: 25px; padding: 0; list-style: none;">
                 <button type="button" onclick="cerrarModalInsumo()" class="btn-cancel" style="flex: 1; text-align: center; padding: 10px;">Cancelar</button>
                 <button type="button" onclick="simularGuardadoInsumo()" class="btn-save" style="flex: 1; text-align: center; padding: 10px;">Guardar</button>
@@ -198,9 +215,15 @@
         function simularGuardadoInsumo() {
             const nombre = document.getElementById('modal-nombre').value; 
             const unidad = document.getElementById('modal-unidad').value;
+            const categoria = document.getElementById('modal-categoria').value;
 
             if (!nombre || nombre.trim() === '') {
                 alert('Por favor, ingresa el nombre del insumo.');
+                return;
+            }
+
+            if (!categoria || categoria.trim() === '') {
+                alert('Por favor, selecciona una categoría de almacén.');
                 return;
             }
 
@@ -212,7 +235,8 @@
                     },
                     body: JSON.stringify({
                         nombre: nombre,
-                        unidad: unidad
+                        unidad: unidad,
+                        categoria: categoria
                     })
                 })
                 .then(response => response.json())

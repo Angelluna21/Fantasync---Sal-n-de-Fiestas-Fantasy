@@ -65,6 +65,7 @@ class PlatilloController extends Controller
             $request->validate([
                 'nombre' => 'required|string',
                 'unidad' => 'required|string',
+                'categoria' => 'required|string',
             ]);
 
             $nombreLimpio = trim($request->nombre);
@@ -75,7 +76,7 @@ class PlatilloController extends Controller
                 $insumo = Ingrediente::create([
                     'nombre' => $nombreLimpio,
                     'unidad' => $request->unidad,
-                    'categoria' => 'General',
+                    'categoria' => $request->categoria,
                 ]);
             }
 

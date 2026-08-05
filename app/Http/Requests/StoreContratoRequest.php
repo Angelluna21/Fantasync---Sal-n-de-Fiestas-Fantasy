@@ -44,7 +44,7 @@ class StoreContratoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cliente' => 'required|string|max:150',
+            'cliente' => 'required|string|max:150|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/',
             'correo' => 'required|email|max:150',
             'telefono' => 'required|string|max:40',
             'tel_casa' => 'nullable|string|max:40',
@@ -65,7 +65,7 @@ class StoreContratoRequest extends FormRequest
             'vendedoras_ids' => 'nullable|array',
             'vendedoras_ids.*' => 'exists:vendedoras,id',
             'cliente_domicilio' => 'nullable|string|max:500',
-            'cliente_ine' => 'nullable|string|max:50',
+            'cliente_ine' => 'nullable|string|size:18|alpha_num',
             'manteleria_color' => 'nullable|string|max:50',
             'platillo_ids' => 'sometimes|array',
             'platillo_ids.*' => 'integer|exists:platillos,id',
@@ -97,6 +97,15 @@ class StoreContratoRequest extends FormRequest
             'pagos.*.recibo' => 'nullable|string|max:100',
             'pagos.*.fecha' => 'required_with:pagos|date',
             'monto_total' => 'nullable|string',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'cliente.regex' => 'El nombre del cliente solo debe contener letras y espacios. No se permiten números ni símbolos.',
+            'cliente_ine.size' => 'La clave INE debe tener exactamente 18 caracteres.',
+            'cliente_ine.alpha_num' => 'La clave INE solo puede contener letras y números, sin símbolos.',
         ];
     }
 }
