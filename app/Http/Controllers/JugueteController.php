@@ -24,7 +24,8 @@ class JugueteController extends Controller
 
         $contratos = \App\Models\Contrato::with('evento.cliente')
             ->whereHas('evento', function($q) use ($startOfWeek, $endOfWeek) {
-                $q->whereBetween('fecha', [$startOfWeek, $endOfWeek]);
+                $q->whereBetween('fecha', [$startOfWeek, $endOfWeek])
+                  ->whereIn('estado', ['confirmado', 'finalizado']);
             })
             ->get()
             ->sortBy('evento.fecha');

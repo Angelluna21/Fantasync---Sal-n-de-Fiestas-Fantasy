@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Módulo de Contratos · Fantasy</title>
     @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/css/eventos.css'])
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .swal2-popup { border-radius: 16px !important; font-family: 'Inter', sans-serif !important; }
+        .swal2-confirm { border-radius: 8px !important; font-weight: 600 !important; }
+        .swal2-cancel { border-radius: 8px !important; font-weight: 600 !important; }
+    </style>
 </head>
 <body>
     <figure class="dashboard-background" aria-hidden="true"></figure>
@@ -189,7 +195,7 @@
                                             Editar
                                         </a>
 
-                                        <form action="{{ route('contratos.destroy', $contrato->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas anular este contrato? Se cancelará el evento.');" style="display: inline-flex; margin: 0;">
+                                        <form action="{{ route('contratos.destroy', $contrato->id) }}" method="POST" class="delete-form" style="display: inline-flex; margin: 0;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn-event-link" title="Anular Contrato" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.3rem; border-radius: 6px; border: none; background: #ef4444; color: white; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); cursor: pointer; transition: all 0.2s;">
@@ -218,5 +224,31 @@
     <footer class="dashboard-footer eventos-footer">
         <p>© 2026 FantaSync · Módulo Legal</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteForms = document.querySelectorAll('.delete-form');
+            deleteForms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: '¿Anular este contrato?',
+                        text: "Se cancelará el evento y esta acción no se podrá deshacer.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#ef4444',
+                        cancelButtonColor: '#64748b',
+                        confirmButtonText: 'Sí, anular contrato',
+                        cancelButtonText: 'Cancelar',
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>

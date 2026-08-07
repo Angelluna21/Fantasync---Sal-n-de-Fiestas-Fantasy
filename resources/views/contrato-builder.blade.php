@@ -349,12 +349,44 @@
                         });
                     </script>
                     
-                    <section class="input-grid grid-4" style="margin-top: 1.5rem;">
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_pinata" value="1" {{ old('tiene_pinata', $draft['extras']['tiene_pinata'] ?? '') ? 'checked' : '' }}> Piñata</label></article>
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="tiene_show" value="1" {{ old('tiene_show', $draft['extras']['tiene_show'] ?? '') ? 'checked' : '' }}> Show</label></article>
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="arco_globos" value="1" {{ old('arco_globos', $draft['extras']['arco_globos'] ?? '') ? 'checked' : '' }}> Arco globos</label></article>
-                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label"><input type="checkbox" name="derecho_pista_check" value="1" {{ old('derecho_pista_check', $draft['extras']['derecho_pista_check'] ?? '') ? 'checked' : '' }}> Der. pista</label></article>
+                    <section class="input-grid grid-4" style="margin-top: 1.5rem; align-items: start;">
+                        <article class="input-wrapper">
+                            <div class="checkbox-wrapper" style="margin-bottom: 0.5rem;">
+                                <label class="checkbox-label"><input type="checkbox" id="cb_pinata" name="tiene_pinata" value="1" {{ old('tiene_pinata', $draft['extras']['tiene_pinata'] ?? '') ? 'checked' : '' }}> Piñata</label>
+                            </div>
+                            <input type="text" id="detalle_pinata" name="detalle_pinata" class="form-control" placeholder="¿De qué será la piñata?" value="{{ old('detalle_pinata', $draft['extras']['detalle_pinata'] ?? '') }}" style="{{ old('tiene_pinata', $draft['extras']['tiene_pinata'] ?? '') ? '' : 'display:none;' }}">
+                        </article>
+                        <article class="input-wrapper">
+                            <div class="checkbox-wrapper" style="margin-bottom: 0.5rem;">
+                                <label class="checkbox-label"><input type="checkbox" id="cb_show" name="tiene_show" value="1" {{ old('tiene_show', $draft['extras']['tiene_show'] ?? '') ? 'checked' : '' }}> Show</label>
+                            </div>
+                            <input type="text" id="detalle_show" name="detalle_show" class="form-control" placeholder="¿De qué será el show?" value="{{ old('detalle_show', $draft['extras']['detalle_show'] ?? '') }}" style="{{ old('tiene_show', $draft['extras']['tiene_show'] ?? '') ? '' : 'display:none;' }}">
+                        </article>
+                        <article class="input-wrapper checkbox-wrapper" style="margin-top: 0.5rem;"><label class="checkbox-label"><input type="checkbox" name="arco_globos" value="1" {{ old('arco_globos', $draft['extras']['arco_globos'] ?? '') ? 'checked' : '' }}> Arco globos</label></article>
+                        <article class="input-wrapper checkbox-wrapper" style="margin-top: 0.5rem;"><label class="checkbox-label"><input type="checkbox" name="derecho_pista_check" value="1" {{ old('derecho_pista_check', $draft['extras']['derecho_pista_check'] ?? '') ? 'checked' : '' }}> Der. pista</label></article>
                     </section>
+                    
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const cbPinata = document.getElementById('cb_pinata');
+                            const inputPinata = document.getElementById('detalle_pinata');
+                            if (cbPinata && inputPinata) {
+                                cbPinata.addEventListener('change', function() {
+                                    inputPinata.style.display = this.checked ? 'block' : 'none';
+                                    if (!this.checked) inputPinata.value = '';
+                                });
+                            }
+                            
+                            const cbShow = document.getElementById('cb_show');
+                            const inputShow = document.getElementById('detalle_show');
+                            if (cbShow && inputShow) {
+                                cbShow.addEventListener('change', function() {
+                                    inputShow.style.display = this.checked ? 'block' : 'none';
+                                    if (!this.checked) inputShow.value = '';
+                                });
+                            }
+                        });
+                    </script>
                 </fieldset>
 
                 <!-- SECCIÓN 3: ALIMENTOS Y CONFIGURACIÓN -->
@@ -880,6 +912,20 @@
             // Inicializar totales de pagos al cargar
             calcularTotalesPagos();
 
+            // Prevent double submission
+            const contractForm = document.querySelector('.contract-form');
+            if (contractForm) {
+                contractForm.addEventListener('submit', function(e) {
+                    const submitBtns = contractForm.querySelectorAll('button[type="submit"]');
+                    setTimeout(() => {
+                        submitBtns.forEach(btn => {
+                            btn.disabled = true;
+                            btn.style.opacity = '0.7';
+                            btn.style.cursor = 'not-allowed';
+                        });
+                    }, 10);
+                });
+            }
 
         });
     </script>
