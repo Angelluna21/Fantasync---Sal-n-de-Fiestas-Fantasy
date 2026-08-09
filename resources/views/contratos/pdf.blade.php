@@ -337,8 +337,8 @@
                 @endif
             </td>
             <td>{!! !empty($contrato->servicios_extras['tiene_misa']) ? '<span style="color:#7a288a;font-weight:bold;">Sí</span>' : 'No' !!}</td>
-            <td>{!! !empty($contrato->servicios_extras['tiene_pinata']) ? '<span style="color:#7a288a;font-weight:bold;">Sí</span>' : 'No' !!}</td>
-            <td>{!! !empty($contrato->servicios_extras['tiene_show']) ? '<span style="color:#7a288a;font-weight:bold;">Sí</span>' : 'No' !!}</td>
+            <td>{!! !empty($contrato->servicios_extras['tiene_pinata']) ? '<span style="color:#7a288a;font-weight:bold;">Sí</span>' . (!empty($contrato->servicios_extras['detalle_pinata']) ? '<br><span style="font-size:7px;color:#555;">' . e($contrato->servicios_extras['detalle_pinata']) . '</span>' : '') : 'No' !!}</td>
+            <td>{!! !empty($contrato->servicios_extras['tiene_show']) ? '<span style="color:#7a288a;font-weight:bold;">Sí</span>' . (!empty($contrato->servicios_extras['detalle_show']) ? '<br><span style="font-size:7px;color:#555;">' . e($contrato->servicios_extras['detalle_show']) . '</span>' : '') : 'No' !!}</td>
             <td>{!! !empty($contrato->servicios_extras['arco_globos']) ? '<span style="color:#7a288a;font-weight:bold;">Sí</span>' : 'No' !!}</td>
         </tr>
     </table>
@@ -408,8 +408,17 @@
         <div class="clear"></div>
     </div>
 
+    <!-- Observaciones Box (Front Page) -->
+    <div class="section-header" style="margin-top: 15px;">6. Observaciones Adicionales</div>
+    <div style="border: 1px solid #7a288a; border-radius: 4px; padding: 10px; min-height: 250px; background-color: #fcfcfc;">
+        <p style="color: #444; font-size: 11px; line-height: 1.5; white-space: pre-wrap;">{{ $contrato->evento->notas ?? '' }}</p>
+    </div>
+
+    <!-- Page Break -->
+    <div style="page-break-before: always;"></div>
+
     <!-- Clauses (2 columns) -->
-    <table class="clauses-table">
+    <table class="clauses-table" style="margin-top: 0;">
         <tr>
             <td>
                 <div class="clauses-title">PRIMERA. PRESTACIÓN DEL SERVICIO Y AFORO</div>

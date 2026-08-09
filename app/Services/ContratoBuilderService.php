@@ -178,6 +178,25 @@ class ContratoBuilderService
             $extras['invitacion_detalle'] = $data['invitacion_detalle'] ?? '';
             $extras['quien_vendio_hora_extra'] = $data['quien_vendio_hora_extra'] ?? '';
 
+            if (!empty($data['tiene_pinata'])) {
+                $extras['tiene_pinata'] = true;
+                $extras['detalle_pinata'] = $data['detalle_pinata'] ?? '';
+            } else {
+                $extras['tiene_pinata'] = false;
+                $extras['detalle_pinata'] = '';
+            }
+
+            if (!empty($data['tiene_show'])) {
+                $extras['tiene_show'] = true;
+                $extras['detalle_show'] = $data['detalle_show'] ?? '';
+            } else {
+                $extras['tiene_show'] = false;
+                $extras['detalle_show'] = '';
+            }
+
+            $extras['arco_globos'] = !empty($data['arco_globos']);
+            $extras['derecho_pista_check'] = !empty($data['derecho_pista_check']);
+
             $eventoData = [
                 'cliente_id' => $cliente->id,
                 'fecha' => $data['evento_fecha'],

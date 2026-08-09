@@ -20,9 +20,11 @@ class EventoController extends Controller
         $saldoPendiente = 0;
 
         foreach ($eventos as $ev) {
-            if ($ev->estado === 'confirmado') {
-                $confirmados++;
-                // Sumar ingresos solo de eventos confirmados
+            if (in_array($ev->estado, ['confirmado', 'finalizado'])) {
+                if ($ev->estado === 'confirmado') {
+                    $confirmados++;
+                }
+                // Sumar ingresos de eventos confirmados y finalizados
                 if ($ev->contrato) {
                     $montoTotal += (float) $ev->contrato->monto_total;
                     $saldoPendiente += (float) $ev->contrato->saldo_pendiente;

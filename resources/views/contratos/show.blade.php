@@ -154,6 +154,16 @@
                     @php $extras = $contrato->servicios_extras ?? []; @endphp
                     <div class="detail-item"><strong>¿Tiene Misa?:</strong> <span>{{ !empty($extras['tiene_misa']) ? 'Sí' : 'No' }}</span></div>
                     <div class="detail-item"><strong>Invitaciones:</strong> <span>{{ $extras['invitacion_estado'] ?? 'No especificadas' }}</span></div>
+                    <div class="detail-item">
+                        <strong>Piñata:</strong> 
+                        <span>{{ !empty($extras['tiene_pinata']) ? 'Sí' . (!empty($extras['detalle_pinata']) ? ' (' . $extras['detalle_pinata'] . ')' : '') : 'No' }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Show:</strong> 
+                        <span>{{ !empty($extras['tiene_show']) ? 'Sí' . (!empty($extras['detalle_show']) ? ' (' . $extras['detalle_show'] . ')' : '') : 'No' }}</span>
+                    </div>
+                    <div class="detail-item"><strong>Arco de Globos:</strong> <span>{{ !empty($extras['arco_globos']) ? 'Sí' : 'No' }}</span></div>
+                    <div class="detail-item"><strong>Derecho de Pista:</strong> <span>{{ !empty($extras['derecho_pista_check']) ? 'Sí' : 'No' }}</span></div>
                     
                     <h4 style="margin-top: 1.5rem; color: #555; font-size: 1.1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.3rem;">Vendedoras Asignadas</h4>
                     @if($contrato->vendedoras && $contrato->vendedoras->count() > 0)
