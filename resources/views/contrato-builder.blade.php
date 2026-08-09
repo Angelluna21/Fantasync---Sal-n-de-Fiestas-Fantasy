@@ -92,7 +92,7 @@
                         </article>
                         <article class="input-wrapper">
                             <label for="cliente_ine">INE</label>
-                            <input type="text" id="cliente_ine" name="cliente_ine" class="form-control" minlength="18" maxlength="18" pattern="[A-Za-z0-9]{18}" title="La clave INE debe tener exactamente 18 caracteres alfanuméricos, sin símbolos" value="{{ old('cliente_ine', $draft['cliente_ine'] ?? '') }}">
+                            <input type="text" id="cliente_ine" name="cliente_ine" class="form-control" maxlength="18" pattern="[A-Za-z0-9]{18}" title="La clave INE debe tener exactamente 18 caracteres alfanuméricos, sin símbolos (opcional)" value="{{ old('cliente_ine', $draft['cliente_ine'] ?? '') }}">
                         </article>
                     </section>
                 </fieldset>
