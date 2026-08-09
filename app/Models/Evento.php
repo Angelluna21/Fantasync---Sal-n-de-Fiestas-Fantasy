@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-#[Fillable(['fecha', 'estado', 'titulo', 'notas', 'cliente_id', 'hora_recepcion', 'hora_inicio', 'horas_duracion', 'tipo_evento', 'nombre_festejado', 'color_manteleria', 'cerrado_por'])]
+#[Fillable(['fecha', 'estado', 'titulo', 'notas', 'cliente_id', 'hora_recepcion', 'hora_inicio', 'horas_duracion', 'tipo_evento', 'nombre_festejado', 'color_manteleria', 'color_cubre_mantel', 'color_monos', 'color_camino_mesa', 'cerrado_por'])]
 class Evento extends Model
 {
     use Auditable;
@@ -26,7 +26,7 @@ class Evento extends Model
         
         return $this->belongsToMany(Salon::class, 'evento_salon')
                     ->using(EventoSalon::class)
-                    ->withPivot('id', 'adultos', 'ninos', 'factor_nino')
+                    ->withPivot('id', 'adultos', 'ninos', 'total_personas', 'factor_nino')
                     ->withTimestamps();
     }
 

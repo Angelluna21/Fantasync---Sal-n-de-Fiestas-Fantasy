@@ -299,9 +299,30 @@
                         @php
                             $totalAdultos = $contrato->evento->salones->sum('pivot.adultos');
                             $totalNinos = $contrato->evento->salones->sum('pivot.ninos');
+                            $totalPersonasExtra = $contrato->evento->salones->sum('pivot.total_personas');
                         @endphp
-                        {{ $totalAdultos }} Adultos, {{ $totalNinos }} Niños <span class="badge">Total: {{ $totalAdultos + $totalNinos }}</span>
+                        {{ $totalAdultos }} Adultos, {{ $totalNinos }} Niños 
+                        @if($totalPersonasExtra > 0)
+                            , {{ $totalPersonasExtra }} Pers. (Totales)
+                        @endif
+                        <span class="badge">Total: {{ $totalAdultos + $totalNinos + $totalPersonasExtra }}</span>
                     </span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Mantelería:</span>
+                    <span class="value">{{ $contrato->evento->color_manteleria ?: 'N/A' }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Cubre Mantel:</span>
+                    <span class="value">{{ $contrato->evento->color_cubre_mantel ?: 'N/A' }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Moños:</span>
+                    <span class="value">{{ $contrato->evento->color_monos ?: 'N/A' }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Camino Mesa:</span>
+                    <span class="value">{{ $contrato->evento->color_camino_mesa ?: 'N/A' }}</span>
                 </div>
             </td>
         </tr>

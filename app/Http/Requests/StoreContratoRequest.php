@@ -23,7 +23,8 @@ class StoreContratoRequest extends FormRequest
     {
         $stringFields = [
             'cliente', 'correo', 'telefono', 'tel_casa', 'recepcion_hora', 'inicio_hora', 
-            'tipo_evento', 'festejado', 'cliente_domicilio', 'cliente_ine', 'manteleria_color', 'cp', 
+            'tipo_evento', 'festejado', 'cliente_domicilio', 'cliente_ine', 'manteleria_color', 
+            'cubre_mantel_color', 'monos_color', 'camino_mesa_color', 'cp', 
             'invitacion_estado', 'invitacion_detalle'
         ];
 
@@ -62,11 +63,15 @@ class StoreContratoRequest extends FormRequest
             'horas_adicionales' => 'nullable|numeric|min:0',
             'num_adultos' => 'required|integer|min:0',
             'num_ninos' => 'required|integer|min:0',
+            'total_personas' => 'nullable|integer|min:0',
             'vendedoras_ids' => 'nullable|array',
             'vendedoras_ids.*' => 'exists:vendedoras,id',
             'cliente_domicilio' => 'nullable|string|max:500',
             'cliente_ine' => 'nullable|string|size:18|alpha_num',
             'manteleria_color' => 'nullable|string|max:50',
+            'cubre_mantel_color' => 'nullable|string|max:50',
+            'monos_color' => 'nullable|string|max:50',
+            'camino_mesa_color' => 'nullable|string|max:50',
             'platillo_ids' => 'sometimes|array',
             'platillo_ids.*' => 'integer|exists:platillos,id',
             'servicio_gastronomico' => 'required|integer|exists:servicios_gastronomicos,id',

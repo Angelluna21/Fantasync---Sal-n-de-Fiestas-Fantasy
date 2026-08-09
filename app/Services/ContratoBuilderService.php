@@ -81,9 +81,13 @@ class ContratoBuilderService
             'horas_evento' => (float) $data['horas_evento'],
             'num_adultos' => (int) $data['num_adultos'],
             'num_ninos' => (int) $data['num_ninos'],
+            'total_personas' => (int) ($data['total_personas'] ?? 0),
             'cliente_domicilio' => trim($data['cliente_domicilio'] ?? ''),
             'cliente_ine' => trim($data['cliente_ine'] ?? ''),
             'manteleria_color' => trim($data['manteleria_color'] ?? ''),
+            'cubre_mantel_color' => trim($data['cubre_mantel_color'] ?? ''),
+            'monos_color' => trim($data['monos_color'] ?? ''),
+            'camino_mesa_color' => trim($data['camino_mesa_color'] ?? ''),
             'platillos' => $platilloIds,
             'extras' => $extras,
             'total' => $total,
@@ -207,6 +211,9 @@ class ContratoBuilderService
                 'nombre_festejado' => trim($data['festejado']),
                 'estado' => $contractData['estado'],
                 'color_manteleria' => trim($data['manteleria_color'] ?? ''),
+                'color_cubre_mantel' => trim($data['cubre_mantel_color'] ?? ''),
+                'color_monos' => trim($data['monos_color'] ?? ''),
+                'color_camino_mesa' => trim($data['camino_mesa_color'] ?? ''),
                 'titulo' => trim($data['cliente']),
                 'notas' => 'Servicio Gastronómico: ' . ($data['servicio_gastronomico'] ?? 'N/A') . '. Platillos: ' . implode(', ', $platilloIds) . '. Extras: ' . json_encode($extras) . $notasAdicionales
             ];
@@ -222,7 +229,8 @@ class ContratoBuilderService
             $evento->salones()->sync([
                 (int) $data['salon_id'] => [
                     'adultos' => (int) $data['num_adultos'],
-                    'ninos' => (int) $data['num_ninos']
+                    'ninos' => (int) $data['num_ninos'],
+                    'total_personas' => (int) ($data['total_personas'] ?? 0)
                 ]
             ]);
 

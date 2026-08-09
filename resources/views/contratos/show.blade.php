@@ -122,7 +122,16 @@
                         @php $salonPivot = $contrato->evento->eventoSalones->first(); @endphp
                         <div class="detail-item"><strong>Adultos:</strong> <span>{{ $salonPivot->adultos ?? 0 }}</span></div>
                         <div class="detail-item"><strong>Niños:</strong> <span>{{ $salonPivot->ninos ?? 0 }}</span></div>
+                        @if(!empty($salonPivot->total_personas))
+                        <div class="detail-item"><strong>Total Personas:</strong> <span>{{ $salonPivot->total_personas }}</span></div>
+                        @endif
                     @endif
+
+                    <h4 style="margin-top: 1.5rem; color: #555; font-size: 1.1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.3rem;">Mantelería</h4>
+                    <div class="detail-item"><strong>Color de Mantelería:</strong> <span>{{ $contrato->evento->color_manteleria ?: 'N/A' }}</span></div>
+                    <div class="detail-item"><strong>Cubre Mantel:</strong> <span>{{ $contrato->evento->color_cubre_mantel ?: 'N/A' }}</span></div>
+                    <div class="detail-item"><strong>Moños:</strong> <span>{{ $contrato->evento->color_monos ?: 'N/A' }}</span></div>
+                    <div class="detail-item"><strong>Camino Mesa:</strong> <span>{{ $contrato->evento->color_camino_mesa ?: 'N/A' }}</span></div>
                 </section>
 
                 <!-- Finanzas -->

@@ -43,9 +43,13 @@ class ContratoBuilderController extends Controller
             'horas_adicionales' => 0,
             'num_adultos' => 0,
             'num_ninos' => 0,
+            'total_personas' => 0,
             'cliente_domicilio' => '',
             'cliente_ine' => '',
             'manteleria_color' => '',
+            'cubre_mantel_color' => '',
+            'monos_color' => '',
+            'camino_mesa_color' => '',
             'vendedoras_ids' => [],
         ]);
 
@@ -66,6 +70,7 @@ class ContratoBuilderController extends Controller
         $salon_id = $eventoSalon ? $eventoSalon->salon_id : null;
         $num_adultos = $eventoSalon ? $eventoSalon->adultos : 50;
         $num_ninos = $eventoSalon ? $eventoSalon->ninos : 20;
+        $total_personas = $eventoSalon ? $eventoSalon->total_personas : 0;
 
         $servicioGastronomico = null;
         $notas = $evento->notas;
@@ -123,10 +128,14 @@ class ContratoBuilderController extends Controller
             'horas_adicionales' => $extras['horas_adicionales'] ?? 0,
             'num_adultos' => $num_adultos,
             'num_ninos' => $num_ninos,
+            'total_personas' => $total_personas,
             'cliente_domicilio' => $evento->cliente->domicilio ?? '',
             'cp' => $evento->cliente->codigo_postal ?? '',
             'cliente_ine' => $evento->cliente->ine_numero ?? '',
-            'manteleria_color' => $evento->color_manteleria ?? 'Blanco',
+            'manteleria_color' => $evento->color_manteleria ?? '',
+            'cubre_mantel_color' => $evento->color_cubre_mantel ?? '',
+            'monos_color' => $evento->color_monos ?? '',
+            'camino_mesa_color' => $evento->color_camino_mesa ?? '',
             'invitacion_estado' => $invitacion_estado,
             'invitacion_detalle' => $invitacion_detalle,
             'vendedoras_ids' => $contrato->vendedoras()->pluck('vendedoras.id')->toArray(),

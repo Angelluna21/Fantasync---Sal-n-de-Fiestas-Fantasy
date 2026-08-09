@@ -194,6 +194,25 @@
                         </article>
                     </section>
                     
+                    <section class="input-grid grid-4" style="margin-top: 1.5rem;">
+                        <article class="input-wrapper">
+                            <label for="manteleria_color">Color de Mantelería</label>
+                            <input type="text" id="manteleria_color" name="manteleria_color" class="form-control" placeholder="Ej. Blanco" value="{{ old('manteleria_color', $draft['manteleria_color'] ?? '') }}">
+                        </article>
+                        <article class="input-wrapper">
+                            <label for="cubre_mantel_color">Color de Cubre Mantel</label>
+                            <input type="text" id="cubre_mantel_color" name="cubre_mantel_color" class="form-control" placeholder="Ej. Dorado" value="{{ old('cubre_mantel_color', $draft['cubre_mantel_color'] ?? '') }}">
+                        </article>
+                        <article class="input-wrapper">
+                            <label for="monos_color">Color de Moños</label>
+                            <input type="text" id="monos_color" name="monos_color" class="form-control" placeholder="Ej. Rojo" value="{{ old('monos_color', $draft['monos_color'] ?? '') }}">
+                        </article>
+                        <article class="input-wrapper">
+                            <label for="camino_mesa_color">Color Camino de Mesa</label>
+                            <input type="text" id="camino_mesa_color" name="camino_mesa_color" class="form-control" placeholder="Ej. Plateado" value="{{ old('camino_mesa_color', $draft['camino_mesa_color'] ?? '') }}">
+                        </article>
+                    </section>
+                    
                     <section class="input-grid grid-6" style="margin-top: 0.5rem; margin-bottom: 1.5rem;">
                         <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="hora_por_definir" id="hora_por_definir" value="1" {{ old('hora_por_definir', $draft['extras']['hora_por_definir'] ?? '') ? 'checked' : '' }}> Hora por definir</label></article>
                         <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="tiene_misa" id="tiene_misa" value="1" {{ old('tiene_misa', $draft['extras']['tiene_misa'] ?? '') ? 'checked' : '' }}> Misa</label></article>
@@ -392,7 +411,7 @@
                 <!-- SECCIÓN 3: ALIMENTOS Y CONFIGURACIÓN -->
                 <fieldset class="form-section">
                     <legend>Alimentos y Configuración</legend>
-                    <section class="input-grid grid-3">
+                    <section class="input-grid grid-4">
                         <article class="input-wrapper">
                             <label for="servicio_gastronomico">Servicio Gastronómico *</label>
                             <select id="servicio_gastronomico" name="servicio_gastronomico" class="form-control" required>
@@ -409,6 +428,10 @@
                         <article class="input-wrapper">
                             <label for="num_ninos">Buffet infantil de niños para *</label>
                             <input type="number" id="num_ninos" name="num_ninos" class="form-control" required min="0" value="{{ old('num_ninos', $draft['num_ninos'] ?? 0) }}">
+                        </article>
+                        <article class="input-wrapper">
+                            <label for="total_personas">Total Personas (Opcional)</label>
+                            <input type="number" id="total_personas" name="total_personas" class="form-control" min="0" value="{{ old('total_personas', $draft['total_personas'] ?? 0) }}">
                         </article>
                     </section>
 
@@ -568,17 +591,17 @@
                 </section>
 
                 <!-- BOTONES DE ACCIÓN -->
-                <footer class="form-actions" style="gap: 1rem; display: flex; flex-wrap: wrap;">
+                <footer class="form-actions" style="gap: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between;">
                     <!-- Botón de Imprimir -->
                     @if(isset($draft['contract_id']))
-                        <a href="{{ route('contratos.show', $draft['contract_id']) }}" target="_blank" class="btn-print" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+                        <a href="{{ route('contratos.show', $draft['contract_id']) }}" target="_blank" class="btn-print" style="flex: 1; justify-content: center; text-decoration: none;">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
                             </svg>
                             Imprimir PDF
                         </a>
                     @else
-                        <button type="button" class="btn-print" onclick="alert('Por favor guarda el contrato primero para poder generar e imprimir el PDF.')">
+                        <button type="button" class="btn-print" onclick="alert('Por favor guarda el contrato primero para poder generar e imprimir el PDF.')" style="flex: 1; justify-content: center;">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
                             </svg>
@@ -587,15 +610,15 @@
                     @endif
 
                     <!-- Botón de Guardar y Salir -->
-                    <button type="submit" name="action" value="save_only" class="btn-submit" style="background: var(--accent-yellow); color: var(--primary-purple);">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24" style="margin-right: 0.5rem;">
+                    <button type="submit" name="action" value="save_only" class="btn-submit" style="flex: 1; justify-content: center; background: var(--accent-yellow); color: var(--primary-purple);">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                         Solo Guardar
                     </button>
 
                     <!-- Botón de Guardar y Continuar -->
-                    <button type="submit" name="action" value="continue" class="btn-submit">
+                    <button type="submit" name="action" value="continue" class="btn-submit" style="flex: 1; justify-content: center; background: var(--primary-purple); color: white;">
                         Guardar y Continuar al Menú
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
