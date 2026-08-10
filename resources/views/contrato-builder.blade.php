@@ -821,16 +821,6 @@
             // Initialize total on load
             calcularTotal();
 
-            const checkboxesAgua = document.querySelectorAll('.sabor-checkbox');
-            checkboxesAgua.forEach(function(box) {
-                box.addEventListener('change', function() {
-                    const seleccionados = document.querySelectorAll('.sabor-checkbox:checked');
-                    if (seleccionados.length > 2) {
-                        this.checked = false;
-                        alert('Recuerda que solo puedes elegir un máximo de 2 sabores de agua.');
-                    }
-                });
-            });
 
             /* ==== LÓGICA DE PAGOS DINÁMICOS ==== */
             const pagosContainer = document.getElementById('pagos-container');

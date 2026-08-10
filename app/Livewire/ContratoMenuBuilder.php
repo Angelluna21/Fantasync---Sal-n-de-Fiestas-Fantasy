@@ -30,9 +30,6 @@ class ContratoMenuBuilder extends Component
     public $espejos = [];
     public $salsas = [];
     public $aderezos = [];
-    public $descorche = false;
-    public $descorche_cerveza = false;
-    public $cafe = false;
 
     public function mount($eventoId)
     {
@@ -42,15 +39,6 @@ class ContratoMenuBuilder extends Component
         if ($evento) {
             if (preg_match('/Servicio Gastronómico:\s*(\d+)/', $evento->notas, $matches)) {
                 $this->servicio_id = $matches[1];
-            }
-            if (strpos($evento->notas, 'Descorche: Sí') !== false) {
-                $this->descorche = true;
-            }
-            if (strpos($evento->notas, 'Descorche Cerveza: Sí') !== false) {
-                $this->descorche_cerveza = true;
-            }
-            if (strpos($evento->notas, 'Café: Sí') !== false) {
-                $this->cafe = true;
             }
         }
 
@@ -180,34 +168,6 @@ class ContratoMenuBuilder extends Component
         }
 
         if ($evento) {
-            $notas = $evento->notas;
-            if ($this->descorche) {
-                if (strpos($notas, 'Descorche: Sí') === false) {
-                    $notas .= "\nDescorche: Sí";
-                }
-            } else {
-                $notas = str_replace("\nDescorche: Sí", "", $notas);
-                $notas = str_replace("Descorche: Sí", "", $notas);
-            }
-
-            if ($this->descorche_cerveza) {
-                if (strpos($notas, 'Descorche Cerveza: Sí') === false) {
-                    $notas .= "\nDescorche Cerveza: Sí";
-                }
-            } else {
-                $notas = str_replace("\nDescorche Cerveza: Sí", "", $notas);
-                $notas = str_replace("Descorche Cerveza: Sí", "", $notas);
-            }
-
-            if ($this->cafe) {
-                if (strpos($notas, 'Café: Sí') === false) {
-                    $notas .= "\nCafé: Sí";
-                }
-            } else {
-                $notas = str_replace("\nCafé: Sí", "", $notas);
-                $notas = str_replace("Café: Sí", "", $notas);
-            }
-            $evento->notas = trim($notas);
             $evento->save();
         }
 
