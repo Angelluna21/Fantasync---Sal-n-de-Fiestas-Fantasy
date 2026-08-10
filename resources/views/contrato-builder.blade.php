@@ -368,7 +368,7 @@
                         });
                     </script>
                     
-                    <section class="input-grid grid-4" style="margin-top: 1.5rem; align-items: start;">
+                    <section class="input-grid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 1.5rem; align-items: start;">
                         <article class="input-wrapper">
                             <div class="checkbox-wrapper" style="margin-bottom: 0.5rem;">
                                 <label class="checkbox-label"><input type="checkbox" id="cb_pinata" name="tiene_pinata" value="1" {{ old('tiene_pinata', $draft['extras']['tiene_pinata'] ?? '') ? 'checked' : '' }}> Piñata</label>
@@ -383,6 +383,7 @@
                         </article>
                         <article class="input-wrapper checkbox-wrapper" style="margin-top: 0.5rem;"><label class="checkbox-label"><input type="checkbox" name="arco_globos" value="1" {{ old('arco_globos', $draft['extras']['arco_globos'] ?? '') ? 'checked' : '' }}> Arco globos</label></article>
                         <article class="input-wrapper checkbox-wrapper" style="margin-top: 0.5rem;"><label class="checkbox-label"><input type="checkbox" name="derecho_pista_check" value="1" {{ old('derecho_pista_check', $draft['extras']['derecho_pista_check'] ?? '') ? 'checked' : '' }}> Der. pista</label></article>
+                        <article class="input-wrapper checkbox-wrapper" style="margin-top: 0.5rem;"><label class="checkbox-label"><input type="checkbox" name="tiene_cafe" value="1" {{ old('tiene_cafe', $draft['extras']['tiene_cafe'] ?? '') ? 'checked' : '' }}> Café</label></article>
                     </section>
                     
                     <script>

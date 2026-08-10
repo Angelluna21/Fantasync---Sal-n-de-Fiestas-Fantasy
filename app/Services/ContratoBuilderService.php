@@ -200,6 +200,7 @@ class ContratoBuilderService
 
             $extras['arco_globos'] = !empty($data['arco_globos']);
             $extras['derecho_pista_check'] = !empty($data['derecho_pista_check']);
+            $extras['tiene_cafe'] = !empty($data['tiene_cafe']);
 
             $eventoData = [
                 'cliente_id' => $cliente->id,
