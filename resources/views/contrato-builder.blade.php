@@ -412,7 +412,7 @@
                 <!-- SECCIÓN 3: ALIMENTOS Y CONFIGURACIÓN -->
                 <fieldset class="form-section">
                     <legend>Alimentos y Configuración</legend>
-                    <section class="input-grid grid-4">
+                    <section class="input-grid" style="grid-template-columns: 2.5fr 1fr 1fr 1fr; align-items: flex-end;">
                         <article class="input-wrapper">
                             <label for="servicio_gastronomico">Servicio Gastronómico *</label>
                             <select id="servicio_gastronomico" name="servicio_gastronomico" class="form-control" required>
@@ -427,11 +427,11 @@
                             <input type="number" id="num_adultos" name="num_adultos" class="form-control" required min="0" value="{{ old('num_adultos', $draft['num_adultos'] ?? 0) }}">
                         </article>
                         <article class="input-wrapper">
-                            <label for="num_ninos">Buffet infantil de niños para *</label>
+                            <label for="num_ninos">Para (Niños) *</label>
                             <input type="number" id="num_ninos" name="num_ninos" class="form-control" required min="0" value="{{ old('num_ninos', $draft['num_ninos'] ?? 0) }}">
                         </article>
                         <article class="input-wrapper">
-                            <label for="total_personas">Total Personas (Opcional)</label>
+                            <label for="total_personas">Total</label>
                             <input type="number" id="total_personas" name="total_personas" class="form-control" min="0" value="{{ old('total_personas', $draft['total_personas'] ?? 0) }}">
                         </article>
                     </section>
