@@ -432,7 +432,7 @@
     <!-- Observaciones Box (Front Page) -->
     <div class="section-header" style="margin-top: 15px;">6. Observaciones Adicionales</div>
     <div style="border: 1px solid #7a288a; border-radius: 4px; padding: 10px; min-height: 250px; background-color: #fcfcfc;">
-        <!-- Espacio en blanco para observaciones a mano -->
+        <p style="color: #444; font-size: 11px; line-height: 1.5; white-space: pre-wrap;">{{ $contrato->evento->notas ?? '' }}</p>
     </div>
 
     <!-- Page Break -->

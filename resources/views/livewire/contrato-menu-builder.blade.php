@@ -334,7 +334,7 @@
                 </article>
 
                 <article class="input-wrapper">
-                    <label class="tiempo-label">Bebidas</label>
+                    <label class="tiempo-label">Bebidas (Hasta 2 sabores)</label>
                     <details class="dropdown-multi" style="position: relative;" wire:ignore.self>
                         <summary class="form-control" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; background-color: white;">
                             <span>{{ count($bebidas) == 0 ? '-- Seleccionar bebidas --' : count($bebidas) . ' seleccionado(s)' }}</span>
@@ -343,13 +343,28 @@
                         <div style="position: absolute; z-index: 10; width: 100%; max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 0.5rem; background: white; margin-top: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                             @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['bebidas']))->flatMap->platillos ?? [] as $bebida_opt)
                                 <label style="display: block; padding: 0.25rem 0; cursor: pointer; border-bottom: 1px solid #eee;">
-                                    <input type="checkbox" wire:model.live="bebidas" value="{{ $bebida_opt->id }}"> {{ $bebida_opt->nombre }}
+                                    <input type="checkbox" wire:model.live="bebidas" value="{{ $bebida_opt->id }}" @if(count($bebidas) >= 2 && !in_array($bebida_opt->id, $bebidas)) disabled @endif> {{ $bebida_opt->nombre }}
                                 </label>
                             @endforeach
                         </div>
                     </details>
                 </article>
-
+                
+                <article class="input-wrapper" style="grid-column: span 2;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; background: rgba(122, 40, 138, 0.05); padding: 1rem; border-radius: 8px; border: 1px solid rgba(122, 40, 138, 0.2);">
+                        <input type="checkbox" wire:model.live="descorche" style="width: 20px; height: 20px; accent-color: var(--primary-purple);">
+                        <span style="font-weight: 600; color: var(--primary-purple);">Servicio de Descorche (Permitir ingreso de alcohol propio)</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; background: rgba(122, 40, 138, 0.05); padding: 1rem; border-radius: 8px; border: 1px solid rgba(122, 40, 138, 0.2); margin-top: 0.5rem;">
+                        <input type="checkbox" wire:model.live="descorche_cerveza" style="width: 20px; height: 20px; accent-color: var(--primary-purple);">
+                        <span style="font-weight: 600; color: var(--primary-purple);">Se ingresará Cerveza (Añade Hielo molido y Limones)</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; background: rgba(122, 40, 138, 0.05); padding: 1rem; border-radius: 8px; border: 1px solid rgba(122, 40, 138, 0.2); margin-top: 0.5rem;">
+                        <input type="checkbox" wire:model.live="cafe" style="width: 20px; height: 20px; accent-color: var(--primary-purple);">
+                        <span style="font-weight: 600; color: var(--primary-purple);">Mesa de Café (Añade Café, Azúcar, Canela al reporte de insumos)</span>
+                    </label>
+                    <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; padding-left: 2rem;">Al activar estas opciones, los insumos extra se calcularán y añadirán automáticamente en tu reporte de insumos logísticos.</p>
+                </article>
             </section>
         </fieldset>
         @endif
