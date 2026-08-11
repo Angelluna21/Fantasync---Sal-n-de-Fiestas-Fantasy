@@ -295,16 +295,6 @@
                 $sucursales = 'Sucursal Fantasy';
             }
         @endphp
-        @php
-            $eventoNotas = $contrato->evento->notas ?? '';
-            $extrasJsonStr = '';
-            $extrasObj = null;
-            if (preg_match('/Extras:\s*(\{.*\})/', $eventoNotas, $matches)) {
-                $extrasJsonStr = $matches[1];
-                $extrasObj = json_decode($extrasJsonStr);
-            }
-        @endphp
-
         <article class="comanda-header-card">
             <section style="flex: 1 1 280px;">
                 <p class="eyebrow" style="color: var(--accent-magenta); margin-bottom: 0.2rem; font-size: 0.95rem; text-transform: uppercase; font-weight: 800;">Orden de Producción Gastronómica</p>
@@ -341,12 +331,6 @@
                     <span class="comanda-meta-label">Hora de Inicio</span>
                     <span class="comanda-meta-value">{{ $hini }}</span>
                 </div>
-                @if($extrasObj)
-                <div class="comanda-meta-item">
-                    <span class="comanda-meta-label">Café</span>
-                    <span class="comanda-meta-value" style="color: {{ isset($extrasObj->tiene_cafe) && $extrasObj->tiene_cafe ? 'green' : 'red' }}">{{ isset($extrasObj->tiene_cafe) && $extrasObj->tiene_cafe ? 'Sí' : 'No' }}</span>
-                </div>
-                @endif
             </section>
         </article>
 
