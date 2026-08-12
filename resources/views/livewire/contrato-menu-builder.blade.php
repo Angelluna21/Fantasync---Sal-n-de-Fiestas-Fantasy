@@ -132,11 +132,17 @@
                 </article>
                 @endif
 
+                @php
+                    $entradaCats = ['entradas', 'entrada'];
+                    if ($servicio_id == 2) {
+                        $entradaCats = array_merge($entradaCats, ['cremas y sopas', 'cremas / sopas', 'crema', 'sopa']);
+                    }
+                @endphp
                 <article class="input-wrapper">
-                    <label class="tiempo-label">{{ $servicio_id == 3 ? '2do Tiempo' : '1er Tiempo' }} (Entrada / Pasta / Ensalada)</label>
+                    <label class="tiempo-label">{{ $servicio_id == 3 ? '2do Tiempo' : '1er Tiempo' }} (Entrada / Pasta / Ensalada{{ $servicio_id == 2 ? ' / Crema o Sopa' : '' }})</label>
                     <select wire:model="entrada_id" class="form-control select-margin">
                         <option value="">-- Selecciona una entrada --</option>
-                        @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), ['entradas', 'entrada']))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id) || $p->serviciosGastronomicos->isEmpty()) ?? [] as $entrada)
+                        @foreach($categorias->filter(fn($cat) => in_array(strtolower(trim($cat->nombre)), $entradaCats))->flatMap->platillos->filter(fn($p) => $p->serviciosGastronomicos->contains('id', $servicio_id) || $p->serviciosGastronomicos->isEmpty()) ?? [] as $entrada)
                             <option value="{{ $entrada->id }}">{{ $entrada->nombre }}</option>
                         @endforeach
                     </select>

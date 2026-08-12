@@ -70,7 +70,11 @@ class ContratoMenuBuilder extends Component
                 } elseif (in_array($cat, ['plato fuerte', 'platos fuertes'])) {
                     $this->plato_fuerte_id = (string) $p->id;
                 } elseif (in_array($cat, ['cremas y sopas', 'cremas / sopas', 'crema', 'sopa'])) {
-                    $this->crema_sopa_id = (string) $p->id;
+                    if ($this->servicio_id == 2 && !$this->entrada_id) {
+                        $this->entrada_id = (string) $p->id;
+                    } else {
+                        $this->crema_sopa_id = (string) $p->id;
+                    }
                 } elseif (in_array($cat, ['guarniciones', 'guarniciones (taquiza)', 'guarniciones (formales)', 'guarnicion formal'])) {
                     if ($this->servicio_id == 1) {
                         $this->taquiza_guarniciones[] = (string) $p->id;
