@@ -122,9 +122,7 @@
                         @php $salonPivot = $contrato->evento->eventoSalones->first(); @endphp
                         <div class="detail-item"><strong>Adultos:</strong> <span>{{ $salonPivot->adultos ?? 0 }}</span></div>
                         <div class="detail-item"><strong>Niños:</strong> <span>{{ $salonPivot->ninos ?? 0 }}</span></div>
-                        @if(!empty($salonPivot->total_personas))
-                        <div class="detail-item"><strong>Total Personas:</strong> <span>{{ $salonPivot->total_personas }}</span></div>
-                        @endif
+                        <div class="detail-item"><strong>Total Personas:</strong> <span>{{ $salonPivot->total_personas ?: ($salonPivot->adultos + $salonPivot->ninos) }}</span></div>
                     @endif
 
                     <h4 style="margin-top: 1.5rem; color: #555; font-size: 1.1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.3rem;">Mantelería</h4>
