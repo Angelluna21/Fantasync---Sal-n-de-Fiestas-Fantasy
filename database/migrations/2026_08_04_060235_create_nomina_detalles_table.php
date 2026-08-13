@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('nomina_detalles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('nomina_id')->constrained('nominas')->onDelete('cascade');
+            $table->unsignedBigInteger('nomina_id');
+            $table->foreign('nomina_id')->references('id')->on('nominas')->onDelete('cascade');
             $table->foreignId('evento_id')->nullable()->constrained('eventos')->onDelete('set null');
             $table->date('fecha_trabajo');
             $table->string('puesto');

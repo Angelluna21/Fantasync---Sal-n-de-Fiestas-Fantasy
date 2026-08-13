@@ -153,8 +153,12 @@ class ContratoBuilderService
                 }
             }
 
-            $horaInicio = trim($data['inicio_hora'] ?? '00:00');
-            $horaRecepcion = trim($data['recepcion_hora'] ?? '00:00');
+            $horaInicio = trim($data['inicio_hora'] ?? '');
+            $horaRecepcion = trim($data['recepcion_hora'] ?? '');
+            
+            if ($horaInicio === '') $horaInicio = null;
+            if ($horaRecepcion === '') $horaRecepcion = null;
+
             $notasAdicionales = '';
             
             if (!empty($data['hora_por_definir'])) {
