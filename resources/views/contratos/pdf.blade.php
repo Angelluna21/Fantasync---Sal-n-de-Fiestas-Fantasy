@@ -434,7 +434,7 @@
     <div style="border: 1px solid #7a288a; border-radius: 4px; padding: 10px; min-height: 250px; background-color: #fcfcfc;">
         @php
             $notasImprimibles = $contrato->evento->notas ?? '';
-            $notasImprimibles = preg_replace('/Servicio Gastronómico:.*?Extras:\s*\{.*\}/', '', $notasImprimibles);
+            $notasImprimibles = preg_replace('/Servicio Gastronómico:.*?Extras:\s*\{.*\}/s', '', $notasImprimibles);
             $notasImprimibles = trim($notasImprimibles);
         @endphp
         @if($notasImprimibles)
