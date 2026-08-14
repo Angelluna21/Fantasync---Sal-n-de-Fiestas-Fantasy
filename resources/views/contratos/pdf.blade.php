@@ -431,7 +431,7 @@
 
     <!-- Observaciones Box (Front Page) -->
     <div class="section-header" style="margin-top: 15px;">6. Observaciones Adicionales</div>
-    <div style="border: 1px solid #7a288a; border-radius: 4px; padding: 10px; min-height: 250px; background-color: #fcfcfc;">
+    <div style="border: 1px solid #7a288a; border-radius: 4px; padding: 10px; min-height: 80px; background-color: #fcfcfc;">
         @php
             $notasImprimibles = $contrato->evento->notas ?? '';
             $notasImprimibles = preg_replace('/Servicio Gastronómico:.*?Extras:\s*\{.*\}/s', '', $notasImprimibles);
