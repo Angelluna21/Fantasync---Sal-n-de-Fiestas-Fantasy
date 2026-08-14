@@ -432,7 +432,16 @@
     <!-- Observaciones Box (Front Page) -->
     <div class="section-header" style="margin-top: 15px;">6. Observaciones Adicionales</div>
     <div style="border: 1px solid #7a288a; border-radius: 4px; padding: 10px; min-height: 250px; background-color: #fcfcfc;">
-        <p style="color: #444; font-size: 11px; line-height: 1.5; white-space: pre-wrap;">{{ $contrato->evento->notas ?? '' }}</p>
+        @php
+            $notasImprimibles = $contrato->evento->notas ?? '';
+            $notasImprimibles = preg_replace('/Servicio Gastronómico:.*?Extras:\s*\{.*\}/', '', $notasImprimibles);
+            $notasImprimibles = trim($notasImprimibles);
+        @endphp
+        @if($notasImprimibles)
+            <p style="color: #444; font-size: 11px; line-height: 1.5; white-space: pre-wrap;">{{ $notasImprimibles }}</p>
+        @else
+            <p style="color: #888; font-size: 11px; font-style: italic;">Ninguna</p>
+        @endif
     </div>
 
     <!-- Page Break -->
