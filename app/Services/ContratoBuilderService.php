@@ -127,6 +127,21 @@ class ContratoBuilderService
                 }
             }
             // -------------------------------------------------------------------------
+            // Validar restricción de Cliente Único por fecha
+            // Evita que se duplique un evento accidentalmente para la misma persona el mismo día
+            $clienteDuplicadoQuery = \App\Models\Evento::whereDate('fecha', $data['evento_fecha'])
+                ->whereHas('cliente', function ($q) use ($data) {
+                    $q->where('nombre_completo', trim($data['cliente']));
+                });
+            
+            if ($eventoId) {
+                $clienteDuplicadoQuery->where('id', '!=', $eventoId);
+            }
+            
+            if ($clienteDuplicadoQuery->exists()) {
+                throw new \Exception("El cliente '" . trim($data['cliente']) . "' ya tiene un evento registrado para esta misma fecha. No se pueden duplicar contratos para la misma persona el mismo día.");
+            }
+            // -------------------------------------------------------------------------
 
             // 1. Crear o actualizar Cliente
             $cliente = Cliente::updateOrCreate(
