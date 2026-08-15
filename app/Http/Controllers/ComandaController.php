@@ -82,6 +82,21 @@ class ComandaController extends Controller
             return $item;
         });
 
+        // Inyectar Servicio de Café si está activo en los extras
+        if (!empty($contrato->evento->extras['servicio_cafe'])) {
+            $platillosAgrupados->put('cafe_especial', [
+                'nombre' => 'Mesa de Café (Servicio de Café)',
+                'categoria' => 'Bebidas',
+                'porciones_totales' => 'Por demanda',
+                'salones' => [['nombre' => 'General', 'porciones' => '-', 'notas' => 'Activado en Detalles del Evento']],
+                'ingredientes' => [
+                    'Café (Grano/Soluble)' => ['cantidad' => 1, 'unidad' => 'lote', 'format' => '1 lote'],
+                    'Azúcar' => ['cantidad' => 1, 'unidad' => 'lote', 'format' => '1 lote'],
+                    'Canela' => ['cantidad' => 1, 'unidad' => 'lote', 'format' => '1 lote'],
+                ]
+            ]);
+        }
+
         // Agrupamos la colección final por categoría para que la cocina tenga orden
         $comandaGlobal = $platillosAgrupados->groupBy('categoria');
 

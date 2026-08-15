@@ -80,6 +80,7 @@ class StoreContratoRequest extends FormRequest
             'extras.*' => 'nullable|boolean',
             'hora_por_definir' => 'nullable|boolean',
             'tiene_misa' => 'nullable|boolean',
+            'servicio_cafe' => 'nullable|boolean',
             'tiene_pinata' => 'nullable|boolean',
             'detalle_pinata' => 'nullable|string|max:150',
             'tiene_show' => 'nullable|boolean',

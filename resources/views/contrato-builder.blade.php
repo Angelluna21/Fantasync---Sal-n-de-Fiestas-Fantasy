@@ -216,6 +216,7 @@
                     <section class="input-grid grid-6" style="margin-top: 0.5rem; margin-bottom: 1.5rem;">
                         <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="hora_por_definir" id="hora_por_definir" value="1" {{ old('hora_por_definir', $draft['extras']['hora_por_definir'] ?? '') ? 'checked' : '' }}> Hora por definir</label></article>
                         <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="tiene_misa" id="tiene_misa" value="1" {{ old('tiene_misa', $draft['extras']['tiene_misa'] ?? '') ? 'checked' : '' }}> Misa</label></article>
+                        <article class="input-wrapper checkbox-wrapper"><label class="checkbox-label" style="font-size: 0.9rem; color: #666;"><input type="checkbox" name="servicio_cafe" id="servicio_cafe" value="1" {{ old('servicio_cafe', $draft['extras']['servicio_cafe'] ?? '') ? 'checked' : '' }}> Servicio de Café</label></article>
                     </section>
                     
                     <script>

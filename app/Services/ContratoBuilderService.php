@@ -185,6 +185,7 @@ class ContratoBuilderService
             $extras['invitacion_estado'] = $data['invitacion_estado'] ?? '';
             $extras['invitacion_detalle'] = $data['invitacion_detalle'] ?? '';
             $extras['quien_vendio_hora_extra'] = $data['quien_vendio_hora_extra'] ?? '';
+            $extras['servicio_cafe'] = !empty($data['servicio_cafe']);
 
             if (!empty($data['tiene_pinata'])) {
                 $extras['tiene_pinata'] = true;
