@@ -83,7 +83,7 @@ class ComandaController extends Controller
         });
 
         // Inyectar Servicio de Café si está activo en los extras
-        if (!empty($contrato->evento->extras['servicio_cafe'])) {
+        if (!empty($contrato->servicios_extras['servicio_cafe'])) {
             $platillosAgrupados->put('cafe_especial', [
                 'nombre' => 'Mesa de Café (Servicio de Café)',
                 'categoria' => 'Bebidas',
