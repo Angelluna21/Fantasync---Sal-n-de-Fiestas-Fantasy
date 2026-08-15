@@ -80,6 +80,8 @@ class ComandaController extends Controller
                 $datos['format'] = $calculadora->formatearCantidad($datos['cantidad'], $datos['unidad']);
             }
             return $item;
+        });
+
         // Agrupamos la colección final por categoría para que la cocina tenga orden
         $comandaGlobal = $platillosAgrupados->groupBy('categoria');
 
