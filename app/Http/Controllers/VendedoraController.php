@@ -52,23 +52,23 @@ class VendedoraController extends Controller
             $endOfYear = $now->copy()->endOfYear();
 
             foreach($todosLosContratos as $c) {
-                if (!$c->fecha_firma) continue;
-                $fechaFirma = \Carbon\Carbon::parse($c->fecha_firma);
-                if ($fechaFirma->between($startOfWeek, $endOfWeek)) $cntSemana++;
-                if ($fechaFirma->between($startOfMonth, $endOfMonth)) $cntMes++;
-                if ($fechaFirma->between($startOfYear, $endOfYear)) $cntAnio++;
+                if (!$c->evento || !$c->evento->fecha) continue;
+                $fechaEvento = \Carbon\Carbon::parse($c->evento->fecha);
+                if ($fechaEvento->between($startOfWeek, $endOfWeek)) $cntSemana++;
+                if ($fechaEvento->between($startOfMonth, $endOfMonth)) $cntMes++;
+                if ($fechaEvento->between($startOfYear, $endOfYear)) $cntAnio++;
             }
 
-            // Filtrar para los cálculos financieros
-            $contratosQuery = $vendedora->contratos()->with('evento');
-            
-            if ($periodo === 'semana') {
-                $contratosQuery->whereBetween('contratos.fecha_firma', [$startOfWeek, $endOfWeek]);
-            } elseif ($periodo === 'mes') {
-                $contratosQuery->whereBetween('contratos.fecha_firma', [$startOfMonth, $endOfMonth]);
-            } elseif ($periodo === 'anio') {
-                $contratosQuery->whereBetween('contratos.fecha_firma', [$startOfYear, $endOfYear]);
-            }
+            // Filtrar para los cálculos financieros (basado en la fecha del EVENTO, no de la firma)
+            $contratosQuery = $vendedora->contratos()->whereHas('evento', function ($query) use ($periodo, $startOfWeek, $endOfWeek, $startOfMonth, $endOfMonth, $startOfYear, $endOfYear) {
+                if ($periodo === 'semana') {
+                    $query->whereBetween('fecha', [$startOfWeek, $endOfWeek]);
+                } elseif ($periodo === 'mes') {
+                    $query->whereBetween('fecha', [$startOfMonth, $endOfMonth]);
+                } elseif ($periodo === 'anio') {
+                    $query->whereBetween('fecha', [$startOfYear, $endOfYear]);
+                }
+            })->with('evento');
             
             $contratos = $contratosQuery->get();
             $comisionTotal = 0;
@@ -106,7 +106,8 @@ class VendedoraController extends Controller
                     $montoComisionable = max(0, $montoTotalContrato - $costoHoraExtra);
                 }
                 
-                $comisionBaseIndividual = ($montoComisionable * 0.05) / $numVendedoras;
+                $porcentajeComision = $esSabado ? 0.01 : 0.05;
+                $comisionBaseIndividual = ($montoComisionable * $porcentajeComision) / $numVendedoras;
                 $comisionTotal += $comisionBaseIndividual;
                 
                 if ($quienVendioHrExtra === 'vendedora_' . $vendedora->id) {
