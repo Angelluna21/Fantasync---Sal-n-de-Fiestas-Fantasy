@@ -331,6 +331,12 @@
                     <span class="comanda-meta-label">Hora de Inicio</span>
                     <span class="comanda-meta-value">{{ $hini }}</span>
                 </div>
+                <div class="comanda-meta-item">
+                    <span class="comanda-meta-label">Mesa de Café</span>
+                    <span class="comanda-meta-value" style="font-weight: 800; color: {{ !empty($contrato->servicios_extras['servicio_cafe']) ? 'var(--success-color, #28a745)' : 'var(--text-muted)' }};">
+                        {{ !empty($contrato->servicios_extras['servicio_cafe']) ? 'Sí' : 'No' }}
+                    </span>
+                </div>
             </section>
         </article>
 
