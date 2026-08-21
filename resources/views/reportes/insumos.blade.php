@@ -3,16 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte de Insumos · FantaSync</title>
+    <title>Reporte de Platillos · FantaSync</title>
     @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/css/reportes.css'])
+    <style>
+        @media print {
+            @page {
+                size: auto;
+                margin: 0mm;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+                font-family: 'Helvetica Neue', Arial, sans-serif !important;
+                padding: 10mm !important;
+            }
+            .dashboard-background, .top-nav, .navigation-buttons, .comanda-actions-footer, .no-print {
+                display: none !important;
+            }
+            .dashboard-layout {
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+            .comanda-header-card {
+                box-shadow: none !important;
+                border: 2px solid #000 !important;
+                background: #fff !important;
+                padding: 1rem !important;
+                margin-bottom: 1.5rem !important;
+                border-radius: 8px !important;
+            }
+            .comanda-meta-label, .comanda-meta-value {
+                color: #000 !important;
+            }
+            .sucursal-card {
+                box-shadow: none !important;
+                border: none !important;
+                background: white !important;
+                padding: 0 !important;
+                margin-bottom: 2rem !important;
+            }
+            .card-header {
+                border-bottom: 2px solid #000 !important;
+                padding-bottom: 0.5rem !important;
+                margin-bottom: 0.75rem !important;
+            }
+            .card-title {
+                color: #000 !important;
+                font-size: 1.4rem !important;
+            }
+            .print-checkbox {
+                border: 2px solid #000 !important;
+                width: 18px !important;
+                height: 18px !important;
+                border-radius: 50% !important;
+            }
+            .comanda-list-item {
+                border-bottom: 1px solid #000 !important;
+                break-inside: avoid;
+            }
+            .comanda-category-section {
+                margin-bottom: 1rem !important;
+            }
+        }
+        .comanda-header-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .comanda-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .comanda-meta-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 800;
+        }
+        .comanda-meta-value {
+            font-size: 1.1rem;
+            color: var(--primary-purple);
+            font-weight: 800;
+        }
+        .comanda-list {
+            display: flex;
+            flex-direction: column;
+        }
+        .comanda-list-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            gap: 1rem;
+        }
+        .comanda-list-item:last-child {
+            border-bottom: none;
+        }
+        .comanda-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .comanda-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .comanda-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.2;
+        }
+    </style>
 </head>
 <body>
     <figure class="dashboard-background" aria-hidden="true"></figure>
     
     <main class="dashboard-layout">
-        <!-- Navegación superior -->
-        <nav class="top-nav" aria-label="Menú superior" style="align-items: flex-start; margin-bottom: 2rem;">
-            <!-- Lado izquierdo: Logo y Botones de navegación -->
+        <nav class="top-nav no-print" aria-label="Menú superior" style="align-items: flex-start; margin-bottom: 2rem;">
             <section style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
                 <a href="{{ route('dashboard') }}" aria-label="Volver al panel" class="logo-link" style="width: fit-content;">
                     <img src="{{ asset('img/logo.png') }}" alt="Logo FantaSync" class="nav-logo" style="height: 100px;">
@@ -31,226 +156,126 @@
                 </section>
             </section>
             
-            <!-- Lado derecho: Menú de usuario -->
             <section style="flex: 1; display: flex; justify-content: flex-end;">
                 <x-user-menu />
             </section>
         </nav>
 
-        <!-- Sección de reporte -->
-        <section class="reportes-section">
-            <article class="sucursal-card main-report-card">
-                
-                <!-- Encabezado integrado al contenedor -->
-                <header style="border-bottom: 2px solid rgba(122, 40, 138, 0.15); padding-bottom: 1.5rem; margin-bottom: 2rem;">
-                    <p class="eyebrow" style="color: var(--accent-magenta); margin-bottom: 0.2rem; font-size: 0.95rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em;">Producción de Cocina</p>
-                    <h1 style="color: var(--primary-purple); font-size: 2.2rem; font-weight: 800; margin: 0 0 0.5rem 0; line-height: 1.2;">Lista de Insumos</h1>
-                    <p style="color: var(--text-main); font-size: 1.1rem; margin: 0;">Evento: <strong style="color: var(--primary-purple);">{{ $evento->titulo }}</strong> ({{ $evento->fecha->format('d/m/Y') }})</p>
-                </header>
+        @php
+            $totAdultos = $evento->salones->sum('pivot.adultos');
+            $totNinos = $evento->salones->sum('pivot.ninos');
+            $hrec = $evento->hora_recepcion ? \Carbon\Carbon::parse($evento->hora_recepcion)->format('H:i') . ' hrs' : 'No definida';
+            $hini = $evento->hora_inicio ? \Carbon\Carbon::parse($evento->hora_inicio)->format('H:i') . ' hrs' : 'No definida';
+            $sucursales = $evento->salones->map(fn($s) => $s->sucursal ? $s->sucursal->nombre : null)->filter()->unique()->implode(', ');
+            if (empty($sucursales)) {
+                $sucursales = 'Sucursal Fantasy';
+            }
+        @endphp
 
-                <header class="card-header-report" style="margin-bottom: 1.5rem; padding-bottom: 0; border: none;">
-                    <h2 class="card-title">Salones Reservados:</h2>
-                    <section class="salones-badges-container">
-                        @foreach($evento->salones as $salon)
-                            <span class="location-badge">
-                                {{ $salon->nombre }}
-                            </span>
-                        @endforeach
-                    </section>
-                </header>
+        <article class="comanda-header-card">
+            <section style="flex: 1 1 280px;">
+                <p class="eyebrow" style="color: var(--accent-magenta); margin-bottom: 0.2rem; font-size: 0.95rem; text-transform: uppercase; font-weight: 800;">Orden de Producción</p>
+                <h1 style="color: var(--primary-purple); font-size: 2.2rem; font-weight: 900; margin: 0 0 0.4rem 0; line-height: 1.1;">Platillos a Preparar</h1>
+                <p style="color: var(--text-main); font-size: 1.15rem; margin: 0;">Evento: <strong style="color: var(--primary-purple);">{{ $evento->titulo }}</strong></p>
+            </section>
 
-                <section class="platillos-preparar-card">
-                    <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
-                        <h3 class="platillos-title" style="margin: 0;">Platillos a Preparar:</h3>
-                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                            <button onclick="window.print()" class="no-print" style="background: linear-gradient(135deg, #1565c0, #0d47a1); color: white; padding: 0.55rem 1.25rem; border-radius: 2rem; border: none; cursor: pointer; font-weight: 800; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3); transition: all 0.3s ease;">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                                Imprimir Insumos
-                            </button>
-                            
-                            @if($evento->contrato)
-                                <a href="{{ route('reportes.comanda', $evento->contrato->id) }}" class="no-print" style="background: linear-gradient(135deg, var(--primary-purple), #4a148c); color: white; padding: 0.55rem 1.25rem; border-radius: 2rem; text-decoration: none; font-weight: 800; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px rgba(122, 40, 138, 0.3); transition: all 0.3s ease;">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
-                                    Ver Cantidades a Picar (Comanda)
-                                </a>
-                            @endif
-                        </div>
-                    </header>
-                    @php
-                        $platillosList = collect();
-                        foreach($evento->eventoSalones as $es) {
-                            foreach($es->platillos as $pl) {
-                                $cat = $pl->categoriaPlatillo ? $pl->categoriaPlatillo->nombre : 'Sin Categoría';
-                                $id = $pl->id;
-                                if(!$platillosList->has($id)) {
-                                    $platillosList->put($id, [
-                                        'nombre' => $pl->nombre,
-                                        'categoria' => $cat,
-                                        'porciones' => 0,
-                                    ]);
-                                }
-                                $item = $platillosList->get($id);
-                                $item['porciones'] += $pl->pivot->porciones_plan;
-                                $platillosList->put($id, $item);
-                            }
-                        }
-                        $ordenDeseado = ['Entradas', 'Cremas y Sopas', 'Platos Fuertes', 'Guarniciones (Formales)', 'Guisados', 'Parrillada (Carnes)', 'Guarniciones', 'Menú Infantil', 'Buffet Infantil', 'Bebidas', 'Dulces', 'Postres'];
-                        $platillosPorCat = $platillosList->groupBy('categoria')->sortBy(function($val, $cat) use ($ordenDeseado) {
-                            $pos = array_search($cat, $ordenDeseado);
-                            return $pos === false ? 999 : $pos;
-                        });
-                    @endphp
-
-                    @if($platillosPorCat->isEmpty())
-                        <p class="no-platillos-item" style="margin: 0; padding: 0.5rem 0;">No hay platillos asignados a este evento aún.</p>
-                    @else
-                        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-                            @foreach($platillosPorCat as $catName => $items)
-                                <div>
-                                    <h4 style="margin: 0 0 0.3rem 0; font-size: 0.8rem; color: var(--accent-magenta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 800;">
-                                        ▫️ {{ $catName }}
-                                    </h4>
-                                    <ul class="platillos-list-badges" style="margin: 0;">
-                                        @foreach($items as $platillo)
-                                            <li class="platillo-chip">
-                                                <strong>{{ $platillo['nombre'] }}</strong>
-                                                <span class="platillo-details">({{ $platillo['porciones'] }} porciones)</span>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </section>
-
-                @php
-                    $groupedInsumos = collect($reporteInsumos)->groupBy('categoria');
-                    $categoriaOrder = ['Frutas y Verduras', 'Carnes', 'Cremería', 'Abarrotes', 'General', 'Otros'];
-                    $sortedGroups = $groupedInsumos->sortBy(function($val, $key) use ($categoriaOrder) {
-                        $pos = array_search($key, $categoriaOrder);
-                        return $pos === false ? 99 : $pos;
-                    });
-                @endphp
-
-                <div style="display: flex; justify-content: flex-end; margin-bottom: 1.5rem;" class="no-print">
-                    <a href="{{ route('reportes.compras-semana') }}" style="background: linear-gradient(135deg, var(--accent-yellow), #fbc02d); color: var(--primary-purple); padding: 0.65rem 1.5rem; border-radius: 2rem; text-decoration: none; font-weight: 800; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: var(--shadow-sm); transition: all 0.3s ease;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                        Ver Lista Consolidada de la Semana (Central de Abastos)
-                    </a>
+            <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.25rem; flex: 2 1 500px; background: rgba(122, 40, 138, 0.04); padding: 1.25rem; border-radius: 16px; border: 1px solid rgba(122, 40, 138, 0.15);">
+                <div class="comanda-meta-item">
+                    <span class="comanda-meta-label">Fecha del Evento</span>
+                    <span class="comanda-meta-value">{{ $evento->fecha->format('d/m/Y') }}</span>
                 </div>
+                <div class="comanda-meta-item">
+                    <span class="comanda-meta-label">Cliente</span>
+                    <span class="comanda-meta-value">{{ $evento->cliente->nombre_completo ?? $evento->titulo }}</span>
+                </div>
+                <div class="comanda-meta-item">
+                    <span class="comanda-meta-label">Sucursal</span>
+                    <span class="comanda-meta-value">{{ $sucursales }}</span>
+                </div>
+                <div class="comanda-meta-item">
+                    <span class="comanda-meta-label">Invitados Adultos</span>
+                    <span class="comanda-meta-value">{{ $totAdultos }} <small style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">adultos</small></span>
+                </div>
+                <div class="comanda-meta-item">
+                    <span class="comanda-meta-label">Invitados Niños</span>
+                    <span class="comanda-meta-value">{{ $totNinos }} <small style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">niños</small></span>
+                </div>
+                <div class="comanda-meta-item">
+                    <span class="comanda-meta-label">Recepción</span>
+                    <span class="comanda-meta-value">{{ $hrec }}</span>
+                </div>
+                <div class="comanda-meta-item">
+                    <span class="comanda-meta-label">Hora de Inicio</span>
+                    <span class="comanda-meta-value">{{ $hini }}</span>
+                </div>
+                <div class="comanda-meta-item">
+                    <span class="comanda-meta-label">Mesa de Café</span>
+                    <span class="comanda-meta-value" style="font-weight: 800; color: {{ (!empty($evento->contrato) && !empty($evento->contrato->servicios_extras['servicio_cafe'])) ? 'var(--success-color, #28a745)' : 'var(--text-muted)' }};">
+                        {{ (!empty($evento->contrato) && !empty($evento->contrato->servicios_extras['servicio_cafe'])) ? 'Sí' : 'No' }}
+                    </span>
+                </div>
+            </section>
+        </article>
 
-                <section class="insumos-categories-container">
-                    @if(count($reporteInsumos) > 0)
-                        @foreach($sortedGroups as $categoria => $insumos)
-                            <article class="category-group-card">
-                                <h3 class="category-group-title">
-                                    {{ $categoria }}
-                                </h3>
-                                <figure class="table-responsive">
-                                    <table class="tabla-reporte">
-                                        <thead>
-                                            <tr>
-                                                <th>Materia Prima / Insumo</th>
-                                                <th class="col-requerido">Exacto</th>
-                                                <th class="col-margen">Sugerido</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($insumos as $insumo)
-                                                <tr>
-                                                    <td><strong>{{ $insumo['nombre'] }}</strong></td>
-                                                    <td class="col-requerido">{{ $insumo['exacto_format'] }}</td>
-                                                    <td class="col-margen">{{ $insumo['comprar_format'] }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </figure>
-                            </article>
-                        @endforeach
-                    @else
-                        <section class="empty-insumos-state">
-                            No hay platillos asignados para calcular insumos.
-                        </section>
-                    @endif
-                </section>
-                
-                <footer class="report-button-container">
-                    <button class="btn-print" onclick="window.print();">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
-                        </svg>
-                        Imprimir Todo
-                    </button>
-                </footer>
-            </article>
+        <section class="reportes-section" style="gap: 2rem;">
+            @php
+                $platillosList = collect();
+                foreach($evento->eventoSalones as $es) {
+                    foreach($es->platillos as $pl) {
+                        $cat = $pl->categoriaPlatillo ? $pl->categoriaPlatillo->nombre : 'Sin Categoría';
+                        $id = $pl->id;
+                        if(!$platillosList->has($id)) {
+                            $platillosList->put($id, [
+                                'nombre' => $pl->nombre,
+                                'categoria' => $cat,
+                            ]);
+                        }
+                    }
+                }
+                $ordenDeseado = ['Entradas', 'Cremas y Sopas', 'Platos Fuertes', 'Espejos', 'Guarniciones (Formales)', 'Guisados', 'Parrillada (Carnes)', 'Guarniciones', 'Salsas', 'Aderezos', 'Menú Infantil', 'Buffet Infantil', 'Bebidas', 'Dulces', 'Postres'];
+                $platillosPorCat = $platillosList->groupBy('categoria')->sortBy(function($val, $cat) use ($ordenDeseado) {
+                    $pos = array_search($cat, $ordenDeseado);
+                    return $pos === false ? 999 : $pos;
+                });
+            @endphp
 
-            <!-- Lista de Compras para Central de Abasto (Agrupada) -->
-            <article class="sucursal-card shopping-list-card">
-                <header class="card-header-shopping">
-                    <p class="eyebrow-accent">LOGÍSTICA</p>
-                    <h2 class="card-title">Lista de Compras (Central de Abasto)</h2>
-                    <p class="card-subtitle">Lista consolidada por áreas de la Central de Abasto con totales comerciales.</p>
-                </header>
+            @if($platillosPorCat->isEmpty())
+                <article class="sucursal-card main-report-card" style="text-align: center; padding: 4rem 2rem;">
+                    <p style="font-size: 1.2rem; color: var(--text-muted); font-weight: 700;">No hay platillos asignados a este evento aún.</p>
+                </article>
+            @else
+                <article class="sucursal-card main-report-card" style="padding: 1.5rem;">
+                    @foreach($platillosPorCat as $catName => $items)
+                        <div class="comanda-category-section" style="margin-bottom: 2rem;">
+                            <header class="card-header" style="border-bottom: 2px solid rgba(122, 40, 138, 0.15); padding-bottom: 0.5rem; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+                                <h2 class="card-title" style="margin: 0; display: flex; align-items: center; gap: 0.5rem; font-size: 1.35rem; font-weight: 900; color: var(--primary-purple);">
+                                    <span>{{ $catName }}</span>
+                                </h2>
+                                <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); background: #f0f0f0; padding: 0.2rem 0.6rem; border-radius: 12px;">{{ count($items) }} platillo(s)</span>
+                            </header>
 
-                @php
-                    $comprasInsumos = collect($reporteInsumos)->where('comprar_raw', '>', 0);
-                    $groupedCompras = $comprasInsumos->groupBy('categoria');
-                    $sortedCompras = $groupedCompras->sortBy(function($val, $key) use ($categoriaOrder) {
-                        $pos = array_search($key, $categoriaOrder);
-                        return $pos === false ? 99 : $pos;
-                    });
-                @endphp
+                            <div class="comanda-list">
+                                @foreach($items as $platillo)
+                                    <div class="comanda-list-item">
+                                        <div class="comanda-checkbox print-checkbox" title="Marcar como listo"></div>
+                                        <div class="comanda-details">
+                                            <p class="comanda-name">{{ $platillo['nombre'] }}</p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </article>
+            @endif
 
-                <section class="shopping-list-categories">
-                    @if($comprasInsumos->count() > 0)
-                        @foreach($sortedCompras as $categoria => $compras)
-                            <section class="shopping-category-section">
-                                <h3 class="shopping-category-title">
-                                    {{ $categoria }}
-                                </h3>
-                                <menu class="shopping-items-grid">
-                                    @foreach($compras as $insumo)
-                                        <li class="shopping-item-card">
-                                            <label class="checkbox-container">
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                                <hgroup class="shopping-item-info">
-                                                    <span class="shopping-item-name">{{ $insumo['nombre'] }}</span>
-                                                    <span class="shopping-item-qty">{{ $insumo['comprar_format'] }}</span>
-                                                </hgroup>
-                                            </label>
-                                        </li>
-                                    @endforeach
-                                </menu>
-                            </section>
-                        @endforeach
-                    @else
-                        <section class="all-stocked-message">
-                            Hay stock suficiente de todos los ingredientes para este evento. No es necesario comprar nada.
-                        </section>
-                    @endif
-                </section>
-            </article>
-
-            <!-- Bloque de Confirmación y Salida -->
-            <article class="sucursal-card text-center no-print" style="margin-top: 1rem; padding: 3rem 2rem; text-align: center;">
-                <svg fill="none" stroke="#1b8544" viewBox="0 0 24 24" width="60" height="60" style="margin: 0 auto 1rem;">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <h2 style="color: var(--primary-purple); font-size: 1.5rem; margin-bottom: 0.5rem;">¡Todo está guardado exitosamente!</h2>
-                <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.05rem;">El evento y la lista logística están seguros. Puedes salir de esta pantalla sin preocuparte.</p>
-                <a href="{{ route('dashboard') }}" class="btn-print" style="text-decoration: none; margin: 0 auto;">
-                    Finalizar y Volver al Inicio
-                </a>
-            </article>
+            <footer class="comanda-actions-footer no-print" style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; margin-bottom: 4rem; flex-wrap: wrap;">
+                <button class="btn-print" onclick="window.print();" style="background: linear-gradient(135deg, var(--primary-purple), #4a148c); color: white; border: none; font-size: 1.1rem; font-weight: 800; padding: 0.8rem 2.5rem; border-radius: 2rem; box-shadow: 0 4px 15px rgba(122, 40, 138, 0.4); cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    Imprimir Platillos
+                </button>
+            </footer>
         </section>
     </main>
-
-    <!-- Footer -->
-    <footer class="dashboard-footer">
-        <p>© 2026 FantaSync · Sistema de Gestión de Eventos Gastronómicos</p>
-    </footer>
 </body>
 </html>
