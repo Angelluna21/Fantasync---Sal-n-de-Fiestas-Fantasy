@@ -250,7 +250,7 @@
                 </a>
                 
                 <section style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
-                    <a href="javascript:history.back()" class="btn-back-nav-glass" style="margin: 0; padding: 0.4rem 1rem; font-size: 0.85rem;">
+                    <a href="{{ route('contratos.index') }}" class="btn-back-nav-glass" style="margin: 0; padding: 0.4rem 1rem; font-size: 0.85rem;">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="nav-icon"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                         Regresar
                     </a>

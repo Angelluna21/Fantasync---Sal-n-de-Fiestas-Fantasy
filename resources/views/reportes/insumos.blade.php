@@ -144,7 +144,7 @@
                 </a>
                 
                 <section style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
-                    <a href="javascript:history.back()" class="btn-back-nav-glass" style="margin: 0; padding: 0.4rem 1rem; font-size: 0.85rem;">
+                    <a href="{{ route('contratos.index') }}" class="btn-back-nav-glass" style="margin: 0; padding: 0.4rem 1rem; font-size: 0.85rem;">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="nav-icon"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                         Regresar
                     </a>
@@ -152,7 +152,7 @@
                     @if(!empty($evento->contrato))
                     <a href="{{ route('reportes.comanda', $evento->contrato->id) }}" class="btn-back-nav-glass" style="margin: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(122, 40, 138, 0.2); border-color: var(--primary-purple);">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="nav-icon"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-                        Ver Comanda a Picar
+                        Ver Comanda
                     </a>
                     @endif
                     
@@ -284,7 +284,7 @@
                 
                 @if(!empty($evento->contrato))
                 <a href="{{ route('reportes.comanda', $evento->contrato->id) }}" class="btn-back-nav-glass" style="background: rgba(255, 255, 255, 0.8); color: var(--primary-purple); border-color: var(--border-color); font-size: 1.05rem; padding: 0.8rem 2rem; text-decoration: none; border-radius: 2rem;">
-                    Ir a Comanda a Picar
+                    Ir a Comanda
                 </a>
                 @endif
             </footer>
