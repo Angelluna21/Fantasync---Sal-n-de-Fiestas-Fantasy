@@ -91,10 +91,15 @@
             display: block;
         }
         @media print {
+            @page {
+                size: auto;
+                margin: 0mm;
+            }
             body {
                 background: white !important;
                 color: black !important;
                 font-family: 'Helvetica Neue', Arial, sans-serif !important;
+                padding: 10mm !important;
             }
             .dashboard-background, .top-nav, .navigation-buttons, .comanda-actions-footer, .no-print {
                 display: none !important;
@@ -121,8 +126,6 @@
                 background: white !important;
                 padding: 0 !important;
                 margin-bottom: 2rem !important;
-                page-break-inside: avoid;
-                break-inside: avoid;
             }
             .card-header {
                 border-bottom: 2px solid #000 !important;
@@ -185,11 +188,6 @@
                 border-bottom: 1px solid #000 !important;
                 break-inside: avoid;
             }
-            .comanda-portions {
-                border: 1px solid #000 !important;
-                background: none !important;
-                color: #000 !important;
-            }
             .comanda-card {
                 padding: 0 !important;
                 border: none !important;
@@ -233,15 +231,6 @@
             color: var(--text-main);
             margin: 0;
             line-height: 1.2;
-        }
-        .comanda-portions {
-            background: rgba(122, 40, 138, 0.08);
-            color: var(--primary-purple);
-            font-size: 1rem;
-            font-weight: 800;
-            padding: 0.25rem 0.85rem;
-            border-radius: 1rem;
-            white-space: nowrap;
         }
         .comanda-card {
             padding: 1.5rem !important;
@@ -399,9 +388,6 @@
                                                     <span class="nota-box" style="margin-top: 0.2rem; display: inline-block; padding: 0.2rem 0.5rem; font-size: 0.75rem;">Nota: {{ $salon['notas'] }}</span>
                                                 @endif
                                             @endforeach
-                                        </div>
-                                        <div class="comanda-portions">
-                                            {{ $platillo['porciones_totales'] }}
                                         </div>
                                     </div>
                                 @endforeach
