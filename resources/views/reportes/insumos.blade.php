@@ -149,6 +149,13 @@
                         Regresar
                     </a>
                     
+                    @if(!empty($evento->contrato))
+                    <a href="{{ route('reportes.comanda', $evento->contrato->id) }}" class="btn-back-nav-glass" style="margin: 0; padding: 0.4rem 1rem; font-size: 0.85rem; background: rgba(122, 40, 138, 0.2); border-color: var(--primary-purple);">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="nav-icon"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                        Ver Comanda a Picar
+                    </a>
+                    @endif
+                    
                     <a href="{{ route('dashboard') }}" class="btn-back-nav-glass btn-dashboard" style="margin: 0; padding: 0.4rem 1rem; font-size: 0.85rem;">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="nav-icon"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                         Dashboard
@@ -274,6 +281,12 @@
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                     Imprimir Platillos
                 </button>
+                
+                @if(!empty($evento->contrato))
+                <a href="{{ route('reportes.comanda', $evento->contrato->id) }}" class="btn-back-nav-glass" style="background: rgba(255, 255, 255, 0.8); color: var(--primary-purple); border-color: var(--border-color); font-size: 1.05rem; padding: 0.8rem 2rem; text-decoration: none; border-radius: 2rem;">
+                    Ir a Comanda a Picar
+                </a>
+                @endif
             </footer>
         </section>
     </main>
