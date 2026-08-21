@@ -176,9 +176,14 @@
                                             Platillos
                                         </a>
                                         
-                                        <a href="{{ route('reportes.insumos', $contrato->evento_id) }}" target="_blank" class="btn-event-link" title="Reporte de Insumos" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.3rem 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-decoration: none; background: #4caf50; color: white; border: none; box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3); gap: 0.2rem; transition: all 0.2s;">
+                                        <a href="{{ route('reportes.insumos', $contrato->evento_id) }}" target="_blank" class="btn-event-link" title="Reporte de Insumos (Limpio)" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.3rem 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-decoration: none; background: #4caf50; color: white; border: none; box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3); gap: 0.2rem; transition: all 0.2s;">
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
                                             Insumos
+                                        </a>
+
+                                        <a href="{{ route('reportes.comanda', $contrato->id) }}" target="_blank" class="btn-event-link" title="Comanda de Cocina (Con cantidades a picar)" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.3rem 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-decoration: none; background: #e91e63; color: white; border: none; box-shadow: 0 4px 10px rgba(233, 30, 99, 0.3); gap: 0.2rem; transition: all 0.2s;">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                                            Comanda
                                         </a>
                                         
                                         <a href="{{ route('contratos.show', $contrato->id) }}" class="btn-event-link" title="Consultar Contrato" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.3rem 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-decoration: none; background: #9b30b0; color: white; border: none; box-shadow: 0 4px 10px rgba(155, 48, 176, 0.3); gap: 0.2rem; transition: all 0.2s;">
